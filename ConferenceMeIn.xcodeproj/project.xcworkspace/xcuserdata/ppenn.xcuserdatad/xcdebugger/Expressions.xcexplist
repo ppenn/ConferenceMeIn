@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[ConferenceMeInDetailViewController configureView]:ConferenceMeInDetailViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(EKEvent *)(null)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ConferenceMeInAppDelegate setupByPreferences]:ConferenceMeInAppDelegate.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(NSUserDefaults *)(null)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ConferenceMeInMasterViewController tableView:cellForRowAtIndexPath:]:ConferenceMeInMasterViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[ConferenceMeInMasterViewController tableView:didSelectRowAtIndexPath:]:ConferenceMeInMasterViewController.m">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
