@@ -148,11 +148,7 @@
 	// the user clicked one of the OK/Cancel buttons
 	if (buttonIndex == 0)
 	{
-		NSLog(@"Dialling");
-        NSString* telLink = ((CMIEvent*) self.detailItem).conferenceNumberURL;
-        [[UIApplication sharedApplication] 
-         openURL:[NSURL URLWithString:telLink]];    
-        
+        [((CMIEvent*) self.detailItem) dial];        
 	}
 	else
 	{

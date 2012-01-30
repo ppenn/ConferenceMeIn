@@ -26,6 +26,6 @@
 - (UITableViewCell *)tableViewCellWithReuseIdentifier:(NSString *)identifier;
 - (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath;
 - (void)reloadTable;
-
+- (void)showEventNatively:(NSInteger)row;
 
 @end

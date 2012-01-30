@@ -24,7 +24,6 @@ typedef enum calendarTypes
 @property calendarTypes calendarType;
 
 - (id) init;
-
 - (NSArray *)fetchEvents;
 
 @end

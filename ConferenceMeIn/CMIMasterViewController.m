@@ -11,6 +11,9 @@
 #define ROW_HEIGHT 80
 
 static UIImage *_phoneImage;
+NSInteger _tapCount = 0;
+NSInteger _tappedRow = 0;
+NSTimer* _tapTimer;
 
 @implementation CMIMasterViewController
 
@@ -21,6 +24,16 @@ static UIImage *_phoneImage;
 
 #pragma mark -
 #pragma mark Table view delegate and data source methods
+
+- (void)tapTimerFired:(NSTimer *)aTimer{
+    //timer fired, there was a single tap on indexPath.row = tappedRow
+    NSInteger row = _tappedRow;
+    if(_tapTimer != nil){
+        _tapCount = 0;
+        _tappedRow = -1;
+    }
+    [self showEventNatively:row];
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
 	// Number of sections is the number of regions
@@ -61,19 +74,50 @@ static UIImage *_phoneImage;
 	return cell;
 }
 
+- (void)showEventNatively:(NSInteger)row
+{
+    self.detailViewController = [[CMIEKEventViewController alloc] initWithNibName:nil bundle:nil];        
+    _detailViewController.event = [[self.eventsList objectAtIndex:row] ekEvent];
+    
+    _detailViewController.allowsEditing = YES;
+    _detailViewController.detailItem = [self.eventsList objectAtIndex:row];
+    //	Push detailViewController onto the navigation controller stack
+    //	If the underlying event gets deleted, detailViewController will remove itself from
+    //	the stack and clear its event property.
+    [self.navigationController pushViewController:_detailViewController animated:YES];
+
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     @try {
-        
-        self.detailViewController = [[CMIEKEventViewController alloc] initWithNibName:nil bundle:nil];        
-        _detailViewController.event = [[self.eventsList objectAtIndex:indexPath.row] ekEvent];
-        
-        _detailViewController.allowsEditing = YES;
-        _detailViewController.detailItem = [self.eventsList objectAtIndex:indexPath.row];
-        //	Push detailViewController onto the navigation controller stack
-        //	If the underlying event gets deleted, detailViewController will remove itself from
-        //	the stack and clear its event property.
-        [self.navigationController pushViewController:_detailViewController animated:YES];
+
+        //checking for double taps here
+        if(_tapCount == 1 && _tapTimer != nil && _tappedRow == indexPath.row){
+            //double tap - Put your double tap code here            
+            [_tapTimer invalidate];
+            _tapTimer = nil;            
+            if ([[self.eventsList objectAtIndex:_tappedRow] hasConferenceNumber] == true) {
+                [[self.eventsList objectAtIndex:_tappedRow] dial];
+            }
+        }
+        else if(_tapCount == 0){
+            //This is the first tap. If there is no tap till tapTimer is fired, it is a single tap
+            _tapCount = _tapCount + 1;
+            _tappedRow = indexPath.row;
+            _tapTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(tapTimerFired:) userInfo:nil repeats:NO];
+        }        
+        else if(_tappedRow != indexPath.row){
+            //tap on new row
+            _tapCount = 1;
+            if(_tapTimer != nil){
+                [_tapTimer invalidate];
+                _tapTimer = nil;
+            }
+            _tappedRow = indexPath.row;
+            _tapTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(tapTimerFired:) userInfo:nil repeats:NO];
+            
+        }
         
     }
     @catch (NSException * e) {
@@ -103,6 +147,8 @@ static UIImage *_phoneImage;
     self.eventsList = [CMIEvent createCMIEvents:[self fetchEventsForTable]];
 	[self.tableView reloadData];    
 }
+
+
 
 - (void) storeChanged:(NSNotification *) notification
 {
@@ -145,6 +191,7 @@ static UIImage *_phoneImage;
 
 #define EVENT_TITLE_TAG 4
 #define EVENT_ORGANIZER_TAG 5
+#define EVENT_PHONE_NUMBER_TAG 6
 
 //#define LEFT_COLUMN_OFFSET 10.0
 //#define LEFT_COLUMN_WIDTH 160.0
@@ -165,14 +212,18 @@ static UIImage *_phoneImage;
 #define IMAGE_COLUMN_OFFSET 100.0
 #define IMAGE_COLUMN_WIDTH 40.0
 
-#define RIGHT_COLUMN_OFFSET 100.0
-#define RIGHT_COLUMN_WIDTH 200.0
+#define RIGHT_COLUMN_OFFSET 95.0
+#define RIGHT_COLUMN_WIDTH 205.0
 
 #define ORGANIZER_WIDTH 100.0
 
-#define MAIN_FONT_SIZE 18.0
+#define MAIN_FONT_SIZE 16.0
 #define TIME_FONT_SIZE 24.0
 #define LABEL_HEIGHT 26.0
+
+#define LABEL_UPPER 2.0
+#define LABEL_MIDDLE 28.0
+#define LABEL_LOWER 54.0
 
 #define IMAGE_SIDE 15.0
 
@@ -200,6 +251,7 @@ static UIImage *_phoneImage;
 	label.highlightedTextColor = [UIColor whiteColor];
 	    
 	UILabel *topLabel;
+	UILabel *middleLabel;
 	UILabel *bottomLabel;
     
     topLabel =
@@ -207,35 +259,48 @@ static UIImage *_phoneImage;
       initWithFrame:
       CGRectMake(
                  RIGHT_COLUMN_OFFSET,
-                 0.5 * (self.tableView.rowHeight - 2 * LABEL_HEIGHT),
+                 LABEL_UPPER,// 0.5 * (self.tableView.rowHeight - 2 * LABEL_HEIGHT),
                  RIGHT_COLUMN_WIDTH,
                  LABEL_HEIGHT)];
     topLabel.tag = EVENT_TITLE_TAG;
 //    topLabel.backgroundColor = [UIColor clearColor];
 //    topLabel.textColor = [UIColor colorWithRed:0.25 green:0.0 blue:0.0 alpha:1.0];
 //    topLabel.highlightedTextColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.9 alpha:1.0];
-    topLabel.font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize]];
+    topLabel.font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize] - 2];
 
+    middleLabel =
+    [[UILabel alloc]
+     initWithFrame:
+     CGRectMake(
+                RIGHT_COLUMN_OFFSET,
+                LABEL_MIDDLE,// 0.5 * (self.tableView.rowHeight - 2 * LABEL_HEIGHT) + LABEL_HEIGHT,
+                RIGHT_COLUMN_WIDTH, // - (LABEL_HEIGHT + 4),
+                LABEL_HEIGHT)];
+    
+    middleLabel.tag = EVENT_ORGANIZER_TAG;
+    middleLabel.font = [UIFont systemFontOfSize:[UIFont labelFontSize] - 4];
+    
     bottomLabel =
     [[UILabel alloc]
       initWithFrame:
       CGRectMake(
-                 RIGHT_COLUMN_OFFSET,
-                 0.5 * (self.tableView.rowHeight - 2 * LABEL_HEIGHT) + LABEL_HEIGHT,
-                 RIGHT_COLUMN_WIDTH - (LABEL_HEIGHT + 4),
+                 RIGHT_COLUMN_OFFSET + (LABEL_HEIGHT + 4),
+                 LABEL_LOWER,// 0.5 * (self.tableView.rowHeight - 2 * LABEL_HEIGHT) + LABEL_HEIGHT,
+                 RIGHT_COLUMN_WIDTH - (LABEL_HEIGHT + 4), // - (LABEL_HEIGHT + 4),
                  LABEL_HEIGHT)];
     
-    bottomLabel.tag = EVENT_ORGANIZER_TAG;
-    bottomLabel.font = [UIFont systemFontOfSize:[UIFont labelFontSize] - 2];
+    bottomLabel.tag = EVENT_PHONE_NUMBER_TAG;
+    bottomLabel.font = [UIFont systemFontOfSize:[UIFont labelFontSize] - 6];
 
     [cell.contentView addSubview:topLabel];
+    [cell.contentView addSubview:middleLabel];
     [cell.contentView addSubview:bottomLabel];
 
 	// Create an image view for the quarter image.// MCW WAS IMAGE_SIDE
-	rect = CGRectMake(RIGHT_COLUMN_OFFSET + RIGHT_COLUMN_WIDTH - (LABEL_HEIGHT + 4.0), 
-                      0.5 * (self.tableView.rowHeight - 2 * LABEL_HEIGHT) + LABEL_HEIGHT,
-                      LABEL_HEIGHT, 
-                      LABEL_HEIGHT);
+	rect = CGRectMake(RIGHT_COLUMN_OFFSET + 2, 
+                      LABEL_LOWER + 2,// 0.5 * (self.tableView.rowHeight - 2 * LABEL_HEIGHT) + LABEL_HEIGHT,
+                      LABEL_HEIGHT - 4, 
+                      LABEL_HEIGHT - 4);
     
 	UIImageView *imageView = [[UIImageView alloc] initWithFrame:rect];
 	imageView.tag = IMAGE_TAG;
@@ -282,9 +347,13 @@ static UIImage *_phoneImage;
 	UIImageView *imageView = (UIImageView *)[cell viewWithTag:IMAGE_TAG];
     if (cmiEvent.hasConferenceNumber == true) {
         imageView.image = _phoneImage;        
+        label = (UILabel *)[cell viewWithTag:EVENT_PHONE_NUMBER_TAG];
+        label.text = cmiEvent.conferenceNumber;
     }
     else {
         imageView.image = nil;
+        label = (UILabel *)[cell viewWithTag:EVENT_PHONE_NUMBER_TAG];
+        label.text = @"";
     }
 }    
 

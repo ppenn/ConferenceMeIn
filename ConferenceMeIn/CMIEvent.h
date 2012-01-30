@@ -16,6 +16,7 @@
 
 - (id) initWithEKEvent:(EKEvent*)baseEvent;
 - (void) parseEvent;
+- (void) dial;
 
 @property (readonly, nonatomic,strong) EKEvent* ekEvent;
 @property (readonly, nonatomic,strong) NSString* conferenceNumber;

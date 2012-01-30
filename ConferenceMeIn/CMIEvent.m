@@ -31,6 +31,7 @@
 - (id) initWithEKEvent:(EKEvent*)ekEvent
 {
     _ekEvent = ekEvent;
+    _conferenceNumber = nil;
     
     [self parseEvent];
     
@@ -68,6 +69,15 @@
         _ekEvent.notes != nil && [_ekEvent.notes length] > 0) {
         _conferenceNumber = [EKEventParser parseEventText:_ekEvent.notes];        
     }
+
+}
+
+- (void) dial
+{
+    NSLog(@"Dialling");
+    
+    [[UIApplication sharedApplication] 
+     openURL:[NSURL URLWithString:self.conferenceNumberURL]];    
 
 }
 
