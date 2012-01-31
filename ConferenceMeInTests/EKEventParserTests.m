@@ -41,6 +41,9 @@
 
     phoneNumber = [EKEventParser parseEventText:@"Body of email                                           When: Wednesday, January 25, 2012 9:30 AM-10:30 AM (GMT-06:00) Central Time (US & Canada).Where: Conference Call 877-603-8688 - Conf Code 1133731826 Note: The GMT offset above does not reflect daylight saving time adjustments."];
     [self testPhoneNumberShouldParse:phoneNumber];
+    
+    phoneNumber = [EKEventParser parseEventText:@"1-718-354-1168 Participants 25798249#"];
+    [self testPhoneNumberShouldParse:phoneNumber];
 
 }
 
