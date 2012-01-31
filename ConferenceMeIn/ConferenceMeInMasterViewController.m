@@ -119,16 +119,11 @@
         
 	// Do any additional setup after loading the view, typically from a nib.
     self.tableView.rowHeight = ROW_HEIGHT;
-//    self.tableView.backgroundColor = [UIColor clearColor];
- //   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
-//	_imageView.image = [UIImage imageNamed:@"gradientBackground.png"];
-
 	// watch when the app has finished launching so we can update our preference settings and apply them to the UI
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSettings:) 
                                                  name:UIApplicationDidFinishLaunchingNotification object:nil];
     
-	self.title = @"Events List";	
+	self.title = @"Calendar Items";	
 	// Initialize an event store object with the init method. Initilize the array for events.
 	self.eventStore = [[EKEventStore alloc] init];
     	
@@ -136,10 +131,6 @@
 	self.defaultCalendar = [self.eventStore defaultCalendarForNewEvents];
 	
 	//	Create an Add button 
-//	UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:
-  //                                    UIBarButtonSystemItemAdd target:self action:@selector(addEvent:)];
-//	self.navigationItem.rightBarButtonItem = addButtonItem;
-//	[addButtonItem release];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
                                                  name:EKEventStoreChangedNotification object:eventStore];

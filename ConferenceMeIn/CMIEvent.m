@@ -73,13 +73,26 @@
 
 }
 
-- (void) dial
+- (void) dial:(UIView*)view confirmCall:(BOOL)confirmCall
 {
     NSLog(@"Dialling");
-    
-    [[UIApplication sharedApplication] 
-     openURL:[NSURL URLWithString:self.conferenceNumberURL]];    
 
+    if (confirmCall == false) {
+        [[UIApplication sharedApplication] 
+         openURL:[NSURL URLWithString:self.conferenceNumberURL]];            
+    }
+    else
+    {
+        UIWebView *webview = [[UIWebView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame]; 
+        NSURL *telURL = [NSURL URLWithString:self.conferenceNumberURL];
+        [webview loadRequest:[NSURLRequest requestWithURL:telURL]]; 
+        webview.hidden = YES; 
+        // Assume we are in a view controller and have access to self.view 
+        [view addSubview:webview];
+    }
+
+
+    
 }
 
 @end

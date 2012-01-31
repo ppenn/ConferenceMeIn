@@ -28,11 +28,13 @@
     }
     else
     {
-        // open a dialog with an OK and cancel button
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Dial Conference #"
-                                                                 delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:cmiEvent.conferenceNumber otherButtonTitles:nil];    
-        actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-        [actionSheet showInView:self.view]; // show from our table view (pops up in the middle of the table)
+        [((CMIEvent*) self.detailItem) dial:self.view confirmCall:true];        
+
+//        // open a dialog with an OK and cancel button
+//        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Dial Conference #"
+//                                                                 delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:cmiEvent.conferenceNumber otherButtonTitles:nil];    
+//        actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+//        [actionSheet showInView:self.view]; // show from our table view (pops up in the middle of the table)
         
     }
     
@@ -47,7 +49,7 @@
 	// the user clicked one of the OK/Cancel buttons
 	if (buttonIndex == 0)
 	{
-        [((CMIEvent*) self.detailItem) dial];        
+        [((CMIEvent*) self.detailItem) dial:self.view confirmCall:true];        
 	}
 	else
 	{

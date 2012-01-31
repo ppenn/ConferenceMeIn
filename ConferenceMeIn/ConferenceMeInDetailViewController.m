@@ -148,7 +148,7 @@
 	// the user clicked one of the OK/Cancel buttons
 	if (buttonIndex == 0)
 	{
-        [((CMIEvent*) self.detailItem) dial];        
+        [((CMIEvent*) self.detailItem) dial:self.view confirmCall:true];        
 	}
 	else
 	{

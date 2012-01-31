@@ -16,7 +16,7 @@
 
 - (id) initWithEKEvent:(EKEvent*)baseEvent;
 - (void) parseEvent;
-- (void) dial;
+- (void) dial:(UIView*)view confirmCall:(BOOL)confirmCall;
 
 @property (readonly, nonatomic,strong) EKEvent* ekEvent;
 @property (readonly, nonatomic,strong) NSString* conferenceNumber;

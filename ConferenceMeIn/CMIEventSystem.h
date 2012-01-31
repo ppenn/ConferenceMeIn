@@ -31,7 +31,7 @@ typedef enum calendarTypes
 - (void) calculateDaysEvents:(NSDate*)startDate atEndDate:(NSDate*)endDate;
 - (NSDate*) getOffsetDate:(NSDate*)today atOffsetDays:(NSInteger)offsetDays;
 - (NSString*)formatDateAsDay:(NSDate*)date;
-
+- (NSDate*) getMidnightDate:(NSDate*) date;
 - (CMIEvent*)getCMIEvent:(NSInteger)dayEventIndex eventIndex:(NSInteger)eventIndex;
 
 @end

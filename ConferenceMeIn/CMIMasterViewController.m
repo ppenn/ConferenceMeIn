@@ -105,9 +105,10 @@ NSTimer* _tapTimer;
             _tapTimer = nil;
             CMIEvent* cmiEvent = [_cmiEventSystem getCMIEvent:_tappedSection eventIndex:_tappedRow];
             if ([cmiEvent hasConferenceNumber] == true) {
-                [cmiEvent dial];
-//            if ([[self.eventsList objectAtIndex:_tappedRow] hasConferenceNumber] == true) {
-//                [[self.eventsList objectAtIndex:_tappedRow] dial];
+                [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+                _tappedRow = -1;
+                _tappedSection = -1;
+                [cmiEvent dial:self.view confirmCall:false];
             }
         }
         else if(_tapCount == 0){
@@ -161,6 +162,38 @@ NSTimer* _tapTimer;
 }
 
 
+- (void) scrollToNow
+{
+    NSDate* now = [[NSDate alloc] init];
+    NSDate* currentDay = [_cmiEventSystem getMidnightDate:now];
+    NSInteger currentDaySection = -1;
+    NSInteger currentDayRow = 0;
+    
+    for (NSInteger i = 0; i < [_cmiEventSystem.eventDays count]; i++ ) {
+        NSDate* date = (NSDate*)[_cmiEventSystem.eventDays objectAtIndex:i];
+        if ([date isEqualToDate:currentDay] == TRUE) {
+            currentDaySection = i;
+            break;
+        }
+    }
+    
+    if (currentDaySection != -1) {
+        NSArray* dayEvents = [_cmiEventSystem.daysEvents objectForKey:currentDay];
+        for (NSDate* date in dayEvents) {            
+            // If event is later than now
+        }
+    }
+    
+    NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:currentDayRow inSection:currentDaySection];
+    [[self tableView] scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];    
+}
+
+- (void) reloadTableScrollToNow
+{
+    [self reloadTable];
+    [self scrollToNow];
+    
+}
 
 - (void) storeChanged:(NSNotification *) notification
 {
@@ -171,9 +204,9 @@ NSTimer* _tapTimer;
     //    if ([[notification name] isEqualToString:@"TestNotification"])
     NSString* logMessage = @"Successfully received the test notification!"; 
     logMessage = [logMessage stringByAppendingString:notification.name];
-    NSLog(logMessage );
+    NSLog(@"Exception: %@", logMessage );
 
-    [self reloadTable];
+    [self reloadTableScrollToNow];
 }
 
 #pragma mark -
@@ -182,7 +215,7 @@ NSTimer* _tapTimer;
 - (void)viewDidLoad {
     //TODO: figure this out
     //	self.title = NSLocalizedString(@"Time Zones", @"Time Zones title");
-	self.title = @"Events List";
+	self.title = @"Calendar";
 	self.tableView.rowHeight = ROW_HEIGHT;
     _phoneImage = [UIImage imageNamed:@"phone.png"];
 
@@ -191,7 +224,7 @@ NSTimer* _tapTimer;
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
                                                  name:EKEventStoreChangedNotification object:_cmiEventSystem.eventStore];
     
-    [self reloadTable];
+    [self reloadTableScrollToNow];
 }
 
 #pragma mark -

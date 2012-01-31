@@ -23,7 +23,7 @@
     NSError *error = NULL;
     NSString* phoneNumber = @"";
     
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(\\d{3}[\\s(\.]*-?[\\s)\.]*\\d{3}\[\s\.]*-?\\s*\\d{4})" 
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(\\d{3}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{4})" 
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
     
