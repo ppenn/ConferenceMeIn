@@ -88,6 +88,17 @@
     return dateString;
 }
 
++ (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate
+{
+    if ([date compare:beginDate] == NSOrderedAscending)
+        return NO;
+    
+    if ([date compare:endDate] == NSOrderedDescending) 
+        return NO;
+    
+    return YES;
+}
+
 - (NSDate*) getMidnightDate:(NSDate*) date
 {
     //TODO: centralize
@@ -168,11 +179,11 @@
     }
     else
     {
-        startDate = [NSDate date]; 
+        startDate = [self getMidnightDate:[NSDate date]];
     }
 	
     NSDate* now = [[NSDate alloc] init];
-	NSDate *endDate = [self getOffsetDate:now atOffsetDays:1];
+	NSDate* endDate = [self getOffsetDate:now atOffsetDays:1];
 	
     
     NSArray* calendarArray = nil; // All calendars
@@ -192,11 +203,13 @@
 	
 	// Fetch all events that match the predicate.
 	NSArray *events = [self.eventStore eventsMatchingPredicate:predicate];
+    NSArray *sortedEvents =
+    [events sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)];
     
     //    NSString *nsString = [((EKCalendarItem*)[events objectAtIndex:0]) notes];
-    [self assignCMIEventsToDayEvents:startDate atEndDate:endDate atEvents:events];
+    [self assignCMIEventsToDayEvents:startDate atEndDate:endDate atEvents:sortedEvents];
     
-	return events;
+	return sortedEvents;
     
 }
 

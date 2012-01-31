@@ -96,8 +96,7 @@ CMIMasterViewController* _cmiMasterViewController;
     
         [self setupByPreferences];
     
-//        [_conferenceMeInMasterViewController reloadTable];
-        [_cmiMasterViewController reloadTable];
+        [_cmiMasterViewController reloadTableScrollToNow];
         
         UITableView *tableView = ((UITableViewController *)self.navigationController.visibleViewController).    tableView;
         [tableView reloadData];

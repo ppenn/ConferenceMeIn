@@ -178,14 +178,24 @@ NSTimer* _tapTimer;
     }
     
     if (currentDaySection != -1) {
-        NSArray* dayEvents = [_cmiEventSystem.daysEvents objectForKey:currentDay];
-        for (NSDate* date in dayEvents) {            
-            // If event is later than now
+        NSArray* events = [_cmiEventSystem.daysEvents objectForKey:currentDay];
+        for (currentDayRow = 0; currentDayRow < events.count; currentDayRow++) {
+            CMIEvent* event = [events objectAtIndex:currentDayRow];            
+            // If event is current
+            if ([CMIEventSystem date:now isBetweenDate:event.ekEvent.startDate andDate:event.ekEvent.endDate] == true) {
+                break;
+            }
+            // if current event is later than now, then bail too
+            if ([now compare:event.ekEvent.startDate] == NSOrderedAscending ||
+                [now compare:event.ekEvent.startDate] == NSOrderedSame) {
+                break;
+            }
         }
     }
     
     NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:currentDayRow inSection:currentDaySection];
-    [[self tableView] scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];    
+    [[self tableView] scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];  
+    
 }
 
 - (void) reloadTableScrollToNow

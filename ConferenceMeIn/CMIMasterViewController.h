@@ -27,5 +27,6 @@
 - (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath;
 - (void)reloadTable;
 - (void)showEventNatively:(NSInteger)section row:(NSInteger)row;
+- (void) reloadTableScrollToNow;
 
 @end

@@ -33,5 +33,6 @@ typedef enum calendarTypes
 - (NSString*)formatDateAsDay:(NSDate*)date;
 - (NSDate*) getMidnightDate:(NSDate*) date;
 - (CMIEvent*)getCMIEvent:(NSInteger)dayEventIndex eventIndex:(NSInteger)eventIndex;
++ (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate;
 
 @end
