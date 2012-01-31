@@ -50,6 +50,7 @@
 {
     NSString* telLink = @"tel:";
     telLink = [telLink stringByAppendingString:_conferenceNumber];
+    telLink = [telLink stringByAppendingString:@";"];
 
     return telLink;
 }

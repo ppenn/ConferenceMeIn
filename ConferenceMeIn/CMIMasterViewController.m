@@ -13,6 +13,7 @@
 static UIImage *_phoneImage;
 NSInteger _tapCount = 0;
 NSInteger _tappedRow = 0;
+NSInteger _tappedSection = 0;
 NSTimer* _tapTimer;
 
 @implementation CMIMasterViewController
@@ -28,23 +29,25 @@ NSTimer* _tapTimer;
 - (void)tapTimerFired:(NSTimer *)aTimer{
     //timer fired, there was a single tap on indexPath.row = tappedRow
     NSInteger row = _tappedRow;
+    NSInteger section = _tappedSection;
     if(_tapTimer != nil){
         _tapCount = 0;
         _tappedRow = -1;
+        _tappedSection = -1;
     }
-    [self showEventNatively:row];
+    [self showEventNatively:section row:row];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
 	// Number of sections is the number of regions
-    return 1;
-//TODO: sort this out for today/tomorrow...    
-//	return [displayList count];
+    NSInteger numSections = [_cmiEventSystem.daysEvents count];
+    return numSections;
 }
 
 //TODO: sort this out per section...when sections arrive
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return _eventsList.count;
+    NSMutableArray* events = [_cmiEventSystem.daysEvents objectForKey:[_cmiEventSystem.eventDays objectAtIndex:section]];
+    return [events count];
 }
 
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section {
@@ -52,7 +55,8 @@ NSTimer* _tapTimer;
 //TODO: make this today, tomorrow and then other dates    
 //	Region *region = [displayList objectAtIndex:section];
 //	return region.name;
-    return @"Today";
+    NSString* day = [_cmiEventSystem formatDateAsDay:[_cmiEventSystem.eventDays objectAtIndex:section]];    
+    return day;//[_cmiEventSystem formatDateAsDay:[_cmiEventSystem.eventDays objectAtIndex:section]];    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
@@ -74,13 +78,14 @@ NSTimer* _tapTimer;
 	return cell;
 }
 
-- (void)showEventNatively:(NSInteger)row
+- (void)showEventNatively:(NSInteger)section row:(NSInteger)row
 {
     self.detailViewController = [[CMIEKEventViewController alloc] initWithNibName:nil bundle:nil];        
-    _detailViewController.event = [[self.eventsList objectAtIndex:row] ekEvent];
+    CMIEvent* cmiEvent = [self.cmiEventSystem getCMIEvent:section eventIndex:row];
+    _detailViewController.event = [cmiEvent ekEvent];
     
     _detailViewController.allowsEditing = YES;
-    _detailViewController.detailItem = [self.eventsList objectAtIndex:row];
+    _detailViewController.detailItem = cmiEvent;
     //	Push detailViewController onto the navigation controller stack
     //	If the underlying event gets deleted, detailViewController will remove itself from
     //	the stack and clear its event property.
@@ -93,18 +98,23 @@ NSTimer* _tapTimer;
     @try {
 
         //checking for double taps here
-        if(_tapCount == 1 && _tapTimer != nil && _tappedRow == indexPath.row){
+        if(_tapCount == 1 && _tapTimer != nil && 
+           _tappedRow == indexPath.row && _tappedSection == indexPath.section){
             //double tap - Put your double tap code here            
             [_tapTimer invalidate];
-            _tapTimer = nil;            
-            if ([[self.eventsList objectAtIndex:_tappedRow] hasConferenceNumber] == true) {
-                [[self.eventsList objectAtIndex:_tappedRow] dial];
+            _tapTimer = nil;
+            CMIEvent* cmiEvent = [_cmiEventSystem getCMIEvent:_tappedSection eventIndex:_tappedRow];
+            if ([cmiEvent hasConferenceNumber] == true) {
+                [cmiEvent dial];
+//            if ([[self.eventsList objectAtIndex:_tappedRow] hasConferenceNumber] == true) {
+//                [[self.eventsList objectAtIndex:_tappedRow] dial];
             }
         }
         else if(_tapCount == 0){
             //This is the first tap. If there is no tap till tapTimer is fired, it is a single tap
             _tapCount = _tapCount + 1;
             _tappedRow = indexPath.row;
+            _tappedSection = indexPath.section;
             _tapTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(tapTimerFired:) userInfo:nil repeats:NO];
         }        
         else if(_tappedRow != indexPath.row){
@@ -115,6 +125,7 @@ NSTimer* _tapTimer;
                 _tapTimer = nil;
             }
             _tappedRow = indexPath.row;
+            _tappedSection = indexPath.section;
             _tapTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(tapTimerFired:) userInfo:nil repeats:NO];
             
         }
@@ -142,6 +153,7 @@ NSTimer* _tapTimer;
 - (void)reloadTable
 {
     if (_eventsList != nil) {
+    //TODO: remove
     [self.eventsList removeAllObjects]; // not necessary because we're about to alloc and ARC prevents us         
     }
     self.eventsList = [CMIEvent createCMIEvents:[self fetchEventsForTable]];
@@ -297,8 +309,8 @@ NSTimer* _tapTimer;
     [cell.contentView addSubview:bottomLabel];
 
 	// Create an image view for the quarter image.// MCW WAS IMAGE_SIDE
-	rect = CGRectMake(RIGHT_COLUMN_OFFSET + 2, 
-                      LABEL_LOWER + 2,// 0.5 * (self.tableView.rowHeight - 2 * LABEL_HEIGHT) + LABEL_HEIGHT,
+	rect = CGRectMake(RIGHT_COLUMN_OFFSET, 
+                      LABEL_LOWER,// 0.5 * (self.tableView.rowHeight - 2 * LABEL_HEIGHT) + LABEL_HEIGHT,
                       LABEL_HEIGHT - 4, 
                       LABEL_HEIGHT - 4);
     
@@ -321,7 +333,8 @@ NSTimer* _tapTimer;
 	}
 	
 	// Get the event at the row selected and display it's title
-    CMIEvent* cmiEvent = [self.eventsList objectAtIndex:indexPath.row];
+//    CMIEvent* cmiEvent = [self.eventsList objectAtIndex:indexPath.row];
+    CMIEvent* cmiEvent = [self.cmiEventSystem getCMIEvent:indexPath.section eventIndex:indexPath.row];
     NSDate* eventDate = [[cmiEvent ekEvent] startDate];
     NSString* eventDateStr = [dateFormatter stringFromDate:eventDate];
 //    now = [now stringByAppendingString:@" : "];

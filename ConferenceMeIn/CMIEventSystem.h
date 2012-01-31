@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <EventKit/EventKit.h>
+#import "CMIEvent.h"
 
 typedef enum calendarTypes
 {
@@ -19,11 +20,18 @@ typedef enum calendarTypes
 
 @property (strong, nonatomic, readonly) EKEventStore *eventStore;
 @property (strong, nonatomic) EKCalendar *defaultCalendar;
+@property (strong, nonatomic, readonly) NSMutableDictionary* daysEvents;
+@property (strong, nonatomic, readonly) NSMutableArray* eventDays;
 
 @property bool fetchAllEvents;
 @property calendarTypes calendarType;
 
 - (id) init;
 - (NSArray *)fetchEvents;
+- (void) calculateDaysEvents:(NSDate*)startDate atEndDate:(NSDate*)endDate;
+- (NSDate*) getOffsetDate:(NSDate*)today atOffsetDays:(NSInteger)offsetDays;
+- (NSString*)formatDateAsDay:(NSDate*)date;
+
+- (CMIEvent*)getCMIEvent:(NSInteger)dayEventIndex eventIndex:(NSInteger)eventIndex;
 
 @end
