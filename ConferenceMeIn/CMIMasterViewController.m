@@ -233,8 +233,19 @@ NSTimer* _tapTimer;
 
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
                                                  name:EKEventStoreChangedNotification object:_cmiEventSystem.eventStore];
+
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;    
+    self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;    
+    self.view.autoresizesSubviews = true;
+    self.tableView.autoresizesSubviews = true;
     
     [self reloadTableScrollToNow];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
 #pragma mark -

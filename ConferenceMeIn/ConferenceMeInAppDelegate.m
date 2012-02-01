@@ -21,6 +21,7 @@ NSString *kfetch28DaysEventsKey = @"fetch28DaysEventsKey";
 @synthesize calendarType = _calendarType;
 @synthesize debugMode = _debugMode;
 
+//TODO: remove
 ConferenceMeInMasterViewController* _conferenceMeInMasterViewController;
 CMIMasterViewController* _cmiMasterViewController;
 
