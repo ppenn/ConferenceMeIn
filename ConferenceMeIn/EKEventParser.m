@@ -38,6 +38,7 @@
         // Get extension, if there is one?
         
         // Get PIN
+        //TODO: Search for another phone#, make sure the PIN isn't part of that #
         NSUInteger afterPhoneNumberPosition = rangeOfFirstMatch.location + rangeOfFirstMatch.length;
         NSString* remainderText = [eventText substringFromIndex:afterPhoneNumberPosition];
         NSRegularExpression *regexPIN = [NSRegularExpression regularExpressionWithPattern:@"\\d{4,12}"                                                                                                                   options:NSRegularExpressionCaseInsensitive                                                                                  error:&error];

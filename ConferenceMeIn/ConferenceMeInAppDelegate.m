@@ -20,6 +20,7 @@ NSString *kfetch28DaysEventsKey = @"fetch28DaysEventsKey";
 @synthesize navigationController = _navigationController;
 @synthesize calendarType = _calendarType;
 @synthesize debugMode = _debugMode;
+@synthesize firstRun = _firstRun;
 
 //TODO: remove
 ConferenceMeInMasterViewController* _conferenceMeInMasterViewController;
@@ -36,10 +37,11 @@ CMIMasterViewController* _cmiMasterViewController;
 - (void)setupByPreferences
 {
     NSLog(@"NSUserDefaults dump: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+    BOOL firstRun = false;
     
     if(![[NSUserDefaults standardUserDefaults] objectForKey:@"firstRun"] ) {
     //do initialization stuff here...
-        
+        firstRun = true;
 		// no default values have been set, create them here based on what's in our Settings bundle info
 		//
 		NSString *pathStr = [[NSBundle mainBundle] bundlePath];
@@ -86,6 +88,7 @@ CMIMasterViewController* _cmiMasterViewController;
 	// we're ready to go, so lastly set the key preference values
 	self.calendarType = [[NSUserDefaults standardUserDefaults] integerForKey:kCalendarTypeKey];
     self.debugMode = [[NSUserDefaults standardUserDefaults] boolForKey:kfetch28DaysEventsKey];
+    self.firstRun = firstRun;
 }
 
 // we are being notified that our preferences have changed (user changed them in the Settings app)

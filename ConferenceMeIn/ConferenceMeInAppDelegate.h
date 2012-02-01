@@ -21,7 +21,8 @@
 @property (strong, nonatomic) UINavigationController *navigationController;
 
 @property (nonatomic, assign) NSInteger calendarType;
-@property (nonatomic, assign) bool debugMode;
+@property (nonatomic, assign) BOOL debugMode;
+@property (nonatomic, assign) BOOL firstRun;
 
 
 @end

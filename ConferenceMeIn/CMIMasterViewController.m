@@ -104,12 +104,16 @@ NSTimer* _tapTimer;
             [_tapTimer invalidate];
             _tapTimer = nil;
             CMIEvent* cmiEvent = [_cmiEventSystem getCMIEvent:_tappedSection eventIndex:_tappedRow];
+            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+            _tappedRow = -1;
+            _tappedSection = -1;
             if ([cmiEvent hasConferenceNumber] == true) {
-                [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-                _tappedRow = -1;
-                _tappedSection = -1;
                 [cmiEvent dial:self.view confirmCall:false];
             }
+            else {
+                [self showEventNatively:indexPath.section row:indexPath.row];
+            }
+
         }
         else if(_tapCount == 0){
             //This is the first tap. If there is no tap till tapTimer is fired, it is a single tap
@@ -138,6 +142,19 @@ NSTimer* _tapTimer;
     @finally {
         // Added to show finally works as well
     }    
+}
+
+- (void) showStartDialog
+{
+    // Create the predicate. Pass it the default calendar.
+	ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
+
+    if (appDelegate.firstRun == true) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ConferenceMeIn" message:@"Double-tap calendar item to dial # directly. Single-tap item to see event details and dial number "
+                                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+        
+    }
 }
 
 - (NSArray *)fetchEventsForTable 
@@ -240,6 +257,9 @@ NSTimer* _tapTimer;
     self.tableView.autoresizesSubviews = true;
     
     [self reloadTableScrollToNow];
+    
+    [self showStartDialog];
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
