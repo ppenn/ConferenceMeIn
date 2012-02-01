@@ -179,7 +179,7 @@ NSTimer* _tapTimer;
     
     if (currentDaySection != -1) {
         NSArray* events = [_cmiEventSystem.daysEvents objectForKey:currentDay];
-        for (currentDayRow = 0; currentDayRow < events.count; currentDayRow++) {
+        for (currentDayRow = 0; currentDayRow < (events.count -1); currentDayRow++) {
             CMIEvent* event = [events objectAtIndex:currentDayRow];            
             // If event is current
             if ([CMIEventSystem date:now isBetweenDate:event.ekEvent.startDate andDate:event.ekEvent.endDate] == true) {
@@ -258,19 +258,7 @@ NSTimer* _tapTimer;
 #define EVENT_TITLE_TAG 4
 #define EVENT_ORGANIZER_TAG 5
 #define EVENT_PHONE_NUMBER_TAG 6
-
-//#define LEFT_COLUMN_OFFSET 10.0
-//#define LEFT_COLUMN_WIDTH 160.0
-//
-//#define MIDDLE_COLUMN_OFFSET 170.0
-//#define MIDDLE_COLUMN_WIDTH 90.0
-//
-//#define RIGHT_COLUMN_OFFSET 280.0
-//
-//#define MAIN_FONT_SIZE 18.0
-//#define LABEL_HEIGHT 26.0
-//
-//#define IMAGE_SIDE 30.0
+#define DUMMY_LEFT_CELL_TAG 7
 
 #define LEFT_COLUMN_OFFSET 10.0
 #define LEFT_COLUMN_WIDTH 80.0
@@ -278,7 +266,7 @@ NSTimer* _tapTimer;
 #define IMAGE_COLUMN_OFFSET 100.0
 #define IMAGE_COLUMN_WIDTH 40.0
 
-#define RIGHT_COLUMN_OFFSET 95.0
+#define RIGHT_COLUMN_OFFSET 90.0
 #define RIGHT_COLUMN_WIDTH 205.0
 
 #define ORGANIZER_WIDTH 100.0
@@ -304,17 +292,23 @@ NSTimer* _tapTimer;
 	/*
 	 Create labels for the text fields; set the highlight color so that when the cell is selected it changes appropriately.
      */
-	UILabel *label;
+	UILabel *timeLabel;
 	CGRect rect;
+
+//	// Create a label for the event time.
+//	rect = CGRectMake(0, 0, RIGHT_COLUMN_OFFSET, ROW_HEIGHT);
+//	timeLabel = [[UILabel alloc] initWithFrame:rect];
+//	timeLabel.tag = DUMMY_LEFT_CELL_TAG;
+//	[cell.contentView addSubview:timeLabel];
 	
 	// Create a label for the event time.
 	rect = CGRectMake(LEFT_COLUMN_OFFSET, (ROW_HEIGHT - LABEL_HEIGHT) / 2.0, LEFT_COLUMN_WIDTH, LABEL_HEIGHT);
-	label = [[UILabel alloc] initWithFrame:rect];
-	label.tag = TIME_TAG;
-	label.font = [UIFont systemFontOfSize:MAIN_FONT_SIZE];
-	label.adjustsFontSizeToFitWidth = NO;
-	[cell.contentView addSubview:label];
-	label.highlightedTextColor = [UIColor whiteColor];
+	timeLabel = [[UILabel alloc] initWithFrame:rect];
+	timeLabel.tag = TIME_TAG;
+	timeLabel.font = [UIFont systemFontOfSize:MAIN_FONT_SIZE];
+	timeLabel.adjustsFontSizeToFitWidth = NO;
+	[cell.contentView addSubview:timeLabel];
+	timeLabel.highlightedTextColor = [UIColor whiteColor];
 	    
 	UILabel *topLabel;
 	UILabel *middleLabel;
@@ -325,10 +319,11 @@ NSTimer* _tapTimer;
       initWithFrame:
       CGRectMake(
                  RIGHT_COLUMN_OFFSET,
-                 LABEL_UPPER,// 0.5 * (self.tableView.rowHeight - 2 * LABEL_HEIGHT),
-                 RIGHT_COLUMN_WIDTH,
+                 0.333333 * (self.tableView.rowHeight - 3 * LABEL_HEIGHT), //LABEL_UPPER,//
+                 self.tableView.bounds.size.width - (2 * cell.indentationWidth) - RIGHT_COLUMN_OFFSET,
                  LABEL_HEIGHT)];
     topLabel.tag = EVENT_TITLE_TAG;
+    topLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth; 
 //    topLabel.backgroundColor = [UIColor clearColor];
 //    topLabel.textColor = [UIColor colorWithRed:0.25 green:0.0 blue:0.0 alpha:1.0];
 //    topLabel.highlightedTextColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.9 alpha:1.0];
@@ -375,6 +370,44 @@ NSTimer* _tapTimer;
 	return cell;
 }
 
+//TODO: MOVE this somewhere...parameterize
+- (BOOL) eventIsNow:(EKEvent*) event
+{
+    NSDate* now = [[NSDate alloc] init];
+    // endDate is 1 day = 60*60*24 seconds = 86400 seconds from startDate
+    NSDate* trueStartDate = [NSDate dateWithTimeInterval:-(15*60) sinceDate:event.startDate];
+
+    return [CMIEventSystem date:now isBetweenDate:trueStartDate andDate:event.endDate];
+    
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CMIEvent* cmiEvent = [self.cmiEventSystem getCMIEvent:indexPath.section eventIndex:indexPath.row];
+
+    if ([self eventIsNow:cmiEvent.ekEvent] ) {
+        ((UILabel *)[cell viewWithTag:TIME_TAG]).backgroundColor = 
+        ((UILabel *)[cell viewWithTag:NAME_TAG]).backgroundColor = 
+        ((UILabel *)[cell viewWithTag:EVENT_TITLE_TAG]).backgroundColor = 
+        ((UILabel *)[cell viewWithTag:EVENT_ORGANIZER_TAG]).backgroundColor = 
+        ((UILabel *)[cell viewWithTag:EVENT_PHONE_NUMBER_TAG]).backgroundColor = 
+        ((UIImageView *)[cell viewWithTag:IMAGE_TAG]).backgroundColor = 
+        cell.backgroundColor = [UIColor redColor];
+	}
+    else {
+        ((UILabel *)[cell viewWithTag:TIME_TAG]).backgroundColor = 
+        ((UILabel *)[cell viewWithTag:NAME_TAG]).backgroundColor = 
+        ((UILabel *)[cell viewWithTag:EVENT_TITLE_TAG]).backgroundColor = 
+        ((UILabel *)[cell viewWithTag:EVENT_ORGANIZER_TAG]).backgroundColor = 
+        ((UILabel *)[cell viewWithTag:EVENT_PHONE_NUMBER_TAG]).backgroundColor = 
+        ((UIImageView *)[cell viewWithTag:IMAGE_TAG]).backgroundColor = 
+        cell.backgroundColor = [UIColor whiteColor];
+    }
+        
+    
+}
+
+
 - (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath {
     
     /*
@@ -387,15 +420,11 @@ NSTimer* _tapTimer;
 	}
 	
 	// Get the event at the row selected and display it's title
-//    CMIEvent* cmiEvent = [self.eventsList objectAtIndex:indexPath.row];
     CMIEvent* cmiEvent = [self.cmiEventSystem getCMIEvent:indexPath.section eventIndex:indexPath.row];
-    NSDate* eventDate = [[cmiEvent ekEvent] startDate];
-    NSString* eventDateStr = [dateFormatter stringFromDate:eventDate];
-//    now = [now stringByAppendingString:@" : "];
-//    NSString* eventRowTitle = [now stringByAppendingString:[[[self.eventsList objectAtIndex:indexPath.row]  ekEvent] title]];            
-	
-//    cell.textLabel.text = eventRowTitle;// [[self.eventsList objectAtIndex:indexPath.row] title];
-	
+    NSDate* eventStartDate = [[cmiEvent ekEvent] startDate];
+    NSDate* eventEndDate = [[cmiEvent ekEvent] endDate];
+    NSString* eventDateStr = [dateFormatter stringFromDate:eventStartDate];
+    
 	UILabel *label;
 	
     
