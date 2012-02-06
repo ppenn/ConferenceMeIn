@@ -35,7 +35,6 @@
 		A8E5251514CA0EC800797C16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8E5251314CA0EC800797C16 /* InfoPlist.strings */; };
 		A8E5251714CA0EC800797C16 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E5251614CA0EC800797C16 /* main.m */; };
 		A8E5251B14CA0EC800797C16 /* ConferenceMeInAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E5251A14CA0EC800797C16 /* ConferenceMeInAppDelegate.m */; };
-		A8E5251E14CA0EC800797C16 /* ConferenceMeInMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E5251D14CA0EC800797C16 /* ConferenceMeInMasterViewController.m */; };
 		A8E5252114CA0EC800797C16 /* ConferenceMeInDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E5252014CA0EC800797C16 /* ConferenceMeInDetailViewController.m */; };
 		A8E5252414CA0EC800797C16 /* ConferenceMeInMasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8E5252214CA0EC800797C16 /* ConferenceMeInMasterViewController.xib */; };
 		A8E5252714CA0EC800797C16 /* ConferenceMeInDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8E5252514CA0EC800797C16 /* ConferenceMeInDetailViewController.xib */; };
@@ -94,8 +93,6 @@
 		A8E5251814CA0EC800797C16 /* ConferenceMeIn-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConferenceMeIn-Prefix.pch"; sourceTree = "<group>"; };
 		A8E5251914CA0EC800797C16 /* ConferenceMeInAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConferenceMeInAppDelegate.h; sourceTree = "<group>"; };
 		A8E5251A14CA0EC800797C16 /* ConferenceMeInAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConferenceMeInAppDelegate.m; sourceTree = "<group>"; };
-		A8E5251C14CA0EC800797C16 /* ConferenceMeInMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConferenceMeInMasterViewController.h; sourceTree = "<group>"; };
-		A8E5251D14CA0EC800797C16 /* ConferenceMeInMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConferenceMeInMasterViewController.m; sourceTree = "<group>"; };
 		A8E5251F14CA0EC800797C16 /* ConferenceMeInDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConferenceMeInDetailViewController.h; sourceTree = "<group>"; };
 		A8E5252014CA0EC800797C16 /* ConferenceMeInDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConferenceMeInDetailViewController.m; sourceTree = "<group>"; };
 		A8E5252314CA0EC800797C16 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ConferenceMeInMasterViewController.xib; sourceTree = "<group>"; };
@@ -205,8 +202,6 @@
 			children = (
 				A8E5251914CA0EC800797C16 /* ConferenceMeInAppDelegate.h */,
 				A8E5251A14CA0EC800797C16 /* ConferenceMeInAppDelegate.m */,
-				A8E5251C14CA0EC800797C16 /* ConferenceMeInMasterViewController.h */,
-				A8E5251D14CA0EC800797C16 /* ConferenceMeInMasterViewController.m */,
 				A8E1D73E14D279E000E5A877 /* CMIMasterViewController.h */,
 				A8E1D73F14D279E000E5A877 /* CMIMasterViewController.m */,
 				A8E5251F14CA0EC800797C16 /* ConferenceMeInDetailViewController.h */,
@@ -383,7 +378,6 @@
 			files = (
 				A8E5251714CA0EC800797C16 /* main.m in Sources */,
 				A8E5251B14CA0EC800797C16 /* ConferenceMeInAppDelegate.m in Sources */,
-				A8E5251E14CA0EC800797C16 /* ConferenceMeInMasterViewController.m in Sources */,
 				A8E5252114CA0EC800797C16 /* ConferenceMeInDetailViewController.m in Sources */,
 				A8E5254C14CA37A200797C16 /* EKEventParser.m in Sources */,
 				A8E1D70C14D0974700E5A877 /* CMIEvent.m in Sources */,
