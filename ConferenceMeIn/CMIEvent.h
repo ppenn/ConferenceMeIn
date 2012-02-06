@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <EventKit/EventKit.h>
 
+typedef enum callProviders {
+    phoneCarrier,
+    skype,
+    google
+}callProviders;
+
 @interface CMIEvent : NSObject
 
 
@@ -22,5 +28,8 @@
 @property (readonly, nonatomic,strong) NSString* conferenceNumber;
 @property (readonly, nonatomic) bool hasConferenceNumber;
 @property (readonly, nonatomic,strong) NSString* conferenceNumberURL;
+@property callProviders callProvider;
+
+
 
 @end

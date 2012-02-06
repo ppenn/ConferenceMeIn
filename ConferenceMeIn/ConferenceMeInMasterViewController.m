@@ -98,7 +98,7 @@
 //    if ([[notification name] isEqualToString:@"TestNotification"])
     NSString* logMessage = @"Successfully received the test notification!"; 
     logMessage = [logMessage stringByAppendingString:notification.name];
-    NSLog(logMessage );
+    NSLog(@"%@", logMessage );
 //    [self.eventStore refreshSourcesIfNecessary];
     [self.eventsList removeAllObjects];
 	[self.eventsList addObjectsFromArray:[self fetchEventsForToday]];    

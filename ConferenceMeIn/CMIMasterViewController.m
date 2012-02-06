@@ -329,6 +329,7 @@ NSTimer* _tapTimer;
 	timeLabel.adjustsFontSizeToFitWidth = NO;
 	[cell.contentView addSubview:timeLabel];
 	timeLabel.highlightedTextColor = [UIColor whiteColor];
+    timeLabel.backgroundColor = [UIColor clearColor];
 	    
 	UILabel *topLabel;
 	UILabel *middleLabel;
@@ -344,7 +345,7 @@ NSTimer* _tapTimer;
                  LABEL_HEIGHT)];
     topLabel.tag = EVENT_TITLE_TAG;
     topLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth; 
-//    topLabel.backgroundColor = [UIColor clearColor];
+    topLabel.backgroundColor = [UIColor clearColor];
 //    topLabel.textColor = [UIColor colorWithRed:0.25 green:0.0 blue:0.0 alpha:1.0];
 //    topLabel.highlightedTextColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.9 alpha:1.0];
     topLabel.font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize] - 2];
@@ -360,6 +361,8 @@ NSTimer* _tapTimer;
     
     middleLabel.tag = EVENT_ORGANIZER_TAG;
     middleLabel.font = [UIFont systemFontOfSize:[UIFont labelFontSize] - 4];
+    middleLabel.backgroundColor = [UIColor clearColor];
+
     
     bottomLabel =
     [[UILabel alloc]
@@ -372,6 +375,7 @@ NSTimer* _tapTimer;
     
     bottomLabel.tag = EVENT_PHONE_NUMBER_TAG;
     bottomLabel.font = [UIFont systemFontOfSize:[UIFont labelFontSize] - 6];
+    bottomLabel.backgroundColor = [UIColor clearColor];
 
     [cell.contentView addSubview:topLabel];
     [cell.contentView addSubview:middleLabel];
@@ -385,7 +389,11 @@ NSTimer* _tapTimer;
     
 	UIImageView *imageView = [[UIImageView alloc] initWithFrame:rect];
 	imageView.tag = IMAGE_TAG;
+    imageView.backgroundColor = [UIColor clearColor];
+
 	[cell.contentView addSubview:imageView];
+
+    cell.backgroundView =[[UIImageView alloc] init];
 	
 	return cell;
 }
@@ -401,7 +409,7 @@ NSTimer* _tapTimer;
     
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView willDisplayCell1:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CMIEvent* cmiEvent = [self.cmiEventSystem getCMIEvent:indexPath.section eventIndex:indexPath.row];
 
@@ -446,7 +454,14 @@ NSTimer* _tapTimer;
     NSString* eventDateStr = [dateFormatter stringFromDate:eventStartDate];
     
 	UILabel *label;
-	
+    UIImage *rowBackground;
+    if ([self eventIsNow:cmiEvent.ekEvent] ) {
+        rowBackground = [UIImage imageNamed:@"middleRowSelected.png"];            
+    }
+	else {
+        rowBackground = [UIImage imageNamed:@"middleRow.png"];            
+    }
+    ((UIImageView *)cell.backgroundView).image = rowBackground;
     
 	// Set the event title name.
 	label = (UILabel *)[cell viewWithTag:EVENT_TITLE_TAG];

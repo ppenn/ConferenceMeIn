@@ -13,6 +13,10 @@
 
 @synthesize ekEvent = _ekEvent;
 @synthesize conferenceNumber = _conferenceNumber;
+@synthesize callProvider = _callProvider;
+
+
+//UIPasteboard *pasteboard;
 
 + (NSMutableArray*)createCMIEvents:(NSArray*)events
 {
@@ -34,7 +38,7 @@
     _conferenceNumber = nil;
     
     [self parseEvent];
-    
+
     return self;
 }
 
@@ -49,9 +53,18 @@
 - (NSString*) conferenceNumberURL
 {
     NSString* telLink = @"tel:";
-    telLink = [telLink stringByAppendingString:_conferenceNumber];
-    telLink = [telLink stringByAppendingString:@";"];
+//    telLink = @"tktn://call?destination=";
+//    telLink = @"skype:";  
+    
+//    telLink = [telLink stringByAppendingString:@"18776038688%2C%2C8113067"];
+//    telLink = [telLink stringByAppendingString:@"%23"];
 
+//    pasteboard = [UIPasteboard generalPasteboard];    
+//    pasteboard.string = @"8113067";
+//    return @"skype:18776038688?call";//&skype:8113067?call";//&token=8113067";
+
+    telLink = [telLink stringByAppendingString:_conferenceNumber];
+    
     return telLink;
 }
 
