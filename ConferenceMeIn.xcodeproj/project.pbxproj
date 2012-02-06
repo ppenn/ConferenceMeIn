@@ -46,6 +46,11 @@
 		A8E5253C14CA0EC800797C16 /* ConferenceMeInTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E5253B14CA0EC800797C16 /* ConferenceMeInTests.m */; };
 		A8E5254C14CA37A200797C16 /* EKEventParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E5254B14CA37A200797C16 /* EKEventParser.m */; };
 		A8E5254D14CA37A200797C16 /* EKEventParser.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E5254B14CA37A200797C16 /* EKEventParser.m */; };
+		A8EAB88D14DA4C90001294B4 /* topRow.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EAB88A14DA4C90001294B4 /* topRow.png */; };
+		A8EAB88E14DA4C90001294B4 /* middleRow.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EAB88B14DA4C90001294B4 /* middleRow.png */; };
+		A8EAB88F14DA4C90001294B4 /* bottomRowSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EAB88C14DA4C90001294B4 /* bottomRowSelected.png */; };
+		A8EAB89214DA4E82001294B4 /* topAndBottomRow.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EAB89114DA4E82001294B4 /* topAndBottomRow.png */; };
+		A8EAB89414DA51D9001294B4 /* middleRowSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EAB89314DA51D9001294B4 /* middleRowSelected.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +108,11 @@
 		A8E5253B14CA0EC800797C16 /* ConferenceMeInTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConferenceMeInTests.m; sourceTree = "<group>"; };
 		A8E5254A14CA37A100797C16 /* EKEventParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKEventParser.h; sourceTree = "<group>"; };
 		A8E5254B14CA37A200797C16 /* EKEventParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKEventParser.m; sourceTree = "<group>"; };
+		A8EAB88A14DA4C90001294B4 /* topRow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topRow.png; sourceTree = "<group>"; };
+		A8EAB88B14DA4C90001294B4 /* middleRow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = middleRow.png; sourceTree = "<group>"; };
+		A8EAB88C14DA4C90001294B4 /* bottomRowSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottomRowSelected.png; sourceTree = "<group>"; };
+		A8EAB89114DA4E82001294B4 /* topAndBottomRow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topAndBottomRow.png; sourceTree = "<group>"; };
+		A8EAB89314DA51D9001294B4 /* middleRowSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = middleRowSelected.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +154,11 @@
 		A8E1D72814D22AB700E5A877 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A8EAB89114DA4E82001294B4 /* topAndBottomRow.png */,
+				A8EAB88A14DA4C90001294B4 /* topRow.png */,
+				A8EAB88B14DA4C90001294B4 /* middleRow.png */,
+				A8EAB89314DA51D9001294B4 /* middleRowSelected.png */,
+				A8EAB88C14DA4C90001294B4 /* bottomRowSelected.png */,
 				A8E1D74214D322CA00E5A877 /* phone.png */,
 				A8E1D72C14D2688F00E5A877 /* confCall.png */,
 				A8E1D72914D22AE400E5A877 /* gradientBackground.png */,
@@ -324,6 +339,11 @@
 				A8E1D72A14D22AE400E5A877 /* gradientBackground.png in Resources */,
 				A8E1D72D14D2688F00E5A877 /* confCall.png in Resources */,
 				A8E1D74314D322CA00E5A877 /* phone.png in Resources */,
+				A8EAB88D14DA4C90001294B4 /* topRow.png in Resources */,
+				A8EAB88E14DA4C90001294B4 /* middleRow.png in Resources */,
+				A8EAB88F14DA4C90001294B4 /* bottomRowSelected.png in Resources */,
+				A8EAB89214DA4E82001294B4 /* topAndBottomRow.png in Resources */,
+				A8EAB89414DA51D9001294B4 /* middleRowSelected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,7 +481,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -536,7 +556,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -549,7 +569,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0C30BD6C-6375-4877-95B9-E4928AE4E722";
 				WRAPPER_EXTENSION = app;
