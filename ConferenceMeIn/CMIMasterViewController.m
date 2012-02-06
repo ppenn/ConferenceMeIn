@@ -51,7 +51,9 @@ NSTimer* _tapTimer;
 }
 
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section {
-	// Section title is the region name
+    NSLog(@"titleForHeaderInSection()");
+	
+    // Section title is the region name
 //TODO: make this today, tomorrow and then other dates    
 //	Region *region = [displayList objectAtIndex:section];
 //	return region.name;
@@ -60,7 +62,9 @@ NSTimer* _tapTimer;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
-	
+
+	NSLog(@"cellForRowAtIndexPath()");
+    
 	static NSString *CellIdentifier = @"EventCell";
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -80,6 +84,8 @@ NSTimer* _tapTimer;
 
 - (void)showEventNatively:(NSInteger)section row:(NSInteger)row
 {
+    NSLog(@"showEventNatively()");
+    
     self.detailViewController = [[CMIEKEventViewController alloc] initWithNibName:nil bundle:nil];        
     CMIEvent* cmiEvent = [self.cmiEventSystem getCMIEvent:section eventIndex:row];
     _detailViewController.event = [cmiEvent ekEvent];
@@ -95,6 +101,8 @@ NSTimer* _tapTimer;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"didSelectRowAtIndexPath()");
+    
     @try {
 
         //checking for double taps here
@@ -146,6 +154,8 @@ NSTimer* _tapTimer;
 
 - (void) showStartDialog
 {
+    NSLog(@"showStartDialog()");
+    
     // Create the predicate. Pass it the default calendar.
 	ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
 
@@ -159,6 +169,8 @@ NSTimer* _tapTimer;
 
 - (NSArray *)fetchEventsForTable 
 {
+    NSLog(@"fetchEventsForTable()");
+
 	// Create the predicate. Pass it the default calendar.
 	ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
     
@@ -170,6 +182,8 @@ NSTimer* _tapTimer;
 
 - (void)reloadTable
 {
+    NSLog(@"reloadTable()");
+
     if (_eventsList != nil) {
     //TODO: remove
     [self.eventsList removeAllObjects]; // not necessary because we're about to alloc and ARC prevents us         
@@ -181,10 +195,12 @@ NSTimer* _tapTimer;
 
 - (void) scrollToNow
 {
+    NSLog(@"scrollToNow()");
+    
     NSDate* now = [[NSDate alloc] init];
     NSDate* currentDay = [_cmiEventSystem getMidnightDate:now];
     NSInteger currentDaySection = -1;
-    NSInteger currentDayRow = 0;
+    NSInteger currentDayRow = -1;
     
     for (NSInteger i = 0; i < [_cmiEventSystem.eventDays count]; i++ ) {
         NSDate* date = (NSDate*)[_cmiEventSystem.eventDays objectAtIndex:i];
@@ -196,27 +212,32 @@ NSTimer* _tapTimer;
     
     if (currentDaySection != -1) {
         NSArray* events = [_cmiEventSystem.daysEvents objectForKey:currentDay];
-        for (currentDayRow = 0; currentDayRow < (events.count -1); currentDayRow++) {
-            CMIEvent* event = [events objectAtIndex:currentDayRow];            
-            // If event is current
-            if ([CMIEventSystem date:now isBetweenDate:event.ekEvent.startDate andDate:event.ekEvent.endDate] == true) {
-                break;
-            }
-            // if current event is later than now, then bail too
-            if ([now compare:event.ekEvent.startDate] == NSOrderedAscending ||
-                [now compare:event.ekEvent.startDate] == NSOrderedSame) {
-                break;
+        if (events.count > 0) {
+            for (currentDayRow = 0; currentDayRow < (events.count -1); currentDayRow++) {
+                CMIEvent* event = [events objectAtIndex:currentDayRow];            
+                // If event is current
+                if ([CMIEventSystem date:now isBetweenDate:event.ekEvent.startDate andDate:event.ekEvent.endDate] == true) {
+                    break;
+                }
+                // if current event is later than now, then bail too
+                if ([now compare:event.ekEvent.startDate] == NSOrderedAscending ||
+                    [now compare:event.ekEvent.startDate] == NSOrderedSame) {
+                    break;
+                }
             }
         }
     }
     
-    NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:currentDayRow inSection:currentDaySection];
-    [[self tableView] scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];  
-    
+    if (currentDayRow > -1) {
+        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:currentDayRow inSection:currentDaySection];
+        [[self tableView] scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];  
+    }    
 }
 
 - (void) reloadTableScrollToNow
 {
+    NSLog(@"reloadTableScrollToNow()");
+
     [self reloadTable];
     [self scrollToNow];
     
@@ -224,6 +245,8 @@ NSTimer* _tapTimer;
 
 - (void) storeChanged:(NSNotification *) notification
 {
+    NSLog(@"storeChanged() notification [ @% ]", notification.name);
+
     // [notification name] should always be @"TestNotification"
     // unless you use this method for observation of other notifications
     // as well.
@@ -240,6 +263,8 @@ NSTimer* _tapTimer;
 #pragma mark View life-cycle
 
 - (void)viewDidLoad {
+    NSLog(@"viewDidLoad()");
+    
     //TODO: figure this out
     //	self.title = NSLocalizedString(@"Time Zones", @"Time Zones title");
 	self.title = @"Calendar";
@@ -437,6 +462,7 @@ NSTimer* _tapTimer;
 
 
 - (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"configureCell()");
     
     /*
 	 Cache the formatter. Normally you would use one of the date formatter styles (such as NSDateFormatterShortStyle), but here we want a specific format that excludes seconds.

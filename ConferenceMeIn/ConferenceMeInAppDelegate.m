@@ -124,9 +124,9 @@ CMIMasterViewController* _cmiMasterViewController;
                                                  name:NSUserDefaultsDidChangeNotification
                                                object:nil];
     
-    CMIMasterViewController *masterViewController2 = [[CMIMasterViewController alloc] init];// bundle:nil];
-    _cmiMasterViewController = masterViewController2;
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController2];
+    CMIMasterViewController *masterViewController = [[CMIMasterViewController alloc] init];// bundle:nil];
+    _cmiMasterViewController = masterViewController;
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
 
