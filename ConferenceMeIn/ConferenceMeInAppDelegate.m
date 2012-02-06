@@ -7,8 +7,6 @@
 //
 
 #import "ConferenceMeInAppDelegate.h"
-
-#import "ConferenceMeInMasterViewController.h"
 #import "CMIMasterViewController.h"
 
 NSString *kCalendarTypeKey	= @"calendarTypeKey";
@@ -22,8 +20,6 @@ NSString *kfetch28DaysEventsKey = @"fetch28DaysEventsKey";
 @synthesize debugMode = _debugMode;
 @synthesize firstRun = _firstRun;
 
-//TODO: remove
-ConferenceMeInMasterViewController* _conferenceMeInMasterViewController;
 CMIMasterViewController* _cmiMasterViewController;
 
 - (void)dealloc
@@ -128,9 +124,7 @@ CMIMasterViewController* _cmiMasterViewController;
                                                  name:NSUserDefaultsDidChangeNotification
                                                object:nil];
     
-    ConferenceMeInMasterViewController *masterViewController = [[ConferenceMeInMasterViewController alloc] initWithNibName:@"ConferenceMeInMasterViewController" bundle:nil];
     CMIMasterViewController *masterViewController2 = [[CMIMasterViewController alloc] init];// bundle:nil];
-    _conferenceMeInMasterViewController = masterViewController;
     _cmiMasterViewController = masterViewController2;
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController2];
     self.window.rootViewController = self.navigationController;
