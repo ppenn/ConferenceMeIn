@@ -245,7 +245,7 @@ NSTimer* _tapTimer;
 
 - (void) storeChanged:(NSNotification *) notification
 {
-    NSLog(@"storeChanged() notification [ @% ]", notification.name);
+    NSLog(@"storeChanged() notification  [ %@ ] ", notification.name);
 
     // [notification name] should always be @"TestNotification"
     // unless you use this method for observation of other notifications
@@ -268,6 +268,7 @@ NSTimer* _tapTimer;
     //TODO: figure this out
     //	self.title = NSLocalizedString(@"Time Zones", @"Time Zones title");
 	self.title = @"Calendar";
+    
 	self.tableView.rowHeight = ROW_HEIGHT;
     _phoneImage = [UIImage imageNamed:@"phone.png"];
 
