@@ -11,6 +11,7 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 #import "CMIEvent.h"
+#import <TargetConditionals.h>
 
 typedef enum fetchTypes
 {
@@ -20,5 +21,7 @@ typedef enum fetchTypes
 } fetchTypes;
 
 @interface CMIEventTests : SenTestCase
+
+- (void)createEvent:(NSDate*) startDate endDate:(NSDate*)endDate title:(NSString*)title;
 
 @end

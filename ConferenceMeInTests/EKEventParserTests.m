@@ -32,6 +32,9 @@
 - (void)testPhoneNumbersShouldParse
 {
     NSString* phoneNumber;
+
+    phoneNumber = [EKEventParser parseEventText:@"1800 123 4567 xx 12345678"];
+    [self testPhoneNumberShouldParse:phoneNumber];
     
     phoneNumber = [EKEventParser parseEventText:@"Conference Room - Aspen / Intercall: 877-603-8688 Partipant Code: 6450391 4155138001"];
     [self testPhoneNumberShouldParse:phoneNumber];
@@ -45,6 +48,10 @@
     phoneNumber = [EKEventParser parseEventText:@"1-718-354-1168 Participants 25798249#"];
     [self testPhoneNumberShouldParse:phoneNumber];
 
+    // This one is bringing back 5599 as the code. Need to ensure that phone numbers are not included. How?
+    phoneNumber = [EKEventParser parseEventText:@"US Dial In:  866-262-0701    International Dial In: 706-679-5599  code 1234"];
+    [self testPhoneNumberShouldParse:phoneNumber];
+    
 }
 
 

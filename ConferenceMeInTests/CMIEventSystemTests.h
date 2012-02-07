@@ -12,6 +12,7 @@
 #import <SenTestingKit/SenTestingKit.h>
 #import "CMIEventSystem.h"
 #import <EventKit/EventKit.h>
+#import <TargetConditionals.h>
 
 @interface CMIEventSystemTests : SenTestCase
 

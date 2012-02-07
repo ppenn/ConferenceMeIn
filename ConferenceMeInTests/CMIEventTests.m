@@ -15,7 +15,6 @@ NSArray* _calendarEvents;
 
 - (NSArray*)fetchEvents:(NSDate*)startDate atEndDate:(NSDate*)endDate
 {
-    
     NSPredicate* predicate = [_eventStore predicateForEventsWithStartDate:startDate endDate:endDate 
                                                                calendars:nil]; 
     
@@ -25,6 +24,21 @@ NSArray* _calendarEvents;
     return events;
 }
 
+- (void)createEvent:(NSDate*) startDate endDate:(NSDate*)endDate title:(NSString*)title
+{
+    EKEvent *event = [EKEvent eventWithEventStore:_eventStore];
+    
+    event.title = title; 
+    
+    event.startDate = startDate;
+    event.endDate = endDate;// 
+    event.location = @"1800 123 4567 xx 123456789"; 
+    [event setCalendar:[_eventStore defaultCalendarForNewEvents]];
+    NSError *err;
+    BOOL isSuccess=[_eventStore saveEvent:event span:EKSpanThisEvent error:&err];
+    
+}
+
 - (void)setUp
 {
     [super setUp];
@@ -32,6 +46,18 @@ NSArray* _calendarEvents;
     // Set-up code here.
     _eventStore = [[EKEventStore alloc] init];
 
+    BOOL simulatorRunning = false;
+    NSDate* startDate = [[NSDate alloc] init];
+    NSDate* endDate = [[NSDate alloc] initWithTimeInterval:600 sinceDate:startDate];
+    
+    [self createEvent:startDate endDate:endDate title:@"testtitle"];
+    
+#if TARGET_IPHONE_SIMULATOR
+    // Simulator specific code
+    simulatorRunning = true;
+#else // TARGET_IPHONE_SIMULATOR
+    // Device specific code
+#endif // TARGET_IPHONE_SIMULATOR    
 
 }
 
