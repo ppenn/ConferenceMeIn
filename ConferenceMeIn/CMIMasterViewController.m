@@ -259,6 +259,8 @@ NSTimer* _tapTimer;
     [self reloadTableScrollToNow];
 }
 
+
+
 #pragma mark -
 #pragma mark View life-cycle
 
@@ -273,7 +275,8 @@ NSTimer* _tapTimer;
     _phoneImage = [UIImage imageNamed:@"phone.png"];
 
     _cmiEventSystem = [[CMIEventSystem alloc] init];
-
+    [CMIEventSystem createTestEvents:_cmiEventSystem.eventStore];
+    
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
                                                  name:EKEventStoreChangedNotification object:_cmiEventSystem.eventStore];
 

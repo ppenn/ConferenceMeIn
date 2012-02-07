@@ -29,10 +29,13 @@ typedef enum calendarTypes
 - (id) init;
 - (NSArray *)fetchEvents;
 - (void) calculateDaysEvents:(NSDate*)startDate atEndDate:(NSDate*)endDate;
-- (NSDate*) getOffsetDate:(NSDate*)today atOffsetDays:(NSInteger)offsetDays;
 - (NSString*)formatDateAsDay:(NSDate*)date;
 - (NSDate*) getMidnightDate:(NSDate*) date;
 - (CMIEvent*)getCMIEvent:(NSInteger)dayEventIndex eventIndex:(NSInteger)eventIndex;
+
++ (NSDate*) getOffsetDate:(NSDate*)today atOffsetDays:(NSInteger)offsetDays;
 + (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate;
++ (void)createTestEvents:(EKEventStore*)eventStore;
++ (void)removeAllSimulatorEvents:(EKEventStore*)eventStore;
 
 @end
