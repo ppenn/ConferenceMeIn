@@ -243,6 +243,8 @@ NSTimer* _tapTimer;
     
 }
 
+
+
 - (void) storeChanged:(NSNotification *) notification
 {
     NSLog(@"storeChanged() notification  [ %@ ] ", notification.name);
@@ -259,6 +261,24 @@ NSTimer* _tapTimer;
     [self reloadTableScrollToNow];
 }
 
+- (void)menuAction:(id)sender
+{
+	// open a dialog with just an OK button
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Menu"
+                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"HelpButtonTitle",@""),@"About",nil];
+	actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+	[actionSheet showInView:self.view];	// show from our table view (pops up in the middle of the table)
+    
+}
+- (void) createMenuButton
+{
+    // add tint bar button
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
+                                                                   style:UIBarButtonItemStyleBordered
+                                                                  target:self
+                                                                  action:@selector(menuAction:)];
+    self.navigationItem.leftBarButtonItem = menuButton;
+}
 
 
 #pragma mark -
@@ -270,6 +290,7 @@ NSTimer* _tapTimer;
     //TODO: figure this out
     //	self.title = NSLocalizedString(@"Time Zones", @"Time Zones title");
 	self.title = @"Calendar";
+    [self createMenuButton];
     
 	self.tableView.rowHeight = ROW_HEIGHT;
     _phoneImage = [UIImage imageNamed:@"phone.png"];
@@ -518,5 +539,24 @@ NSTimer* _tapTimer;
     }
 }    
 
+#pragma mark -
+#pragma mark - UIActionSheetDelegate
+    
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    // the user clicked one of the OK/Cancel buttons
+    switch (buttonIndex) {
+        case 0:
+            NSLog(@"Help");
+            break;
+        case 1:
+            NSLog(@"About");            
+            break;
+        default:
+            NSLog(@"Cancel");
+            break;
+    }
+}
+    
 
 @end

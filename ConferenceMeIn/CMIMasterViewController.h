@@ -14,7 +14,7 @@
 #import "CMIEventSystem.h"
 #import "ConferenceMeInAppDelegate.h"
 
-@interface CMIMasterViewController : UITableViewController
+@interface CMIMasterViewController : UITableViewController <UIActionSheetDelegate>
 
 @property (strong, nonatomic) CMIEKEventViewController *detailViewController;
 @property (strong, nonatomic) NSMutableArray* eventsList;

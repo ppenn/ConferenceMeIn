@@ -131,7 +131,6 @@ CMIMasterViewController* _cmiMasterViewController;
     [self.window makeKeyAndVisible];
 
     
-    
     return YES;
 }
 
