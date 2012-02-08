@@ -22,6 +22,5 @@ typedef enum fetchTypes
 
 @interface CMIEventTests : SenTestCase
 
-- (void)createEvent:(NSDate*) startDate endDate:(NSDate*)endDate title:(NSString*)title;
 
 @end

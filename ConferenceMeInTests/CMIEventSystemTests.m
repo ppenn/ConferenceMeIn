@@ -18,7 +18,7 @@
     
     // Set-up code here.
     _cmiEventSystem = [[CMIEventSystem alloc] init];
-    
+    [CMIEventSystem createTestEvents:_cmiEventSystem.eventStore];
 }
 
 - (void)testCalculateDateStuff
