@@ -8,6 +8,7 @@
 
 #import "ConferenceMeInAppDelegate.h"
 #import "CMIMasterViewController.h"
+#import "CMIUtility.h"
 
 NSString *kCalendarTypeKey	= @"calendarTypeKey";
 NSString *kfetch28DaysEventsKey = @"fetch28DaysEventsKey";
@@ -93,17 +94,23 @@ CMIMasterViewController* _cmiMasterViewController;
 - (void)defaultsChanged:(NSNotification *)notif
 {
     @try {
-    
-        [self setupByPreferences];
-    
-        [_cmiMasterViewController reloadTableScrollToNow];
+        // Get the user defaults
+//        NSUserDefaults *defaults = (NSUserDefaults *)[notif object];
         
-        UITableView *tableView = ((UITableViewController *)self.navigationController.visibleViewController).    tableView;
-        [tableView reloadData];
+        // Do something with it
+//        NSLog(@"%@", [defaults objectforKey:@"nameOfThingIAmInterestedIn"]);    
+        
+        if ([self.navigationController.visibleViewController isKindOfClass:[UITableViewController class]]) {
+            [self setupByPreferences];
+            [_cmiMasterViewController reloadTableScrollToNow];
+
+            UITableView *tableView = ((UITableViewController *)self.navigationController.visibleViewController).    tableView;
+            [tableView reloadData];            
+        }
     }
     @catch (NSException * e) {
-        NSLog(@"Exception: %@", e); 
-    }
+        [CMIUtility Log:e.reason];
+         }
     @finally {
         // Added to show finally works as well
     }    
@@ -112,26 +119,32 @@ CMIMasterViewController* _cmiMasterViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-	[self setupByPreferences];
-    
-    // listen for changes to our preferences when the Settings app does so,
-    // when we are resumed from the backround, this will give us a chance to update our UI
-    //
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(defaultsChanged:)
-                                                 name:NSUserDefaultsDidChangeNotification
-                                               object:nil];
-    
-    CMIMasterViewController *masterViewController = [[CMIMasterViewController alloc] init];// bundle:nil];
-    _cmiMasterViewController = masterViewController;
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
-    self.window.rootViewController = self.navigationController;
-    [self.window makeKeyAndVisible];
+    @try {
+        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        // Override point for customization after application launch.
+        [self setupByPreferences];
 
-    
-    return YES;
+        // listen for changes to our preferences when the Settings app does so,
+        // when we are resumed from the backround, this will give us a chance to update our UI
+        //
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(defaultsChanged:)
+                                                     name:NSUserDefaultsDidChangeNotification
+                                                   object:nil];
+
+        CMIMasterViewController *masterViewController = [[CMIMasterViewController alloc] init];// bundle:nil];
+        _cmiMasterViewController = masterViewController;
+        self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+        self.window.rootViewController = self.navigationController;
+        [self.window makeKeyAndVisible];
+        
+//        [NSException raise:@"Invalid foo value" format:@"foo of %d is invalid", 3];
+        
+        return YES;
+    }
+    @catch (NSException * e) {
+        [CMIUtility Log:e.reason];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

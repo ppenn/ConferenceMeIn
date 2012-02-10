@@ -13,10 +13,16 @@
 #import "CMIEKEventViewController.h"
 #import "CMIEventSystem.h"
 #import "ConferenceMeInAppDelegate.h"
+#import "CMIAboutViewController.h"
+#import "CMIHelpViewController.h"
 
-@interface CMIMasterViewController : UITableViewController <UIActionSheetDelegate>
+@interface CMIMasterViewController : UITableViewController <UIActionSheetDelegate, EKEventEditViewDelegate>
 
 @property (strong, nonatomic) CMIEKEventViewController *detailViewController;
+@property (strong, nonatomic) CMIAboutViewController* cmiAboutViewController;
+@property (strong, nonatomic) CMIHelpViewController* cmiHelpViewController;
+
+
 @property (strong, nonatomic) NSMutableArray* eventsList;
 @property (strong, nonatomic) CMIEventSystem* cmiEventSystem;
 

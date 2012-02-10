@@ -21,7 +21,8 @@ NSTimer* _tapTimer;
 @synthesize detailViewController = _detailViewController;
 @synthesize eventsList = _eventsList;
 @synthesize cmiEventSystem = _cmiEventSystem;
-
+@synthesize cmiHelpViewController = _cmiHelpViewController;
+@synthesize cmiAboutViewController = _cmiAboutViewController;
 
 #pragma mark -
 #pragma mark Table view delegate and data source methods
@@ -63,8 +64,7 @@ NSTimer* _tapTimer;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
 
-	NSLog(@"cellForRowAtIndexPath()");
-    
+	NSLog(@"cellForRowAtIndexPath()");    
 	static NSString *CellIdentifier = @"EventCell";
 	
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -264,8 +264,7 @@ NSTimer* _tapTimer;
 - (void)menuAction:(id)sender
 {
 	// open a dialog with just an OK button
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Menu"
-                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"HelpButtonTitle",@""),@"About",nil];
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"MenuButtonTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"HelpButtonTitle",@""),@"About",nil];
 	actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
 	[actionSheet showInView:self.view];	// show from our table view (pops up in the middle of the table)
     
@@ -273,11 +272,73 @@ NSTimer* _tapTimer;
 - (void) createMenuButton
 {
     // add tint bar button
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"Menu"
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"MenuButtonTitle", @"")
                                                                    style:UIBarButtonItemStyleBordered
                                                                   target:self
                                                                   action:@selector(menuAction:)];
     self.navigationItem.leftBarButtonItem = menuButton;
+}
+
+// If event is nil, a new event is created and added to the specified event store. New events are 
+// added to the default calendar. An exception is raised if set to an event that is not in the 
+// specified event store.
+- (void)addEvent:(id)sender {
+	// When add button is pushed, create an EKEventEditViewController to display the event.
+	EKEventEditViewController *addController = [[EKEventEditViewController alloc] initWithNibName:nil bundle:nil];
+	
+	// set the addController's event store to the current event store.
+	addController.eventStore = _cmiEventSystem.eventStore;
+	
+	// present EventsAddViewController as a modal view controller
+	[self presentModalViewController:addController animated:YES];
+	
+	addController.editViewDelegate = self;
+}
+
+#pragma mark -
+#pragma mark EKEventEditViewDelegate
+
+// Overriding EKEventEditViewDelegate method to update event store according to user actions.
+- (void)eventEditViewController:(EKEventEditViewController *)controller 
+          didCompleteWithAction:(EKEventEditViewAction)action {
+	
+	NSError *error = nil;
+	EKEvent *thisEvent = controller.event;
+	
+	switch (action) {
+		case EKEventEditViewActionCanceled:
+			// Edit action canceled, do nothing. 
+			break;
+			
+		case EKEventEditViewActionSaved:
+			// When user hit "Done" button, save the newly created event to the event store, 
+			// and reload table view.
+			// If the new event is being added to the default calendar, then update its 
+			// eventsList.
+//            [_cmiEventSystem.
+//            [self.eventsList addObject:thisEvent];
+//			[controller.eventStore saveEvent:controller.event span:EKSpanThisEvent error:&error];
+//			[self.tableView reloadData];
+			break;
+			
+		case EKEventEditViewActionDeleted:
+			// When deleting an event, remove the event from the event store, 
+			// and reload table view.
+			// If deleting an event from the currenly default calendar, then update its 
+			// eventsList.
+//			if (self.defaultCalendar ==  thisEvent.calendar) {
+//				[self.eventsList removeObject:thisEvent];
+//			}
+			[controller.eventStore removeEvent:thisEvent span:EKSpanThisEvent error:&error];
+			[self.tableView reloadData];
+			break;
+			
+		default:
+			break;
+	}
+	// Dismiss the modal view controller
+	[controller dismissModalViewControllerAnimated:YES];
+	
 }
 
 
@@ -305,10 +366,33 @@ NSTimer* _tapTimer;
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;    
     self.view.autoresizesSubviews = true;
     self.tableView.autoresizesSubviews = true;
+
+	//	Create an Add button 
+	UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:
+                                      UIBarButtonSystemItemAdd target:self action:@selector(addEvent:)];
+	self.navigationItem.rightBarButtonItem = addButtonItem;
+    
+    
+    NSArray *segmentedItems = [NSArray arrayWithObjects:@"All Events", @"Conf Call Events", nil];
+    UISegmentedControl *ctrl = [[UISegmentedControl alloc] initWithItems:segmentedItems];
+    ctrl.segmentedControlStyle = UISegmentedControlStyleBar;
+    ctrl.selectedSegmentIndex = 0;
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:ctrl];
+    ctrl.frame = CGRectMake(0.0f, 5.0f, 320.0f, 30.0f);
+    
+    NSArray *theToolbarItems = [NSArray arrayWithObjects:item, nil];
+    [self setToolbarItems:theToolbarItems];
     
     [self reloadTableScrollToNow];
     
     [self showStartDialog];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    self.navigationController.toolbarHidden = NO;
     
 }
 
@@ -539,6 +623,17 @@ NSTimer* _tapTimer;
     }
 }    
 
+- (void) showAboutDialog
+{
+    _cmiAboutViewController = [CMIAboutViewController alloc];
+    [self.navigationController pushViewController:_cmiAboutViewController animated:YES];
+}
+- (void) showHelpDialog
+{
+    _cmiHelpViewController = [[CMIHelpViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:_cmiHelpViewController animated:YES];
+}
+
 #pragma mark -
 #pragma mark - UIActionSheetDelegate
     
@@ -548,9 +643,11 @@ NSTimer* _tapTimer;
     switch (buttonIndex) {
         case 0:
             NSLog(@"Help");
+            [self showHelpDialog];
             break;
         case 1:
-            NSLog(@"About");            
+            NSLog(@"About"); 
+            [self showAboutDialog];
             break;
         default:
             NSLog(@"Cancel");

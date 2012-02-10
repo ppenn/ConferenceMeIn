@@ -130,7 +130,7 @@
 
 }
 
-+ (BOOL)createEvent:(EKEventStore*)eventStore startDate:(NSDate*) startDate endDate:(NSDate*)endDate title:(NSString*)title
++ (BOOL)createTestEvent:(EKEventStore*)eventStore startDate:(NSDate*) startDate endDate:(NSDate*)endDate title:(NSString*)title withConfNumber:(BOOL)withConfNumber
 {
     EKEvent *event = [EKEvent eventWithEventStore:eventStore];
     
@@ -138,7 +138,7 @@
     
     event.startDate = startDate;
     event.endDate = endDate;// 
-    event.location = @"1800 123 4567 xx 123456789"; 
+    event.location = withConfNumber ? @"1800 123 4567 xx 123456789" : @"nada" ; 
     [event setCalendar:[eventStore defaultCalendarForNewEvents]];
     NSError *err;
     BOOL isSuccess=[eventStore saveEvent:event span:EKSpanThisEvent error:&err];
@@ -185,9 +185,10 @@
     NSDate* beforeStartDate = [[NSDate alloc] initWithTimeInterval:-(60*60) sinceDate:startDate];
     NSDate* beforeBeforeStartDate = [[NSDate alloc] initWithTimeInterval:-(2*60*60) sinceDate:beforeStartDate];
     
-    [self createEvent:eventStore startDate:startDate endDate:endDate title:@"testtitle2"];    
-    [self createEvent:eventStore startDate:beforeStartDate endDate:startDate title:@"testtitle1"];
-    [self createEvent:eventStore startDate:beforeBeforeStartDate endDate:beforeStartDate title:@"testtitle0"];
+    [self createTestEvent:eventStore startDate:startDate endDate:endDate title:@"testtitle2" withConfNumber:TRUE];    
+    [self createTestEvent:eventStore startDate:beforeStartDate endDate:startDate title:@"testtitle1" withConfNumber:TRUE];
+    [self createTestEvent:eventStore startDate:beforeStartDate endDate:startDate title:@"NoConfNumEvent" withConfNumber:FALSE];
+    [self createTestEvent:eventStore startDate:beforeBeforeStartDate endDate:beforeStartDate title:@"testtitle0" withConfNumber:TRUE];
     
     
 #else // TARGET_IPHONE_SIMULATOR
@@ -272,7 +273,10 @@
 	NSArray *events = [self.eventStore eventsMatchingPredicate:predicate];
     NSArray *sortedEvents =
     [events sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)];
-    
+
+    if (sortedEvents != nil && sortedEvents.count > 0) {
+       startDate = [[sortedEvents objectAtIndex:0] startDate];
+    }
     //    NSString *nsString = [((EKCalendarItem*)[events objectAtIndex:0]) notes];
     [self assignCMIEventsToDayEvents:startDate atEndDate:endDate atEvents:sortedEvents];
     
