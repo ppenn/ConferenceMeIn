@@ -10,6 +10,12 @@
 		A847419D14E0C8FD0017A7C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A847419B14E0C8FD0017A7C8 /* Localizable.strings */; };
 		A847419E14E0C8FD0017A7C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A847419B14E0C8FD0017A7C8 /* Localizable.strings */; };
 		A85FF3B614CEF90100F2CD1C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A85FF3B514CEF90100F2CD1C /* Settings.bundle */; };
+		A8AEA2FD14E2380500E6ADC6 /* CMIHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */; };
+		A8AEA2FE14E2380500E6ADC6 /* CMIHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */; };
+		A8B6321114E224830006E3A5 /* About.png in Resources */ = {isa = PBXBuildFile; fileRef = A8B6321014E224830006E3A5 /* About.png */; };
+		A8B6321414E229440006E3A5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A8B6321314E229430006E3A5 /* Default.png */; };
+		A8B6321814E22EEC0006E3A5 /* CMIAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B6321714E22EEC0006E3A5 /* CMIAboutViewController.m */; };
+		A8B6321914E22EEC0006E3A5 /* CMIAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B6321714E22EEC0006E3A5 /* CMIAboutViewController.m */; };
 		A8E1D70514D08F2800E5A877 /* EKEventParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D70414D08F2800E5A877 /* EKEventParserTests.m */; };
 		A8E1D70C14D0974700E5A877 /* CMIEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D70B14D0974700E5A877 /* CMIEvent.m */; };
 		A8E1D70D14D0974700E5A877 /* CMIEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D70B14D0974700E5A877 /* CMIEvent.m */; };
@@ -51,7 +57,11 @@
 		A8EAB88E14DA4C90001294B4 /* middleRow.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EAB88B14DA4C90001294B4 /* middleRow.png */; };
 		A8EAB88F14DA4C90001294B4 /* bottomRowSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EAB88C14DA4C90001294B4 /* bottomRowSelected.png */; };
 		A8EAB89214DA4E82001294B4 /* topAndBottomRow.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EAB89114DA4E82001294B4 /* topAndBottomRow.png */; };
-		A8EAB89414DA51D9001294B4 /* middleRowSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EAB89314DA51D9001294B4 /* middleRowSelected.png */; };
+		A8EAB89414DA51D9001294B4 /* middleRowSelected_red.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EAB89314DA51D9001294B4 /* middleRowSelected_red.png */; };
+		A8F6211514E3630700B735AC /* middleRowSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F6211414E3630700B735AC /* middleRowSelected.png */; };
+		A8F6211C14E368E900B735AC /* CMIUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6211B14E368E800B735AC /* CMIUtility.m */; };
+		A8F6212314E56A2C00B735AC /* CMIDay.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6212214E56A2C00B735AC /* CMIDay.m */; };
+		A8F6212414E56A2C00B735AC /* CMIDay.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6212214E56A2C00B735AC /* CMIDay.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +77,12 @@
 /* Begin PBXFileReference section */
 		A847419C14E0C8FD0017A7C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ConferenceMeIn/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A85FF3B514CEF90100F2CD1C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		A8AEA2FB14E2380500E6ADC6 /* CMIHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIHelpViewController.h; sourceTree = "<group>"; };
+		A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIHelpViewController.m; sourceTree = "<group>"; };
+		A8B6321014E224830006E3A5 /* About.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = About.png; path = ConferenceMeIn/images/About.png; sourceTree = "<group>"; };
+		A8B6321314E229430006E3A5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ConferenceMeIn/images/Default.png; sourceTree = "<group>"; };
+		A8B6321614E22EEC0006E3A5 /* CMIAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIAboutViewController.h; sourceTree = "<group>"; };
+		A8B6321714E22EEC0006E3A5 /* CMIAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIAboutViewController.m; sourceTree = "<group>"; };
 		A8E1D70314D08F2800E5A877 /* EKEventParserTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKEventParserTests.h; sourceTree = "<group>"; };
 		A8E1D70414D08F2800E5A877 /* EKEventParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKEventParserTests.m; sourceTree = "<group>"; };
 		A8E1D70A14D0974700E5A877 /* CMIEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIEvent.h; sourceTree = "<group>"; };
@@ -112,7 +128,12 @@
 		A8EAB88B14DA4C90001294B4 /* middleRow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = middleRow.png; sourceTree = "<group>"; };
 		A8EAB88C14DA4C90001294B4 /* bottomRowSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottomRowSelected.png; sourceTree = "<group>"; };
 		A8EAB89114DA4E82001294B4 /* topAndBottomRow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topAndBottomRow.png; sourceTree = "<group>"; };
-		A8EAB89314DA51D9001294B4 /* middleRowSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = middleRowSelected.png; sourceTree = "<group>"; };
+		A8EAB89314DA51D9001294B4 /* middleRowSelected_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = middleRowSelected_red.png; sourceTree = "<group>"; };
+		A8F6211414E3630700B735AC /* middleRowSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = middleRowSelected.png; path = ConferenceMeIn/images/middleRowSelected.png; sourceTree = "<group>"; };
+		A8F6211A14E368E800B735AC /* CMIUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIUtility.h; sourceTree = "<group>"; };
+		A8F6211B14E368E800B735AC /* CMIUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIUtility.m; sourceTree = "<group>"; };
+		A8F6212114E56A2B00B735AC /* CMIDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIDay.h; sourceTree = "<group>"; };
+		A8F6212214E56A2C00B735AC /* CMIDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIDay.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,10 +176,13 @@
 		A8E1D72814D22AB700E5A877 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A8F6211414E3630700B735AC /* middleRowSelected.png */,
+				A8B6321314E229430006E3A5 /* Default.png */,
+				A8B6321014E224830006E3A5 /* About.png */,
 				A8EAB89114DA4E82001294B4 /* topAndBottomRow.png */,
 				A8EAB88A14DA4C90001294B4 /* topRow.png */,
 				A8EAB88B14DA4C90001294B4 /* middleRow.png */,
-				A8EAB89314DA51D9001294B4 /* middleRowSelected.png */,
+				A8EAB89314DA51D9001294B4 /* middleRowSelected_red.png */,
 				A8EAB88C14DA4C90001294B4 /* bottomRowSelected.png */,
 				A8E1D74214D322CA00E5A877 /* phone.png */,
 				A8E1D72C14D2688F00E5A877 /* confCall.png */,
@@ -221,6 +245,14 @@
 				A8E1D70B14D0974700E5A877 /* CMIEvent.m */,
 				A8E1D72F14D26AEE00E5A877 /* CMIEventSystem.h */,
 				A8E1D73014D26AEF00E5A877 /* CMIEventSystem.m */,
+				A8AEA2FB14E2380500E6ADC6 /* CMIHelpViewController.h */,
+				A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */,
+				A8B6321614E22EEC0006E3A5 /* CMIAboutViewController.h */,
+				A8B6321714E22EEC0006E3A5 /* CMIAboutViewController.m */,
+				A8F6211A14E368E800B735AC /* CMIUtility.h */,
+				A8F6211B14E368E800B735AC /* CMIUtility.m */,
+				A8F6212114E56A2B00B735AC /* CMIDay.h */,
+				A8F6212214E56A2C00B735AC /* CMIDay.m */,
 			);
 			path = ConferenceMeIn;
 			sourceTree = "<group>";
@@ -342,8 +374,11 @@
 				A8EAB88E14DA4C90001294B4 /* middleRow.png in Resources */,
 				A8EAB88F14DA4C90001294B4 /* bottomRowSelected.png in Resources */,
 				A8EAB89214DA4E82001294B4 /* topAndBottomRow.png in Resources */,
-				A8EAB89414DA51D9001294B4 /* middleRowSelected.png in Resources */,
+				A8EAB89414DA51D9001294B4 /* middleRowSelected_red.png in Resources */,
 				A847419D14E0C8FD0017A7C8 /* Localizable.strings in Resources */,
+				A8B6321114E224830006E3A5 /* About.png in Resources */,
+				A8B6321414E229440006E3A5 /* Default.png in Resources */,
+				A8F6211514E3630700B735AC /* middleRowSelected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,6 +425,10 @@
 				A8E1D71B14D1303900E5A877 /* CMIEKEventViewController.m in Sources */,
 				A8E1D73114D26AEF00E5A877 /* CMIEventSystem.m in Sources */,
 				A8E1D74014D279E100E5A877 /* CMIMasterViewController.m in Sources */,
+				A8B6321814E22EEC0006E3A5 /* CMIAboutViewController.m in Sources */,
+				A8AEA2FD14E2380500E6ADC6 /* CMIHelpViewController.m in Sources */,
+				A8F6211C14E368E900B735AC /* CMIUtility.m in Sources */,
+				A8F6212314E56A2C00B735AC /* CMIDay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,6 +445,9 @@
 				A8E1D73214D26AEF00E5A877 /* CMIEventSystem.m in Sources */,
 				A8E1D73D14D2718900E5A877 /* CMIEventSystemTests.m in Sources */,
 				A8E1D74114D279E100E5A877 /* CMIMasterViewController.m in Sources */,
+				A8B6321914E22EEC0006E3A5 /* CMIAboutViewController.m in Sources */,
+				A8AEA2FE14E2380500E6ADC6 /* CMIHelpViewController.m in Sources */,
+				A8F6212414E56A2C00B735AC /* CMIDay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
