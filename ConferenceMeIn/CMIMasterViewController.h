@@ -21,9 +21,6 @@
 @property (strong, nonatomic) CMIEKEventViewController *detailViewController;
 @property (strong, nonatomic) CMIAboutViewController* cmiAboutViewController;
 @property (strong, nonatomic) CMIHelpViewController* cmiHelpViewController;
-
-
-@property (strong, nonatomic) NSMutableArray* eventsList;
 @property (strong, nonatomic) CMIEventSystem* cmiEventSystem;
 
 - (void) storeChanged:(NSNotification *) notification;

@@ -12,12 +12,15 @@
 
 + (void)Log:(NSString*)logMessage
 {
-//    NSString *fullMessage = [@"Error: " stringByAppendingString:logMessage];
-    NSLog(logMessage);
+    NSLog(@"%@", logMessage);
+}
+
++ (void)LogError:(NSString*)logMessage
+{
+    NSLog(@"%@", logMessage);
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error!" message:logMessage
                                                    delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alert show];
-    
+    [alert show];    
 }
 
 @end

@@ -34,11 +34,15 @@
 
 - (id) initWithEKEvent:(EKEvent*)ekEvent
 {
-    _ekEvent = ekEvent;
-    _conferenceNumber = nil;
+    self = [super init];
     
-    [self parseEvent];
+    if (self != nil)
+    {    
+        _ekEvent = ekEvent;
+        _conferenceNumber = nil;
 
+        [self parseEvent];
+    }
     return self;
 }
 

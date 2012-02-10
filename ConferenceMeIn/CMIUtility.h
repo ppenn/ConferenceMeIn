@@ -11,5 +11,6 @@
 @interface CMIUtility : NSObject
 
 + (void)Log:(NSString*)logMessage;
++ (void)LogError:(NSString*)logMessage;
 
 @end

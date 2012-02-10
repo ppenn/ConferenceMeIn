@@ -22,6 +22,7 @@ typedef enum calendarTypes
 @property (strong, nonatomic) EKCalendar *defaultCalendar;
 @property (strong, nonatomic, readonly) NSMutableDictionary* daysEvents;
 @property (strong, nonatomic, readonly) NSMutableArray* eventDays;
+@property (strong, nonatomic) NSMutableArray* eventsList;
 
 @property bool fetchAllEvents;
 @property calendarTypes calendarType;

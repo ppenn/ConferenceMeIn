@@ -16,6 +16,7 @@
 @synthesize defaultCalendar = _defaultCalendar;
 @synthesize daysEvents = _daysEvents;
 @synthesize eventDays = _eventDays;
+@synthesize eventsList = _eventsList;
 
 - (id) init
 {

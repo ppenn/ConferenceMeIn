@@ -19,7 +19,6 @@ NSTimer* _tapTimer;
 @implementation CMIMasterViewController
 
 @synthesize detailViewController = _detailViewController;
-@synthesize eventsList = _eventsList;
 @synthesize cmiEventSystem = _cmiEventSystem;
 @synthesize cmiHelpViewController = _cmiHelpViewController;
 @synthesize cmiAboutViewController = _cmiAboutViewController;
@@ -39,48 +38,6 @@ NSTimer* _tapTimer;
     [self showEventNatively:section row:row];
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
-	// Number of sections is the number of regions
-    NSInteger numSections = [_cmiEventSystem.daysEvents count];
-    return numSections;
-}
-
-//TODO: sort this out per section...when sections arrive
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSMutableArray* events = [_cmiEventSystem.daysEvents objectForKey:[_cmiEventSystem.eventDays objectAtIndex:section]];
-    return [events count];
-}
-
-- (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section {
-    NSLog(@"titleForHeaderInSection()");
-	
-    // Section title is the region name
-//TODO: make this today, tomorrow and then other dates    
-//	Region *region = [displayList objectAtIndex:section];
-//	return region.name;
-    NSString* day = [_cmiEventSystem formatDateAsDay:[_cmiEventSystem.eventDays objectAtIndex:section]];    
-    return day;//[_cmiEventSystem formatDateAsDay:[_cmiEventSystem.eventDays objectAtIndex:section]];    
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
-
-	NSLog(@"cellForRowAtIndexPath()");    
-	static NSString *CellIdentifier = @"EventCell";
-	
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	
-	if (cell == nil) {
-		cell = [self tableViewCellWithReuseIdentifier:CellIdentifier];
-	}
-
-    // Add disclosure triangle to cell
-	UITableViewCellAccessoryType editableCellAccessoryType =UITableViewCellAccessoryDisclosureIndicator;
-	cell.accessoryType = editableCellAccessoryType;
-
-	// configureCell:cell forIndexPath: sets the text and image for the cell -- the method is factored out as it's also called during minuted-based updates.
-	[self configureCell:cell forIndexPath:indexPath];
-	return cell;
-}
 
 - (void)showEventNatively:(NSInteger)section row:(NSInteger)row
 {
@@ -97,6 +54,46 @@ NSTimer* _tapTimer;
     //	the stack and clear its event property.
     [self.navigationController pushViewController:_detailViewController animated:YES];
 
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
+	// Number of sections is the number of regions
+    NSInteger numSections = [_cmiEventSystem.daysEvents count];
+    return numSections;
+}
+
+//TODO: sort this out per section...when sections arrive
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSMutableArray* events = [_cmiEventSystem.daysEvents objectForKey:[_cmiEventSystem.eventDays objectAtIndex:section]];
+    return [events count];
+}
+
+- (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section {
+    NSLog(@"titleForHeaderInSection()");
+	
+    // Section title is the region name
+    NSString* day = [_cmiEventSystem formatDateAsDay:[_cmiEventSystem.eventDays objectAtIndex:section]];    
+    return day;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
+    
+	NSLog(@"cellForRowAtIndexPath()");    
+	static NSString *CellIdentifier = @"EventCell";
+	
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	
+	if (cell == nil) {
+		cell = [self tableViewCellWithReuseIdentifier:CellIdentifier];
+	}
+    
+    // Add disclosure triangle to cell
+	UITableViewCellAccessoryType editableCellAccessoryType =UITableViewCellAccessoryDisclosureIndicator;
+	cell.accessoryType = editableCellAccessoryType;
+    
+	// configureCell:cell forIndexPath: sets the text and image for the cell -- the method is factored out as it's also called during minuted-based updates.
+	[self configureCell:cell forIndexPath:indexPath];
+	return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -184,11 +181,11 @@ NSTimer* _tapTimer;
 {
     NSLog(@"reloadTable()");
 
-    if (_eventsList != nil) {
+    if (_cmiEventSystem.eventsList != nil) {
     //TODO: remove
-    [self.eventsList removeAllObjects]; // not necessary because we're about to alloc and ARC prevents us         
+        [_cmiEventSystem.eventsList removeAllObjects]; // not necessary because we're about to alloc and ARC prevents us         
     }
-    self.eventsList = [CMIEvent createCMIEvents:[self fetchEventsForTable]];
+    _cmiEventSystem.eventsList = [CMIEvent createCMIEvents:[self fetchEventsForTable]];
 	[self.tableView reloadData];    
 }
 
