@@ -7,10 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <EventKit/EventKit.h>
 
 @interface CMIUtility : NSObject
 
 + (void)Log:(NSString*)logMessage;
 + (void)LogError:(NSString*)logMessage;
++ (NSDate*) getOffsetDate:(NSDate*)today atOffsetDays:(NSInteger)offsetDays;
++ (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate;
+
+
+//TODO:Maybe move these to TestUtility
++ (void)createTestEvents:(EKEventStore*)eventStore;
++ (void)removeAllSimulatorEvents:(EKEventStore*)eventStore;
++ (BOOL)createTestEvent:(EKEventStore*)eventStore startDate:(NSDate*) startDate endDate:(NSDate*)endDate title:(NSString*)title withConfNumber:(BOOL)withConfNumber;
+
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "CMIMasterViewController.h"
+#import "CMIUtility.h"
 
 #define ROW_HEIGHT 80
 
@@ -168,6 +169,8 @@ NSTimer* _tapTimer;
 {
     NSLog(@"fetchEventsForTable()");
 
+    //TODO: move this to the notification receiving event?
+    
 	// Create the predicate. Pass it the default calendar.
 	ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
     
@@ -181,11 +184,8 @@ NSTimer* _tapTimer;
 {
     NSLog(@"reloadTable()");
 
-    if (_cmiEventSystem.eventsList != nil) {
-    //TODO: remove
-        [_cmiEventSystem.eventsList removeAllObjects]; // not necessary because we're about to alloc and ARC prevents us         
-    }
-    _cmiEventSystem.eventsList = [CMIEvent createCMIEvents:[self fetchEventsForTable]];
+    [_cmiEventSystem createCMIEvents];
+    
 	[self.tableView reloadData];    
 }
 
@@ -213,7 +213,7 @@ NSTimer* _tapTimer;
             for (currentDayRow = 0; currentDayRow < (events.count -1); currentDayRow++) {
                 CMIEvent* event = [events objectAtIndex:currentDayRow];            
                 // If event is current
-                if ([CMIEventSystem date:now isBetweenDate:event.ekEvent.startDate andDate:event.ekEvent.endDate] == true) {
+                if ([CMIUtility date:now isBetweenDate:event.ekEvent.startDate andDate:event.ekEvent.endDate] == true) {
                     break;
                 }
                 // if current event is later than now, then bail too
@@ -354,7 +354,7 @@ NSTimer* _tapTimer;
     _phoneImage = [UIImage imageNamed:@"phone.png"];
 
     _cmiEventSystem = [[CMIEventSystem alloc] init];
-    [CMIEventSystem createTestEvents:_cmiEventSystem.eventStore];
+    [CMIUtility createTestEvents:_cmiEventSystem.eventStore];
     
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
                                                  name:EKEventStoreChangedNotification object:_cmiEventSystem.eventStore];
@@ -536,7 +536,7 @@ NSTimer* _tapTimer;
     // endDate is 1 day = 60*60*24 seconds = 86400 seconds from startDate
     NSDate* trueStartDate = [NSDate dateWithTimeInterval:-(15*60) sinceDate:event.startDate];
 
-    return [CMIEventSystem date:now isBetweenDate:trueStartDate andDate:event.endDate];
+    return [CMIUtility date:now isBetweenDate:trueStartDate andDate:event.endDate];
     
 }
 
@@ -582,7 +582,6 @@ NSTimer* _tapTimer;
 	// Get the event at the row selected and display it's title
     CMIEvent* cmiEvent = [self.cmiEventSystem getCMIEvent:indexPath.section eventIndex:indexPath.row];
     NSDate* eventStartDate = [[cmiEvent ekEvent] startDate];
-    NSDate* eventEndDate = [[cmiEvent ekEvent] endDate];
     NSString* eventDateStr = [dateFormatter stringFromDate:eventStartDate];
     
 	UILabel *label;
