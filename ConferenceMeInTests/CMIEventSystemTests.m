@@ -17,15 +17,20 @@
     [super setUp];
     
     // Set-up code here.
-    _cmiEventSystem = [[CMIEventSystem alloc] init];
-    [CMIEventSystem createTestEvents:_cmiEventSystem.eventStore];
+    _cmiEventSystem = [[CMIEventCalendar alloc] init];
+    [CMIEventCalendar createTestEvents:_cmiEventSystem.eventStore];
+}
+
+- (void)testCreateCMIDays
+{
+    
 }
 
 - (void)testCalculateDateStuff
 {
     NSDate* nowDate = [[NSDate alloc] init]; 
-    NSDate* yesterdayDate = [_cmiEventSystem getOffsetDate:nowDate atOffsetDays:-1];
-    NSDate* tomorrowDate = [_cmiEventSystem getOffsetDate:nowDate atOffsetDays:1];
+    NSDate* yesterdayDate = [CMIEventCalendar getOffsetDate:nowDate atOffsetDays:-1];
+    NSDate* tomorrowDate = [CMIEventCalendar getOffsetDate:nowDate atOffsetDays:1];
 
     NSString* today = [_cmiEventSystem formatDateAsDay:nowDate];
     NSString* tomorrow = [_cmiEventSystem formatDateAsDay:tomorrowDate];
@@ -40,8 +45,8 @@
 - (void)testCalculateDaysEvents
 {
     NSDate* nowDate = [[NSDate alloc] init]; 
-    NSDate* startDate = [_cmiEventSystem getOffsetDate:nowDate atOffsetDays:-1];
-    NSDate* endDate = [_cmiEventSystem getOffsetDate:nowDate atOffsetDays:1];
+    NSDate* startDate = [CMIEventCalendar getOffsetDate:nowDate atOffsetDays:-1];
+    NSDate* endDate = [CMIEventCalendar getOffsetDate:nowDate atOffsetDays:1];
     
     [_cmiEventSystem calculateDaysEvents:startDate atEndDate:endDate];
     for(NSString *aKey in _cmiEventSystem.daysEvents){

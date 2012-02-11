@@ -10,13 +10,13 @@
 //  See Also: http://developer.apple.com/iphone/library/documentation/Xcode/Conceptual/iphone_development/135-Unit_Testing_Applications/unit_testing_applications.html
 
 #import <SenTestingKit/SenTestingKit.h>
-#import "CMIEventSystem.h"
+#import "CMIEventCalendar.h"
 #import <EventKit/EventKit.h>
 #import <TargetConditionals.h>
 
 @interface CMIEventSystemTests : SenTestCase
 
-@property (strong, nonatomic) CMIEventSystem* cmiEventSystem;
+@property (strong, nonatomic) CMIEventCalendar* cmiEventSystem;
 
 
 @end
