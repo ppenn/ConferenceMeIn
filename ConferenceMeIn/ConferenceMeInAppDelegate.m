@@ -12,6 +12,7 @@
 
 NSString *kCalendarTypeKey	= @"calendarTypeKey";
 NSString *kfetch28DaysEventsKey = @"fetch28DaysEventsKey";
+NSString *kfilterTypeKey = @"filterTypeKey";
 
 @implementation ConferenceMeInAppDelegate
 
@@ -20,6 +21,7 @@ NSString *kfetch28DaysEventsKey = @"fetch28DaysEventsKey";
 @synthesize calendarType = _calendarType;
 @synthesize debugMode = _debugMode;
 @synthesize firstRun = _firstRun;
+@synthesize filterType = _filterType;
 
 CMIMasterViewController* _cmiMasterViewController;
 
@@ -77,6 +79,7 @@ CMIMasterViewController* _cmiMasterViewController;
         
 		[[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 		[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"firstRun"];
+		[[NSUserDefaults standardUserDefaults] setValue:0 forKey:kfilterTypeKey];
 		[[NSUserDefaults standardUserDefaults] setBool:fetch28DaysEventsDefault forKey:kfetch28DaysEventsKey];
         
 		[[NSUserDefaults standardUserDefaults] synchronize];
@@ -86,6 +89,7 @@ CMIMasterViewController* _cmiMasterViewController;
 	self.calendarType = [[NSUserDefaults standardUserDefaults] integerForKey:kCalendarTypeKey];
     self.debugMode = [[NSUserDefaults standardUserDefaults] boolForKey:kfetch28DaysEventsKey];
     self.firstRun = firstRun;
+    self.filterType = [[NSUserDefaults standardUserDefaults] integerForKey:kfilterTypeKey];
 }
 
 // we are being notified that our preferences have changed (user changed them in the Settings app)
@@ -151,7 +155,7 @@ CMIMasterViewController* _cmiMasterViewController;
 {
     /*
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-     Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+     Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should urease this method to pause the game.
      */
 }
 
@@ -161,6 +165,12 @@ CMIMasterViewController* _cmiMasterViewController;
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
+    
+    NSNumber *number = [NSNumber numberWithInt:_cmiMasterViewController.cmiEventCalendar.filterType];
+    [[NSUserDefaults standardUserDefaults] setObject:number forKey:kfilterTypeKey];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -184,6 +194,12 @@ CMIMasterViewController* _cmiMasterViewController;
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
+//    [[NSUserDefaults standardUserDefaults] setValue:[self filterType] forKey:kfilterTypeKey];
+    NSNumber *number = [NSNumber numberWithInt:_cmiMasterViewController.cmiEventCalendar.filterType];
+    [[NSUserDefaults standardUserDefaults] setObject:number forKey:kfilterTypeKey];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
 }
 
 

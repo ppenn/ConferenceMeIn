@@ -170,6 +170,22 @@ NSTimer* _tapTimer;
     }
 }
 
+//TODO:refactor?
+- (void)readAppSettings
+{
+    ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
+        
+    _cmiEventCalendar.fetchAllEvents = appDelegate.debugMode;
+    _cmiEventCalendar.calendarType = appDelegate.calendarType;
+    _cmiEventCalendar.filterType = appDelegate.filterType;
+    
+}
+
+- (void)viewWillUnload
+{
+    
+}
+
 - (NSArray *)fetchEventsForTable 
 {
     NSLog(@"fetchEventsForTable()");
@@ -345,6 +361,8 @@ NSTimer* _tapTimer;
     _phoneImage = [UIImage imageNamed:@"phone.png"];
 
     _cmiEventCalendar = [[CMIEventCalendar alloc] init];
+    // NB: you cannot read app settings before instantiating the calendar
+    [self readAppSettings];
     // This will only do anything if we are in the Simulator
     [CMIUtility createTestEvents:_cmiEventCalendar.eventStore];
     
@@ -365,7 +383,7 @@ NSTimer* _tapTimer;
     NSArray *segmentedItems = [NSArray arrayWithObjects:@"All Events", @"Conf Call Events", nil];
     UISegmentedControl *ctrl = [[UISegmentedControl alloc] initWithItems:segmentedItems];
     ctrl.segmentedControlStyle = UISegmentedControlStyleBar;
-    ctrl.selectedSegmentIndex = 0;
+    ctrl.selectedSegmentIndex = _cmiEventCalendar.filterType;
 
     [ctrl addTarget:self
           action:@selector(eventFilterChanged:)
@@ -376,7 +394,7 @@ NSTimer* _tapTimer;
     
     NSArray *theToolbarItems = [NSArray arrayWithObjects:item, nil];
     [self setToolbarItems:theToolbarItems];
-    
+        
     [self reloadTableScrollToNow];
     
     [self showStartDialog];

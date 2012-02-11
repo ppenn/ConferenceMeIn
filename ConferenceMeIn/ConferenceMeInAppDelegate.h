@@ -24,5 +24,6 @@
 @property (nonatomic, assign) BOOL debugMode;
 @property (nonatomic, assign) BOOL firstRun;
 
+@property (nonatomic, assign) NSInteger filterType;
 
 @end

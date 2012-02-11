@@ -34,5 +34,6 @@
 - (void)showEventNatively:(NSInteger)section row:(NSInteger)row;
 - (void) reloadTableScrollToNow;
 - (void) showStartDialog;
+- (void)readAppSettings;
 
 @end
