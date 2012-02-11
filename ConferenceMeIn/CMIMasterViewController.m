@@ -20,7 +20,7 @@ NSTimer* _tapTimer;
 @implementation CMIMasterViewController
 
 @synthesize detailViewController = _detailViewController;
-@synthesize cmiEventSystem = _cmiEventSystem;
+@synthesize cmiEventCalendar = _cmiEventCalendar;
 @synthesize cmiHelpViewController = _cmiHelpViewController;
 @synthesize cmiAboutViewController = _cmiAboutViewController;
 
@@ -45,7 +45,7 @@ NSTimer* _tapTimer;
     NSLog(@"showEventNatively()");
     
     self.detailViewController = [[CMIEKEventViewController alloc] initWithNibName:nil bundle:nil];        
-    CMIEvent* cmiEvent = [self.cmiEventSystem getCMIEvent:section eventIndex:row];
+    CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEvent:section eventIndex:row];
     _detailViewController.event = [cmiEvent ekEvent];
     
     _detailViewController.allowsEditing = YES;
@@ -59,13 +59,13 @@ NSTimer* _tapTimer;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
 	// Number of sections is the number of regions
-    NSInteger numSections = [_cmiEventSystem.daysEvents count];
+    NSInteger numSections = [_cmiEventCalendar.cmiDaysArray count];
     return numSections;
 }
 
 //TODO: sort this out per section...when sections arrive
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSMutableArray* events = [_cmiEventSystem.daysEvents objectForKey:[_cmiEventSystem.eventDays objectAtIndex:section]];
+    NSMutableArray* events = [_cmiEventCalendar.daysEvents objectForKey:[_cmiEventCalendar.eventDays objectAtIndex:section]];
     return [events count];
 }
 
@@ -73,7 +73,7 @@ NSTimer* _tapTimer;
     NSLog(@"titleForHeaderInSection()");
 	
     // Section title is the region name
-    NSString* day = [_cmiEventSystem formatDateAsDay:[_cmiEventSystem.eventDays objectAtIndex:section]];    
+    NSString* day = [CMIUtility formatDateAsDay:[_cmiEventCalendar.eventDays objectAtIndex:section]];    
     return day;
 }
 
@@ -109,7 +109,7 @@ NSTimer* _tapTimer;
             //double tap - Put your double tap code here            
             [_tapTimer invalidate];
             _tapTimer = nil;
-            CMIEvent* cmiEvent = [_cmiEventSystem getCMIEvent:_tappedSection eventIndex:_tappedRow];
+            CMIEvent* cmiEvent = [_cmiEventCalendar getCMIEvent:_tappedSection eventIndex:_tappedRow];
             [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
             _tappedRow = -1;
             _tappedSection = -1;
@@ -172,64 +172,36 @@ NSTimer* _tapTimer;
     //TODO: move this to the notification receiving event?
     
 	// Create the predicate. Pass it the default calendar.
-	ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
+//	ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
+//    
+//    _cmiEventCalendar.fetchAllEvents = appDelegate.debugMode;
+//    _cmiEventCalendar.calendarType = appDelegate.calendarType;
     
-    _cmiEventSystem.fetchAllEvents = appDelegate.debugMode;
-    _cmiEventSystem.calendarType = appDelegate.calendarType;
-    
-    return [_cmiEventSystem fetchEvents];
+    return [_cmiEventCalendar fetchEvents];
 }
 
 - (void)reloadTable
 {
     NSLog(@"reloadTable()");
 
-    [_cmiEventSystem createCMIEvents];
+//    [_cmiEventCalendar createCMIEvents];
+    [_cmiEventCalendar createCMIDayEvents];
     
 	[self.tableView reloadData];    
 }
-
 
 - (void) scrollToNow
 {
     NSLog(@"scrollToNow()");
     
     NSDate* now = [[NSDate alloc] init];
-    NSDate* currentDay = [_cmiEventSystem getMidnightDate:now];
-    NSInteger currentDaySection = -1;
-    NSInteger currentDayRow = -1;
-    
-    for (NSInteger i = 0; i < [_cmiEventSystem.eventDays count]; i++ ) {
-        NSDate* date = (NSDate*)[_cmiEventSystem.eventDays objectAtIndex:i];
-        if ([date isEqualToDate:currentDay] == TRUE) {
-            currentDaySection = i;
-            break;
-        }
-    }
-    
-    if (currentDaySection != -1) {
-        NSArray* events = [_cmiEventSystem.daysEvents objectForKey:currentDay];
-        if (events.count > 0) {
-            for (currentDayRow = 0; currentDayRow < (events.count -1); currentDayRow++) {
-                CMIEvent* event = [events objectAtIndex:currentDayRow];            
-                // If event is current
-                if ([CMIUtility date:now isBetweenDate:event.ekEvent.startDate andDate:event.ekEvent.endDate] == true) {
-                    break;
-                }
-                // if current event is later than now, then bail too
-                if ([now compare:event.ekEvent.startDate] == NSOrderedAscending ||
-                    [now compare:event.ekEvent.startDate] == NSOrderedSame) {
-                    break;
-                }
-            }
-        }
-    }
-    
-    if (currentDayRow > -1) {
-        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:currentDayRow inSection:currentDaySection];
+
+    NSIndexPath *scrollIndexPath = [_cmiEventCalendar getDayEventIndexForDate:now];
+    if (scrollIndexPath != nil) {
         [[self tableView] scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];  
     }    
 }
+
 
 - (void) reloadTableScrollToNow
 {
@@ -241,19 +213,20 @@ NSTimer* _tapTimer;
 }
 
 
-
 - (void) storeChanged:(NSNotification *) notification
 {
     NSLog(@"storeChanged() notification  [ %@ ] ", notification.name);
-
+    
     // [notification name] should always be @"TestNotification"
     // unless you use this method for observation of other notifications
     // as well.
+
+    //TODO: Refactor...move to CMISettings class
+	ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
     
-    //    if ([[notification name] isEqualToString:@"TestNotification"])
-    NSString* logMessage = @"Successfully received the test notification!"; 
-    logMessage = [logMessage stringByAppendingString:notification.name];
-    NSLog(@"Exception: %@", logMessage );
+    _cmiEventCalendar.fetchAllEvents = appDelegate.debugMode;
+    _cmiEventCalendar.calendarType = appDelegate.calendarType;
+    
 
     [self reloadTableScrollToNow];
 }
@@ -284,7 +257,7 @@ NSTimer* _tapTimer;
 	EKEventEditViewController *addController = [[EKEventEditViewController alloc] initWithNibName:nil bundle:nil];
 	
 	// set the addController's event store to the current event store.
-	addController.eventStore = _cmiEventSystem.eventStore;
+	addController.eventStore = _cmiEventCalendar.eventStore;
 	
 	// present EventsAddViewController as a modal view controller
 	[self presentModalViewController:addController animated:YES];
@@ -312,7 +285,7 @@ NSTimer* _tapTimer;
 			// and reload table view.
 			// If the new event is being added to the default calendar, then update its 
 			// eventsList.
-//            [_cmiEventSystem.
+//            [_cmiEventCalendar.
 //            [self.eventsList addObject:thisEvent];
 //			[controller.eventStore saveEvent:controller.event span:EKSpanThisEvent error:&error];
 //			[self.tableView reloadData];
@@ -338,6 +311,21 @@ NSTimer* _tapTimer;
 	
 }
 
+- (void)eventFilterChanged:(id)sender
+{
+    eventFilterTypes selectionIndex = ((UISegmentedControl*)sender).selectedSegmentIndex;
+
+    switch (selectionIndex) {
+        case filterNone:
+            
+            break;            
+        case filterConfCallOnly:
+            break;
+        default:
+            break;
+    }
+    
+}
 
 #pragma mark -
 #pragma mark View life-cycle
@@ -353,11 +341,12 @@ NSTimer* _tapTimer;
 	self.tableView.rowHeight = ROW_HEIGHT;
     _phoneImage = [UIImage imageNamed:@"phone.png"];
 
-    _cmiEventSystem = [[CMIEventSystem alloc] init];
-    [CMIUtility createTestEvents:_cmiEventSystem.eventStore];
+    _cmiEventCalendar = [[CMIEventCalendar alloc] init];
+    // This will only do anything if we are in the Simulator
+    [CMIUtility createTestEvents:_cmiEventCalendar.eventStore];
     
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
-                                                 name:EKEventStoreChangedNotification object:_cmiEventSystem.eventStore];
+                                                 name:EKEventStoreChangedNotification object:_cmiEventCalendar.eventStore];
 
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;    
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;    
@@ -374,6 +363,10 @@ NSTimer* _tapTimer;
     UISegmentedControl *ctrl = [[UISegmentedControl alloc] initWithItems:segmentedItems];
     ctrl.segmentedControlStyle = UISegmentedControlStyleBar;
     ctrl.selectedSegmentIndex = 0;
+
+    [ctrl addTarget:self
+          action:@selector(eventFilterChanged:)
+          forControlEvents:UIControlEventValueChanged];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:ctrl];
     ctrl.frame = CGRectMake(0.0f, 5.0f, 320.0f, 30.0f);
@@ -542,7 +535,7 @@ NSTimer* _tapTimer;
 
 - (void)tableView:(UITableView *)tableView willDisplayCell1:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CMIEvent* cmiEvent = [self.cmiEventSystem getCMIEvent:indexPath.section eventIndex:indexPath.row];
+    CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEvent:indexPath.section eventIndex:indexPath.row];
 
     if ([self eventIsNow:cmiEvent.ekEvent] ) {
         ((UILabel *)[cell viewWithTag:TIME_TAG]).backgroundColor = 
@@ -580,7 +573,7 @@ NSTimer* _tapTimer;
 	}
 	
 	// Get the event at the row selected and display it's title
-    CMIEvent* cmiEvent = [self.cmiEventSystem getCMIEvent:indexPath.section eventIndex:indexPath.row];
+    CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEvent:indexPath.section eventIndex:indexPath.row];
     NSDate* eventStartDate = [[cmiEvent ekEvent] startDate];
     NSString* eventDateStr = [dateFormatter stringFromDate:eventStartDate];
     

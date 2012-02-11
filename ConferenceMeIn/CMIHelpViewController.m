@@ -35,6 +35,13 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    self.navigationController.toolbarHidden = YES;
+    
+}
+
+
 //- (void)viewDidLoad {
 //    NSLog(@"viewDidLoad()");
 //    

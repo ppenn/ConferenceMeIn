@@ -11,17 +11,19 @@
 #import "CMIEvent.h"
 #import <EventKitUI/EventKitUI.h>
 #import "CMIEKEventViewController.h"
-#import "CMIEventSystem.h"
+#import "CMIEventCalendar.h"
 #import "ConferenceMeInAppDelegate.h"
 #import "CMIAboutViewController.h"
 #import "CMIHelpViewController.h"
+
+
 
 @interface CMIMasterViewController : UITableViewController <UIActionSheetDelegate, EKEventEditViewDelegate>
 
 @property (strong, nonatomic) CMIEKEventViewController *detailViewController;
 @property (strong, nonatomic) CMIAboutViewController* cmiAboutViewController;
 @property (strong, nonatomic) CMIHelpViewController* cmiHelpViewController;
-@property (strong, nonatomic) CMIEventSystem* cmiEventSystem;
+@property (strong, nonatomic) CMIEventCalendar* cmiEventCalendar;
 
 - (void) storeChanged:(NSNotification *) notification;
 - (NSArray *)fetchEventsForTable;

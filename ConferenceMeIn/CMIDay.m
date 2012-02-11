@@ -15,14 +15,14 @@
 @synthesize dateAtMidnight = _dateAtMidnight;
 @synthesize cmiEvents = _cmiEvents;
 
-- (id) initWithCMIEvents:(NSDate*)dateAtMidnight cmiEvents:(NSArray*)cmiEvents
+- (id) initWithDay:(NSDate*)dateAtMidnight
 {
     self = [super init];
     
     if (self != nil)
     {    
         _dateAtMidnight = dateAtMidnight;
-        _cmiEvents = cmiEvents;
+        _cmiEvents = [[NSMutableArray alloc] init];
     }
 
     return self;

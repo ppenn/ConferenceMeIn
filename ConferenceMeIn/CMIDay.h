@@ -10,10 +10,10 @@
 
 @interface CMIDay : NSObject
 
-@property (readonly, nonatomic, strong) NSArray* cmiEvents;
+@property (readonly, nonatomic, strong) NSMutableArray* cmiEvents;
 @property (readonly, nonatomic, strong) NSDate* dateAtMidnight;
 
-- (id) initWithCMIEvents:(NSDate*)dateAtMidnight cmiEvents:(NSArray*)cmiEvents;
+- (id) initWithDay:(NSDate*)dateAtMidnight;
 
 
 @end

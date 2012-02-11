@@ -32,4 +32,10 @@
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    self.navigationController.toolbarHidden = YES;
+    
+}
+
 @end
