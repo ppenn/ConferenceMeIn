@@ -30,8 +30,8 @@
 		A8E1D72B14D22AE400E5A877 /* gradientBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = A8E1D72914D22AE400E5A877 /* gradientBackground.png */; };
 		A8E1D72D14D2688F00E5A877 /* confCall.png in Resources */ = {isa = PBXBuildFile; fileRef = A8E1D72C14D2688F00E5A877 /* confCall.png */; };
 		A8E1D72E14D2688F00E5A877 /* confCall.png in Resources */ = {isa = PBXBuildFile; fileRef = A8E1D72C14D2688F00E5A877 /* confCall.png */; };
-		A8E1D73114D26AEF00E5A877 /* CMIEventSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D73014D26AEF00E5A877 /* CMIEventSystem.m */; };
-		A8E1D73214D26AEF00E5A877 /* CMIEventSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D73014D26AEF00E5A877 /* CMIEventSystem.m */; };
+		A8E1D73114D26AEF00E5A877 /* CMIEventCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D73014D26AEF00E5A877 /* CMIEventCalendar.m */; };
+		A8E1D73214D26AEF00E5A877 /* CMIEventCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D73014D26AEF00E5A877 /* CMIEventCalendar.m */; };
 		A8E1D73D14D2718900E5A877 /* CMIEventSystemTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D73C14D2718900E5A877 /* CMIEventSystemTests.m */; };
 		A8E1D74014D279E100E5A877 /* CMIMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D73F14D279E000E5A877 /* CMIMasterViewController.m */; };
 		A8E1D74114D279E100E5A877 /* CMIMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D73F14D279E000E5A877 /* CMIMasterViewController.m */; };
@@ -95,8 +95,8 @@
 		A8E1D71F14D133B300E5A877 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		A8E1D72914D22AE400E5A877 /* gradientBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradientBackground.png; sourceTree = "<group>"; };
 		A8E1D72C14D2688F00E5A877 /* confCall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = confCall.png; sourceTree = "<group>"; };
-		A8E1D72F14D26AEE00E5A877 /* CMIEventSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIEventSystem.h; sourceTree = "<group>"; };
-		A8E1D73014D26AEF00E5A877 /* CMIEventSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIEventSystem.m; sourceTree = "<group>"; };
+		A8E1D72F14D26AEE00E5A877 /* CMIEventCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; path = CMIEventCalendar.h; sourceTree = "<group>"; };
+		A8E1D73014D26AEF00E5A877 /* CMIEventCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIEventCalendar.m; sourceTree = "<group>"; };
 		A8E1D73B14D2718900E5A877 /* CMIEventSystemTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIEventSystemTests.h; sourceTree = "<group>"; };
 		A8E1D73C14D2718900E5A877 /* CMIEventSystemTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIEventSystemTests.m; sourceTree = "<group>"; };
 		A8E1D73E14D279E000E5A877 /* CMIMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIMasterViewController.h; sourceTree = "<group>"; };
@@ -243,8 +243,8 @@
 				A8E5254B14CA37A200797C16 /* EKEventParser.m */,
 				A8E1D70A14D0974700E5A877 /* CMIEvent.h */,
 				A8E1D70B14D0974700E5A877 /* CMIEvent.m */,
-				A8E1D72F14D26AEE00E5A877 /* CMIEventSystem.h */,
-				A8E1D73014D26AEF00E5A877 /* CMIEventSystem.m */,
+				A8E1D72F14D26AEE00E5A877 /* CMIEventCalendar.h */,
+				A8E1D73014D26AEF00E5A877 /* CMIEventCalendar.m */,
 				A8AEA2FB14E2380500E6ADC6 /* CMIHelpViewController.h */,
 				A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */,
 				A8B6321614E22EEC0006E3A5 /* CMIAboutViewController.h */,
@@ -423,7 +423,7 @@
 				A8E5254C14CA37A200797C16 /* EKEventParser.m in Sources */,
 				A8E1D70C14D0974700E5A877 /* CMIEvent.m in Sources */,
 				A8E1D71B14D1303900E5A877 /* CMIEKEventViewController.m in Sources */,
-				A8E1D73114D26AEF00E5A877 /* CMIEventSystem.m in Sources */,
+				A8E1D73114D26AEF00E5A877 /* CMIEventCalendar.m in Sources */,
 				A8E1D74014D279E100E5A877 /* CMIMasterViewController.m in Sources */,
 				A8B6321814E22EEC0006E3A5 /* CMIAboutViewController.m in Sources */,
 				A8AEA2FD14E2380500E6ADC6 /* CMIHelpViewController.m in Sources */,
@@ -442,7 +442,7 @@
 				A8E1D70D14D0974700E5A877 /* CMIEvent.m in Sources */,
 				A8E1D71014D09D7A00E5A877 /* CMIEventTests.m in Sources */,
 				A8E1D71C14D1303900E5A877 /* CMIEKEventViewController.m in Sources */,
-				A8E1D73214D26AEF00E5A877 /* CMIEventSystem.m in Sources */,
+				A8E1D73214D26AEF00E5A877 /* CMIEventCalendar.m in Sources */,
 				A8E1D73D14D2718900E5A877 /* CMIEventSystemTests.m in Sources */,
 				A8E1D74114D279E100E5A877 /* CMIMasterViewController.m in Sources */,
 				A8B6321914E22EEC0006E3A5 /* CMIAboutViewController.m in Sources */,
