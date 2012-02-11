@@ -63,10 +63,6 @@ CMIMasterViewController* _cmiMasterViewController;
 			{
 				calendarTypeDefault = defaultValue;
 			}
-//			else if ([keyValueStr isEqualToString:kfetch28DaysEventsKey])
-//			{
-//				fetch28DaysEventsDefault = [prefItem objectForKey:@"DefaultValue"];
-//			}
 		}
         
         NSDate *today = [NSDate date];        
@@ -98,6 +94,7 @@ CMIMasterViewController* _cmiMasterViewController;
 - (void)defaultsChanged:(NSNotification *)notif
 {
     @try {
+        [CMIUtility Log:[@"defaultsChanged() " stringByAppendingString:notif.name]];
         // Get the user defaults
 //        NSUserDefaults *defaults = (NSUserDefaults *)[notif object];
         
@@ -113,10 +110,10 @@ CMIMasterViewController* _cmiMasterViewController;
         }
     }
     @catch (NSException * e) {
-        [CMIUtility Log:e.reason];
+        [CMIUtility LogError:e.reason];
          }
     @finally {
-        // Added to show finally works as well
+        // Insert any cleanup...
     }    
 }
 
@@ -124,6 +121,8 @@ CMIMasterViewController* _cmiMasterViewController;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     @try {
+        [CMIUtility Log:@"didFinishLaunchingWithOptions()"];
+        
         self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         // Override point for customization after application launch.
         [self setupByPreferences];
@@ -147,7 +146,7 @@ CMIMasterViewController* _cmiMasterViewController;
         return YES;
     }
     @catch (NSException * e) {
-        [CMIUtility Log:e.reason];
+        [CMIUtility LogError:e.reason];
     }
 }
 
@@ -166,10 +165,20 @@ CMIMasterViewController* _cmiMasterViewController;
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
     
-    NSNumber *number = [NSNumber numberWithInt:_cmiMasterViewController.cmiEventCalendar.filterType];
-    [[NSUserDefaults standardUserDefaults] setObject:number forKey:kfilterTypeKey];
+    @try {
+        [CMIUtility Log:@"applicationDidEnterBackground()"];
     
-    [[NSUserDefaults standardUserDefaults] synchronize];
+        NSNumber *number = [NSNumber numberWithInt:_cmiMasterViewController.cmiEventCalendar.filterType];
+        [[NSUserDefaults standardUserDefaults] setObject:number forKey:kfilterTypeKey];
+        
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    @catch (NSException * e) {
+        [CMIUtility LogError:e.reason];
+    }
+    @finally {
+        // Insert any cleanup...
+    }    
     
 }
 
@@ -194,11 +203,33 @@ CMIMasterViewController* _cmiMasterViewController;
      Save data if appropriate.
      See also applicationDidEnterBackground:.
      */
-//    [[NSUserDefaults standardUserDefaults] setValue:[self filterType] forKey:kfilterTypeKey];
-    NSNumber *number = [NSNumber numberWithInt:_cmiMasterViewController.cmiEventCalendar.filterType];
-    [[NSUserDefaults standardUserDefaults] setObject:number forKey:kfilterTypeKey];
+    @try {
+        [CMIUtility Log:@"applicationWillTerminate()"];
+        
+        NSNumber *number = [NSNumber numberWithInt:_cmiMasterViewController.cmiEventCalendar.filterType];
+        [[NSUserDefaults standardUserDefaults] setObject:number forKey:kfilterTypeKey];
+        
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    @catch (NSException * e) {
+        [CMIUtility LogError:e.reason];
+    }
+    @finally {
+        // Insert any cleanup...
+    }    
+
+    @try {
+        [CMIUtility Log:@"()"];
+        
+    }
+    @catch (NSException * e) {
+        [CMIUtility LogError:e.reason];
+    }
+    @finally {
+        // Insert any cleanup...
+    }    
     
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     
 }
 

@@ -65,41 +65,61 @@ NSTimer* _tapTimer;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"numberOfRowsInSection");
-    
-    // Get number of events in a day
-    CMIDay* cmiDay = [_cmiEventCalendar getCMIDayByIndex:section];
 
-    return cmiDay.cmiEvents.count;
+    @try {
+        [CMIUtility Log:@"numberOfRowsInSection()"];
+        
+        // Get number of events in a day
+        CMIDay* cmiDay = [_cmiEventCalendar getCMIDayByIndex:section];
+        
+        return cmiDay.cmiEvents.count;
+    }
+    @catch (NSException * e) {
+        [CMIUtility LogError:e.reason];
+    }
 }
 
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section {
-    NSLog(@"titleForHeaderInSection()");
+    @try {
+        [CMIUtility Log:@"titleForHeaderInSection()"];
 	
-    // Section title is the region name
-    NSString* day = [_cmiEventCalendar getCMIDayNameByIndex:section];
+        // Section title is the region name
+        NSString* day = [_cmiEventCalendar getCMIDayNameByIndex:section];
 
-    return day;
+        return day;
+    }
+    @catch (NSException * e) {
+        [CMIUtility LogError:e.reason];
+    }
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
     
-	NSLog(@"cellForRowAtIndexPath()");    
-	static NSString *CellIdentifier = @"EventCell";
-	
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	
-	if (cell == nil) {
-		cell = [self tableViewCellWithReuseIdentifier:CellIdentifier];
-	}
-    
-    // Add disclosure triangle to cell
-	UITableViewCellAccessoryType editableCellAccessoryType =UITableViewCellAccessoryDisclosureIndicator;
-	cell.accessoryType = editableCellAccessoryType;
-    
-	// configureCell:cell forIndexPath: sets the text and image for the cell -- the method is factored out as it's also called during minuted-based updates.
-	[self configureCell:cell forIndexPath:indexPath];
-	return cell;
+    @try {
+        [CMIUtility Log:@"cellForRowAtIndexPath()"];
+        
+        static NSString *CellIdentifier = @"EventCell";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (cell == nil) {
+            cell = [self tableViewCellWithReuseIdentifier:CellIdentifier];
+        }
+        
+        // Add disclosure triangle to cell
+        UITableViewCellAccessoryType editableCellAccessoryType =UITableViewCellAccessoryDisclosureIndicator;
+        cell.accessoryType = editableCellAccessoryType;
+        
+        // configureCell:cell forIndexPath: sets the text and image for the cell -- the method is factored out as it's also called during minuted-based updates.
+        [self configureCell:cell forIndexPath:indexPath];
+
+        return cell;
+    }
+    @catch (NSException * e) {
+        [CMIUtility LogError:e.reason];
+    }
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -173,6 +193,8 @@ NSTimer* _tapTimer;
 //TODO:refactor?
 - (void)readAppSettings
 {
+    [CMIUtility Log:@"readAppSettings()"];
+    
     ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
         
     _cmiEventCalendar.fetchAllEvents = appDelegate.debugMode;
@@ -189,14 +211,6 @@ NSTimer* _tapTimer;
 - (NSArray *)fetchEventsForTable 
 {
     NSLog(@"fetchEventsForTable()");
-
-    //TODO: move this to the notification receiving event?
-    
-	// Create the predicate. Pass it the default calendar.
-//	ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
-//    
-//    _cmiEventCalendar.fetchAllEvents = appDelegate.debugMode;
-//    _cmiEventCalendar.calendarType = appDelegate.calendarType;
     
     return [_cmiEventCalendar fetchEvents];
 }
@@ -236,32 +250,48 @@ NSTimer* _tapTimer;
 
 - (void) storeChanged:(NSNotification *) notification
 {
-    NSLog(@"storeChanged() notification  [ %@ ] ", notification.name);
     
-    // [notification name] should always be @"TestNotification"
-    // unless you use this method for observation of other notifications
-    // as well.
+    @try {
+        [CMIUtility Log:[@"storeChanged() notification" stringByAppendingFormat:@"[ %@ ] ", notification.name ]];
 
-    //TODO: Refactor...move to CMISettings class
-	ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
+        // [notification name] should always be @"TestNotification"
+        // unless you use this method for observation of other notifications
+        // as well.
+        
+        //TODO: Refactor...move to CMISettings class
+        ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
+        
+        _cmiEventCalendar.fetchAllEvents = appDelegate.debugMode;
+        _cmiEventCalendar.calendarType = appDelegate.calendarType;
+        
+        
+        [self reloadTableScrollToNow];
+    }
+    @catch (NSException *e) {
+        [CMIUtility LogError:e.reason];
+    }
     
-    _cmiEventCalendar.fetchAllEvents = appDelegate.debugMode;
-    _cmiEventCalendar.calendarType = appDelegate.calendarType;
-    
-
-    [self reloadTableScrollToNow];
 }
 
 - (void)menuAction:(id)sender
 {
-	// open a dialog with just an OK button
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"MenuButtonTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"HelpButtonTitle",@""),@"About",nil];
-	actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-	[actionSheet showInView:self.view];	// show from our table view (pops up in the middle of the table)
+    @try {
+        [CMIUtility Log:@"menuAction()"];
+        
+        // open a dialog with just an OK button
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"MenuButtonTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"HelpButtonTitle",@""),@"About",nil];
+        actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+        [actionSheet showInView:self.view];	// show from our table view (pops up in the middle of the table)
+    }
+    @catch (NSException *e) {
+        [CMIUtility LogError:e.reason];
+    }
     
 }
 - (void) createMenuButton
 {
+    [CMIUtility Log:@"createMenuButton()"];
+
     // add tint bar button
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"MenuButtonTitle", @"")
                                                                    style:UIBarButtonItemStyleBordered
@@ -274,16 +304,24 @@ NSTimer* _tapTimer;
 // added to the default calendar. An exception is raised if set to an event that is not in the 
 // specified event store.
 - (void)addEvent:(id)sender {
-	// When add button is pushed, create an EKEventEditViewController to display the event.
-	EKEventEditViewController *addController = [[EKEventEditViewController alloc] initWithNibName:nil bundle:nil];
-	
-	// set the addController's event store to the current event store.
-	addController.eventStore = _cmiEventCalendar.eventStore;
-	
-	// present EventsAddViewController as a modal view controller
-	[self presentModalViewController:addController animated:YES];
-	
-	addController.editViewDelegate = self;
+
+    @try {
+        
+        // When add button is pushed, create an EKEventEditViewController to display the event.
+        EKEventEditViewController *addController = [[EKEventEditViewController alloc] initWithNibName:nil bundle:nil];
+        
+        // set the addController's event store to the current event store.
+        addController.eventStore = _cmiEventCalendar.eventStore;
+        
+        // present EventsAddViewController as a modal view controller
+        [self presentModalViewController:addController animated:YES];
+        
+        addController.editViewDelegate = self;
+    }
+    @catch (NSException *e) {
+        [CMIUtility LogError:e.reason];
+    }
+    
 }
 
 #pragma mark -
@@ -334,15 +372,21 @@ NSTimer* _tapTimer;
 
 - (void)eventFilterChanged:(id)sender
 {    
-    NSLog(@"eventFilterChanged()");
+    @try {
+        
+        [CMIUtility Log:@"eventFilterChanged()"];
 
-    eventFilterTypes selectionIndex = ((UISegmentedControl*)sender).selectedSegmentIndex;
+        eventFilterTypes selectionIndex = ((UISegmentedControl*)sender).selectedSegmentIndex;
 
-    if (selectionIndex != _cmiEventCalendar.filterType) {    
-        _cmiEventCalendar.filterType = selectionIndex;
-    
-        [self reloadTableScrollToNow];
-    }    
+        if (selectionIndex != _cmiEventCalendar.filterType) {    
+            _cmiEventCalendar.filterType = selectionIndex;
+        
+            [self reloadTableScrollToNow];
+        }    
+    }
+    @catch (NSException *e) {
+        [CMIUtility LogError:e.reason];
+    }
 
 }
 
@@ -350,65 +394,75 @@ NSTimer* _tapTimer;
 #pragma mark View life-cycle
 
 - (void)viewDidLoad {
-    NSLog(@"viewDidLoad()");
     
-    //TODO: figure this out
-    //	self.title = NSLocalizedString(@"Time Zones", @"Time Zones title");
-	self.title = @"Calendar";
-    [self createMenuButton];
-    
-	self.tableView.rowHeight = ROW_HEIGHT;
-    _phoneImage = [UIImage imageNamed:@"phone.png"];
-
-    _cmiEventCalendar = [[CMIEventCalendar alloc] init];
-    // NB: you cannot read app settings before instantiating the calendar
-    [self readAppSettings];
-    // This will only do anything if we are in the Simulator
-    [CMIUtility createTestEvents:_cmiEventCalendar.eventStore];
-    
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
-                                                 name:EKEventStoreChangedNotification object:_cmiEventCalendar.eventStore];
-
-    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;    
-    self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;    
-    self.view.autoresizesSubviews = true;
-    self.tableView.autoresizesSubviews = true;
-
-	//	Create an Add button 
-	UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:
-                                      UIBarButtonSystemItemAdd target:self action:@selector(addEvent:)];
-	self.navigationItem.rightBarButtonItem = addButtonItem;
-    
-    
-    NSArray *segmentedItems = [NSArray arrayWithObjects:@"All Events", @"Conf Call Events", nil];
-    UISegmentedControl *ctrl = [[UISegmentedControl alloc] initWithItems:segmentedItems];
-    ctrl.segmentedControlStyle = UISegmentedControlStyleBar;
-    ctrl.selectedSegmentIndex = _cmiEventCalendar.filterType;
-
-    [ctrl addTarget:self
-          action:@selector(eventFilterChanged:)
-          forControlEvents:UIControlEventValueChanged];
-    
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:ctrl];
-    ctrl.frame = CGRectMake(0.0f, 5.0f, 320.0f, 30.0f);
-    
-    NSArray *theToolbarItems = [NSArray arrayWithObjects:item, nil];
-    [self setToolbarItems:theToolbarItems];
+    @try {
+        [CMIUtility Log:@"viewDidLoad()"];
         
-    [self reloadTableScrollToNow];
+        //TODO: figure this out
+        //	self.title = NSLocalizedString(@"Time Zones", @"Time Zones title");
+        self.title = @"Calendar";
+        [self createMenuButton];
+        
+        self.tableView.rowHeight = ROW_HEIGHT;
+        _phoneImage = [UIImage imageNamed:@"phone.png"];
+
+        _cmiEventCalendar = [[CMIEventCalendar alloc] init];
+        // NB: you cannot read app settings before instantiating the calendar
+        [self readAppSettings];
+        // This will only do anything if we are in the Simulator
+        [CMIUtility createTestEvents:_cmiEventCalendar.eventStore];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
+                                                     name:EKEventStoreChangedNotification object:_cmiEventCalendar.eventStore];
+
+        self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;    
+        self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;    
+        self.view.autoresizesSubviews = true;
+        self.tableView.autoresizesSubviews = true;
+
+        //	Create an Add button 
+        UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:
+                                          UIBarButtonSystemItemAdd target:self action:@selector(addEvent:)];
+        self.navigationItem.rightBarButtonItem = addButtonItem;
+        
+        
+        NSArray *segmentedItems = [NSArray arrayWithObjects:@"All Events", @"Conf Call Events", nil];
+        UISegmentedControl *ctrl = [[UISegmentedControl alloc] initWithItems:segmentedItems];
+        ctrl.segmentedControlStyle = UISegmentedControlStyleBar;
+        ctrl.selectedSegmentIndex = _cmiEventCalendar.filterType;
+
+        [ctrl addTarget:self
+              action:@selector(eventFilterChanged:)
+              forControlEvents:UIControlEventValueChanged];
+        
+        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:ctrl];
+        ctrl.frame = CGRectMake(0.0f, 5.0f, 320.0f, 30.0f);
+        
+        NSArray *theToolbarItems = [NSArray arrayWithObjects:item, nil];
+        [self setToolbarItems:theToolbarItems];
+            
+        [self reloadTableScrollToNow];
+        
+        [self showStartDialog];
     
-    [self showStartDialog];
-    
+    }
+    @catch (NSException *e) {
+        [CMIUtility LogError:e.reason];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [CMIUtility Log:@"viewDidAppear()"];
+    
     self.navigationController.toolbarHidden = NO;
     
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+    [CMIUtility Log:@"shouldAutorotateToInterfaceOrientation()"];
+
     // Return YES for supported orientations
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
@@ -451,96 +505,109 @@ NSTimer* _tapTimer;
 	/*
 	 Create an instance of UITableViewCell and add tagged subviews for the name, local time, and quarter image of the time zone.
 	 */
-    
-	UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    
-	/*
-	 Create labels for the text fields; set the highlight color so that when the cell is selected it changes appropriately.
-     */
-	UILabel *timeLabel;
-	CGRect rect;
 
-//	// Create a label for the event time.
-//	rect = CGRectMake(0, 0, RIGHT_COLUMN_OFFSET, ROW_HEIGHT);
-//	timeLabel = [[UILabel alloc] initWithFrame:rect];
-//	timeLabel.tag = DUMMY_LEFT_CELL_TAG;
-//	[cell.contentView addSubview:timeLabel];
-	
-	// Create a label for the event time.
-	rect = CGRectMake(LEFT_COLUMN_OFFSET, (ROW_HEIGHT - LABEL_HEIGHT) / 2.0, LEFT_COLUMN_WIDTH, LABEL_HEIGHT);
-	timeLabel = [[UILabel alloc] initWithFrame:rect];
-	timeLabel.tag = TIME_TAG;
-	timeLabel.font = [UIFont systemFontOfSize:MAIN_FONT_SIZE];
-	timeLabel.adjustsFontSizeToFitWidth = NO;
-	[cell.contentView addSubview:timeLabel];
-	timeLabel.highlightedTextColor = [UIColor whiteColor];
-    timeLabel.backgroundColor = [UIColor clearColor];
-	    
-	UILabel *topLabel;
-	UILabel *middleLabel;
-	UILabel *bottomLabel;
+    @try {
+        [CMIUtility Log:@"tableViewCellWithReuseIdentifier()"];
+        
     
-    topLabel =
-    [[UILabel alloc]
-      initWithFrame:
-      CGRectMake(
-                 RIGHT_COLUMN_OFFSET,
-                 0.333333 * (self.tableView.rowHeight - 3 * LABEL_HEIGHT), //LABEL_UPPER,//
-                 self.tableView.bounds.size.width - (2 * cell.indentationWidth) - RIGHT_COLUMN_OFFSET,
-                 LABEL_HEIGHT)];
-    topLabel.tag = EVENT_TITLE_TAG;
-    topLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth; 
-    topLabel.backgroundColor = [UIColor clearColor];
-//    topLabel.textColor = [UIColor colorWithRed:0.25 green:0.0 blue:0.0 alpha:1.0];
-//    topLabel.highlightedTextColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.9 alpha:1.0];
-    topLabel.font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize] - 2];
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        
+        /*
+         Create labels for the text fields; set the highlight color so that when the cell is selected it changes appropriately.
+         */
+        UILabel *timeLabel;
+        CGRect rect;
 
-    middleLabel =
-    [[UILabel alloc]
-     initWithFrame:
-     CGRectMake(
-                RIGHT_COLUMN_OFFSET,
-                LABEL_MIDDLE,// 0.5 * (self.tableView.rowHeight - 2 * LABEL_HEIGHT) + LABEL_HEIGHT,
-                RIGHT_COLUMN_WIDTH, // - (LABEL_HEIGHT + 4),
-                LABEL_HEIGHT)];
-    
-    middleLabel.tag = EVENT_ORGANIZER_TAG;
-    middleLabel.font = [UIFont systemFontOfSize:[UIFont labelFontSize] - 4];
-    middleLabel.backgroundColor = [UIColor clearColor];
+    //	// Create a label for the event time.
+    //	rect = CGRectMake(0, 0, RIGHT_COLUMN_OFFSET, ROW_HEIGHT);
+    //	timeLabel = [[UILabel alloc] initWithFrame:rect];
+    //	timeLabel.tag = DUMMY_LEFT_CELL_TAG;
+    //	[cell.contentView addSubview:timeLabel];
+        
+        // Create a label for the event time.
+        rect = CGRectMake(LEFT_COLUMN_OFFSET, (ROW_HEIGHT - LABEL_HEIGHT) / 2.0, LEFT_COLUMN_WIDTH, LABEL_HEIGHT);
+        timeLabel = [[UILabel alloc] initWithFrame:rect];
+        timeLabel.tag = TIME_TAG;
+        timeLabel.font = [UIFont systemFontOfSize:MAIN_FONT_SIZE];
+        timeLabel.adjustsFontSizeToFitWidth = NO;
+        [cell.contentView addSubview:timeLabel];
+        timeLabel.highlightedTextColor = [UIColor whiteColor];
+        timeLabel.backgroundColor = [UIColor clearColor];
+            
+        UILabel *topLabel;
+        UILabel *middleLabel;
+        UILabel *bottomLabel;
+        
+        topLabel =
+        [[UILabel alloc]
+          initWithFrame:
+          CGRectMake(
+                     RIGHT_COLUMN_OFFSET,
+                     0.333333 * (self.tableView.rowHeight - 3 * LABEL_HEIGHT), //LABEL_UPPER,//
+                     self.tableView.bounds.size.width - (2 * cell.indentationWidth) - RIGHT_COLUMN_OFFSET,
+                     LABEL_HEIGHT)];
+        topLabel.tag = EVENT_TITLE_TAG;
+        topLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth; 
+        topLabel.backgroundColor = [UIColor clearColor];
+    //    topLabel.textColor = [UIColor colorWithRed:0.25 green:0.0 blue:0.0 alpha:1.0];
+    //    topLabel.highlightedTextColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.9 alpha:1.0];
+        topLabel.font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize] - 2];
 
-    
-    bottomLabel =
-    [[UILabel alloc]
-      initWithFrame:
-      CGRectMake(
-                 RIGHT_COLUMN_OFFSET + (LABEL_HEIGHT + 4),
-                 LABEL_LOWER,// 0.5 * (self.tableView.rowHeight - 2 * LABEL_HEIGHT) + LABEL_HEIGHT,
-                 RIGHT_COLUMN_WIDTH - (LABEL_HEIGHT + 4), // - (LABEL_HEIGHT + 4),
-                 LABEL_HEIGHT)];
-    
-    bottomLabel.tag = EVENT_PHONE_NUMBER_TAG;
-    bottomLabel.font = [UIFont systemFontOfSize:[UIFont labelFontSize] - 6];
-    bottomLabel.backgroundColor = [UIColor clearColor];
+        middleLabel =
+        [[UILabel alloc]
+         initWithFrame:
+         CGRectMake(
+                    RIGHT_COLUMN_OFFSET,
+                    LABEL_MIDDLE,// 0.5 * (self.tableView.rowHeight - 2 * LABEL_HEIGHT) + LABEL_HEIGHT,
+                    RIGHT_COLUMN_WIDTH, // - (LABEL_HEIGHT + 4),
+                    LABEL_HEIGHT)];
+        
+        middleLabel.tag = EVENT_ORGANIZER_TAG;
+        middleLabel.font = [UIFont systemFontOfSize:[UIFont labelFontSize] - 4];
+        middleLabel.backgroundColor = [UIColor clearColor];
 
-    [cell.contentView addSubview:topLabel];
-    [cell.contentView addSubview:middleLabel];
-    [cell.contentView addSubview:bottomLabel];
+        
+        bottomLabel =
+        [[UILabel alloc]
+          initWithFrame:
+          CGRectMake(
+                     RIGHT_COLUMN_OFFSET + (LABEL_HEIGHT + 4),
+                     LABEL_LOWER,// 0.5 * (self.tableView.rowHeight - 2 * LABEL_HEIGHT) + LABEL_HEIGHT,
+                     RIGHT_COLUMN_WIDTH - (LABEL_HEIGHT + 4), // - (LABEL_HEIGHT + 4),
+                     LABEL_HEIGHT)];
+        
+        bottomLabel.tag = EVENT_PHONE_NUMBER_TAG;
+        bottomLabel.font = [UIFont systemFontOfSize:[UIFont labelFontSize] - 6];
+        bottomLabel.backgroundColor = [UIColor clearColor];
 
-	// Create an image view for the quarter image.// MCW WAS IMAGE_SIDE
-	rect = CGRectMake(RIGHT_COLUMN_OFFSET, 
-                      LABEL_LOWER,// 0.5 * (self.tableView.rowHeight - 2 * LABEL_HEIGHT) + LABEL_HEIGHT,
-                      LABEL_HEIGHT - 4, 
-                      LABEL_HEIGHT - 4);
-    
-	UIImageView *imageView = [[UIImageView alloc] initWithFrame:rect];
-	imageView.tag = IMAGE_TAG;
-    imageView.backgroundColor = [UIColor clearColor];
+        [cell.contentView addSubview:topLabel];
+        [cell.contentView addSubview:middleLabel];
+        [cell.contentView addSubview:bottomLabel];
 
-	[cell.contentView addSubview:imageView];
+        // Create an image view for the quarter image.// MCW WAS IMAGE_SIDE
+        rect = CGRectMake(RIGHT_COLUMN_OFFSET, 
+                          LABEL_LOWER,// 0.5 * (self.tableView.rowHeight - 2 * LABEL_HEIGHT) + LABEL_HEIGHT,
+                          LABEL_HEIGHT - 4, 
+                          LABEL_HEIGHT - 4);
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:rect];
+        imageView.tag = IMAGE_TAG;
+        imageView.backgroundColor = [UIColor clearColor];
 
-    cell.backgroundView =[[UIImageView alloc] init];
-	
-	return cell;
+        [cell.contentView addSubview:imageView];
+
+        cell.backgroundView =[[UIImageView alloc] init];
+        
+        return cell;
+    }
+    @catch (NSException * e) {
+        [CMIUtility LogError:e.reason];
+    }
+    @finally {
+        // Insert any cleanup...
+    }    
+
+        
 }
 
 //TODO: MOVE this somewhere...parameterize
@@ -582,64 +649,79 @@ NSTimer* _tapTimer;
 
 
 - (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"configureCell()");
+
+    @try {
+        NSLog(@"configureCell()");
+        
+        /*
+         Cache the formatter. Normally you would use one of the date formatter styles (such as NSDateFormatterShortStyle), but here we want a specific format that excludes seconds.
+         */
+        static NSDateFormatter *dateFormatter = nil;
+        if (dateFormatter == nil) {
+            dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"h:mm a"];
+        }
+        
+        // Get the event at the row selected and display it's title
+        CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEventByIndexPath:indexPath.section eventIndex:indexPath.row];
+        NSDate* eventStartDate = [[cmiEvent ekEvent] startDate];
+        NSString* eventDateStr = [dateFormatter stringFromDate:eventStartDate];
+        
+        UILabel *label;
+        UIImage *rowBackground;
+        if ([self eventIsNow:cmiEvent.ekEvent] ) {
+            rowBackground = [UIImage imageNamed:@"middleRowSelected.png"];            
+        }
+        else {
+            rowBackground = [UIImage imageNamed:@"middleRow.png"];            
+        }
+        ((UIImageView *)cell.backgroundView).image = rowBackground;
+        
+        // Set the event title name.
+        label = (UILabel *)[cell viewWithTag:EVENT_TITLE_TAG];
+        label.text = ([[cmiEvent ekEvent] title] != nil) ? [[cmiEvent ekEvent] title] : @"New Event";// wrapper.localeName;
+        
+        label = (UILabel *)[cell viewWithTag:EVENT_ORGANIZER_TAG];
+        label.text = ([[cmiEvent ekEvent] organizer] != nil) ? [[[cmiEvent ekEvent] organizer] name] : @"No Organizer";// wrapper.	
+        
+        // Set the time.
+        label = (UILabel *)[cell viewWithTag:TIME_TAG];
+        label.text = eventDateStr;// [dateFormatter stringFromDate:[NSDate date]];
+        
+        // Set the image.
+        UIImageView *imageView = (UIImageView *)[cell viewWithTag:IMAGE_TAG];
+        if (cmiEvent.hasConferenceNumber == true) {
+            imageView.image = _phoneImage;        
+            label = (UILabel *)[cell viewWithTag:EVENT_PHONE_NUMBER_TAG];
+            label.text = cmiEvent.conferenceNumber;
+        }
+        else {
+            imageView.image = nil;
+            label = (UILabel *)[cell viewWithTag:EVENT_PHONE_NUMBER_TAG];
+            label.text = @"";
+        }
     
-    /*
-	 Cache the formatter. Normally you would use one of the date formatter styles (such as NSDateFormatterShortStyle), but here we want a specific format that excludes seconds.
-	 */
-	static NSDateFormatter *dateFormatter = nil;
-	if (dateFormatter == nil) {
-		dateFormatter = [[NSDateFormatter alloc] init];
-		[dateFormatter setDateFormat:@"h:mm a"];
-	}
-	
-	// Get the event at the row selected and display it's title
-    CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEventByIndexPath:indexPath.section eventIndex:indexPath.row];
-    NSDate* eventStartDate = [[cmiEvent ekEvent] startDate];
-    NSString* eventDateStr = [dateFormatter stringFromDate:eventStartDate];
+    }
+    @catch (NSException * e) {
+        [CMIUtility LogError:e.reason];
+    }
+    @finally {
+        // Insert any cleanup...
+    }    
     
-	UILabel *label;
-    UIImage *rowBackground;
-    if ([self eventIsNow:cmiEvent.ekEvent] ) {
-        rowBackground = [UIImage imageNamed:@"middleRowSelected.png"];            
-    }
-	else {
-        rowBackground = [UIImage imageNamed:@"middleRow.png"];            
-    }
-    ((UIImageView *)cell.backgroundView).image = rowBackground;
-    
-	// Set the event title name.
-	label = (UILabel *)[cell viewWithTag:EVENT_TITLE_TAG];
-	label.text = ([[cmiEvent ekEvent] title] != nil) ? [[cmiEvent ekEvent] title] : @"New Event";// wrapper.localeName;
-	
-    label = (UILabel *)[cell viewWithTag:EVENT_ORGANIZER_TAG];
-	label.text = ([[cmiEvent ekEvent] organizer] != nil) ? [[[cmiEvent ekEvent] organizer] name] : @"No Organizer";// wrapper.	
-    
-	// Set the time.
-	label = (UILabel *)[cell viewWithTag:TIME_TAG];
-	label.text = eventDateStr;// [dateFormatter stringFromDate:[NSDate date]];
-	
-	// Set the image.
-	UIImageView *imageView = (UIImageView *)[cell viewWithTag:IMAGE_TAG];
-    if (cmiEvent.hasConferenceNumber == true) {
-        imageView.image = _phoneImage;        
-        label = (UILabel *)[cell viewWithTag:EVENT_PHONE_NUMBER_TAG];
-        label.text = cmiEvent.conferenceNumber;
-    }
-    else {
-        imageView.image = nil;
-        label = (UILabel *)[cell viewWithTag:EVENT_PHONE_NUMBER_TAG];
-        label.text = @"";
-    }
 }    
 
 - (void) showAboutDialog
 {
+    [CMIUtility Log:@"showAboutDialog()"];
+    
     _cmiAboutViewController = [CMIAboutViewController alloc];
     [self.navigationController pushViewController:_cmiAboutViewController animated:YES];
 }
 - (void) showHelpDialog
 {
+    [CMIUtility Log:@"showHelpDialog()"];
+
     _cmiHelpViewController = [[CMIHelpViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:_cmiHelpViewController animated:YES];
 }
@@ -649,20 +731,32 @@ NSTimer* _tapTimer;
     
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    // the user clicked one of the OK/Cancel buttons
-    switch (buttonIndex) {
-        case 0:
-            NSLog(@"Help");
-            [self showHelpDialog];
-            break;
-        case 1:
-            NSLog(@"About"); 
-            [self showAboutDialog];
-            break;
-        default:
-            NSLog(@"Cancel");
-            break;
+    
+    @try {
+        [CMIUtility Log:@"clickedButtonAtIndex()"];
+
+        // the user clicked one of the OK/Cancel buttons
+        switch (buttonIndex) {
+            case 0:
+                NSLog(@"Help");
+                [self showHelpDialog];
+                break;
+            case 1:
+                NSLog(@"About"); 
+                [self showAboutDialog];
+                break;
+            default:
+                NSLog(@"Cancel");
+                break;
+        }
     }
+    @catch (NSException * e) {
+        [CMIUtility LogError:e.reason];
+    }
+    @finally {
+        // Insert any cleanup...
+    }    
+
 }
     
 

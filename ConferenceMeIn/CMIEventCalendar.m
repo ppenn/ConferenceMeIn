@@ -67,7 +67,6 @@ NSDate* _eventsEndDate = nil;
         if (events.count > 0) {
             for (currentDayRow = 0; currentDayRow < (events.count -1); currentDayRow++) {
                 CMIEvent* event = [events objectAtIndex:currentDayRow];
-//                CMIEvent* event = [[[_cmiDaysArray objectAtIndex:currentDayRow] cmiEvents] objectAtIndex:currentDayRow];            
                 // If event is current
                 if ([CMIUtility date:date isBetweenDate:event.ekEvent.startDate andDate:event.ekEvent.endDate] == true) {
                     break;
@@ -84,6 +83,10 @@ NSDate* _eventsEndDate = nil;
     NSIndexPath *scrollIndexPath = nil;
     if (currentDayRow > -1) {
         scrollIndexPath = [NSIndexPath indexPathForRow:currentDayRow inSection:currentDaySection];
+    }
+    else if (currentDaySection > -1) {
+        // Get the last row 
+        scrollIndexPath = [NSIndexPath indexPathForRow:NSNotFound inSection:currentDaySection];
     }
     return scrollIndexPath;
 }
