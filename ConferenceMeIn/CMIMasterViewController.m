@@ -45,7 +45,7 @@ NSTimer* _tapTimer;
     NSLog(@"showEventNatively()");
     
     self.detailViewController = [[CMIEKEventViewController alloc] initWithNibName:nil bundle:nil];        
-    CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEvent:section eventIndex:row];
+    CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEventByIndexPath:section eventIndex:row];
     _detailViewController.event = [cmiEvent ekEvent];
     
     _detailViewController.allowsEditing = YES;
@@ -58,22 +58,27 @@ NSTimer* _tapTimer;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
-	// Number of sections is the number of regions
+	// Number of days in calendar
     NSInteger numSections = [_cmiEventCalendar.cmiDaysArray count];
+
     return numSections;
 }
 
-//TODO: sort this out per section...when sections arrive
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSMutableArray* events = [_cmiEventCalendar.daysEvents objectForKey:[_cmiEventCalendar.eventDays objectAtIndex:section]];
-    return [events count];
+    NSLog(@"numberOfRowsInSection");
+    
+    // Get number of events in a day
+    CMIDay* cmiDay = [_cmiEventCalendar getCMIDayByIndex:section];
+
+    return cmiDay.cmiEvents.count;
 }
 
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section {
     NSLog(@"titleForHeaderInSection()");
 	
     // Section title is the region name
-    NSString* day = [CMIUtility formatDateAsDay:[_cmiEventCalendar.eventDays objectAtIndex:section]];    
+    NSString* day = [_cmiEventCalendar getCMIDayNameByIndex:section];
+
     return day;
 }
 
@@ -109,7 +114,7 @@ NSTimer* _tapTimer;
             //double tap - Put your double tap code here            
             [_tapTimer invalidate];
             _tapTimer = nil;
-            CMIEvent* cmiEvent = [_cmiEventCalendar getCMIEvent:_tappedSection eventIndex:_tappedRow];
+            CMIEvent* cmiEvent = [_cmiEventCalendar getCMIEventByIndexPath:_tappedSection eventIndex:_tappedRow];
             [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
             _tappedRow = -1;
             _tappedSection = -1;
@@ -312,19 +317,17 @@ NSTimer* _tapTimer;
 }
 
 - (void)eventFilterChanged:(id)sender
-{
+{    
+    NSLog(@"eventFilterChanged()");
+
     eventFilterTypes selectionIndex = ((UISegmentedControl*)sender).selectedSegmentIndex;
 
-    switch (selectionIndex) {
-        case filterNone:
-            
-            break;            
-        case filterConfCallOnly:
-            break;
-        default:
-            break;
-    }
+    if (selectionIndex != _cmiEventCalendar.filterType) {    
+        _cmiEventCalendar.filterType = selectionIndex;
     
+        [self reloadTableScrollToNow];
+    }    
+
 }
 
 #pragma mark -
@@ -535,7 +538,7 @@ NSTimer* _tapTimer;
 
 - (void)tableView:(UITableView *)tableView willDisplayCell1:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEvent:indexPath.section eventIndex:indexPath.row];
+    CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEventByIndexPath:indexPath.section eventIndex:indexPath.row];
 
     if ([self eventIsNow:cmiEvent.ekEvent] ) {
         ((UILabel *)[cell viewWithTag:TIME_TAG]).backgroundColor = 
@@ -573,7 +576,7 @@ NSTimer* _tapTimer;
 	}
 	
 	// Get the event at the row selected and display it's title
-    CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEvent:indexPath.section eventIndex:indexPath.row];
+    CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEventByIndexPath:indexPath.section eventIndex:indexPath.row];
     NSDate* eventStartDate = [[cmiEvent ekEvent] startDate];
     NSString* eventDateStr = [dateFormatter stringFromDate:eventStartDate];
     

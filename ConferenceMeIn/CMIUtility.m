@@ -117,7 +117,13 @@
     
     event.startDate = startDate;
     event.endDate = endDate;// 
-    event.location = withConfNumber ? @"1800 123 4567 xx 123456789" : @"nada" ; 
+    if (withConfNumber == TRUE) {
+        event.location = withConfNumber ? @"1800 123 4567 xx 123456789" : @"nada" ;         
+    }
+    else {
+        event.location = @"nada" ;                 
+    }
+    
     [event setCalendar:[eventStore defaultCalendarForNewEvents]];
     NSError *err;
     BOOL isSuccess=[eventStore saveEvent:event span:EKSpanThisEvent error:&err];
@@ -170,7 +176,8 @@
     [self createTestEvent:eventStore startDate:beforeStartDate endDate:startDate title:@"testtitle1" withConfNumber:TRUE];
     [self createTestEvent:eventStore startDate:beforeStartDate endDate:startDate title:@"NoConfNumEvent1" withConfNumber:FALSE];
     [self createTestEvent:eventStore startDate:beforeBeforeStartDate endDate:beforeStartDate title:@"testtitle0" withConfNumber:TRUE];
-    [self createTestEvent:eventStore startDate:beforeBeforeStartDate endDate:beforeStartDate title:@"NoConfNumEvent0" withConfNumber:TRUE];
+    [self createTestEvent:eventStore startDate:beforeBeforeStartDate endDate:beforeStartDate title:@"testtitle00" withConfNumber:TRUE];
+    [self createTestEvent:eventStore startDate:beforeBeforeStartDate endDate:beforeStartDate title:@"NoConfNumEvent0" withConfNumber:FALSE];
     
     
 #else // TARGET_IPHONE_SIMULATOR

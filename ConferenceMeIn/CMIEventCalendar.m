@@ -15,12 +15,13 @@
 @synthesize fetchAllEvents = _fetchAllEvents;
 @synthesize calendarType = _calendarType;
 @synthesize defaultCalendar = _defaultCalendar;
-@synthesize daysEvents = _daysEvents;
-@synthesize eventDays = _eventDays;
 @synthesize eventsList = _eventsList;
 @synthesize cmiDaysDictionary = _cmiDaysDictionary;
 @synthesize cmiDaysArray = _cmiDaysArray;
 @synthesize filterType = _filterType;
+
+//@synthesize daysEvents = _daysEvents;
+//@synthesize eventDays = _eventDays;
 
 NSDate* _eventsStartDate = nil;
 NSDate* _eventsEndDate = nil;
@@ -38,8 +39,6 @@ NSDate* _eventsEndDate = nil;
         _calendarType = allCalendars;
         _fetchAllEvents = false;
         _filterType = filterNone;
-        _daysEvents = [[NSMutableDictionary alloc] init];
-        _eventDays = [[NSMutableArray alloc] init];
         
         _cmiDaysDictionary = [[NSMutableDictionary alloc] init]; 
         _cmiDaysArray = [[NSMutableArray alloc] init];
@@ -95,9 +94,11 @@ NSDate* _eventsEndDate = nil;
     NSLog(@"createCMIEvents()");
     
     if (_eventsList != nil) {
-        [_eventsList removeAllObjects];
+        _eventsList = nil;
+//        [_eventsList removeAllObjects];
     }
-    _eventsList = [CMIEvent createCMIEvents:[self fetchEvents]];    
+//    _eventsList = [CMIEvent createCMIEvents:[self fetchEvents]];    
+    _eventsList = [self fetchEvents];    
 }
 
 - (void) createCMIDays
@@ -133,12 +134,13 @@ NSDate* _eventsEndDate = nil;
     NSLog(@"assignCMIEventsToCMIDays()");
     
     // Populate the days with events
-    for (CMIEvent* cmiEvent in _eventsList) {
+    for (EKEvent* event in _eventsList) {
         // Need to convert date into day
-        NSDate* eventDay = [CMIUtility getMidnightDate:cmiEvent.ekEvent.startDate];  	
+        NSDate* eventDay = [CMIUtility getMidnightDate:event.startDate];  	
         // Should we be creating CMIEvent?
-        //CMIEvent* cmiEvent = [[CMIEvent alloc] initWithEKEvent:event];
-        if (_filterType == filterConfCallOnly || cmiEvent.hasConferenceNumber == true) {
+        CMIEvent* cmiEvent = [[CMIEvent alloc] initWithEKEvent:event];
+        
+        if (_filterType == filterNone || cmiEvent.hasConferenceNumber == true) {
             CMIDay* cmiDay = [_cmiDaysDictionary objectForKey:eventDay];
             [cmiDay.cmiEvents addObject:cmiEvent];
         }
@@ -165,60 +167,76 @@ NSDate* _eventsEndDate = nil;
 
 
 
-- (void) assignCMIEventsToDayEvents:(NSDate*)startDate atEndDate:(NSDate*)endDate atEvents:(NSArray*)events
+//- (void) assignCMIEventsToDayEvents:(NSDate*)startDate atEndDate:(NSDate*)endDate atEvents:(NSArray*)events
+//{
+//
+//    // Get the days together
+//    [self calculateDaysEvents:startDate atEndDate:endDate];
+//
+//    // Now populate the number
+//    for (EKEvent* event in events) {
+//        // Need to convert date into day
+//        NSDate* eventDay = [CMIUtility getMidnightDate:event.startDate];  	
+//        NSMutableArray *events = [_daysEvents objectForKey:eventDay];
+//        // Should we be creating CMIEvent?
+//        CMIEvent* cmiEvent = [[CMIEvent alloc] initWithEKEvent:event];
+//        [events addObject:cmiEvent];
+//        [_daysEvents setObject:events forKey:eventDay];        
+//    }
+//
+//}
+//
+//- (void) calculateDaysEvents:(NSDate*)startDate atEndDate:(NSDate*)endDate
+//{
+//    [_daysEvents removeAllObjects];
+//    [_eventDays removeAllObjects];
+//    
+//    NSDate *nextDay=[startDate copy];
+//    
+//    NSCalendar *calendar = [NSCalendar currentCalendar];
+//    NSDateComponents *offset = [[NSDateComponents alloc] init];
+//    
+//    int i = 0;
+//
+//    while (([nextDay compare:endDate] == NSOrderedAscending))
+//    {
+////        NSInteger numEvents = 0; //TODO: get # of events for that "day". going to need to get day range
+//        NSMutableArray* events = [[NSMutableArray alloc] init];
+//        NSDate* nextDayMidnight = [CMIUtility getMidnightDate:nextDay];
+//        [_daysEvents setObject:events forKey:nextDayMidnight];
+//        [_eventDays addObject:nextDayMidnight];
+//
+//        // Move to next day
+//        i++;
+//        [offset setDay:i];
+//        nextDay = [calendar dateByAddingComponents:offset toDate:startDate options:0];
+//    }
+//
+//}
+
+- (CMIEvent*)getCMIEventByIndexPath:(NSInteger)dayEventIndex eventIndex:(NSInteger)eventIndex
 {
-
-    // Get the days together
-    [self calculateDaysEvents:startDate atEndDate:endDate];
-
-    // Now populate the number
-    for (EKEvent* event in events) {
-        // Need to convert date into day
-        NSDate* eventDay = [CMIUtility getMidnightDate:event.startDate];  	
-        NSMutableArray *events = [_daysEvents objectForKey:eventDay];
-        // Should we be creating CMIEvent?
-        CMIEvent* cmiEvent = [[CMIEvent alloc] initWithEKEvent:event];
-        [events addObject:cmiEvent];
-        [_daysEvents setObject:events forKey:eventDay];        
-    }
-
-}
-
-- (void) calculateDaysEvents:(NSDate*)startDate atEndDate:(NSDate*)endDate
-{
-    [_daysEvents removeAllObjects];
-    [_eventDays removeAllObjects];
-    
-    NSDate *nextDay=[startDate copy];
-    
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *offset = [[NSDateComponents alloc] init];
-    
-    int i = 0;
-
-    while (([nextDay compare:endDate] == NSOrderedAscending))
-    {
-//        NSInteger numEvents = 0; //TODO: get # of events for that "day". going to need to get day range
-        NSMutableArray* events = [[NSMutableArray alloc] init];
-        NSDate* nextDayMidnight = [CMIUtility getMidnightDate:nextDay];
-        [_daysEvents setObject:events forKey:nextDayMidnight];
-        [_eventDays addObject:nextDayMidnight];
-
-        // Move to next day
-        i++;
-        [offset setDay:i];
-        nextDay = [calendar dateByAddingComponents:offset toDate:startDate options:0];
-    }
-
-}
-
-- (CMIEvent*)getCMIEvent:(NSInteger)dayEventIndex eventIndex:(NSInteger)eventIndex
-{
-//    NSMutableArray* events = [_daysEvents objectForKey:[_eventDays objectAtIndex:dayEventIndex]];
-//    return (CMIEvent*)[ objectAtIndex:eventIndex];
     CMIDay* cmiDay = [_cmiDaysArray objectAtIndex:dayEventIndex];
     
     return (CMIEvent*)[cmiDay.cmiEvents objectAtIndex:eventIndex];
+}
+
+- (CMIDay*)getCMIDayByIndex:(NSInteger)dayIndex
+{
+    CMIDay* cmiDay = [_cmiDaysArray objectAtIndex:dayIndex];
+    
+    return cmiDay;
+}
+
+- (NSString*)getCMIDayNameByIndex:(NSInteger)dayIndex
+{
+    [CMIUtility Log:@"getCMIDayNameByIndex()"];
+    
+    CMIDay* cmiDay = [self getCMIDayByIndex:dayIndex];
+
+    NSString* day = [CMIUtility formatDateAsDay:cmiDay.dateAtMidnight];
+    
+    return day;
 }
 
 

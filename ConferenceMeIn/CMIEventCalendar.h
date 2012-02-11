@@ -29,9 +29,10 @@ typedef enum eventFilterTypes
 @property (strong, nonatomic, readonly) EKEventStore *eventStore;
 @property (strong, nonatomic) EKCalendar *defaultCalendar;
 
-@property (strong, nonatomic, readonly) NSMutableDictionary* daysEvents;
-@property (strong, nonatomic, readonly) NSMutableArray* eventDays;
-@property (strong, nonatomic, readonly) NSMutableArray* eventsList;
+//@property (strong, nonatomic, readonly) NSMutableDictionary* daysEvents;
+//@property (strong, nonatomic, readonly) NSMutableArray* eventDays;
+
+@property (strong, nonatomic, readonly) NSArray* eventsList;
 
 @property (strong, nonatomic, readonly) NSMutableDictionary* cmiDaysDictionary;
 @property (strong, nonatomic, readonly) NSMutableArray* cmiDaysArray;
@@ -48,8 +49,8 @@ typedef enum eventFilterTypes
 - (NSIndexPath*)getDayEventIndexForDate:(NSDate*)date;
 
 - (NSArray *)fetchEvents;
-- (void) calculateDaysEvents:(NSDate*)startDate atEndDate:(NSDate*)endDate;
-- (CMIEvent*)getCMIEvent:(NSInteger)dayEventIndex eventIndex:(NSInteger)eventIndex;
-
+- (CMIEvent*)getCMIEventByIndexPath:(NSInteger)dayEventIndex eventIndex:(NSInteger)eventIndex;
+- (CMIDay*)getCMIDayByIndex:(NSInteger)dayEventIndex;
+- (NSString*)getCMIDayNameByIndex:(NSInteger)dayEventIndex;
 
 @end
