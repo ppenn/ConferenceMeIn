@@ -56,7 +56,27 @@
 
 - (NSString*) conferenceNumberURL
 {
-    NSString* telLink = @"tel:";
+    NSString* telLink;
+    
+    
+    switch (_callProvider)
+    {
+        case phoneCarrier:
+            telLink = @"tel:";
+            telLink = [telLink stringByAppendingString:_conferenceNumber];
+            break;
+        case google:
+            telLink = @"tktn://call?destination=";            
+            telLink = [telLink stringByAppendingString:_conferenceNumber];
+            telLink = [telLink stringByReplacingOccurrencesOfString:@"," withString:@"%2C"];
+            telLink = [telLink stringByAppendingString:@"%23"];
+//            telLink = @"tktn://call?destination=18776038688%2C%2C8113067%23";
+            break;
+        case skype:
+            break;
+        default:
+            break;
+    }
 //    telLink = @"tktn://call?destination=";
 //    telLink = @"skype:";  
     
@@ -66,8 +86,6 @@
 //    pasteboard = [UIPasteboard generalPasteboard];    
 //    pasteboard.string = @"8113067";
 //    return @"skype:18776038688?call";//&skype:8113067?call";//&token=8113067";
-
-    telLink = [telLink stringByAppendingString:_conferenceNumber];
     
     return telLink;
 }
@@ -90,9 +108,11 @@
 
 }
 
-- (void) dial:(UIView*)view confirmCall:(BOOL)confirmCall
+- (void) dial:(UIView*)view confirmCall:(BOOL)confirmCall callProvider:(NSInteger)callProvider
 {
     NSLog(@"Dialling");
+    
+    _callProvider = callProvider;
 
     if (confirmCall == false) {
         [[UIApplication sharedApplication] 

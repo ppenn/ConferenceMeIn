@@ -24,6 +24,8 @@ NSTimer* _tapTimer;
 @synthesize cmiHelpViewController = _cmiHelpViewController;
 @synthesize cmiAboutViewController = _cmiAboutViewController;
 
+callProviders _callProvider;
+
 #pragma mark -
 #pragma mark Table view delegate and data source methods
 
@@ -139,7 +141,7 @@ NSTimer* _tapTimer;
             _tappedRow = -1;
             _tappedSection = -1;
             if ([cmiEvent hasConferenceNumber] == true) {
-                [cmiEvent dial:self.view confirmCall:false];
+                [cmiEvent dial:self.view confirmCall:false callProvider:_callProvider];
             }
             else {
                 [self showEventNatively:indexPath.section row:indexPath.row];
@@ -197,6 +199,7 @@ NSTimer* _tapTimer;
     
     ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
         
+    _callProvider = appDelegate.callProviderType;
     _cmiEventCalendar.fetchAllEvents = appDelegate.debugMode;
     _cmiEventCalendar.calendarType = appDelegate.calendarType;
     _cmiEventCalendar.filterType = appDelegate.filterType;
@@ -242,6 +245,7 @@ NSTimer* _tapTimer;
 {
     NSLog(@"reloadTableScrollToNow()");
 
+    [self readAppSettings];    
     [self reloadTable];
     [self scrollToNow];
     

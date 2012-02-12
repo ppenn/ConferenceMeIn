@@ -11,8 +11,8 @@
 
 typedef enum callProviders {
     phoneCarrier,
-    skype,
-    google
+    google,
+    skype
 }callProviders;
 
 @interface CMIEvent : NSObject
@@ -22,7 +22,7 @@ typedef enum callProviders {
 
 - (id) initWithEKEvent:(EKEvent*)baseEvent;
 - (void) parseEvent;
-- (void) dial:(UIView*)view confirmCall:(BOOL)confirmCall;
+- (void) dial:(UIView*)view confirmCall:(BOOL)confirmCall callProvider:(NSInteger)callProvider;
 
 @property (readonly, nonatomic,strong) EKEvent* ekEvent;
 @property (readonly, nonatomic,strong) NSString* conferenceNumber;

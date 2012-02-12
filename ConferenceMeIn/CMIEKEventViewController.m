@@ -7,12 +7,21 @@
 //
 
 #import "CMIEKEventViewController.h"
+#import "ConferenceMeInAppDelegate.h"
 
 @implementation CMIEKEventViewController
 
 @synthesize detailItem = _detailItem;
 
+callProviders _callProvider = phoneCarrier;
 
+- (void)viewDidLoad
+{
+    ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    _callProvider = appDelegate.callProviderType;
+    
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -28,7 +37,7 @@
     }
     else
     {
-        [((CMIEvent*) self.detailItem) dial:self.view confirmCall:true];        
+        [((CMIEvent*) self.detailItem) dial:self.view confirmCall:true callProvider:_callProvider];        
 
 //        // open a dialog with an OK and cancel button
 //        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Dial Conference #"
@@ -49,7 +58,7 @@
 	// the user clicked one of the OK/Cancel buttons
 	if (buttonIndex == 0)
 	{
-        [((CMIEvent*) self.detailItem) dial:self.view confirmCall:true];        
+        [((CMIEvent*) self.detailItem) dial:self.view confirmCall:true callProvider:_callProvider];        
 	}
 	else
 	{

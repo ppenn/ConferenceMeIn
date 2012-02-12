@@ -13,6 +13,7 @@
 NSString *kCalendarTypeKey	= @"calendarTypeKey";
 NSString *kfetch28DaysEventsKey = @"fetch28DaysEventsKey";
 NSString *kfilterTypeKey = @"filterTypeKey";
+NSString *kcallProviderTypeKey = @"callProviderTypeKey";
 
 @implementation ConferenceMeInAppDelegate
 
@@ -22,6 +23,7 @@ NSString *kfilterTypeKey = @"filterTypeKey";
 @synthesize debugMode = _debugMode;
 @synthesize firstRun = _firstRun;
 @synthesize filterType = _filterType;
+@synthesize callProviderType = _callProviderType;
 
 CMIMasterViewController* _cmiMasterViewController;
 
@@ -76,6 +78,7 @@ CMIMasterViewController* _cmiMasterViewController;
 		[[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 		[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"firstRun"];
 		[[NSUserDefaults standardUserDefaults] setValue:0 forKey:kfilterTypeKey];
+		[[NSUserDefaults standardUserDefaults] setValue:0 forKey:kcallProviderTypeKey];
 		[[NSUserDefaults standardUserDefaults] setBool:fetch28DaysEventsDefault forKey:kfetch28DaysEventsKey];
         
 		[[NSUserDefaults standardUserDefaults] synchronize];
@@ -86,6 +89,7 @@ CMIMasterViewController* _cmiMasterViewController;
     self.debugMode = [[NSUserDefaults standardUserDefaults] boolForKey:kfetch28DaysEventsKey];
     self.firstRun = firstRun;
     self.filterType = [[NSUserDefaults standardUserDefaults] integerForKey:kfilterTypeKey];
+    self.callProviderType = [[NSUserDefaults standardUserDefaults] integerForKey:kcallProviderTypeKey];
 }
 
 // we are being notified that our preferences have changed (user changed them in the Settings app)
@@ -96,17 +100,14 @@ CMIMasterViewController* _cmiMasterViewController;
     @try {
         [CMIUtility Log:[@"defaultsChanged() " stringByAppendingString:notif.name]];
         // Get the user defaults
-//        NSUserDefaults *defaults = (NSUserDefaults *)[notif object];
-        
-        // Do something with it
-//        NSLog(@"%@", [defaults objectforKey:@"nameOfThingIAmInterestedIn"]);    
         
         if ([self.navigationController.visibleViewController isKindOfClass:[UITableViewController class]]) {
             [self setupByPreferences];
             [_cmiMasterViewController reloadTableScrollToNow];
 
-            UITableView *tableView = ((UITableViewController *)self.navigationController.visibleViewController).    tableView;
-            [tableView reloadData];            
+// Unnecessary?            
+//            UITableView *tableView = ((UITableViewController *)self.navigationController.visibleViewController).tableView;
+//            [tableView reloadData];            
         }
     }
     @catch (NSException * e) {
