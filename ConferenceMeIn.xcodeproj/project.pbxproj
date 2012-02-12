@@ -43,9 +43,6 @@
 		A8E5251514CA0EC800797C16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8E5251314CA0EC800797C16 /* InfoPlist.strings */; };
 		A8E5251714CA0EC800797C16 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E5251614CA0EC800797C16 /* main.m */; };
 		A8E5251B14CA0EC800797C16 /* ConferenceMeInAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E5251A14CA0EC800797C16 /* ConferenceMeInAppDelegate.m */; };
-		A8E5252114CA0EC800797C16 /* ConferenceMeInDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E5252014CA0EC800797C16 /* ConferenceMeInDetailViewController.m */; };
-		A8E5252414CA0EC800797C16 /* ConferenceMeInMasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8E5252214CA0EC800797C16 /* ConferenceMeInMasterViewController.xib */; };
-		A8E5252714CA0EC800797C16 /* ConferenceMeInDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8E5252514CA0EC800797C16 /* ConferenceMeInDetailViewController.xib */; };
 		A8E5252F14CA0EC800797C16 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8E5252E14CA0EC800797C16 /* SenTestingKit.framework */; };
 		A8E5253014CA0EC800797C16 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8E5250A14CA0EC800797C16 /* UIKit.framework */; };
 		A8E5253114CA0EC800797C16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8E5250C14CA0EC800797C16 /* Foundation.framework */; };
@@ -95,7 +92,7 @@
 		A8E1D71F14D133B300E5A877 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		A8E1D72914D22AE400E5A877 /* gradientBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradientBackground.png; sourceTree = "<group>"; };
 		A8E1D72C14D2688F00E5A877 /* confCall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = confCall.png; sourceTree = "<group>"; };
-		A8E1D72F14D26AEE00E5A877 /* CMIEventCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; path = CMIEventCalendar.h; sourceTree = "<group>"; };
+		A8E1D72F14D26AEE00E5A877 /* CMIEventCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIEventCalendar.h; sourceTree = "<group>"; };
 		A8E1D73014D26AEF00E5A877 /* CMIEventCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIEventCalendar.m; sourceTree = "<group>"; };
 		A8E1D73B14D2718900E5A877 /* CMIEventSystemTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIEventSystemTests.h; sourceTree = "<group>"; };
 		A8E1D73C14D2718900E5A877 /* CMIEventSystemTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIEventSystemTests.m; sourceTree = "<group>"; };
@@ -112,10 +109,6 @@
 		A8E5251814CA0EC800797C16 /* ConferenceMeIn-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConferenceMeIn-Prefix.pch"; sourceTree = "<group>"; };
 		A8E5251914CA0EC800797C16 /* ConferenceMeInAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConferenceMeInAppDelegate.h; sourceTree = "<group>"; };
 		A8E5251A14CA0EC800797C16 /* ConferenceMeInAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConferenceMeInAppDelegate.m; sourceTree = "<group>"; };
-		A8E5251F14CA0EC800797C16 /* ConferenceMeInDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConferenceMeInDetailViewController.h; sourceTree = "<group>"; };
-		A8E5252014CA0EC800797C16 /* ConferenceMeInDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConferenceMeInDetailViewController.m; sourceTree = "<group>"; };
-		A8E5252314CA0EC800797C16 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ConferenceMeInMasterViewController.xib; sourceTree = "<group>"; };
-		A8E5252614CA0EC800797C16 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ConferenceMeInDetailViewController.xib; sourceTree = "<group>"; };
 		A8E5252D14CA0EC800797C16 /* ConferenceMeInTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConferenceMeInTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8E5252E14CA0EC800797C16 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		A8E5253614CA0EC800797C16 /* ConferenceMeInTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ConferenceMeInTests-Info.plist"; sourceTree = "<group>"; };
@@ -232,12 +225,8 @@
 				A8E5251A14CA0EC800797C16 /* ConferenceMeInAppDelegate.m */,
 				A8E1D73E14D279E000E5A877 /* CMIMasterViewController.h */,
 				A8E1D73F14D279E000E5A877 /* CMIMasterViewController.m */,
-				A8E5251F14CA0EC800797C16 /* ConferenceMeInDetailViewController.h */,
-				A8E5252014CA0EC800797C16 /* ConferenceMeInDetailViewController.m */,
 				A8E1D71914D1303900E5A877 /* CMIEKEventViewController.h */,
 				A8E1D71A14D1303900E5A877 /* CMIEKEventViewController.m */,
-				A8E5252214CA0EC800797C16 /* ConferenceMeInMasterViewController.xib */,
-				A8E5252514CA0EC800797C16 /* ConferenceMeInDetailViewController.xib */,
 				A8E5251114CA0EC800797C16 /* Supporting Files */,
 				A8E5254A14CA37A100797C16 /* EKEventParser.h */,
 				A8E5254B14CA37A200797C16 /* EKEventParser.m */,
@@ -364,8 +353,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8E5251514CA0EC800797C16 /* InfoPlist.strings in Resources */,
-				A8E5252414CA0EC800797C16 /* ConferenceMeInMasterViewController.xib in Resources */,
-				A8E5252714CA0EC800797C16 /* ConferenceMeInDetailViewController.xib in Resources */,
 				A85FF3B614CEF90100F2CD1C /* Settings.bundle in Resources */,
 				A8E1D72A14D22AE400E5A877 /* gradientBackground.png in Resources */,
 				A8E1D72D14D2688F00E5A877 /* confCall.png in Resources */,
@@ -419,7 +406,6 @@
 			files = (
 				A8E5251714CA0EC800797C16 /* main.m in Sources */,
 				A8E5251B14CA0EC800797C16 /* ConferenceMeInAppDelegate.m in Sources */,
-				A8E5252114CA0EC800797C16 /* ConferenceMeInDetailViewController.m in Sources */,
 				A8E5254C14CA37A200797C16 /* EKEventParser.m in Sources */,
 				A8E1D70C14D0974700E5A877 /* CMIEvent.m in Sources */,
 				A8E1D71B14D1303900E5A877 /* CMIEKEventViewController.m in Sources */,
@@ -476,22 +462,6 @@
 				A8E5251414CA0EC800797C16 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		A8E5252214CA0EC800797C16 /* ConferenceMeInMasterViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A8E5252314CA0EC800797C16 /* en */,
-			);
-			name = ConferenceMeInMasterViewController.xib;
-			sourceTree = "<group>";
-		};
-		A8E5252514CA0EC800797C16 /* ConferenceMeInDetailViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A8E5252614CA0EC800797C16 /* en */,
-			);
-			name = ConferenceMeInDetailViewController.xib;
 			sourceTree = "<group>";
 		};
 		A8E5253714CA0EC800797C16 /* InfoPlist.strings */ = {
