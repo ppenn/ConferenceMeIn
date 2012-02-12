@@ -8,11 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CMIEvent.h"
-//typedef enum calendarTypes
-//{
-//	allCalendars = 0,
-//    defaultCalendarType = 1
-//}calendarTypes;
+#import "CMIUserDefaults.h"
 
 @interface ConferenceMeInAppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -20,11 +16,6 @@
 
 @property (strong, nonatomic) UINavigationController *navigationController;
 
-//TODO: Move these
-@property (nonatomic, assign) NSInteger calendarType;
-@property (nonatomic, assign) BOOL debugMode;
-@property (nonatomic, assign) BOOL firstRun;
-@property (nonatomic, assign) NSInteger filterType;
-@property (nonatomic, assign) callProviders callProviderType;
+@property (strong, nonatomic, readonly) CMIUserDefaults* cmiUserDefaults;
 
 @end

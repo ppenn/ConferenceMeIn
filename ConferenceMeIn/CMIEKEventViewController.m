@@ -8,6 +8,7 @@
 
 #import "CMIEKEventViewController.h"
 #import "ConferenceMeInAppDelegate.h"
+#import "CMIUserDefaults.h"
 
 @implementation CMIEKEventViewController
 
@@ -17,9 +18,11 @@ callProviders _callProvider = phoneCarrier;
 
 - (void)viewDidLoad
 {
-    ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
+    CMIUserDefaults* cmiUserDefaults = ((ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate]).cmiUserDefaults;
     
-    _callProvider = appDelegate.callProviderType;
+    //TODO: this will not refresh if someone changes the defaults while this screen is open
+    //Need to register for those events ourselves?
+    _callProvider = cmiUserDefaults.callProviderType;
     
 }
 

@@ -10,20 +10,12 @@
 #import "CMIMasterViewController.h"
 #import "CMIUtility.h"
 
-NSString *kCalendarTypeKey	= @"calendarTypeKey";
-NSString *kfetch28DaysEventsKey = @"fetch28DaysEventsKey";
-NSString *kfilterTypeKey = @"filterTypeKey";
-NSString *kcallProviderTypeKey = @"callProviderTypeKey";
 
 @implementation ConferenceMeInAppDelegate
 
 @synthesize window = _window;
 @synthesize navigationController = _navigationController;
-@synthesize calendarType = _calendarType;
-@synthesize debugMode = _debugMode;
-@synthesize firstRun = _firstRun;
-@synthesize filterType = _filterType;
-@synthesize callProviderType = _callProviderType;
+@synthesize cmiUserDefaults = _cmiUserDefaults;
 
 CMIMasterViewController* _cmiMasterViewController;
 
@@ -35,62 +27,6 @@ CMIMasterViewController* _cmiMasterViewController;
 
 }
 
-- (void)setupByPreferences
-{
-    NSLog(@"NSUserDefaults dump: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
-    BOOL firstRun = false;
-    
-    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"firstRun"] ) {
-    //do initialization stuff here...
-        firstRun = true;
-		// no default values have been set, create them here based on what's in our Settings bundle info
-		//
-		NSString *pathStr = [[NSBundle mainBundle] bundlePath];
-		NSString *settingsBundlePath = [pathStr stringByAppendingPathComponent:@"Settings.bundle"];
-		NSString *finalPath = [settingsBundlePath stringByAppendingPathComponent:@"Root.plist"];
-        
-		NSDictionary *settingsDict = [NSDictionary dictionaryWithContentsOfFile:finalPath];
-		NSArray *prefSpecifierArray = [settingsDict objectForKey:@"PreferenceSpecifiers"];
-        
-		NSNumber *calendarTypeDefault = nil;
-		bool fetch28DaysEventsDefault = [[NSUserDefaults standardUserDefaults] boolForKey:kfetch28DaysEventsKey];
-        
-		NSDictionary *prefItem;
-		for (prefItem in prefSpecifierArray)
-		{
-			NSString *keyValueStr = [prefItem objectForKey:@"Key"];
-			id defaultValue = [prefItem objectForKey:@"DefaultValue"];
-			
-			if ([keyValueStr isEqualToString:kCalendarTypeKey])
-			{
-				calendarTypeDefault = defaultValue;
-			}
-		}
-        
-        NSDate *today = [NSDate date];        
-
-		// since no default values have been set (i.e. no preferences file created), create it here		
-		NSDictionary *appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
-                                     calendarTypeDefault, kCalendarTypeKey,
-                                     today, @"firstRun",
-                                     nil];
-        
-		[[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
-		[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"firstRun"];
-		[[NSUserDefaults standardUserDefaults] setValue:0 forKey:kfilterTypeKey];
-		[[NSUserDefaults standardUserDefaults] setValue:0 forKey:kcallProviderTypeKey];
-		[[NSUserDefaults standardUserDefaults] setBool:fetch28DaysEventsDefault forKey:kfetch28DaysEventsKey];
-        
-		[[NSUserDefaults standardUserDefaults] synchronize];
-	}
-    
-	// we're ready to go, so lastly set the key preference values
-	self.calendarType = [[NSUserDefaults standardUserDefaults] integerForKey:kCalendarTypeKey];
-    self.debugMode = [[NSUserDefaults standardUserDefaults] boolForKey:kfetch28DaysEventsKey];
-    self.firstRun = firstRun;
-    self.filterType = [[NSUserDefaults standardUserDefaults] integerForKey:kfilterTypeKey];
-    self.callProviderType = [[NSUserDefaults standardUserDefaults] integerForKey:kcallProviderTypeKey];
-}
 
 // we are being notified that our preferences have changed (user changed them in the Settings app)
 // so read in the changes and update our UI.
@@ -102,12 +38,9 @@ CMIMasterViewController* _cmiMasterViewController;
         // Get the user defaults
         
         if ([self.navigationController.visibleViewController isKindOfClass:[UITableViewController class]]) {
-            [self setupByPreferences];
+            [_cmiUserDefaults loadDefaults];
             [_cmiMasterViewController reloadTableScrollToNow];
 
-// Unnecessary?            
-//            UITableView *tableView = ((UITableViewController *)self.navigationController.visibleViewController).tableView;
-//            [tableView reloadData];            
         }
     }
     @catch (NSException * e) {
@@ -126,7 +59,8 @@ CMIMasterViewController* _cmiMasterViewController;
         
         self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         // Override point for customization after application launch.
-        [self setupByPreferences];
+        _cmiUserDefaults = [[CMIUserDefaults alloc] init];
+        [_cmiUserDefaults loadDefaults];
 
         // listen for changes to our preferences when the Settings app does so,
         // when we are resumed from the backround, this will give us a chance to update our UI
@@ -168,11 +102,8 @@ CMIMasterViewController* _cmiMasterViewController;
     
     @try {
         [CMIUtility Log:@"applicationDidEnterBackground()"];
-    
-        NSNumber *number = [NSNumber numberWithInt:_cmiMasterViewController.cmiEventCalendar.filterType];
-        [[NSUserDefaults standardUserDefaults] setObject:number forKey:kfilterTypeKey];
-        
-        [[NSUserDefaults standardUserDefaults] synchronize];
+
+        [_cmiUserDefaults saveDefaults];
     }
     @catch (NSException * e) {
         [CMIUtility LogError:e.reason];
@@ -207,10 +138,7 @@ CMIMasterViewController* _cmiMasterViewController;
     @try {
         [CMIUtility Log:@"applicationWillTerminate()"];
         
-        NSNumber *number = [NSNumber numberWithInt:_cmiMasterViewController.cmiEventCalendar.filterType];
-        [[NSUserDefaults standardUserDefaults] setObject:number forKey:kfilterTypeKey];
-        
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [_cmiUserDefaults saveDefaults];
     }
     @catch (NSException * e) {
         [CMIUtility LogError:e.reason];

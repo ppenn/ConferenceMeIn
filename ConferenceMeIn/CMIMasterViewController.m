@@ -8,6 +8,7 @@
 
 #import "CMIMasterViewController.h"
 #import "CMIUtility.h"
+#import "CMIUserDefaults.h"
 
 #define ROW_HEIGHT 80
 
@@ -17,6 +18,8 @@ NSInteger _tappedRow = 0;
 NSInteger _tappedSection = 0;
 NSTimer* _tapTimer;
 
+CMIUserDefaults* _cmiUserDefaults;
+
 @implementation CMIMasterViewController
 
 @synthesize detailViewController = _detailViewController;
@@ -25,6 +28,8 @@ NSTimer* _tapTimer;
 @synthesize cmiAboutViewController = _cmiAboutViewController;
 
 callProviders _callProvider;
+
+
 
 #pragma mark -
 #pragma mark Table view delegate and data source methods
@@ -182,9 +187,8 @@ callProviders _callProvider;
     NSLog(@"showStartDialog()");
     
     // Create the predicate. Pass it the default calendar.
-	ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
 
-    if (appDelegate.firstRun == true) {
+    if (_cmiUserDefaults.firstRun == true) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ConferenceMeIn" message:@"Double-tap calendar item to dial # directly. Single-tap item to see event details and dial number "
                                                        delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];
@@ -196,13 +200,11 @@ callProviders _callProvider;
 - (void)readAppSettings
 {
     [CMIUtility Log:@"readAppSettings()"];
-    
-    ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
-        
-    _callProvider = appDelegate.callProviderType;
-    _cmiEventCalendar.fetchAllEvents = appDelegate.debugMode;
-    _cmiEventCalendar.calendarType = appDelegate.calendarType;
-    _cmiEventCalendar.filterType = appDelegate.filterType;
+            
+    _callProvider = _cmiUserDefaults.callProviderType;
+    _cmiEventCalendar.fetchAllEvents = _cmiUserDefaults.debugMode;
+    _cmiEventCalendar.calendarType = _cmiUserDefaults.calendarType;
+    _cmiEventCalendar.filterType = _cmiUserDefaults.filterType;
     
 }
 
@@ -261,13 +263,9 @@ callProviders _callProvider;
         // [notification name] should always be @"TestNotification"
         // unless you use this method for observation of other notifications
         // as well.
-        
-        //TODO: Refactor...move to CMISettings class
-        ConferenceMeInAppDelegate *appDelegate = (ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate];
-        
-        _cmiEventCalendar.fetchAllEvents = appDelegate.debugMode;
-        _cmiEventCalendar.calendarType = appDelegate.calendarType;
-        
+                
+        _cmiEventCalendar.fetchAllEvents = _cmiUserDefaults.debugMode;
+        _cmiEventCalendar.calendarType = _cmiUserDefaults.calendarType;
         
         [self reloadTableScrollToNow];
     }
@@ -401,6 +399,8 @@ callProviders _callProvider;
     
     @try {
         [CMIUtility Log:@"viewDidLoad()"];
+        
+        _cmiUserDefaults = ((ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate]).cmiUserDefaults;
         
         //TODO: figure this out
         //	self.title = NSLocalizedString(@"Time Zones", @"Time Zones title");
