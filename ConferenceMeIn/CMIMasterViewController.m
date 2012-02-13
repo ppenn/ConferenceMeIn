@@ -10,7 +10,7 @@
 #import "CMIUtility.h"
 #import "CMIUserDefaults.h"
 
-#define ROW_HEIGHT 80
+#define ROW_HEIGHT 90
 
 static UIImage *_phoneImage;
 NSInteger _tapCount = 0;
@@ -483,8 +483,14 @@ callProviders _callProvider;
 #define EVENT_PHONE_NUMBER_TAG 6
 #define DUMMY_LEFT_CELL_TAG 7
 
+#define START_TIME_TAG 8
+#define TIME_SEPARATOR_TAG 9
+#define END_TIME_TAG 10
+
+
 #define LEFT_COLUMN_OFFSET 10.0
-#define LEFT_COLUMN_WIDTH 80.0
+#define LEFT_COLUMN_WIDTH 70.0
+#define LEFT_SEPARATOR_WIDTH 12.0
 
 #define IMAGE_COLUMN_OFFSET 100.0
 #define IMAGE_COLUMN_WIDTH 40.0
@@ -495,8 +501,10 @@ callProviders _callProvider;
 #define ORGANIZER_WIDTH 100.0
 
 #define MAIN_FONT_SIZE 16.0
-#define TIME_FONT_SIZE 24.0
+#define TIME_FONT_SIZE 14.0
 #define LABEL_HEIGHT 26.0
+#define TIME_LABEL_HEIGHT 26.0
+#define SEPARATOR_OFFSET 5.0
 
 #define LABEL_UPPER 2.0
 #define LABEL_MIDDLE 28.0
@@ -519,25 +527,77 @@ callProviders _callProvider;
         /*
          Create labels for the text fields; set the highlight color so that when the cell is selected it changes appropriately.
          */
-        UILabel *timeLabel;
         CGRect rect;
+//        UILabel *timeLabel;
+//
+//        // Create a label for the event time.
+//        rect = CGRectMake(LEFT_COLUMN_OFFSET, (ROW_HEIGHT - LABEL_HEIGHT) / 2.0, LEFT_COLUMN_WIDTH, LABEL_HEIGHT);
+//        timeLabel = [[UILabel alloc] initWithFrame:rect];
+//        timeLabel.tag = TIME_TAG;
+//        timeLabel.font = [UIFont systemFontOfSize:MAIN_FONT_SIZE];
+//        timeLabel.adjustsFontSizeToFitWidth = NO;
+//        [cell.contentView addSubview:timeLabel];
+//        timeLabel.highlightedTextColor = [UIColor whiteColor];
+//        timeLabel.backgroundColor = [UIColor clearColor];
 
-    //	// Create a label for the event time.
-    //	rect = CGRectMake(0, 0, RIGHT_COLUMN_OFFSET, ROW_HEIGHT);
-    //	timeLabel = [[UILabel alloc] initWithFrame:rect];
-    //	timeLabel.tag = DUMMY_LEFT_CELL_TAG;
-    //	[cell.contentView addSubview:timeLabel];
+        UIFont* fontTime = [UIFont systemFontOfSize:TIME_FONT_SIZE];
+        NSString* sampleTime = @"4:56 PM";
+        CGSize sizeOfTimeString = [sampleTime sizeWithFont:fontTime];
+        CGFloat timeStringHeight = sizeOfTimeString.height;
+        CGFloat rowMiddle = self.tableView.rowHeight / 2.0;
         
-        // Create a label for the event time.
-        rect = CGRectMake(LEFT_COLUMN_OFFSET, (ROW_HEIGHT - LABEL_HEIGHT) / 2.0, LEFT_COLUMN_WIDTH, LABEL_HEIGHT);
-        timeLabel = [[UILabel alloc] initWithFrame:rect];
-        timeLabel.tag = TIME_TAG;
-        timeLabel.font = [UIFont systemFontOfSize:MAIN_FONT_SIZE];
-        timeLabel.adjustsFontSizeToFitWidth = NO;
-        [cell.contentView addSubview:timeLabel];
-        timeLabel.highlightedTextColor = [UIColor whiteColor];
-        timeLabel.backgroundColor = [UIColor clearColor];
-            
+        double timeLabelHeight = self.tableView.rowHeight / 2.85;
+        timeLabelHeight = timeStringHeight + SEPARATOR_OFFSET;
+        
+        UILabel* timeStartLabel =
+        [[UILabel alloc]
+         initWithFrame:
+         CGRectMake(
+                    LEFT_COLUMN_OFFSET,
+                    rowMiddle - (timeLabelHeight - 2.0), 
+                    LEFT_COLUMN_WIDTH,
+                    timeStringHeight)];
+        timeStartLabel.tag = START_TIME_TAG;
+        timeStartLabel.font = fontTime;
+        timeStartLabel.textAlignment = UITextAlignmentCenter;
+        timeStartLabel.adjustsFontSizeToFitWidth = NO;
+        [cell.contentView addSubview:timeStartLabel];
+        timeStartLabel.highlightedTextColor = [UIColor whiteColor];
+        timeStartLabel.backgroundColor = [UIColor clearColor];
+        
+        UILabel* timeEndLabel =
+        [[UILabel alloc]
+         initWithFrame:
+         CGRectMake(
+                    LEFT_COLUMN_OFFSET,
+                    rowMiddle, 
+                    LEFT_COLUMN_WIDTH,
+                    timeLabelHeight)];
+        timeEndLabel.tag = END_TIME_TAG;
+        timeEndLabel.textAlignment = UITextAlignmentCenter;
+        timeEndLabel.font = [UIFont systemFontOfSize:TIME_FONT_SIZE];
+        timeEndLabel.adjustsFontSizeToFitWidth = NO;
+        [cell.contentView addSubview:timeEndLabel];
+        timeEndLabel.highlightedTextColor = [UIColor whiteColor];
+        timeEndLabel.backgroundColor = [UIColor clearColor];
+        
+        
+        CGFloat leftMiddle = (LEFT_COLUMN_OFFSET + LEFT_COLUMN_WIDTH) / 2.0;
+        UILabel* timeSeparatorRect =
+        [[UILabel alloc]
+         initWithFrame:
+         CGRectMake(
+                    leftMiddle - (LEFT_SEPARATOR_WIDTH / 2.0),
+                    rowMiddle, 
+                    LEFT_SEPARATOR_WIDTH,
+                    1.0)];
+        timeSeparatorRect.tag = TIME_SEPARATOR_TAG;
+        //        timeSeparatorRect.font = [UIFont systemFontOfSize:TIME_FONT_SIZE];
+        timeSeparatorRect.adjustsFontSizeToFitWidth = NO;
+        [cell.contentView addSubview:timeSeparatorRect];
+        timeSeparatorRect.highlightedTextColor = [UIColor whiteColor];
+        timeSeparatorRect.backgroundColor = [UIColor blackColor];
+        
         UILabel *topLabel;
         UILabel *middleLabel;
         UILabel *bottomLabel;
@@ -547,14 +607,12 @@ callProviders _callProvider;
           initWithFrame:
           CGRectMake(
                      RIGHT_COLUMN_OFFSET,
-                     0.333333 * (self.tableView.rowHeight - 3 * LABEL_HEIGHT), //LABEL_UPPER,//
+                     0.333333 * (self.tableView.rowHeight - 3 * LABEL_HEIGHT), 
                      self.tableView.bounds.size.width - (2 * cell.indentationWidth) - RIGHT_COLUMN_OFFSET,
                      LABEL_HEIGHT)];
         topLabel.tag = EVENT_TITLE_TAG;
         topLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth; 
         topLabel.backgroundColor = [UIColor clearColor];
-    //    topLabel.textColor = [UIColor colorWithRed:0.25 green:0.0 blue:0.0 alpha:1.0];
-    //    topLabel.highlightedTextColor = [UIColor colorWithRed:1.0 green:1.0 blue:0.9 alpha:1.0];
         topLabel.font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize] - 2];
 
         middleLabel =
@@ -669,7 +727,9 @@ callProviders _callProvider;
         // Get the event at the row selected and display it's title
         CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEventByIndexPath:indexPath.section eventIndex:indexPath.row];
         NSDate* eventStartDate = [[cmiEvent ekEvent] startDate];
-        NSString* eventDateStr = [dateFormatter stringFromDate:eventStartDate];
+        NSString* eventStartDateStr = [dateFormatter stringFromDate:eventStartDate];
+        NSDate* eventEndDate = [[cmiEvent ekEvent] endDate];
+        NSString* eventEndDateStr = [dateFormatter stringFromDate:eventEndDate];
         
         UILabel *label;
         UIImage *rowBackground;
@@ -689,8 +749,16 @@ callProviders _callProvider;
         label.text = ([[cmiEvent ekEvent] organizer] != nil) ? [[[cmiEvent ekEvent] organizer] name] : @"No Organizer";// wrapper.	
         
         // Set the time.
-        label = (UILabel *)[cell viewWithTag:TIME_TAG];
-        label.text = eventDateStr;// [dateFormatter stringFromDate:[NSDate date]];
+//        if ([eventEndDateStr length] > [eventStartDateStr length]) {
+//            eventStartDateStr = [@" " stringByAppendingString:eventStartDateStr];
+//        }
+
+        label = (UILabel *)[cell viewWithTag:START_TIME_TAG];
+        label.text = eventStartDateStr;
+//        label = (UILabel *)[cell viewWithTag:TIME_SEPARATOR_TAG];
+//        label.text = @"-";
+        label = (UILabel *)[cell viewWithTag:END_TIME_TAG];
+        label.text = eventEndDateStr;
         
         // Set the image.
         UIImageView *imageView = (UIImageView *)[cell viewWithTag:IMAGE_TAG];
