@@ -381,7 +381,7 @@ callProviders _callProvider;
         eventFilterTypes selectionIndex = ((UISegmentedControl*)sender).selectedSegmentIndex;
 
         if (selectionIndex != _cmiEventCalendar.filterType) {    
-            _cmiEventCalendar.filterType = selectionIndex;
+            _cmiUserDefaults.filterType = selectionIndex;
         
             [self reloadTableScrollToNow];
         }    
@@ -511,6 +511,7 @@ callProviders _callProvider;
 #define LABEL_LOWER 54.0
 
 #define IMAGE_SIDE 15.0
+#define VERTICAL_ALIGNMENT_OFFSET 2.0
 
 - (UITableViewCell *)tableViewCellWithReuseIdentifier:(NSString *)identifier {
 	
@@ -548,13 +549,12 @@ callProviders _callProvider;
         
         double timeLabelHeight = self.tableView.rowHeight / 2.85;
         timeLabelHeight = timeStringHeight + SEPARATOR_OFFSET;
-        
         UILabel* timeStartLabel =
         [[UILabel alloc]
          initWithFrame:
          CGRectMake(
                     LEFT_COLUMN_OFFSET,
-                    rowMiddle - (timeLabelHeight - 2.0), 
+                    rowMiddle - (timeLabelHeight - VERTICAL_ALIGNMENT_OFFSET), 
                     LEFT_COLUMN_WIDTH,
                     timeStringHeight)];
         timeStartLabel.tag = START_TIME_TAG;
