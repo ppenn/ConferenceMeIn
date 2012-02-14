@@ -17,8 +17,9 @@ NSInteger _tapCount = 0;
 NSInteger _tappedRow = 0;
 NSInteger _tappedSection = 0;
 NSTimer* _tapTimer;
-
 CMIUserDefaults* _cmiUserDefaults;
+NSTimer* _refreshTimer;
+callProviders _callProvider;
 
 @implementation CMIMasterViewController
 
@@ -27,7 +28,6 @@ CMIUserDefaults* _cmiUserDefaults;
 @synthesize cmiHelpViewController = _cmiHelpViewController;
 @synthesize cmiAboutViewController = _cmiAboutViewController;
 
-callProviders _callProvider;
 
 
 
@@ -60,6 +60,8 @@ callProviders _callProvider;
     //	Push detailViewController onto the navigation controller stack
     //	If the underlying event gets deleted, detailViewController will remove itself from
     //	the stack and clear its event property.
+    self.navigationController.toolbarHidden = YES;
+
     [self.navigationController pushViewController:_detailViewController animated:YES];
 
 }
@@ -451,7 +453,7 @@ callProviders _callProvider;
         [self reloadTableScrollToNow];
         
         [self showStartDialog];
-    
+            
     }
     @catch (NSException *e) {
         [CMIUtility LogError:e.reason];
@@ -461,6 +463,12 @@ callProviders _callProvider;
 - (void)viewDidAppear:(BOOL)animated
 {
     [CMIUtility Log:@"viewDidAppear()"];
+    
+    // If the toolbar's not been hidden then this "didAppear" event was fired
+    // by the app coming back to life, not from touching back from a forward screen
+    if (self.navigationController.toolbarHidden == NO) {
+        [self scrollToNow];
+    }
     
     self.navigationController.toolbarHidden = NO;
     
