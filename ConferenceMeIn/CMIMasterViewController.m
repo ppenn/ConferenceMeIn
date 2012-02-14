@@ -202,10 +202,13 @@ callProviders _callProvider;
     [CMIUtility Log:@"readAppSettings()"];
             
     _callProvider = _cmiUserDefaults.callProviderType;
-    _cmiEventCalendar.fetchAllEvents = _cmiUserDefaults.debugMode;
+   // _cmiEventCalendar.fetchAllEvents = true;//TODO: _cmiUserDefaults.debugMode;
     _cmiEventCalendar.calendarType = _cmiUserDefaults.calendarType;
     _cmiEventCalendar.filterType = _cmiUserDefaults.filterType;
-    
+    _cmiEventCalendar.currentTimeframeStarts = _cmiUserDefaults.currentTimeframeStarts;
+    _cmiEventCalendar.calendarTimeframeType = _cmiEventCalendar.calendarTimeframeType;
+    _cmiEventCalendar.highlightCurrentEvents = _cmiEventCalendar.highlightCurrentEvents;
+
 }
 
 - (void)viewWillUnload
@@ -264,7 +267,7 @@ callProviders _callProvider;
         // unless you use this method for observation of other notifications
         // as well.
                 
-        _cmiEventCalendar.fetchAllEvents = _cmiUserDefaults.debugMode;
+//        _cmiEventCalendar.fetchAllEvents = true;//TODO _cmiUserDefaults.debugMode;
         _cmiEventCalendar.calendarType = _cmiUserDefaults.calendarType;
         
         [self reloadTableScrollToNow];

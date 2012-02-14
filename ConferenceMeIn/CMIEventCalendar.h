@@ -11,6 +11,16 @@
 #import "CMIEvent.h"
 #import "CMIDay.h"
 
+typedef enum calendarTimeframes
+{
+    restOfToday = 0,
+    next24Hours,
+    today,
+    todayAndTomorrow,
+    debugTimeframe
+}calendarTimeframes;
+
+
 typedef enum calendarTypes
 {
 	allCalendars = 0,
@@ -29,9 +39,6 @@ typedef enum eventFilterTypes
 @property (strong, nonatomic, readonly) EKEventStore *eventStore;
 @property (strong, nonatomic) EKCalendar *defaultCalendar;
 
-//@property (strong, nonatomic, readonly) NSMutableDictionary* daysEvents;
-//@property (strong, nonatomic, readonly) NSMutableArray* eventDays;
-
 @property (strong, nonatomic, readonly) NSArray* eventsList;
 
 @property (strong, nonatomic, readonly) NSMutableDictionary* cmiDaysDictionary;
@@ -39,8 +46,10 @@ typedef enum eventFilterTypes
 
 @property eventFilterTypes filterType;
 
-@property bool fetchAllEvents;
+@property calendarTimeframes calendarTimeframeType;
 @property calendarTypes calendarType;
+@property BOOL highlightCurrentEvents;
+@property (nonatomic, assign) NSInteger currentTimeframeStarts;
 
 - (id) init;
 - (void) createCMIEvents;

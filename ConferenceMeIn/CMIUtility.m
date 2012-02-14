@@ -97,13 +97,34 @@
     return YES;
 }
 
-+ (NSDate*) getOffsetDate:(NSDate*)today atOffsetDays:(NSInteger)offsetDays
++ (NSDate*) getOffsetDate:(NSDate*)date atOffsetDays:(NSInteger)offsetDays
 {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *offset = [[NSDateComponents alloc] init];
     
     [offset setDay:offsetDays];
-    NSDate* nextDate = [calendar dateByAddingComponents:offset toDate:today options:0];
+    NSDate* nextDate = [calendar dateByAddingComponents:offset toDate:date options:0];
+    
+    return nextDate;
+}
+
++ (NSDate*) getOffsetDateByHours:(NSDate *)date offsetHours:(NSInteger)offsetHours
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *offset = [[NSDateComponents alloc] init];
+    
+    [offset setHour:offsetHours];
+    NSDate* nextDate = [calendar dateByAddingComponents:offset toDate:date options:0];
+    
+    return nextDate;
+}
++ (NSDate*) getOffsetDateByMinutes:(NSDate *)date offsetMinutes:(NSInteger)offsetMinutes
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *offset = [[NSDateComponents alloc] init];
+    
+    [offset setMinute:offsetMinutes];
+    NSDate* nextDate = [calendar dateByAddingComponents:offset toDate:date options:0];
     
     return nextDate;
 }
@@ -178,6 +199,7 @@
     [self createTestEvent:eventStore startDate:beforeBeforeStartDate endDate:beforeStartDate title:@"testtitle0" withConfNumber:TRUE];
     [self createTestEvent:eventStore startDate:beforeBeforeStartDate endDate:beforeStartDate title:@"testtitle00" withConfNumber:TRUE];
     [self createTestEvent:eventStore startDate:beforeBeforeStartDate endDate:beforeStartDate title:@"NoConfNumEvent0" withConfNumber:FALSE];
+    [self createTestEvent:eventStore startDate:beforeBeforeStartDate endDate:endDate title:@"testStartEarlyEndFuture" withConfNumber:TRUE];
     
     
 #else // TARGET_IPHONE_SIMULATOR

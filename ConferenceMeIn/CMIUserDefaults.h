@@ -8,15 +8,22 @@
 
 #import <Foundation/Foundation.h>
 #import "CMIEvent.h"
+#import "CMIEventCalendar.h"
 
 @interface CMIUserDefaults : NSObject
 
-
+// Settings app settings
 @property (nonatomic, assign) NSInteger calendarType;
-@property (nonatomic, assign) BOOL debugMode;
-@property (nonatomic, assign) BOOL firstRun;
-@property (nonatomic, assign) NSInteger filterType;
 @property (nonatomic, assign) callProviders callProviderType;
+@property (nonatomic, assign) NSInteger currentTimeframeStarts;
+@property (nonatomic, assign) calendarTimeframes calendarTimeframeType;
+@property (nonatomic, assign) BOOL highlightCurrentEvents;
+
+// Invisible setting
+@property (nonatomic, assign) BOOL firstRun;
+
+// Runtime-only settings
+@property (nonatomic, assign) NSInteger filterType;
 
 - (void)loadDefaults;
 - (void)saveDefaults;

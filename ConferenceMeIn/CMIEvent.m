@@ -82,6 +82,8 @@
     
 //    telLink = [telLink stringByAppendingString:@"18776038688%2C%2C8113067"];
 //    telLink = [telLink stringByAppendingString:@"%23"];
+    
+//    telLink = @"tel:18776038688;8113067;*7166";
 
 //    pasteboard = [UIPasteboard generalPasteboard];    
 //    pasteboard.string = @"8113067";

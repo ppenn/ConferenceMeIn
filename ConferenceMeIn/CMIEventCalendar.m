@@ -12,16 +12,15 @@
 @implementation CMIEventCalendar
 
 @synthesize eventStore = _eventStore;
-@synthesize fetchAllEvents = _fetchAllEvents;
 @synthesize calendarType = _calendarType;
 @synthesize defaultCalendar = _defaultCalendar;
 @synthesize eventsList = _eventsList;
 @synthesize cmiDaysDictionary = _cmiDaysDictionary;
 @synthesize cmiDaysArray = _cmiDaysArray;
 @synthesize filterType = _filterType;
-
-//@synthesize daysEvents = _daysEvents;
-//@synthesize eventDays = _eventDays;
+@synthesize calendarTimeframeType = _calendarTimeframeType;
+@synthesize highlightCurrentEvents = _highlightCurrentEvents;
+@synthesize currentTimeframeStarts = _currentTimeframeStarts;
 
 NSDate* _eventsStartDate = nil;
 NSDate* _eventsEndDate = nil;
@@ -37,8 +36,9 @@ NSDate* _eventsEndDate = nil;
         // Get the default calendar from store.
         _defaultCalendar = [_eventStore defaultCalendarForNewEvents];
         _calendarType = allCalendars;
-        _fetchAllEvents = false;
+        _calendarTimeframeType = restOfToday;
         _filterType = filterNone;
+        _currentTimeframeStarts = 0;
         
         _cmiDaysDictionary = [[NSMutableDictionary alloc] init]; 
         _cmiDaysArray = [[NSMutableArray alloc] init];
@@ -169,54 +169,6 @@ NSDate* _eventsEndDate = nil;
 
 
 
-
-//- (void) assignCMIEventsToDayEvents:(NSDate*)startDate atEndDate:(NSDate*)endDate atEvents:(NSArray*)events
-//{
-//
-//    // Get the days together
-//    [self calculateDaysEvents:startDate atEndDate:endDate];
-//
-//    // Now populate the number
-//    for (EKEvent* event in events) {
-//        // Need to convert date into day
-//        NSDate* eventDay = [CMIUtility getMidnightDate:event.startDate];  	
-//        NSMutableArray *events = [_daysEvents objectForKey:eventDay];
-//        // Should we be creating CMIEvent?
-//        CMIEvent* cmiEvent = [[CMIEvent alloc] initWithEKEvent:event];
-//        [events addObject:cmiEvent];
-//        [_daysEvents setObject:events forKey:eventDay];        
-//    }
-//
-//}
-//
-//- (void) calculateDaysEvents:(NSDate*)startDate atEndDate:(NSDate*)endDate
-//{
-//    [_daysEvents removeAllObjects];
-//    [_eventDays removeAllObjects];
-//    
-//    NSDate *nextDay=[startDate copy];
-//    
-//    NSCalendar *calendar = [NSCalendar currentCalendar];
-//    NSDateComponents *offset = [[NSDateComponents alloc] init];
-//    
-//    int i = 0;
-//
-//    while (([nextDay compare:endDate] == NSOrderedAscending))
-//    {
-////        NSInteger numEvents = 0; //TODO: get # of events for that "day". going to need to get day range
-//        NSMutableArray* events = [[NSMutableArray alloc] init];
-//        NSDate* nextDayMidnight = [CMIUtility getMidnightDate:nextDay];
-//        [_daysEvents setObject:events forKey:nextDayMidnight];
-//        [_eventDays addObject:nextDayMidnight];
-//
-//        // Move to next day
-//        i++;
-//        [offset setDay:i];
-//        nextDay = [calendar dateByAddingComponents:offset toDate:startDate options:0];
-//    }
-//
-//}
-
 - (CMIEvent*)getCMIEventByIndexPath:(NSInteger)dayEventIndex eventIndex:(NSInteger)eventIndex
 {
     CMIDay* cmiDay = [_cmiDaysArray objectAtIndex:dayEventIndex];
@@ -242,22 +194,67 @@ NSDate* _eventsEndDate = nil;
     return day;
 }
 
+- (void)calculateCurrentStartTime
+{
+    [CMIUtility Log:@"calculateCurrentStartTime()"];
+
+    NSDate* now = [[NSDate alloc] init];
+
+    if (_currentTimeframeStarts > 0) {
+        _eventsStartDate = [CMIUtility getOffsetDateByMinutes:now offsetMinutes:-_currentTimeframeStarts];
+    }
+    else {
+        _eventsStartDate = now;
+    }
+
+}
+
+- (void)calculateCalendarTimeframe
+{
+    [CMIUtility Log:@"calculateCalendarTimeframe()"];
+
+	_eventsStartDate = nil;
+    _eventsEndDate = nil;
+	
+    [self calculateCurrentStartTime];
+    
+    NSDate* now = [[NSDate alloc] init];
+    
+    switch (_calendarTimeframeType) {
+        case restOfToday:
+            _eventsEndDate = [CMIUtility getMidnightDate:now];
+            _eventsEndDate = [CMIUtility getOffsetDate:_eventsEndDate atOffsetDays:1];
+            _eventsEndDate = [CMIUtility getOffsetDateByMinutes:_eventsEndDate offsetMinutes:-1];
+            
+            break;
+        case next24Hours:
+            _eventsEndDate = [CMIUtility getOffsetDate:now atOffsetDays:1];
+            break;
+        case today:
+            _eventsStartDate = [CMIUtility getMidnightDate:now];
+            break;
+        case todayAndTomorrow:
+            _eventsStartDate = [CMIUtility getMidnightDate:now];
+            _eventsEndDate = [CMIUtility getOffsetDate:now atOffsetDays:2];
+            _eventsEndDate = [CMIUtility getMidnightDate:_eventsEndDate];
+            _eventsEndDate = [CMIUtility getOffsetDateByMinutes:_eventsEndDate offsetMinutes:-1];
+            break;
+        case debugTimeframe:
+            _eventsStartDate = [CMIUtility dayToDate:@"20120101"];
+            _eventsEndDate = [CMIUtility getOffsetDate:now atOffsetDays:1];
+            break;
+            
+        default:
+            break;
+    }
+}
 
 - (NSArray *)fetchEvents
 {
-	_eventsStartDate = nil;
-    if (_fetchAllEvents == true)
-    {
-        //TODO: date arithmetic...new settings etc
-        _eventsStartDate = [CMIUtility dayToDate:@"20120101"];
-    }
-    else
-    {
-        _eventsStartDate = [CMIUtility getMidnightDate:[NSDate date]];
-    }
-	
-    NSDate* now = [[NSDate alloc] init];
-	_eventsEndDate = [CMIUtility getOffsetDate:now atOffsetDays:1];
+    [CMIUtility Log:@"fetchEvents()"];
+
+    [self calculateCalendarTimeframe];
+    
     
     NSArray* calendarArray = nil; // All calendars
     NSPredicate *predicate;

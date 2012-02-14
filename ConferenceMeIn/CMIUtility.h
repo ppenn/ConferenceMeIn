@@ -13,7 +13,9 @@
 
 + (void)Log:(NSString*)logMessage;
 + (void)LogError:(NSString*)logMessage;
-+ (NSDate*) getOffsetDate:(NSDate*)today atOffsetDays:(NSInteger)offsetDays;
++ (NSDate*) getOffsetDate:(NSDate*)day atOffsetDays:(NSInteger)offsetDays;
++ (NSDate*) getOffsetDateByHours:(NSDate*)date offsetHours:(NSInteger)offsetHours;
++ (NSDate*) getOffsetDateByMinutes:(NSDate*)date offsetMinutes:(NSInteger)offsetMinutes;
 + (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate;
 
 
