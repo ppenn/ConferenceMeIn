@@ -48,7 +48,6 @@ typedef enum eventFilterTypes
 
 @property calendarTimeframes calendarTimeframeType;
 @property calendarTypes calendarType;
-@property BOOL highlightCurrentEvents;
 @property (nonatomic, assign) NSInteger currentTimeframeStarts;
 
 - (id) init;

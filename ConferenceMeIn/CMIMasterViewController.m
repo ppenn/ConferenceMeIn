@@ -27,7 +27,7 @@ callProviders _callProvider;
 @synthesize cmiEventCalendar = _cmiEventCalendar;
 @synthesize cmiHelpViewController = _cmiHelpViewController;
 @synthesize cmiAboutViewController = _cmiAboutViewController;
-
+@synthesize highlightCurrentEvents = _highlightCurrentEvents;
 
 
 
@@ -208,8 +208,8 @@ callProviders _callProvider;
     _cmiEventCalendar.calendarType = _cmiUserDefaults.calendarType;
     _cmiEventCalendar.filterType = _cmiUserDefaults.filterType;
     _cmiEventCalendar.currentTimeframeStarts = _cmiUserDefaults.currentTimeframeStarts;
-    _cmiEventCalendar.calendarTimeframeType = _cmiEventCalendar.calendarTimeframeType;
-    _cmiEventCalendar.highlightCurrentEvents = _cmiEventCalendar.highlightCurrentEvents;
+    _cmiEventCalendar.calendarTimeframeType = _cmiUserDefaults.calendarTimeframeType;
+    _highlightCurrentEvents = _cmiUserDefaults.highlightCurrentEvents;
 
 }
 
@@ -540,17 +540,6 @@ callProviders _callProvider;
          Create labels for the text fields; set the highlight color so that when the cell is selected it changes appropriately.
          */
         CGRect rect;
-//        UILabel *timeLabel;
-//
-//        // Create a label for the event time.
-//        rect = CGRectMake(LEFT_COLUMN_OFFSET, (ROW_HEIGHT - LABEL_HEIGHT) / 2.0, LEFT_COLUMN_WIDTH, LABEL_HEIGHT);
-//        timeLabel = [[UILabel alloc] initWithFrame:rect];
-//        timeLabel.tag = TIME_TAG;
-//        timeLabel.font = [UIFont systemFontOfSize:MAIN_FONT_SIZE];
-//        timeLabel.adjustsFontSizeToFitWidth = NO;
-//        [cell.contentView addSubview:timeLabel];
-//        timeLabel.highlightedTextColor = [UIColor whiteColor];
-//        timeLabel.backgroundColor = [UIColor clearColor];
 
         UIFont* fontTime = [UIFont systemFontOfSize:TIME_FONT_SIZE];
         NSString* sampleTime = @"4:56 PM";
@@ -744,7 +733,7 @@ callProviders _callProvider;
         
         UILabel *label;
         UIImage *rowBackground;
-        if ([self eventIsNow:cmiEvent.ekEvent] ) {
+        if (_highlightCurrentEvents == TRUE && [self eventIsNow:cmiEvent.ekEvent]) {
             rowBackground = [UIImage imageNamed:@"middleRowSelected.png"];            
         }
         else {

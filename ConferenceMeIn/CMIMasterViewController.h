@@ -24,6 +24,7 @@
 @property (strong, nonatomic) CMIAboutViewController* cmiAboutViewController;
 @property (strong, nonatomic) CMIHelpViewController* cmiHelpViewController;
 @property (strong, nonatomic) CMIEventCalendar* cmiEventCalendar;
+@property BOOL highlightCurrentEvents;
 
 - (void) storeChanged:(NSNotification *) notification;
 - (NSArray *)fetchEventsForTable;

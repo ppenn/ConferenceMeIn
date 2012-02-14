@@ -91,12 +91,7 @@ NSString *kHighlightCurrentEventsKey = @"highlightCurrentEventsKey";
 			}
         
         }        
-        
-//        NSInteger calendarTimeframeDefault = [[NSUserDefaults standardUserDefaults] integerForKey:kCalendarTimeframeTypeKey];
-//        NSInteger currentTimeframeStartsDefault = [[NSUserDefaults standardUserDefaults] integerForKey:kCurrentTimeframeStartsKey];
-//        BOOL highlightCurrentEvents = [[NSUserDefaults standardUserDefaults] boolForKey:kHighlightCurrentEventsKey];
-        
-        
+                
 		// since no default values have been set (i.e. no preferences file created), create it here		
 //		NSDictionary *appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
 //                                     kCalendarTimeframeTypeKey, kCalendarTypeKey,

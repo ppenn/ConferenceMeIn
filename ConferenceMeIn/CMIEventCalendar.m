@@ -19,7 +19,6 @@
 @synthesize cmiDaysArray = _cmiDaysArray;
 @synthesize filterType = _filterType;
 @synthesize calendarTimeframeType = _calendarTimeframeType;
-@synthesize highlightCurrentEvents = _highlightCurrentEvents;
 @synthesize currentTimeframeStarts = _currentTimeframeStarts;
 
 NSDate* _eventsStartDate = nil;
