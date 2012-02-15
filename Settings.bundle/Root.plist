@@ -118,28 +118,42 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>About</string>
+			<string>User</string>
 		</dict>
         <dict>
-            <key>DefaultValue</key>
-            <string>1.0</string>
-            <key>Key</key>
-            <string>version_string</string>
-            <key>Title</key>
-            <string>Version</string>
             <key>Type</key>
-            <string>PSTitleValueSpecifier</string>
-        </dict>
-        <dict>
-            <key>DefaultValue</key>
-            <string>Paleon Solutions</string>
-            <key>Key</key>
-            <string>version_string1</string>
+            <string>PSChildPaneSpecifier</string>
             <key>Title</key>
-            <string>Developed by</string>
-            <key>Type</key>
-            <string>PSTitleValueSpecifier</string>
+            <string>My Conference Number</string>
+            <key>File</key>
+            <string>ChildCMINumber</string>
         </dict>		
+        <dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>About</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<string>1.0</string>
+			<key>Key</key>
+			<string>version_string</string>
+			<key>Title</key>
+			<string>Version</string>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<string>Paleon Solutions</string>
+			<key>Key</key>
+			<string>version_string1</string>
+			<key>Title</key>
+			<string>Developed by</string>
+			<key>Type</key>
+			<string>PSTitleValueSpecifier</string>
+		</dict>
 	</array>
 </dict>
 </plist>
