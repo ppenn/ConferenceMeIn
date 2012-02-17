@@ -8,12 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <EventKit/EventKit.h>
-
-typedef enum callProviders {
-    phoneCarrier,
-    google,
-    skype
-}callProviders;
+#import "CMIConferencePhoneNumber.h"
 
 @interface CMIEvent : NSObject
 

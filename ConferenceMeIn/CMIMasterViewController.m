@@ -286,7 +286,7 @@ callProviders _callProvider;
         [CMIUtility Log:@"menuAction()"];
         
         // open a dialog with just an OK button
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"MenuButtonTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"HelpButtonTitle",@""),@"About",nil];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"MenuButtonTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Settings", NSLocalizedString(@"HelpButtonTitle",@""),@"About",nil];
         actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
         [actionSheet showInView:self.view];	// show from our table view (pops up in the middle of the table)
     }
@@ -353,8 +353,8 @@ callProviders _callProvider;
 			// eventsList.
 //            [_cmiEventCalendar.
 //            [self.eventsList addObject:thisEvent];
-//			[controller.eventStore saveEvent:controller.event span:EKSpanThisEvent error:&error];
-//			[self.tableView reloadData];
+			[controller.eventStore saveEvent:controller.event span:EKSpanThisEvent error:&error];
+			[self reloadTableScrollToNow];
 			break;
 			
 		case EKEventEditViewActionDeleted:
@@ -366,7 +366,7 @@ callProviders _callProvider;
 //				[self.eventsList removeObject:thisEvent];
 //			}
 			[controller.eventStore removeEvent:thisEvent span:EKSpanThisEvent error:&error];
-			[self.tableView reloadData];
+			[self reloadTableScrollToNow];
 			break;
 			
 		default:
@@ -810,10 +810,14 @@ callProviders _callProvider;
         // the user clicked one of the OK/Cancel buttons
         switch (buttonIndex) {
             case 0:
+                NSLog(@"Settings");
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=Conf Me In&path=Network"]];
+                break;
+            case 1:
                 NSLog(@"Help");
                 [self showHelpDialog];
                 break;
-            case 1:
+            case 2:
                 NSLog(@"About"); 
                 [self showAboutDialog];
                 break;

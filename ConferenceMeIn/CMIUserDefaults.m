@@ -37,6 +37,16 @@ NSString *kHighlightCurrentEventsKey = @"highlightCurrentEventsKey";
     
 }
 
+- (void)loadMyConferenceNumberDefaults:(NSString*) settingsBundlePath
+{
+    NSString *finalPath = [settingsBundlePath stringByAppendingPathComponent:@"ChildCMINumber.plist"];
+    
+    NSDictionary *settingsDict = [NSDictionary dictionaryWithContentsOfFile:finalPath];
+    NSArray *prefSpecifierArray = [settingsDict objectForKey:@"PreferenceSpecifiers"];
+    prefSpecifierArray = nil;
+    
+}
+
 - (void)loadDefaults
 {
     [CMIUtility Log:@"loadDefaults()"];
@@ -101,7 +111,12 @@ NSString *kHighlightCurrentEventsKey = @"highlightCurrentEventsKey";
 //		[[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 		[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"firstRun"];
 		[[NSUserDefaults standardUserDefaults] setInteger:filterNone forKey:kFilterTypeKey];
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
 		[[NSUserDefaults standardUserDefaults] setInteger:[callProviderTypeDefault intValue] forKey:kCallProviderTypeKey];
+        }
+        else {
+            [[NSUserDefaults standardUserDefaults] setInteger:google forKey:kCallProviderTypeKey];            
+        }
 		[[NSUserDefaults standardUserDefaults] setInteger:[calendarTimeframeDefault intValue]  forKey:kCalendarTimeframeTypeKey];
 		[[NSUserDefaults standardUserDefaults] setBool:highlightCurrentEventsDefault forKey:kHighlightCurrentEventsKey];
 		[[NSUserDefaults standardUserDefaults] setInteger:[currentTimeframeStartsDefault intValue] forKey:kCurrentTimeframeStartsKey];

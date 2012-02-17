@@ -32,7 +32,6 @@ callProviders _callProvider = phoneCarrier;
     if ([self detailItem] == nil)   return;
 
     CMIEvent* cmiEvent = (CMIEvent*) self.detailItem;
-    
     if (cmiEvent.hasConferenceNumber == false) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Phone#" message:@"No Phone number found for event"
                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
@@ -42,6 +41,7 @@ callProviders _callProvider = phoneCarrier;
     {
         [((CMIEvent*) self.detailItem) dial:self.view confirmCall:true callProvider:_callProvider];        
 
+        
 //        // open a dialog with an OK and cancel button
 //        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Dial Conference #"
 //                                                                 delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:cmiEvent.conferenceNumber otherButtonTitles:nil];    
