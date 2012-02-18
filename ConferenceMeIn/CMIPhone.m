@@ -13,30 +13,61 @@ NSURL* _phoneURL;
 
 @implementation CMIPhone
 
-@synthesize callProvider;
+@synthesize callProvider = _callProvider;
 
-- (void) setPhoneURL
+- (void) setPhoneURL:(NSString*) phoneNumber
 {
     NSString* phoneNumberURL = nil;
     //memleak?
+
+    //TODO: phone vs other
+    switch (_callProvider)
+    {
+        case phoneCarrier:
+            phoneNumberURL = @"tel:";
+            phoneNumberURL = [phoneNumberURL stringByAppendingString:phoneNumber];
+            break;
+        case google:
+            phoneNumberURL = @"tktn://call?destination=";            
+            phoneNumberURL = [phoneNumberURL stringByAppendingString:phoneNumber];
+            phoneNumberURL = [phoneNumberURL stringByReplacingOccurrencesOfString:@"," withString:@"%2C"];
+            phoneNumberURL = [phoneNumberURL stringByAppendingString:@"%23"];
+            //            telLink = @"tktn://call?destination=18776038688%2C%2C8113067%23";
+            break;
+        case skype:
+            break;
+        default:
+            break;
+    }
     _phoneURL = [NSURL URLWithString:phoneNumberURL];
 }
 
 - (void) dial:(NSString*) phoneNumber
 {
     [CMIUtility Log:@"dial()"];
-    
-    [self setPhoneURL];
+
+    [self setPhoneURL:phoneNumber];
 
     [[UIApplication sharedApplication] openURL:_phoneURL];            
     
 }
 
+- (id) initWithCallProvider:(callProviders)callProvider
+{
+    self = [super init];
+    
+    if (self != nil)
+    {    
+        _callProvider = callProvider;
+    }
+    return self;
+    
+}
 - (void) dialWithConfirmation:(NSString*) phoneNumber view:(UIView*)view
 {
     [CMIUtility Log:@"dialWithConfirmation()"];
 
-    [self setPhoneURL];
+    [self setPhoneURL:phoneNumber];
 
     UIWebView *webview = [[UIWebView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame]; 
     [webview loadRequest:[NSURLRequest requestWithURL:_phoneURL]]; 

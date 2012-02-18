@@ -20,5 +20,6 @@ typedef enum callProviders {
 
 - (void) dial:(NSString*) phoneNumber;
 - (void) dialWithConfirmation:(NSString*) phoneNumber view:(UIView*)view;
+- (id) initWithCallProvider:(callProviders)callProvider;
 
 @end

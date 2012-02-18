@@ -192,7 +192,7 @@ callProviders _callProvider;
     // Create the predicate. Pass it the default calendar.
 
     if (_cmiUserDefaults.firstRun == true) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ConferenceMeIn" message:@"Double-tap calendar item to dial # directly. Single-tap item to see event details and dial number "
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ConferenceMeIn" message:@"Double-tap calendar item to dial # directly.\r\n Single-tap item to see event details and dial number "
                                                        delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];
         
@@ -411,6 +411,7 @@ callProviders _callProvider;
         _cmiUserDefaults = ((ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate]).cmiUserDefaults;
         
         _cmiMyConferenceNumber = [[CMIMyConferenceNumber alloc] initWithUserDefaults:_cmiUserDefaults];
+        _cmiPhone = [[CMIPhone alloc] initWithCallProvider:_cmiUserDefaults.callProviderType];
         
         //TODO: figure this out
         //	self.title = NSLocalizedString(@"Time Zones", @"Time Zones title");
@@ -829,8 +830,9 @@ callProviders _callProvider;
     [CMIUtility Log:@"callMyNumber()"];
 
     // Check the number
-    if(!_cmiMyConferenceNumber.isValid) {
+    if(_cmiMyConferenceNumber.isValid == FALSE) {
 
+        //TODO: this needs to prompt..
         // Maybe tell the user it's a barry
         
         if ([self.appSettingsViewController.file isEqualToString:@"ChildCMINumber"]) {
@@ -845,6 +847,17 @@ callProviders _callProvider;
     }
     else {
         // Call the number...
+        [_cmiPhone dial:_cmiMyConferenceNumber.conferenceNumber];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    // TODO check for controller?
+    if (self.navigationController != nil) {
+        if ([self.navigationController isKindOfClass:[IASKAppSettingsViewController class]]       ) {
+            NSLog(@"IAS");
+        }
     }
 }
 
@@ -892,6 +905,12 @@ callProviders _callProvider;
 	
 	// your code here to reconfigure the app for changed settings
     // If we now have phone and conf numbers...then we can proceed
+    [_cmiUserDefaults loadDefaults];
+    [self readAppSettings];
+    if([sender.file isEqualToString:@"ChildCMINumber"] && _cmiMyConferenceNumber.isValid) {
+        // Call the number...
+        [_cmiPhone dial:_cmiMyConferenceNumber.conferenceNumber];
+    }    
 }
 
 
