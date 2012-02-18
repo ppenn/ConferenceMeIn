@@ -820,8 +820,16 @@ callProviders _callProvider;
         _appSettingsViewController = nil;
     }
     
-    self.appSettingsViewController.showDoneButton = NO;
-    [self.navigationController pushViewController:self.appSettingsViewController animated:YES];
+//    self.appSettingsViewController.showDoneButton = NO;
+//    [self.navigationController pushViewController:self.appSettingsViewController animated:YES];
+
+    if ([self.appSettingsViewController.file isEqualToString:@"ChildCMINumber"]) {
+        _appSettingsViewController = nil;
+    }
+    self.appSettingsViewController.file = @"Root";
+    self.appSettingsViewController.showDoneButton = YES;
+    UINavigationController *aNavController = [[UINavigationController alloc] initWithRootViewController:self.appSettingsViewController];
+    [self presentModalViewController:aNavController animated:YES];
     
 }
 
