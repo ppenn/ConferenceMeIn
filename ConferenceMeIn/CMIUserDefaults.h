@@ -19,6 +19,11 @@
 @property (nonatomic, assign) calendarTimeframes calendarTimeframeType;
 @property (nonatomic, assign) BOOL highlightCurrentEvents;
 
+@property (nonatomic, assign) NSString* myConfPhoneNumber;
+@property (nonatomic, assign) NSString* myConfConfNumber;
+@property (nonatomic, assign) NSString* myConfLeaderSeparator;
+@property (nonatomic, assign) NSString* myConfLeaderPIN;
+
 // Invisible setting
 @property (nonatomic, assign) BOOL firstRun;
 

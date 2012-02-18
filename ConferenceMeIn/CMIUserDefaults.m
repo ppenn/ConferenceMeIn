@@ -15,6 +15,11 @@ NSString *kFilterTypeKey = @"filterTypeKey";
 NSString *kCallProviderTypeKey = @"callProviderTypeKey";
 NSString *kCurrentTimeframeStartsKey = @"currentTimeframeStartsKey";
 NSString *kHighlightCurrentEventsKey = @"highlightCurrentEventsKey";
+NSString *kMyConfPhoneNumberKey = @"myConfPhoneNumberKey";
+NSString *kMyConfConfNumberKey = @"myConfConfNumberKey";
+NSString *kMyConfLeaderSeparatorKey = @"myConfLeaderSeparatorKey";
+NSString *kMyConfLeaderPINKey = @"myConfLeaderPINKey";
+NSString *kFirstRun = @"firstRunKey";
 
 @implementation CMIUserDefaults
 
@@ -25,6 +30,11 @@ NSString *kHighlightCurrentEventsKey = @"highlightCurrentEventsKey";
 @synthesize callProviderType = _callProviderType;
 @synthesize currentTimeframeStarts = _currentTimeframeStarts;
 @synthesize highlightCurrentEvents = _highlightCurrentEvents;
+@synthesize myConfPhoneNumber = _myConfPhoneNumber;
+@synthesize myConfConfNumber = _myConfConfNumber;
+@synthesize myConfLeaderSeparator = _myConfLeaderSeparator;
+@synthesize myConfLeaderPIN = _myConfLeaderPIN;
+
 
 - (void)saveDefaults
 {
@@ -33,6 +43,7 @@ NSString *kHighlightCurrentEventsKey = @"highlightCurrentEventsKey";
     NSNumber *number = [NSNumber numberWithInt:_filterType];
     
     [[NSUserDefaults standardUserDefaults] setObject:number forKey:kFilterTypeKey];    
+    
     [[NSUserDefaults standardUserDefaults] synchronize];
     
 }
@@ -54,7 +65,7 @@ NSString *kHighlightCurrentEventsKey = @"highlightCurrentEventsKey";
     NSLog(@"NSUserDefaults dump: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
     BOOL firstRun = false;
     
-    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"firstRun"] ) {
+    if(![[NSUserDefaults standardUserDefaults] objectForKey:kFirstRun] ) {
         //do initialization stuff here...
         firstRun = true;
 		// no default values have been set, create them here based on what's in our Settings bundle info
@@ -109,7 +120,7 @@ NSString *kHighlightCurrentEventsKey = @"highlightCurrentEventsKey";
 //                                     nil];
 //        
 //		[[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
-		[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"firstRun"];
+		[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kFirstRun];
 		[[NSUserDefaults standardUserDefaults] setInteger:filterNone forKey:kFilterTypeKey];
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
 		[[NSUserDefaults standardUserDefaults] setInteger:[callProviderTypeDefault intValue] forKey:kCallProviderTypeKey];
@@ -121,6 +132,7 @@ NSString *kHighlightCurrentEventsKey = @"highlightCurrentEventsKey";
 		[[NSUserDefaults standardUserDefaults] setBool:highlightCurrentEventsDefault forKey:kHighlightCurrentEventsKey];
 		[[NSUserDefaults standardUserDefaults] setInteger:[currentTimeframeStartsDefault intValue] forKey:kCurrentTimeframeStartsKey];
 		[[NSUserDefaults standardUserDefaults] setInteger:[calendarTypeDefault intValue] forKey:kCalendarTypeKey];
+        
         
 		[[NSUserDefaults standardUserDefaults] synchronize];
         
@@ -137,6 +149,11 @@ NSString *kHighlightCurrentEventsKey = @"highlightCurrentEventsKey";
     self.firstRun = firstRun;
     self.filterType = [[NSUserDefaults standardUserDefaults] integerForKey:kFilterTypeKey];
     self.callProviderType = [[NSUserDefaults standardUserDefaults] integerForKey:kCallProviderTypeKey];
+
+    self.myConfPhoneNumber = [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfPhoneNumberKey];
+    self.myConfConfNumber = [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfConfNumberKey];
+    self.myConfLeaderSeparator = [[NSUserDefaults standardUserDefaults]objectForKey:kMyConfLeaderSeparatorKey];
+    self.myConfLeaderPIN = [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfLeaderPINKey];
     
 }
 

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <EventKit/EventKit.h>
-#import "CMIConferencePhoneNumber.h"
+#import "CMIPhone.h"
 
 @interface CMIEvent : NSObject
 
