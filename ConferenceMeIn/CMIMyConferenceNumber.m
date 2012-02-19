@@ -16,6 +16,19 @@
 @synthesize conferenceNumber = _conferenceNumber;
 @synthesize leaderInfo = _leaderInfo;
 @synthesize cmiUserDefaults = _cmiUserDefaults;
+@synthesize conferenceNumberFormatted;
+
+- (NSString*)conferenceNumberFormatted
+{
+    NSString* retval = nil;
+    
+    if ([self isValid]) {
+        NSString* format = NSLocalizedString(@"ConferenceNumberFormat", @"");
+        retval = [NSString stringWithFormat:format,_cmiUserDefaults.myConfPhoneNumber, _cmiUserDefaults.myConfConfNumber];
+    }
+    
+    return retval;
+}
 
 - (void) validateConferenceNumber
 {

@@ -12,7 +12,7 @@
 #import "CMIEvent.h"
 
 @interface CMIEKEventViewController : EKEventViewController
-<UIAlertViewDelegate, UIActionSheetDelegate>
+<UIAlertViewDelegate, UIActionSheetDelegate, EKEventViewDelegate>
 
 @property (strong, nonatomic) id detailItem;
 

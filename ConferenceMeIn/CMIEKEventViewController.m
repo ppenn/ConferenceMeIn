@@ -24,6 +24,9 @@ callProviders _callProvider = phoneCarrier;
     //Need to register for those events ourselves?
     _callProvider = cmiUserDefaults.callProviderType;
     
+    self.allowsEditing = YES;
+    self.modalInPopover = NO;
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -32,6 +35,7 @@ callProviders _callProvider = phoneCarrier;
     if ([self detailItem] == nil)   return;
 
     CMIEvent* cmiEvent = (CMIEvent*) self.detailItem;
+    
     if (cmiEvent.hasConferenceNumber == false) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Phone#" message:@"No Phone number found for event"
                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
@@ -52,6 +56,13 @@ callProviders _callProvider = phoneCarrier;
     
 }
 
+#pragma mark -
+#pragma mark - EKEventViewDelegate
+
+- (void)eventViewController:(EKEventViewController *)controller didCompleteWithAction:(EKEventViewAction)action
+{
+    
+}
 
 #pragma mark -
 #pragma mark - UIActionSheetDelegate

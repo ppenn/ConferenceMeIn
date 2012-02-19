@@ -9,6 +9,7 @@
 #import "CMIMasterViewController.h"
 #import "CMIUtility.h"
 #import "CMIUserDefaults.h"
+#import "CMIEKEventEditViewController.h"
 
 #define ROW_HEIGHT 90
 
@@ -20,6 +21,7 @@ NSTimer* _tapTimer;
 CMIUserDefaults* _cmiUserDefaults;
 NSTimer* _refreshTimer;
 callProviders _callProvider;
+NSIndexPath* _indexPath;
 
 @implementation CMIMasterViewController
 
@@ -54,15 +56,16 @@ callProviders _callProvider;
     
     self.detailViewController = [[CMIEKEventViewController alloc] initWithNibName:nil bundle:nil];        
     CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEventByIndexPath:section eventIndex:row];
-    _detailViewController.event = [cmiEvent ekEvent];
+    _detailViewController.event = cmiEvent.ekEvent;
     
-    _detailViewController.allowsEditing = YES;
     _detailViewController.detailItem = cmiEvent;
     //	Push detailViewController onto the navigation controller stack
     //	If the underlying event gets deleted, detailViewController will remove itself from
     //	the stack and clear its event property.
-    self.navigationController.toolbarHidden = YES;
+   self.navigationController.toolbarHidden = YES;
 
+    _detailViewController.delegate = _detailViewController;
+    _detailViewController.allowsEditing = YES;
     [self.navigationController pushViewController:_detailViewController animated:YES];
 
 }
@@ -137,6 +140,8 @@ callProviders _callProvider;
     NSLog(@"didSelectRowAtIndexPath()");
     
     @try {
+        
+        _indexPath = indexPath;
 
         //checking for double taps here
         if(_tapCount == 1 && _tapTimer != nil && 
@@ -313,8 +318,34 @@ callProviders _callProvider;
 // If event is nil, a new event is created and added to the specified event store. New events are 
 // added to the default calendar. An exception is raised if set to an event that is not in the 
 // specified event store.
-- (void)addEvent:(id)sender {
+- (void)addEventDelete:(id)sender {
 
+    @try {
+        
+        // When add button is pushed, create an EKEventEditViewController to display the event.
+        CMIEKEventEditViewController *addController = [[CMIEKEventEditViewController alloc] initWithNibName:nil bundle:nil];
+        
+        // set the addController's event store to the current event store.
+        addController.eventStore = _cmiEventCalendar.eventStore;
+        EKEvent *event  = [EKEvent eventWithEventStore:_cmiEventCalendar.eventStore];        
+        event.location = _cmiMyConferenceNumber.conferenceNumberFormatted;
+        addController.event = event;
+        
+        addController.editViewDelegate = addController;
+        
+        // present EventsAddViewController as a modal view controller
+        [self presentModalViewController:addController animated:YES];
+        
+//        addController.editViewDelegate = self;
+    }
+    @catch (NSException *e) {
+        [CMIUtility LogError:e.reason];
+    }
+    
+}
+
+- (void)addEvent:(id)sender {
+    
     @try {
         
         // When add button is pushed, create an EKEventEditViewController to display the event.
@@ -322,6 +353,9 @@ callProviders _callProvider;
         
         // set the addController's event store to the current event store.
         addController.eventStore = _cmiEventCalendar.eventStore;
+        EKEvent *event  = [EKEvent eventWithEventStore:_cmiEventCalendar.eventStore];        
+        event.location = _cmiMyConferenceNumber.conferenceNumberFormatted;
+        addController.event = event;
         
         // present EventsAddViewController as a modal view controller
         [self presentModalViewController:addController animated:YES];
@@ -333,6 +367,7 @@ callProviders _callProvider;
     }
     
 }
+
 
 #pragma mark -
 #pragma mark EKEventEditViewDelegate
@@ -354,8 +389,6 @@ callProviders _callProvider;
 			// and reload table view.
 			// If the new event is being added to the default calendar, then update its 
 			// eventsList.
-//            [_cmiEventCalendar.
-//            [self.eventsList addObject:thisEvent];
 			[controller.eventStore saveEvent:controller.event span:EKSpanThisEvent error:&error];
 			[self reloadTableScrollToNow];
 			break;
@@ -365,9 +398,6 @@ callProviders _callProvider;
 			// and reload table view.
 			// If deleting an event from the currenly default calendar, then update its 
 			// eventsList.
-//			if (self.defaultCalendar ==  thisEvent.calendar) {
-//				[self.eventsList removeObject:thisEvent];
-//			}
 			[controller.eventStore removeEvent:thisEvent span:EKSpanThisEvent error:&error];
 			[self reloadTableScrollToNow];
 			break;
@@ -469,6 +499,11 @@ callProviders _callProvider;
 - (void)viewDidAppear:(BOOL)animated
 {
     [CMIUtility Log:@"viewDidAppear()"];
+    
+    if (_indexPath != nil) {
+        [self.tableView deselectRowAtIndexPath:_indexPath animated:YES];        
+        _indexPath = nil;
+    }
     
     // If the toolbar's not been hidden then this "didAppear" event was fired
     // by the app coming back to life, not from touching back from a forward screen
