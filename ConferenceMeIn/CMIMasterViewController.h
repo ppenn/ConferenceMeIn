@@ -29,6 +29,7 @@
 @property BOOL highlightCurrentEvents;
 @property (strong, nonatomic) CMIMyConferenceNumber* cmiMyConferenceNumber;
 @property (strong, nonatomic) CMIPhone* cmiPhone;
+@property BOOL reloadDefaultsOnAppear;
 
 - (void) storeChanged:(NSNotification *) notification;
 - (NSArray *)fetchEventsForTable;

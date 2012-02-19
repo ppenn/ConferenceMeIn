@@ -32,6 +32,7 @@ NSURL* _phoneURL;
             phoneNumberURL = @"tktn://call?destination=";            
             phoneNumberURL = [phoneNumberURL stringByAppendingString:phoneNumber];
             phoneNumberURL = [phoneNumberURL stringByReplacingOccurrencesOfString:@"," withString:@"%2C"];
+            phoneNumberURL = [phoneNumberURL stringByReplacingOccurrencesOfString:@"#" withString:@"%23"];
             phoneNumberURL = [phoneNumberURL stringByAppendingString:@"%23"];
             //            telLink = @"tktn://call?destination=18776038688%2C%2C8113067%23";
             break;
@@ -40,6 +41,7 @@ NSURL* _phoneURL;
         default:
             break;
     }
+    
     _phoneURL = [NSURL URLWithString:phoneNumberURL];
 }
 
@@ -88,6 +90,20 @@ NSURL* _phoneURL;
     } 
     else {
         [self dial:cmiMyConferenceNumber.conferenceNumber];
+    }
+    
+}
+
+- (void) dialConferenceNumberWithConfirmation:(CMIMyConferenceNumber*) cmiMyConferenceNumber view:(UIView*)view
+{
+    [CMIUtility Log:@"dialConferenceNumberWithConfirmation()"];
+    
+    // Only works with talkataone for now
+    if (cmiMyConferenceNumber.leaderInfo != nil && _callProvider == google) {
+        [self dialWithConfirmation:cmiMyConferenceNumber.fullConferenceNumber view:view];
+    } 
+    else {
+        [self dialWithConfirmation:cmiMyConferenceNumber.conferenceNumber view:view];
     }
     
 }

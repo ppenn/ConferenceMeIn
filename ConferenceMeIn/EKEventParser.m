@@ -39,12 +39,17 @@
     return phoneNumber;
 }
 
++ (NSString*)stripLeading1:(NSString*)eventText
+{
+    return @"1";
+}
+
 + (NSString*)parseEventText:(NSString*)eventText
 {
     NSError *error = NULL;
     NSString* phoneNumber = @"";
     
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"(\\d{3}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{4})" 
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"1?(\\d{3}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{4})" 
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
     
@@ -53,6 +58,10 @@
     NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:eventText options:0 range:NSMakeRange(0, [eventText  length])];
     if (!NSEqualRanges(rangeOfFirstMatch, NSMakeRange(NSNotFound, 0))) {
         substringForFirstMatch = [[[[[[eventText substringWithRange:rangeOfFirstMatch] stringByReplacingOccurrencesOfString:@"(" withString:@""] stringByReplacingOccurrencesOfString:@")" withString:@""] stringByReplacingOccurrencesOfString:@"." withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""] stringByReplacingOccurrencesOfString:@"-" withString:@""];
+        
+        if ([substringForFirstMatch characterAtIndex:0] == '1') {
+            substringForFirstMatch = [substringForFirstMatch substringFromIndex:1];
+        }
         
         phoneNumber = [phoneNumber stringByAppendingString:substringForFirstMatch];
         // Get extension, if there is one?

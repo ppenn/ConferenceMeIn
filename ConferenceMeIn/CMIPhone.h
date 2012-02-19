@@ -21,7 +21,8 @@ typedef enum callProviders {
 
 @property callProviders callProvider;
 
-- (void) dialConferenceNumber:(CMIMyConferenceNumber*) conferenceNumber;
+- (void) dialConferenceNumber:(CMIMyConferenceNumber*) cmiMyConferenceNumber;
+- (void) dialConferenceNumberWithConfirmation:(CMIMyConferenceNumber*) cmiMyConferenceNumber view:(UIView*)view;
 - (void) dial:(NSString*) phoneNumber;
 - (void) dialWithConfirmation:(NSString*) phoneNumber view:(UIView*)view;
 - (id) initWithCallProvider:(callProviders)callProvider;

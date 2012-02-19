@@ -32,6 +32,7 @@ NSIndexPath* _indexPath;
 @synthesize appSettingsViewController = _appSettingsViewController;
 @synthesize cmiMyConferenceNumber = _cmiMyConferenceNumber;
 @synthesize cmiPhone = _cmiPhone;
+@synthesize reloadDefaultsOnAppear = _reloadDefaultsOnAppear;
 
 #pragma mark -
 #pragma mark Table view delegate and data source methods
@@ -198,8 +199,7 @@ NSIndexPath* _indexPath;
     // Create the predicate. Pass it the default calendar.
 
     if (_cmiUserDefaults.firstRun == true) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ConferenceMeIn" message:@"Double-tap calendar item to dial # directly.\r\n Single-tap item to see event details and dial number "
-                                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ConferenceMeIn" message:NSLocalizedString(@"IntroMessage", @"")                                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];
         
     }
@@ -295,7 +295,7 @@ NSIndexPath* _indexPath;
         [CMIUtility Log:@"menuAction()"];
         
         // open a dialog with just an OK button
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"MenuButtonTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Call My Number", @"Settings", NSLocalizedString(@"HelpButtonTitle",@""),nil];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"MenuButtonTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"CallMyConfNumTitle",@""), NSLocalizedString(@"SettingsTitle", @""), NSLocalizedString(@"HelpButtonTitle",@""),nil];
         actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
         [actionSheet showInView:self.view];	// show from our table view (pops up in the middle of the table)
     }
@@ -473,17 +473,22 @@ NSIndexPath* _indexPath;
 {
     [CMIUtility Log:@"viewDidAppear()"];
     
-    if (_indexPath != nil) {
-        [self.tableView deselectRowAtIndexPath:_indexPath animated:YES];        
-        _indexPath = nil;
+    if (_reloadDefaultsOnAppear == YES) {
+        _reloadDefaultsOnAppear = NO;
+        [self reloadTableScrollToNow];
     }
+    else {
+        if (_indexPath != nil) {
+            [self.tableView deselectRowAtIndexPath:_indexPath animated:YES];        
+            _indexPath = nil;
+        }
     
-    // If the toolbar's not been hidden then this "didAppear" event was fired
-    // by the app coming back to life, not from touching back from a forward screen
-    if (self.navigationController.toolbarHidden == NO) {
-        [self scrollToNow];
-    }
-    
+        // If the toolbar's not been hidden then this "didAppear" event was fired
+        // by the app coming back to life, not from touching back from a forward screen
+        if (self.navigationController.toolbarHidden == NO) {
+            [self scrollToNow];
+        }
+    }    
     self.navigationController.toolbarHidden = NO;
     
 }
@@ -838,41 +843,36 @@ NSIndexPath* _indexPath;
     
 }
 
+- (void) warnPhoneNumberNotInSettings
+{
+    [CMIUtility Log:@"warnPhoneNumberNotInSettings()"];
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ConferenceMeIn" message:NSLocalizedString(@"IntroMessage", @"")                                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alert show];
+    
+    if ([self.appSettingsViewController.file isEqualToString:@"ChildCMINumber"]) {
+        _appSettingsViewController = nil;
+    }
+    self.appSettingsViewController.file = @"ChildCMINumber";
+    self.appSettingsViewController.showDoneButton = YES;
+    UINavigationController *aNavController = [[UINavigationController alloc] initWithRootViewController:self.appSettingsViewController];
+    [self presentModalViewController:aNavController animated:YES];
+    
+}
+
 - (void) callMyNumber
 {
     [CMIUtility Log:@"callMyNumber()"];
 
-    // Check the number
     if(_cmiMyConferenceNumber.isValid == FALSE) {
-
-        //TODO: this needs to prompt..
-        // Maybe tell the user it's a barry
-        
-        if ([self.appSettingsViewController.file isEqualToString:@"ChildCMINumber"]) {
-            _appSettingsViewController = nil;
-        }
-        self.appSettingsViewController.file = @"ChildCMINumber";
-
-        self.appSettingsViewController.showDoneButton = YES;
-        UINavigationController *aNavController = [[UINavigationController alloc] initWithRootViewController:self.appSettingsViewController];
-        [self presentModalViewController:aNavController animated:YES];
-
+        [self warnPhoneNumberNotInSettings];
     }
     else {
         // Call the number...
-//        [_cmiPhone dialConferenceNumber:_cmiMyConferenceNumber];
+        [_cmiPhone dialConferenceNumber:_cmiMyConferenceNumber];
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    // TODO check for controller?
-    if (self.navigationController != nil) {
-        if ([self.navigationController isKindOfClass:[IASKAppSettingsViewController class]]       ) {
-            NSLog(@"IAS");
-        }
-    }
-}
 
 #pragma mark -
 #pragma mark - UIActionSheetDelegate
@@ -922,7 +922,7 @@ NSIndexPath* _indexPath;
     [self readAppSettings];
     if([sender.file isEqualToString:@"ChildCMINumber"] && _cmiMyConferenceNumber.isValid) {
         // Call the number...
-        [_cmiPhone dial:_cmiMyConferenceNumber.conferenceNumber];
+        [_cmiPhone dialConferenceNumberWithConfirmation:_cmiMyConferenceNumber view:self.tableView];
     }    
 }
 

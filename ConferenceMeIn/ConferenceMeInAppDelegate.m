@@ -36,12 +36,18 @@ CMIMasterViewController* _cmiMasterViewController;
     @try {
         [CMIUtility Log:[@"defaultsChanged() " stringByAppendingString:notif.name]];
         // Get the user defaults
-        
-        if ([self.navigationController.visibleViewController isKindOfClass:[UITableViewController class]]) {
+
+        if (self.navigationController.visibleViewController == _cmiMasterViewController) {
             [_cmiUserDefaults loadDefaults];
             [_cmiMasterViewController reloadTableScrollToNow];
-
         }
+        else {
+            [CMIUtility Log:@"CMI MasterView not visible, will reload later"];
+            _cmiMasterViewController.reloadDefaultsOnAppear = YES;                        
+        }
+//        if ([self.navigationController.visibleViewController isKindOfClass:[UITableViewController class]]) {
+
+//        }
     }
     @catch (NSException * e) {
         [CMIUtility LogError:e.reason];
