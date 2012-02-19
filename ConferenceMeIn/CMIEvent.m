@@ -34,6 +34,8 @@
 
 - (id) initWithEKEvent:(EKEvent*)ekEvent
 {
+    NSLog(@"initWithEKEvent()");
+
     self = [super init];
     
     if (self != nil)
@@ -56,6 +58,8 @@
 
 - (void) parseEvent
 {
+    NSLog(@"parseEvent()");
+
     if (_ekEvent.title != nil && [_ekEvent.title length] > 0) {
         _conferenceNumber = [EKEventParser parseEventText:_ekEvent.title];        
     }

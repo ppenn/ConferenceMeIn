@@ -45,9 +45,6 @@ CMIMasterViewController* _cmiMasterViewController;
             [CMIUtility Log:@"CMI MasterView not visible, will reload later"];
             _cmiMasterViewController.reloadDefaultsOnAppear = YES;                        
         }
-//        if ([self.navigationController.visibleViewController isKindOfClass:[UITableViewController class]]) {
-
-//        }
     }
     @catch (NSException * e) {
         [CMIUtility LogError:e.reason];
