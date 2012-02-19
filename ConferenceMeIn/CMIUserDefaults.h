@@ -9,12 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "CMIEvent.h"
 #import "CMIEventCalendar.h"
+#import "CMIPhone.h"
 
 @interface CMIUserDefaults : NSObject
 
 // Settings app settings
 @property (nonatomic, assign) NSInteger calendarType;
-@property (nonatomic, assign) callProviders callProviderType;
 @property (nonatomic, assign) NSInteger currentTimeframeStarts;
 @property (nonatomic, assign) calendarTimeframes calendarTimeframeType;
 @property (nonatomic, assign) BOOL highlightCurrentEvents;
@@ -29,6 +29,8 @@
 
 // Runtime-only settings
 @property (nonatomic, assign) NSInteger filterType;
+
+@property callProviders callProviderType;
 
 - (void)loadDefaults;
 - (void)saveDefaults;

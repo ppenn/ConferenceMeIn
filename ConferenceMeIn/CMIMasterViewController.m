@@ -9,7 +9,6 @@
 #import "CMIMasterViewController.h"
 #import "CMIUtility.h"
 #import "CMIUserDefaults.h"
-#import "CMIEKEventEditViewController.h"
 
 #define ROW_HEIGHT 90
 
@@ -54,17 +53,19 @@ NSIndexPath* _indexPath;
 {
     NSLog(@"showEventNatively()");
     
-    self.detailViewController = [[CMIEKEventViewController alloc] initWithNibName:nil bundle:nil];        
+    _detailViewController = [[CMIEKEventViewController alloc] initWithNibName:nil bundle:nil];        
     CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEventByIndexPath:section eventIndex:row];
     _detailViewController.event = cmiEvent.ekEvent;
     
-    _detailViewController.detailItem = cmiEvent;
+    _detailViewController.cmiEvent = cmiEvent;
+    _detailViewController.cmiPhone = _cmiPhone;
+    
     //	Push detailViewController onto the navigation controller stack
     //	If the underlying event gets deleted, detailViewController will remove itself from
     //	the stack and clear its event property.
    self.navigationController.toolbarHidden = YES;
 
-    _detailViewController.delegate = _detailViewController;
+//    _detailViewController.delegate = _detailViewController;
     _detailViewController.allowsEditing = YES;
     [self.navigationController pushViewController:_detailViewController animated:YES];
 
@@ -154,7 +155,7 @@ NSIndexPath* _indexPath;
             _tappedRow = -1;
             _tappedSection = -1;
             if ([cmiEvent hasConferenceNumber] == true) {
-                [cmiEvent dial:self.view confirmCall:false callProvider:_callProvider];
+                [_cmiPhone dial:cmiEvent.conferenceNumber];
             }
             else {
                 [self showEventNatively:indexPath.section row:indexPath.row];
@@ -315,34 +316,6 @@ NSIndexPath* _indexPath;
     self.navigationItem.leftBarButtonItem = menuButton;
 }
 
-// If event is nil, a new event is created and added to the specified event store. New events are 
-// added to the default calendar. An exception is raised if set to an event that is not in the 
-// specified event store.
-- (void)addEventDelete:(id)sender {
-
-    @try {
-        
-        // When add button is pushed, create an EKEventEditViewController to display the event.
-        CMIEKEventEditViewController *addController = [[CMIEKEventEditViewController alloc] initWithNibName:nil bundle:nil];
-        
-        // set the addController's event store to the current event store.
-        addController.eventStore = _cmiEventCalendar.eventStore;
-        EKEvent *event  = [EKEvent eventWithEventStore:_cmiEventCalendar.eventStore];        
-        event.location = _cmiMyConferenceNumber.conferenceNumberFormatted;
-        addController.event = event;
-        
-        addController.editViewDelegate = addController;
-        
-        // present EventsAddViewController as a modal view controller
-        [self presentModalViewController:addController animated:YES];
-        
-//        addController.editViewDelegate = self;
-    }
-    @catch (NSException *e) {
-        [CMIUtility LogError:e.reason];
-    }
-    
-}
 
 - (void)addEvent:(id)sender {
     
@@ -855,9 +828,6 @@ NSIndexPath* _indexPath;
         _appSettingsViewController = nil;
     }
     
-//    self.appSettingsViewController.showDoneButton = NO;
-//    [self.navigationController pushViewController:self.appSettingsViewController animated:YES];
-
     if ([self.appSettingsViewController.file isEqualToString:@"ChildCMINumber"]) {
         _appSettingsViewController = nil;
     }
@@ -890,7 +860,7 @@ NSIndexPath* _indexPath;
     }
     else {
         // Call the number...
-        [_cmiPhone dial:_cmiMyConferenceNumber.conferenceNumber];
+//        [_cmiPhone dialConferenceNumber:_cmiMyConferenceNumber];
     }
 }
 

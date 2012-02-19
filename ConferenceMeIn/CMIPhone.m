@@ -8,6 +8,7 @@
 
 #import "CMIPhone.h"
 #import "CMIUtility.h"
+#import "CMIMyConferenceNumber.h"
 
 NSURL* _phoneURL;
 
@@ -74,6 +75,20 @@ NSURL* _phoneURL;
     webview.hidden = YES; 
     // Assume we are in a view controller and have access to self.view 
     [view addSubview:webview];
+    
+}
+
+- (void) dialConferenceNumber:(CMIMyConferenceNumber*) cmiMyConferenceNumber
+{
+    [CMIUtility Log:@"dialConferenceNumber()"];
+    
+    // Only works with talkataone for now
+    if (cmiMyConferenceNumber.leaderInfo != nil && _callProvider == google) {
+        [self dial:cmiMyConferenceNumber.fullConferenceNumber];
+    } 
+    else {
+        [self dial:cmiMyConferenceNumber.conferenceNumber];
+    }
     
 }
 

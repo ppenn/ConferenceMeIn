@@ -10,11 +10,12 @@
 #import <EventKit/EventKit.h>
 #import <EventKitUI/EventKitUI.h>
 #import "CMIEvent.h"
-
+#import "CMIPhone.h"
 @interface CMIEKEventViewController : EKEventViewController
-<UIAlertViewDelegate, UIActionSheetDelegate, EKEventViewDelegate>
+<UIAlertViewDelegate, UIActionSheetDelegate>
 
-@property (strong, nonatomic) id detailItem;
-
+//@property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) CMIEvent* cmiEvent;
+@property (strong, nonatomic) CMIPhone* cmiPhone;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+//#import "CMIMyConferenceNumber.h"
 
 typedef enum callProviders {
     phoneCarrier,
@@ -14,10 +15,13 @@ typedef enum callProviders {
     skype
 }callProviders;
 
+@class CMIMyConferenceNumber;
+
 @interface CMIPhone : NSObject
 
 @property callProviders callProvider;
 
+- (void) dialConferenceNumber:(CMIMyConferenceNumber*) conferenceNumber;
 - (void) dial:(NSString*) phoneNumber;
 - (void) dialWithConfirmation:(NSString*) phoneNumber view:(UIView*)view;
 - (id) initWithCallProvider:(callProviders)callProvider;

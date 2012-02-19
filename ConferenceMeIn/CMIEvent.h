@@ -17,12 +17,10 @@
 
 - (id) initWithEKEvent:(EKEvent*)baseEvent;
 - (void) parseEvent;
-- (void) dial:(UIView*)view confirmCall:(BOOL)confirmCall callProvider:(NSInteger)callProvider;
 
 @property (readonly, nonatomic,strong) EKEvent* ekEvent;
 @property (readonly, nonatomic,strong) NSString* conferenceNumber;
 @property (readonly, nonatomic) bool hasConferenceNumber;
-@property (readonly, nonatomic,strong) NSString* conferenceNumberURL;
 @property callProviders callProvider;
 
 

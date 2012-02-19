@@ -17,6 +17,12 @@
 @synthesize leaderInfo = _leaderInfo;
 @synthesize cmiUserDefaults = _cmiUserDefaults;
 @synthesize conferenceNumberFormatted;
+@synthesize fullConferenceNumber;
+
+- (NSString*)fullConferenceNumber
+{
+    return [_conferenceNumber stringByAppendingString:_leaderInfo];
+}
 
 - (NSString*)conferenceNumberFormatted
 {
@@ -46,6 +52,13 @@
     }
     
     // Parse Leader Info
+    if (_cmiUserDefaults.myConfLeaderPIN != nil) {
+        _leaderInfo = @"";
+        if (_cmiUserDefaults.myConfLeaderSeparator != nil && [_cmiUserDefaults.myConfLeaderSeparator length] > 0) {
+            _leaderInfo = _cmiUserDefaults.myConfLeaderSeparator;
+        }
+        _leaderInfo = [_leaderInfo stringByAppendingString:_cmiUserDefaults.myConfLeaderPIN];
+    }
 }
 - (void) setCmiUserDefaults:(CMIUserDefaults *)cmiUserDefaults
 {

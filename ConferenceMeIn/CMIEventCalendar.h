@@ -57,8 +57,8 @@ typedef enum eventFilterTypes
 - (NSIndexPath*)getDayEventIndexForDate:(NSDate*)date;
 
 - (NSArray *)fetchEvents;
-- (CMIEvent*)getCMIEventByIndexPath:(NSInteger)dayEventIndex eventIndex:(NSInteger)eventIndex;
 - (CMIDay*)getCMIDayByIndex:(NSInteger)dayEventIndex;
 - (NSString*)getCMIDayNameByIndex:(NSInteger)dayEventIndex;
+- (CMIEvent*)getCMIEventByIndexPath:(NSInteger)dayEventIndex eventIndex:(NSInteger)eventIndex;
 
 @end
