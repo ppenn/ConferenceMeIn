@@ -9,6 +9,8 @@
 #import "CMIEventCalendar.h"
 #import "CMIUtility.h"
 
+#define MINUTES_PRIOR_TO_NOW 0
+
 @implementation CMIEventCalendar
 
 @synthesize eventStore = _eventStore;
@@ -199,12 +201,14 @@ NSDate* _eventsEndDate = nil;
 
     NSDate* now = [[NSDate alloc] init];
 
-    if (_currentTimeframeStarts > 0) {
-        _eventsStartDate = [CMIUtility getOffsetDateByMinutes:now offsetMinutes:-_currentTimeframeStarts];
-    }
-    else {
-        _eventsStartDate = now;
-    }
+    _eventsStartDate = [CMIUtility getOffsetDateByMinutes:now offsetMinutes:-MINUTES_PRIOR_TO_NOW];
+
+//    if (_currentTimeframeStarts > 0) {
+//        _eventsStartDate = [CMIUtility getOffsetDateByMinutes:now offsetMinutes:-_currentTimeframeStarts];
+//    }
+//    else {
+//        _eventsStartDate = now;
+//    }
 
 }
 
@@ -227,10 +231,14 @@ NSDate* _eventsEndDate = nil;
             
             break;
         case next24Hours:
+//            _eventsStartDate = now;
             _eventsEndDate = [CMIUtility getOffsetDate:now atOffsetDays:1];
             break;
         case today:
             _eventsStartDate = [CMIUtility getMidnightDate:now];
+            _eventsEndDate = [CMIUtility getMidnightDate:now];
+            _eventsEndDate = [CMIUtility getOffsetDate:_eventsEndDate atOffsetDays:1];
+            _eventsEndDate = [CMIUtility getOffsetDateByMinutes:_eventsEndDate offsetMinutes:-1];
             break;
         case todayAndTomorrow:
             _eventsStartDate = [CMIUtility getMidnightDate:now];

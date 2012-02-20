@@ -82,7 +82,7 @@ NSString *kFirstRun = @"firstRunKey";
         NSNumber* callProviderTypeDefault = nil;
         NSNumber* calendarTimeframeDefault = nil;
         NSNumber* currentTimeframeStartsDefault = nil;
-        BOOL highlightCurrentEventsDefault;
+//        BOOL highlightCurrentEventsDefault;
         
 		NSDictionary *prefItem;
 		for (prefItem in prefSpecifierArray)

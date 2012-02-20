@@ -190,10 +190,15 @@
     
     NSDate* startDate = [[NSDate alloc] init];
     NSDate* endDate = [[NSDate alloc] initWithTimeInterval:60*60 sinceDate:startDate];
+    NSDate* afterEndDate = [[NSDate alloc] initWithTimeInterval:60*60 sinceDate:endDate];
     NSDate* beforeStartDate = [[NSDate alloc] initWithTimeInterval:-(60*60) sinceDate:startDate];
     NSDate* beforeBeforeStartDate = [[NSDate alloc] initWithTimeInterval:-(2*60*60) sinceDate:beforeStartDate];
+    NSDate* tomorrowStartDate = [[NSDate alloc] initWithTimeInterval:(24*60*60) sinceDate:beforeBeforeStartDate];
+    NSDate* tomorrowEndDate = [[NSDate alloc] initWithTimeInterval:(60*60) sinceDate:tomorrowStartDate];
     
     [self createTestEvent:eventStore startDate:startDate endDate:endDate title:@"testtitle2" withConfNumber:TRUE];    
+    [self createTestEvent:eventStore startDate:endDate endDate:afterEndDate title:@"futureEvent" withConfNumber:TRUE];    
+    [self createTestEvent:eventStore startDate:tomorrowStartDate endDate:tomorrowEndDate title:@"tomorrowEvent" withConfNumber:TRUE];    
     [self createTestEvent:eventStore startDate:beforeStartDate endDate:startDate title:@"testtitle1" withConfNumber:TRUE];
     [self createTestEvent:eventStore startDate:beforeStartDate endDate:startDate title:@"NoConfNumEvent1" withConfNumber:FALSE];
     [self createTestEvent:eventStore startDate:beforeBeforeStartDate endDate:beforeStartDate title:@"testtitle0" withConfNumber:TRUE];
