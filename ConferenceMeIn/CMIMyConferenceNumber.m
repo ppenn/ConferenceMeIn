@@ -42,9 +42,9 @@
     
     // Need to parse all phone number info
     if (_cmiUserDefaults.myConfPhoneNumber != nil && _cmiUserDefaults.myConfConfNumber != nil) {
-        _conferenceNumber = [EKEventParser parseEventText:[[_cmiUserDefaults.myConfPhoneNumber stringByAppendingString:@" "] stringByAppendingString:_cmiUserDefaults.myConfConfNumber]];        
+        _conferenceNumber = [EKEventParser parseEventText:[[_cmiUserDefaults.myConfPhoneNumber stringByAppendingString:@":"] stringByAppendingString:_cmiUserDefaults.myConfConfNumber]];        
     }
-    if (_conferenceNumber != nil) {
+    if (_conferenceNumber != nil && _conferenceNumber.length > 0) {
         _isValid = true;
     }
     else {

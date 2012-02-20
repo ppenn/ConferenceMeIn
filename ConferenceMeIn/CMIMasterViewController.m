@@ -853,7 +853,7 @@ NSIndexPath* _indexPath;
 {
     [CMIUtility Log:@"warnPhoneNumberNotInSettings()"];
 
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ConferenceMeIn" message:NSLocalizedString(@"IntroMessage", @"")                                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ConferenceMeIn" message:NSLocalizedString(@"WarnInvalidPhoneNumberMessage", @"")                                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [alert show];
     
     if ([self.appSettingsViewController.file isEqualToString:@"ChildCMINumber"]) {
