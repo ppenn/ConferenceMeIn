@@ -12,10 +12,11 @@
 #import "CMIEvent.h"
 #import "CMIPhone.h"
 @interface CMIEKEventViewController : EKEventViewController
-<UIAlertViewDelegate, UIActionSheetDelegate>
+<UIAlertViewDelegate>
 
-//@property (strong, nonatomic) id detailItem;
 @property (strong, nonatomic) CMIEvent* cmiEvent;
 @property (strong, nonatomic) CMIPhone* cmiPhone;
+@property (strong, nonatomic) EKEventStore* eventStore;
 
+@property BOOL hasDisplayedPopup;
 @end

@@ -9,15 +9,19 @@
 #import "CMIEKEventViewController.h"
 #import "ConferenceMeInAppDelegate.h"
 #import "CMIUserDefaults.h"
+#import "CMIUtility.h"
 
-BOOL _loaded = false;
+#define ALERT_NO_NUMBER_FOUND 1
+#define ALERT_ENTER_CONF_DETAILS 0
+
+BOOL _supportsNotes = false;
 
 @implementation CMIEKEventViewController
 
-//@synthesize detailItem = _detailItem;
 @synthesize cmiEvent = _cmiEvent;
 @synthesize cmiPhone = _cmiPhone;
-
+@synthesize eventStore = _eventStore;
+@synthesize hasDisplayedPopup = _hasDisplayedPopup;
 
 callProviders _callProvider = phoneCarrier;
 
@@ -34,19 +38,53 @@ callProviders _callProvider = phoneCarrier;
     _callProvider = cmiUserDefaults.callProviderType;
 }
 
+- (void)showEnterConferenceDetailsAlert
+{
+    [CMIUtility Log:@"showEnterConferenceDetailsAlert()"];
+    
+    if (_supportsNotes == YES) {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Conference # Details" message:@"Enter Conference # Details:" delegate:self cancelButtonTitle:@"Continue" otherButtonTitles:nil];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        UITextField * alertTextField = [alert textFieldAtIndex:0];
+        alertTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;// UIKeyboardTypeDefault;// UIKeyboardTypePhonePad;// UIKeyboardTypeNumberPad;
+        alertTextField.placeholder = @"Conf Details #";
+        alert.tag = ALERT_ENTER_CONF_DETAILS;
+        [alert show];                
+    }
+}
+
+- (BOOL)environmentIsAtIOS5OrHigher
+{
+    NSString *osVersion = [[UIDevice currentDevice] systemVersion];
+    
+    NSInteger intOSValue = [osVersion intValue];
+    
+    return intOSValue >= 5;
+}
+
 - (void)tryToDial
 {
     if (_cmiEvent == nil)   return;
         
     if (_cmiEvent.hasConferenceNumber == false) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Phone#" message:@"No Phone number found for event"
-                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        
+        UIAlertView* alert;
+        
+//        if ([EKEvent instancesRespondToSelector:@selector(notes:)]) {
+        if ([self environmentIsAtIOS5OrHigher] == YES) {
+        _supportsNotes = YES;
+        alert = [[UIAlertView alloc] initWithTitle:@"No Phone#" message:@"No Phone number found for event\n\rWould you like to add one?"
+                                          delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: @"Add Number",nil];
+        }
+        else {
+            alert = [[UIAlertView alloc] initWithTitle:@"No Phone#" message:@"No Phone number found for event" delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles: nil];            
+        }
+        alert.tag = ALERT_NO_NUMBER_FOUND;
         [alert show];
     }
     else
     {
         [_cmiPhone dialWithConfirmation:_cmiEvent.conferenceNumber view:self.view];
-//        [_cmiEvent dial:self.view confirmCall:true callProvider:_callProvider];        
     }
     
 }
@@ -57,30 +95,58 @@ callProviders _callProvider = phoneCarrier;
 
     // This flag is so we only try to call when coming from master view
     // There may be another way to do this...
-    if (_loaded == false) {
-        _loaded = true;
-        [self tryToDial];
+    @try {
+        [CMIUtility Log:@"viewDidAppear:animated()"];
+        
+        if (_hasDisplayedPopup == false) {
+            _hasDisplayedPopup = true;
+            [self tryToDial];
+        }
+    }
+    @catch (NSException* e) {
+        [CMIUtility LogError:e.reason];
     }
     
 }
 
-
-#pragma mark -
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)saveNotes:(NSString*)conferenceDetails
 {
-	// the user clicked one of the OK/Cancel buttons
-	if (buttonIndex == 0)
-	{
-        [_cmiPhone dialWithConfirmation:_cmiEvent.conferenceNumber view:self.view];
-//        [_cmiEvent dial:self.view confirmCall:true callProvider:_callProvider];        
-	}
-	else
-	{
-		NSLog(@"cancel");
-	}
+    [CMIUtility Log:@"saveNotes()"];
+    
+    NSError *error = nil;
+    if (conferenceDetails != nil && conferenceDetails.length > 0) {
+        NSString* notes = @"";
+        if (_cmiEvent.ekEvent.hasNotes == YES) {
+            notes = _cmiEvent.ekEvent.notes;
+            notes = [notes stringByAppendingString:@"\n\r"];
+            notes = [notes stringByAppendingString:@"\n\r"];
+            notes = [notes stringByAppendingString:conferenceDetails];
+        }
+        else {
+            notes = conferenceDetails;
+        }
+        _cmiEvent.ekEvent.notes = notes;
+        [_eventStore saveEvent:_cmiEvent.ekEvent span:EKSpanThisEvent error:&error];        
+    }            
 }
 
+#pragma mark -
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{ 
+    [CMIUtility Log:@"alertView:clickedButtonAtIndex()"];
+    
+    @try {
+        if (alertView.tag == ALERT_NO_NUMBER_FOUND && _supportsNotes == YES &&
+            buttonIndex == 1) {
+            [self showEnterConferenceDetailsAlert];
+        }
+        else if (alertView.tag == ALERT_ENTER_CONF_DETAILS && buttonIndex == 0) {
+            [self saveNotes:[[alertView textFieldAtIndex:0] text]];
+        }
+    }
+    @catch (NSException *e) {
+        [CMIUtility LogError:e.reason];
+    }
+}
 
 @end

@@ -56,10 +56,11 @@ NSIndexPath* _indexPath;
     _detailViewController = [[CMIEKEventViewController alloc] initWithNibName:nil bundle:nil];        
     CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEventByIndexPath:section eventIndex:row];
     _detailViewController.event = cmiEvent.ekEvent;
-    
+    _detailViewController.eventStore = _cmiEventCalendar.eventStore;
     _detailViewController.cmiEvent = cmiEvent;
     _detailViewController.cmiPhone = _cmiPhone;
-    
+    _detailViewController.hasDisplayedPopup = NO;
+
     //	Push detailViewController onto the navigation controller stack
     //	If the underlying event gets deleted, detailViewController will remove itself from
     //	the stack and clear its event property.
