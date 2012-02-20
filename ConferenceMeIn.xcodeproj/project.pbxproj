@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A808AFAA14EBF60F00810523 /* CMIConferencePhoneNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A808AFA914EBF60F00810523 /* CMIConferencePhoneNumber.m */; };
-		A808AFAB14EBF60F00810523 /* CMIConferencePhoneNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A808AFA914EBF60F00810523 /* CMIConferencePhoneNumber.m */; };
+		A808AFAA14EBF60F00810523 /* CMIPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = A808AFA914EBF60F00810523 /* CMIPhone.m */; };
+		A808AFAB14EBF60F00810523 /* CMIPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = A808AFA914EBF60F00810523 /* CMIPhone.m */; };
 		A81E2F9C14EAD07A0005B411 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A81E2F9914EAD07A0005B411 /* Icon.png */; };
 		A81E2F9D14EAD07A0005B411 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A81E2F9A14EAD07A0005B411 /* Icon@2x.png */; };
 		A81E2F9E14EAD07A0005B411 /* ITunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = A81E2F9B14EAD07A0005B411 /* ITunesArtwork.png */; };
@@ -20,38 +20,21 @@
 		A8AEA2FD14E2380500E6ADC6 /* CMIHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */; };
 		A8AEA2FE14E2380500E6ADC6 /* CMIHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */; };
 		A8B6321414E229440006E3A5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A8B6321314E229430006E3A5 /* Default.png */; };
-		A8B6321814E22EEC0006E3A5 /* CMIAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B6321714E22EEC0006E3A5 /* CMIAboutViewController.m */; };
-		A8B6321914E22EEC0006E3A5 /* CMIAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8B6321714E22EEC0006E3A5 /* CMIAboutViewController.m */; };
 		A8CFD0B814EF360C00EA8616 /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD09214EF360C00EA8616 /* IASKAppSettingsViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A8CFD0B914EF360C00EA8616 /* IASKAppSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD09214EF360C00EA8616 /* IASKAppSettingsViewController.m */; };
 		A8CFD0BA14EF360C00EA8616 /* IASKAppSettingsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD09414EF360C00EA8616 /* IASKAppSettingsWebViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A8CFD0BB14EF360C00EA8616 /* IASKAppSettingsWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD09414EF360C00EA8616 /* IASKAppSettingsWebViewController.m */; };
 		A8CFD0BC14EF360C00EA8616 /* IASKSpecifierValuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD09614EF360C00EA8616 /* IASKSpecifierValuesViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A8CFD0BD14EF360C00EA8616 /* IASKSpecifierValuesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD09614EF360C00EA8616 /* IASKSpecifierValuesViewController.m */; };
 		A8CFD0BE14EF360C00EA8616 /* IASKSettingsReader.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD09914EF360C00EA8616 /* IASKSettingsReader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A8CFD0BF14EF360C00EA8616 /* IASKSettingsReader.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD09914EF360C00EA8616 /* IASKSettingsReader.m */; };
 		A8CFD0C014EF360C00EA8616 /* IASKSettingsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD09B14EF360C00EA8616 /* IASKSettingsStore.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A8CFD0C114EF360C00EA8616 /* IASKSettingsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD09B14EF360C00EA8616 /* IASKSettingsStore.m */; };
 		A8CFD0C214EF360C00EA8616 /* IASKSettingsStoreFile.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD09D14EF360C00EA8616 /* IASKSettingsStoreFile.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A8CFD0C314EF360C00EA8616 /* IASKSettingsStoreFile.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD09D14EF360C00EA8616 /* IASKSettingsStoreFile.m */; };
 		A8CFD0C414EF360C00EA8616 /* IASKSettingsStoreUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD09F14EF360C00EA8616 /* IASKSettingsStoreUserDefaults.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A8CFD0C514EF360C00EA8616 /* IASKSettingsStoreUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD09F14EF360C00EA8616 /* IASKSettingsStoreUserDefaults.m */; };
 		A8CFD0C614EF360C00EA8616 /* IASKSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0A114EF360C00EA8616 /* IASKSpecifier.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A8CFD0C714EF360C00EA8616 /* IASKSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0A114EF360C00EA8616 /* IASKSpecifier.m */; };
 		A8CFD0C814EF360C00EA8616 /* IASKPSSliderSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0A414EF360C00EA8616 /* IASKPSSliderSpecifierViewCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A8CFD0C914EF360C00EA8616 /* IASKPSSliderSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0A414EF360C00EA8616 /* IASKPSSliderSpecifierViewCell.m */; };
 		A8CFD0CA14EF360C00EA8616 /* IASKPSTextFieldSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0A614EF360C00EA8616 /* IASKPSTextFieldSpecifierViewCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A8CFD0CB14EF360C00EA8616 /* IASKPSTextFieldSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0A614EF360C00EA8616 /* IASKPSTextFieldSpecifierViewCell.m */; };
 		A8CFD0CC14EF360C00EA8616 /* IASKPSTitleValueSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0A814EF360C00EA8616 /* IASKPSTitleValueSpecifierViewCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A8CFD0CD14EF360C00EA8616 /* IASKPSTitleValueSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0A814EF360C00EA8616 /* IASKPSTitleValueSpecifierViewCell.m */; };
 		A8CFD0CE14EF360C00EA8616 /* IASKPSToggleSwitchSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0AA14EF360C00EA8616 /* IASKPSToggleSwitchSpecifierViewCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A8CFD0CF14EF360C00EA8616 /* IASKPSToggleSwitchSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0AA14EF360C00EA8616 /* IASKPSToggleSwitchSpecifierViewCell.m */; };
 		A8CFD0D014EF360C00EA8616 /* IASKSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0AC14EF360C00EA8616 /* IASKSlider.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A8CFD0D114EF360C00EA8616 /* IASKSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0AC14EF360C00EA8616 /* IASKSlider.m */; };
 		A8CFD0D214EF360C00EA8616 /* IASKSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0AE14EF360C00EA8616 /* IASKSwitch.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A8CFD0D314EF360C00EA8616 /* IASKSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0AE14EF360C00EA8616 /* IASKSwitch.m */; };
 		A8CFD0D414EF360C00EA8616 /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0B014EF360C00EA8616 /* IASKTextField.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A8CFD0D514EF360C00EA8616 /* IASKTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0B014EF360C00EA8616 /* IASKTextField.m */; };
 		A8CFD0D614EF360C00EA8616 /* IASKAppSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8CFD0B214EF360C00EA8616 /* IASKAppSettingsView.xib */; };
 		A8CFD0D714EF360C00EA8616 /* IASKAppSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8CFD0B214EF360C00EA8616 /* IASKAppSettingsView.xib */; };
 		A8CFD0D814EF360C00EA8616 /* IASKAppSettingsWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8CFD0B314EF360C00EA8616 /* IASKAppSettingsWebView.xib */; };
@@ -67,6 +50,8 @@
 		A8CFD0E314EF403A00EA8616 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8CFD0E214EF403A00EA8616 /* MessageUI.framework */; };
 		A8CFD0E514EF404500EA8616 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8CFD0E414EF404500EA8616 /* MessageUI.framework */; };
 		A8CFD0E614EF404500EA8616 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8CFD0E414EF404500EA8616 /* MessageUI.framework */; };
+		A8CFD0E914EFE5C200EA8616 /* CMIMyConferenceNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0E814EFE5C200EA8616 /* CMIMyConferenceNumber.m */; };
+		A8CFD0EA14EFE5C200EA8616 /* CMIMyConferenceNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0E814EFE5C200EA8616 /* CMIMyConferenceNumber.m */; };
 		A8E1D70514D08F2800E5A877 /* EKEventParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D70414D08F2800E5A877 /* EKEventParserTests.m */; };
 		A8E1D70C14D0974700E5A877 /* CMIEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D70B14D0974700E5A877 /* CMIEvent.m */; };
 		A8E1D70D14D0974700E5A877 /* CMIEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D70B14D0974700E5A877 /* CMIEvent.m */; };
@@ -121,8 +106,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A808AFA814EBF60F00810523 /* CMIConferencePhoneNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIConferencePhoneNumber.h; sourceTree = "<group>"; };
-		A808AFA914EBF60F00810523 /* CMIConferencePhoneNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIConferencePhoneNumber.m; sourceTree = "<group>"; };
+		A808AFA814EBF60F00810523 /* CMIPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIPhone.h; sourceTree = "<group>"; };
+		A808AFA914EBF60F00810523 /* CMIPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIPhone.m; sourceTree = "<group>"; };
 		A81E2F9914EAD07A0005B411 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ConferenceMeIn/images/Icon.png; sourceTree = "<group>"; };
 		A81E2F9A14EAD07A0005B411 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "ConferenceMeIn/images/Icon@2x.png"; sourceTree = "<group>"; };
 		A81E2F9B14EAD07A0005B411 /* ITunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ITunesArtwork.png; path = ConferenceMeIn/images/ITunesArtwork.png; sourceTree = "<group>"; };
@@ -133,8 +118,6 @@
 		A8AEA2FB14E2380500E6ADC6 /* CMIHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIHelpViewController.h; sourceTree = "<group>"; };
 		A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIHelpViewController.m; sourceTree = "<group>"; };
 		A8B6321314E229430006E3A5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ConferenceMeIn/images/Default.png; sourceTree = "<group>"; };
-		A8B6321614E22EEC0006E3A5 /* CMIAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIAboutViewController.h; sourceTree = "<group>"; };
-		A8B6321714E22EEC0006E3A5 /* CMIAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIAboutViewController.m; sourceTree = "<group>"; };
 		A8CFD09114EF360C00EA8616 /* IASKAppSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsViewController.h; sourceTree = "<group>"; };
 		A8CFD09214EF360C00EA8616 /* IASKAppSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IASKAppSettingsViewController.m; sourceTree = "<group>"; };
 		A8CFD09314EF360C00EA8616 /* IASKAppSettingsWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IASKAppSettingsWebViewController.h; sourceTree = "<group>"; };
@@ -173,6 +156,8 @@
 		A8CFD0B714EF360C00EA8616 /* IASKSpecifierValuesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IASKSpecifierValuesView.xib; sourceTree = "<group>"; };
 		A8CFD0E214EF403A00EA8616 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		A8CFD0E414EF404500EA8616 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		A8CFD0E714EFE5C200EA8616 /* CMIMyConferenceNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIMyConferenceNumber.h; sourceTree = "<group>"; };
+		A8CFD0E814EFE5C200EA8616 /* CMIMyConferenceNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIMyConferenceNumber.m; sourceTree = "<group>"; };
 		A8E1D70314D08F2800E5A877 /* EKEventParserTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKEventParserTests.h; sourceTree = "<group>"; };
 		A8E1D70414D08F2800E5A877 /* EKEventParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKEventParserTests.m; sourceTree = "<group>"; };
 		A8E1D70A14D0974700E5A877 /* CMIEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIEvent.h; sourceTree = "<group>"; };
@@ -358,7 +343,6 @@
 		A8E524FB14CA0EC700797C16 = {
 			isa = PBXGroup;
 			children = (
-				A8CFD0E214EF403A00EA8616 /* MessageUI.framework */,
 				A8CFD08F14EF360C00EA8616 /* InAppSettingsKit */,
 				A8E1D72714D22A9400E5A877 /* Resources */,
 				A8E5251014CA0EC800797C16 /* ConferenceMeIn */,
@@ -381,6 +365,7 @@
 		A8E5250914CA0EC800797C16 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A8CFD0E214EF403A00EA8616 /* MessageUI.framework */,
 				A8CFD0E414EF404500EA8616 /* MessageUI.framework */,
 				A8E1D71F14D133B300E5A877 /* EventKit.framework */,
 				A8E1D71D14D132B600E5A877 /* EventKitUI.framework */,
@@ -406,20 +391,20 @@
 				A8E5251114CA0EC800797C16 /* Supporting Files */,
 				A8E5254A14CA37A100797C16 /* EKEventParser.h */,
 				A8E5254B14CA37A200797C16 /* EKEventParser.m */,
-				A808AFA814EBF60F00810523 /* CMIConferencePhoneNumber.h */,
-				A808AFA914EBF60F00810523 /* CMIConferencePhoneNumber.m */,
+				A808AFA814EBF60F00810523 /* CMIPhone.h */,
+				A808AFA914EBF60F00810523 /* CMIPhone.m */,
 				A8E1D70A14D0974700E5A877 /* CMIEvent.h */,
 				A8E1D70B14D0974700E5A877 /* CMIEvent.m */,
 				A8E1D72F14D26AEE00E5A877 /* CMIEventCalendar.h */,
 				A8E1D73014D26AEF00E5A877 /* CMIEventCalendar.m */,
 				A8AEA2FB14E2380500E6ADC6 /* CMIHelpViewController.h */,
 				A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */,
-				A8B6321614E22EEC0006E3A5 /* CMIAboutViewController.h */,
-				A8B6321714E22EEC0006E3A5 /* CMIAboutViewController.m */,
 				A8F6211A14E368E800B735AC /* CMIUtility.h */,
 				A8F6211B14E368E800B735AC /* CMIUtility.m */,
 				A8F6212114E56A2B00B735AC /* CMIDay.h */,
 				A8F6212214E56A2C00B735AC /* CMIDay.m */,
+				A8CFD0E714EFE5C200EA8616 /* CMIMyConferenceNumber.h */,
+				A8CFD0E814EFE5C200EA8616 /* CMIMyConferenceNumber.m */,
 			);
 			path = ConferenceMeIn;
 			sourceTree = "<group>";
@@ -601,12 +586,11 @@
 				A8E1D71B14D1303900E5A877 /* CMIEKEventViewController.m in Sources */,
 				A8E1D73114D26AEF00E5A877 /* CMIEventCalendar.m in Sources */,
 				A8E1D74014D279E100E5A877 /* CMIMasterViewController.m in Sources */,
-				A8B6321814E22EEC0006E3A5 /* CMIAboutViewController.m in Sources */,
 				A8AEA2FD14E2380500E6ADC6 /* CMIHelpViewController.m in Sources */,
 				A8F6211C14E368E900B735AC /* CMIUtility.m in Sources */,
 				A8F6212314E56A2C00B735AC /* CMIDay.m in Sources */,
 				A856305514E87A53006B24F8 /* CMIUserDefaults.m in Sources */,
-				A808AFAA14EBF60F00810523 /* CMIConferencePhoneNumber.m in Sources */,
+				A808AFAA14EBF60F00810523 /* CMIPhone.m in Sources */,
 				A8CFD0B814EF360C00EA8616 /* IASKAppSettingsViewController.m in Sources */,
 				A8CFD0BA14EF360C00EA8616 /* IASKAppSettingsWebViewController.m in Sources */,
 				A8CFD0BC14EF360C00EA8616 /* IASKSpecifierValuesViewController.m in Sources */,
@@ -622,6 +606,7 @@
 				A8CFD0D014EF360C00EA8616 /* IASKSlider.m in Sources */,
 				A8CFD0D214EF360C00EA8616 /* IASKSwitch.m in Sources */,
 				A8CFD0D414EF360C00EA8616 /* IASKTextField.m in Sources */,
+				A8CFD0E914EFE5C200EA8616 /* CMIMyConferenceNumber.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -638,26 +623,11 @@
 				A8E1D73214D26AEF00E5A877 /* CMIEventCalendar.m in Sources */,
 				A8E1D73D14D2718900E5A877 /* CMIEventSystemTests.m in Sources */,
 				A8E1D74114D279E100E5A877 /* CMIMasterViewController.m in Sources */,
-				A8B6321914E22EEC0006E3A5 /* CMIAboutViewController.m in Sources */,
 				A8AEA2FE14E2380500E6ADC6 /* CMIHelpViewController.m in Sources */,
 				A8F6212414E56A2C00B735AC /* CMIDay.m in Sources */,
 				A856305614E87A53006B24F8 /* CMIUserDefaults.m in Sources */,
-				A808AFAB14EBF60F00810523 /* CMIConferencePhoneNumber.m in Sources */,
-				A8CFD0B914EF360C00EA8616 /* IASKAppSettingsViewController.m in Sources */,
-				A8CFD0BB14EF360C00EA8616 /* IASKAppSettingsWebViewController.m in Sources */,
-				A8CFD0BD14EF360C00EA8616 /* IASKSpecifierValuesViewController.m in Sources */,
-				A8CFD0BF14EF360C00EA8616 /* IASKSettingsReader.m in Sources */,
-				A8CFD0C114EF360C00EA8616 /* IASKSettingsStore.m in Sources */,
-				A8CFD0C314EF360C00EA8616 /* IASKSettingsStoreFile.m in Sources */,
-				A8CFD0C514EF360C00EA8616 /* IASKSettingsStoreUserDefaults.m in Sources */,
-				A8CFD0C714EF360C00EA8616 /* IASKSpecifier.m in Sources */,
-				A8CFD0C914EF360C00EA8616 /* IASKPSSliderSpecifierViewCell.m in Sources */,
-				A8CFD0CB14EF360C00EA8616 /* IASKPSTextFieldSpecifierViewCell.m in Sources */,
-				A8CFD0CD14EF360C00EA8616 /* IASKPSTitleValueSpecifierViewCell.m in Sources */,
-				A8CFD0CF14EF360C00EA8616 /* IASKPSToggleSwitchSpecifierViewCell.m in Sources */,
-				A8CFD0D114EF360C00EA8616 /* IASKSlider.m in Sources */,
-				A8CFD0D314EF360C00EA8616 /* IASKSwitch.m in Sources */,
-				A8CFD0D514EF360C00EA8616 /* IASKTextField.m in Sources */,
+				A808AFAB14EBF60F00810523 /* CMIPhone.m in Sources */,
+				A8CFD0EA14EFE5C200EA8616 /* CMIMyConferenceNumber.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
