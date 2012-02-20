@@ -27,7 +27,6 @@ NSIndexPath* _indexPath;
 @synthesize detailViewController = _detailViewController;
 @synthesize cmiEventCalendar = _cmiEventCalendar;
 @synthesize cmiHelpViewController = _cmiHelpViewController;
-@synthesize cmiAboutViewController = _cmiAboutViewController;
 @synthesize highlightCurrentEvents = _highlightCurrentEvents;
 @synthesize appSettingsViewController = _appSettingsViewController;
 @synthesize cmiMyConferenceNumber = _cmiMyConferenceNumber;
@@ -84,6 +83,10 @@ NSIndexPath* _indexPath;
     @try {
         [CMIUtility Log:@"numberOfRowsInSection()"];
         
+        if (_cmiEventCalendar.eventsList.count == 0) {
+            return 1;
+        }
+        
         // Get number of events in a day
         CMIDay* cmiDay = [_cmiEventCalendar getCMIDayByIndex:section];
         
@@ -113,10 +116,19 @@ NSIndexPath* _indexPath;
     
     @try {
         [CMIUtility Log:@"cellForRowAtIndexPath()"];
+
+        UITableViewCell* cell;
         
-        static NSString *CellIdentifier = @"EventCell";
+        if (_cmiEventCalendar.eventsList.count == 0) {
+            cell = [[UITableViewCell alloc] init];
+            cell.textLabel.text = NSLocalizedString(@"NoEventsMessage", @"");
+            cell.userInteractionEnabled = NO;
+            return cell;            
+        }
         
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        static NSString* CellIdentifier = @"EventCell";
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         
         if (cell == nil) {
             cell = [self tableViewCellWithReuseIdentifier:CellIdentifier];
@@ -802,13 +814,6 @@ NSIndexPath* _indexPath;
     
 }    
 
-- (void) showAboutDialog
-{
-    [CMIUtility Log:@"showAboutDialog()"];
-    
-    _cmiAboutViewController = [CMIAboutViewController alloc];
-    [self.navigationController pushViewController:_cmiAboutViewController animated:YES];
-}
 - (void) showHelpDialog
 {
     [CMIUtility Log:@"showHelpDialog()"];

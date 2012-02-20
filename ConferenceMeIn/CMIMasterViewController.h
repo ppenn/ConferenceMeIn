@@ -13,7 +13,6 @@
 #import "CMIEKEventViewController.h"
 #import "CMIEventCalendar.h"
 #import "ConferenceMeInAppDelegate.h"
-#import "CMIAboutViewController.h"
 #import "CMIHelpViewController.h"
 #import "IASKAppSettingsViewController.h"
 #import "CMIMyConferenceNumber.h"
@@ -22,7 +21,6 @@
 @interface CMIMasterViewController : UITableViewController <UIActionSheetDelegate, EKEventEditViewDelegate, IASKSettingsDelegate>
 
 @property (strong, nonatomic) CMIEKEventViewController *detailViewController;
-@property (strong, nonatomic) CMIAboutViewController* cmiAboutViewController;
 @property (strong, nonatomic) CMIHelpViewController* cmiHelpViewController;
 @property (strong, nonatomic) CMIEventCalendar* cmiEventCalendar;
 @property (strong, nonatomic) IASKAppSettingsViewController *appSettingsViewController;

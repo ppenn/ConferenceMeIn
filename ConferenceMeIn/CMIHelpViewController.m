@@ -12,15 +12,15 @@
 
 @synthesize textView = _textView;
 
-
-- (void)viewDidLoad {
+- (void)setupHelp
+{
 	self.textView = [[UITextView alloc] initWithFrame:self.view.frame];
 	self.textView.textColor = [UIColor blackColor];
 	self.textView.font = [UIFont fontWithName:@"Arial" size:18.0];
 	self.textView.delegate = self;
 	self.textView.backgroundColor = [UIColor whiteColor];
 	
-	self.textView.text = @"Double-tap to dial a conference associated with a calendar item.\n\nSingle-tap to view the calendar item and be prompted to dial a conference.";
+	self.textView.text = NSLocalizedString(@"HelpMessage", @"");
 	self.textView.returnKeyType = UIReturnKeyDefault;
 	self.textView.keyboardType = UIKeyboardTypeDefault;	// use the default type input method (entire keyboard)
 	self.textView.scrollEnabled = YES;
@@ -35,10 +35,24 @@
     
 }
 
+- (void)viewDidLoad {
+	[super viewDidLoad];
+
+    self.navigationController.toolbarHidden = YES;
+	self.title = NSLocalizedString(@"HelpViewTitle", @"");
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self setupHelp];
+    
+}
 - (void)viewDidAppear:(BOOL)animated
 {
-    self.navigationController.toolbarHidden = YES;
-    
+    [super viewDidAppear:animated];
+
 }
 
 
