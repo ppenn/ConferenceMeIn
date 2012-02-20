@@ -477,7 +477,11 @@ NSIndexPath* _indexPath;
               forControlEvents:UIControlEventValueChanged];
         
         UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:ctrl];
-        ctrl.frame = CGRectMake(0.0f, 5.0f, 320.0f, 30.0f);
+        CGFloat margin = 10.0;
+        CGFloat width = self.navigationController.toolbar.frame.size.width - margin;
+        CGFloat height = self.navigationController.toolbar.frame.size.height - margin; 
+        ctrl.frame = CGRectMake(margin, margin, width, height);
+        ctrl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
         NSArray *theToolbarItems = [NSArray arrayWithObjects:item, nil];
         [self setToolbarItems:theToolbarItems];
