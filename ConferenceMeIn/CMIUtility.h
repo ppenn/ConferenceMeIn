@@ -19,7 +19,7 @@
 + (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate;
 
 
-//TODO:Maybe move these to TestUtility
++ (BOOL)environmentIsAtIOS5OrHigher;
 + (void)createTestEvents:(EKEventStore*)eventStore;
 + (void)removeAllSimulatorEvents:(EKEventStore*)eventStore;
 + (BOOL)createTestEvent:(EKEventStore*)eventStore startDate:(NSDate*) startDate endDate:(NSDate*)endDate title:(NSString*)title withConfNumber:(BOOL)withConfNumber;

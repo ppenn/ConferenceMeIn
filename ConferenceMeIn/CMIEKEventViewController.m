@@ -53,14 +53,6 @@ callProviders _callProvider = phoneCarrier;
     }
 }
 
-- (BOOL)environmentIsAtIOS5OrHigher
-{
-    NSString *osVersion = [[UIDevice currentDevice] systemVersion];
-    
-    NSInteger intOSValue = [osVersion intValue];
-    
-    return intOSValue >= 5;
-}
 
 - (void)tryToDial
 {
@@ -71,7 +63,7 @@ callProviders _callProvider = phoneCarrier;
         UIAlertView* alert;
         
 //        if ([EKEvent instancesRespondToSelector:@selector(notes:)]) {
-        if ([self environmentIsAtIOS5OrHigher] == YES) {
+        if ([CMIUtility environmentIsAtIOS5OrHigher] == YES) {
         _supportsNotes = YES;
         alert = [[UIAlertView alloc] initWithTitle:@"No Phone#" message:@"No Phone number found for event\n\rWould you like to add one?"
                                           delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: @"Add Number",nil];

@@ -8,6 +8,7 @@
 
 #import "CMIEvent.h"
 #import "EKEventParser.h"
+#import "CMIUtility.h"
 
 @implementation CMIEvent
 
@@ -69,10 +70,13 @@
         _conferenceNumber = [EKEventParser parseEventText:_ekEvent.location];        
     }
 
-    if ( (_conferenceNumber == nil || [_conferenceNumber length] == 0) && 
-        _ekEvent.notes != nil && [_ekEvent.notes length] > 0) {
+    if ( [CMIUtility environmentIsAtIOS5OrHigher] == YES &&
+        (_conferenceNumber == nil || [_conferenceNumber length] == 0) && 
+        _ekEvent.notes != nil && [_ekEvent.notes length] > 0 ) {
         _conferenceNumber = [EKEventParser parseEventText:_ekEvent.notes];        
     }
+    
+    
 
 }
 

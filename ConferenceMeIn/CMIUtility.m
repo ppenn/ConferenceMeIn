@@ -177,6 +177,15 @@
     
 }
 
++ (BOOL)environmentIsAtIOS5OrHigher
+{
+    NSString *osVersion = [[UIDevice currentDevice] systemVersion];
+    
+    NSInteger intOSValue = [osVersion intValue];
+    
+    return intOSValue >= 5;
+}
+
 
 
 + (void)createTestEvents:(EKEventStore*)eventStore
