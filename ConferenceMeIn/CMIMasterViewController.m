@@ -73,10 +73,16 @@ NSIndexPath* _indexPath;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
-	// Number of days in calendar
-    NSInteger numSections = [_cmiEventCalendar.cmiDaysArray count];
+    @try {
+        [CMIUtility Log:@"numberOfSectionsInTableView()"];
+        // Number of days in calendar
+        NSInteger numSections = [_cmiEventCalendar.cmiDaysArray count];
 
-    return numSections;
+        return numSections;
+    }
+    @catch (NSException * e) {
+        [CMIUtility LogError:e.reason];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -112,6 +118,8 @@ NSIndexPath* _indexPath;
     }
 
 }
+
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
     
@@ -198,11 +206,8 @@ NSIndexPath* _indexPath;
         
     }
     @catch (NSException * e) {
-        NSLog(@"Exception: %@", e); 
+        [CMIUtility LogError:e.reason];
     }
-    @finally {
-        // Added to show finally works as well
-    }    
 }
 
 - (void) showStartDialog
@@ -287,11 +292,6 @@ NSIndexPath* _indexPath;
     @try {
         [CMIUtility Log:[@"storeChanged() notification" stringByAppendingFormat:@"[ %@ ] ", notification.name ]];
 
-        // [notification name] should always be @"TestNotification"
-        // unless you use this method for observation of other notifications
-        // as well.
-                
-//        _cmiEventCalendar.fetchAllEvents = true;//TODO _cmiUserDefaults.debugMode;
         _cmiEventCalendar.calendarType = _cmiUserDefaults.calendarType;
         
         [self reloadTableScrollToNow];
@@ -310,7 +310,7 @@ NSIndexPath* _indexPath;
         // open a dialog with just an OK button
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"MenuButtonTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"CallMyConfNumTitle",@""), NSLocalizedString(@"SettingsTitle", @""), NSLocalizedString(@"HelpButtonTitle",@""),nil];
         actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-        [actionSheet showInView:self.view];	// show from our table view (pops up in the middle of the table)
+        [actionSheet showFromToolbar:self.navigationController.toolbar];	// show from our table view (pops up in the middle of the table)
     }
     @catch (NSException *e) {
         [CMIUtility LogError:e.reason];
@@ -333,6 +333,7 @@ NSIndexPath* _indexPath;
 - (void)addEvent:(id)sender {
     
     @try {
+        [CMIUtility Log:@"addEvent:(id)sender()"];
         
         // When add button is pushed, create an EKEventEditViewController to display the event.
         EKEventEditViewController *addController = [[EKEventEditViewController alloc] initWithNibName:nil bundle:nil];
@@ -362,37 +363,46 @@ NSIndexPath* _indexPath;
 - (void)eventEditViewController:(EKEventEditViewController *)controller 
           didCompleteWithAction:(EKEventEditViewAction)action {
 	
-	NSError *error = nil;
-	EKEvent *thisEvent = controller.event;
-	
-	switch (action) {
-		case EKEventEditViewActionCanceled:
-			// Edit action canceled, do nothing. 
-			break;
-			
-		case EKEventEditViewActionSaved:
-			// When user hit "Done" button, save the newly created event to the event store, 
-			// and reload table view.
-			// If the new event is being added to the default calendar, then update its 
-			// eventsList.
-			[controller.eventStore saveEvent:controller.event span:EKSpanThisEvent error:&error];
-			[self reloadTableScrollToNow];
-			break;
-			
-		case EKEventEditViewActionDeleted:
-			// When deleting an event, remove the event from the event store, 
-			// and reload table view.
-			// If deleting an event from the currenly default calendar, then update its 
-			// eventsList.
-			[controller.eventStore removeEvent:thisEvent span:EKSpanThisEvent error:&error];
-			[self reloadTableScrollToNow];
-			break;
-			
-		default:
-			break;
-	}
-	// Dismiss the modal view controller
-	[controller dismissModalViewControllerAnimated:YES];
+    @try {
+        [CMIUtility Log:@"eventEditViewController:didCompleteWithAction()"];
+
+        NSError *error = nil;
+        EKEvent *thisEvent = controller.event;
+        
+        switch (action) {
+            case EKEventEditViewActionCanceled:
+                // Edit action canceled, do nothing. 
+                break;
+                
+            case EKEventEditViewActionSaved:
+                // When user hit "Done" button, save the newly created event to the event store, 
+                // and reload table view.
+                // If the new event is being added to the default calendar, then update its 
+                // eventsList.
+                [controller.eventStore saveEvent:controller.event span:EKSpanThisEvent error:&error];
+                [self reloadTableScrollToNow];
+                break;
+                
+            case EKEventEditViewActionDeleted:
+                // When deleting an event, remove the event from the event store, 
+                // and reload table view.
+                // If deleting an event from the currenly default calendar, then update its 
+                // eventsList.
+                [controller.eventStore removeEvent:thisEvent span:EKSpanThisEvent error:&error];
+                [self reloadTableScrollToNow];
+                break;
+                
+            default:
+                break;
+        }
+    }
+    @catch (NSException *e) {
+        [CMIUtility LogError:e.reason];
+    }
+    @finally {
+        // Dismiss the modal view controller
+        [controller dismissModalViewControllerAnimated:YES];
+    }
 	
 }
 
@@ -482,27 +492,60 @@ NSIndexPath* _indexPath;
     }
 }
 
+- (void)dealloc
+{
+    @try {
+        [CMIUtility Log:@"dealloc()"];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        
+    }
+    @catch (NSException *e) {
+        [CMIUtility LogError:e.reason];
+    }
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    
+    @try {
+        [CMIUtility Log:@"viewDidUnload()"];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    }
+    @catch (NSException *e) {
+        [CMIUtility LogError:e.reason];
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [CMIUtility Log:@"viewDidAppear()"];
     
-    if (_reloadDefaultsOnAppear == YES) {
-        _reloadDefaultsOnAppear = NO;
-        [self reloadTableScrollToNow];
+    @try {
+        if (_reloadDefaultsOnAppear == YES) {
+            _reloadDefaultsOnAppear = NO;
+            [self reloadTableScrollToNow];
+        }
+        else {
+            if (_indexPath != nil) {
+                [self.tableView deselectRowAtIndexPath:_indexPath animated:YES];        
+                _indexPath = nil;
+            }
+            
+            // If the toolbar's not been hidden then this "didAppear" event was fired
+            // by the app coming back to life, not from touching back from a forward screen
+            if (self.navigationController.toolbarHidden == NO) {
+                [self scrollToNow];
+            }
+        }    
+        self.navigationController.toolbarHidden = NO;
     }
-    else {
-        if (_indexPath != nil) {
-            [self.tableView deselectRowAtIndexPath:_indexPath animated:YES];        
-            _indexPath = nil;
-        }
-    
-        // If the toolbar's not been hidden then this "didAppear" event was fired
-        // by the app coming back to life, not from touching back from a forward screen
-        if (self.navigationController.toolbarHidden == NO) {
-            [self scrollToNow];
-        }
-    }    
-    self.navigationController.toolbarHidden = NO;
+    @catch (NSException *e) {
+        [CMIUtility LogError:e.reason];
+    }
     
 }
 
@@ -697,9 +740,6 @@ NSIndexPath* _indexPath;
     @catch (NSException * e) {
         [CMIUtility LogError:e.reason];
     }
-    @finally {
-        // Insert any cleanup...
-    }    
 
         
 }
@@ -707,6 +747,8 @@ NSIndexPath* _indexPath;
 //TODO: MOVE this somewhere...parameterize
 - (BOOL) eventIsNow:(EKEvent*) event
 {
+    [CMIUtility Log:@"eventIsNow()"];
+    
     NSDate* now = [[NSDate alloc] init];
     // endDate is 1 day = 60*60*24 seconds = 86400 seconds from startDate
     NSDate* trueStartDate = [NSDate dateWithTimeInterval:-(15*60) sinceDate:event.startDate];
@@ -715,31 +757,6 @@ NSIndexPath* _indexPath;
     
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell1:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEventByIndexPath:indexPath.section eventIndex:indexPath.row];
-
-    if ([self eventIsNow:cmiEvent.ekEvent] ) {
-        ((UILabel *)[cell viewWithTag:TIME_TAG]).backgroundColor = 
-        ((UILabel *)[cell viewWithTag:NAME_TAG]).backgroundColor = 
-        ((UILabel *)[cell viewWithTag:EVENT_TITLE_TAG]).backgroundColor = 
-        ((UILabel *)[cell viewWithTag:EVENT_ORGANIZER_TAG]).backgroundColor = 
-        ((UILabel *)[cell viewWithTag:EVENT_PHONE_NUMBER_TAG]).backgroundColor = 
-        ((UIImageView *)[cell viewWithTag:IMAGE_TAG]).backgroundColor = 
-        cell.backgroundColor = [UIColor redColor];
-	}
-    else {
-        ((UILabel *)[cell viewWithTag:TIME_TAG]).backgroundColor = 
-        ((UILabel *)[cell viewWithTag:NAME_TAG]).backgroundColor = 
-        ((UILabel *)[cell viewWithTag:EVENT_TITLE_TAG]).backgroundColor = 
-        ((UILabel *)[cell viewWithTag:EVENT_ORGANIZER_TAG]).backgroundColor = 
-        ((UILabel *)[cell viewWithTag:EVENT_PHONE_NUMBER_TAG]).backgroundColor = 
-        ((UIImageView *)[cell viewWithTag:IMAGE_TAG]).backgroundColor = 
-        cell.backgroundColor = [UIColor whiteColor];
-    }
-        
-    
-}
 
 
 - (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath {
@@ -765,7 +782,7 @@ NSIndexPath* _indexPath;
         
         UILabel *label;
         UIImage *rowBackground;
-        if (_highlightCurrentEvents == TRUE && [self eventIsNow:cmiEvent.ekEvent]) {
+        if (_highlightCurrentEvents == YES && [self eventIsNow:cmiEvent.ekEvent]) {
             rowBackground = [UIImage imageNamed:@"middleRowSelected.png"];            
         }
         else {
@@ -809,9 +826,6 @@ NSIndexPath* _indexPath;
     @catch (NSException * e) {
         [CMIUtility LogError:e.reason];
     }
-    @finally {
-        // Insert any cleanup...
-    }    
     
 }    
 
@@ -911,9 +925,6 @@ NSIndexPath* _indexPath;
     @catch (NSException * e) {
         [CMIUtility LogError:e.reason];
     }
-    @finally {
-        // Insert any cleanup...
-    }    
 
 }
     
@@ -921,15 +932,24 @@ NSIndexPath* _indexPath;
 #pragma mark IASKAppSettingsViewControllerDelegate protocol
 - (void)settingsViewControllerDidEnd:(IASKAppSettingsViewController*)sender {
     [self dismissModalViewControllerAnimated:YES];
+
+    @try {
+        [CMIUtility Log:@"settingsViewControllerDidEnd()"];
 	
-	// your code here to reconfigure the app for changed settings
-    // If we now have phone and conf numbers...then we can proceed
-    [_cmiUserDefaults loadDefaults];
-    [self readAppSettings];
-    if([sender.file isEqualToString:@"ChildCMINumber"] && _cmiMyConferenceNumber.isValid) {
-        // Call the number...
-        [_cmiPhone dialConferenceNumberWithConfirmation:_cmiMyConferenceNumber view:self.tableView];
-    }    
+        // your code here to reconfigure the app for changed settings
+        // If we now have phone and conf numbers...then we can proceed
+        [_cmiUserDefaults loadDefaults];
+        [self readAppSettings];
+        if([sender.file isEqualToString:@"ChildCMINumber"] && _cmiMyConferenceNumber.isValid) {
+            // Call the number...
+            [_cmiPhone dialConferenceNumberWithConfirmation:_cmiMyConferenceNumber view:self.tableView];
+        }    
+
+    }
+    @catch (NSException * e) {
+        [CMIUtility LogError:e.reason];
+    }
+        
 }
 
 
