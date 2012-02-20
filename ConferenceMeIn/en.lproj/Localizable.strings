@@ -15,3 +15,4 @@
 "IntroMessage" = "Double-tap calendar event to dial number directly.\r\nSingle-tap item to see event details and dial number";
 "HelpMessage" = "Double-tap calendar event to dial conference number directly.\r\nSingle-tap calendar event to see event details and be prompted to dial conference number";
 "NoEventsMessage" = "<No calendar events to show>";
+"WarnInvalidPhoneNumberMessage" = "Invalid or Incomplete Conference Phone Number\r\nPlease Review Your Conference Number in Settings";

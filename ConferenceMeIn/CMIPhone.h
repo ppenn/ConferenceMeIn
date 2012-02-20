@@ -11,7 +11,7 @@
 
 typedef enum callProviders {
     phoneCarrier,
-    google,
+    googleTalkatone,
     skype
 }callProviders;
 

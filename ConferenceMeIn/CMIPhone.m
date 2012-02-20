@@ -16,11 +16,22 @@ NSURL* _phoneURL;
 
 @synthesize callProvider = _callProvider;
 
+- (BOOL)talkatoneIsInstalled
+{
+    return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tktn://installed"]];    
+}
+
+- (void)validateTalkatoneInstallation
+{
+    if ([self talkatoneIsInstalled] == NO) {
+        [NSException raise:@"Invalid Call Provider" format:@"Google Talkatone is not installed on device"];
+    }
+}
+
 - (void) setPhoneURL:(NSString*) phoneNumber
 {
     NSString* phoneNumberURL = nil;
-    //memleak?
-
+    
     //TODO: phone vs other
     switch (_callProvider)
     {
@@ -28,7 +39,8 @@ NSURL* _phoneURL;
             phoneNumberURL = @"tel:";
             phoneNumberURL = [phoneNumberURL stringByAppendingString:phoneNumber];
             break;
-        case google:
+        case googleTalkatone:
+            [self validateTalkatoneInstallation];
             phoneNumberURL = @"tktn://call?destination=";            
             phoneNumberURL = [phoneNumberURL stringByAppendingString:phoneNumber];
             phoneNumberURL = [phoneNumberURL stringByReplacingOccurrencesOfString:@"," withString:@"%2C"];
@@ -85,7 +97,7 @@ NSURL* _phoneURL;
     [CMIUtility Log:@"dialConferenceNumber()"];
     
     // Only works with talkataone for now
-    if (cmiMyConferenceNumber.leaderInfo != nil && _callProvider == google) {
+    if (cmiMyConferenceNumber.leaderInfo != nil && _callProvider == googleTalkatone) {
         [self dial:cmiMyConferenceNumber.fullConferenceNumber];
     } 
     else {
@@ -99,7 +111,7 @@ NSURL* _phoneURL;
     [CMIUtility Log:@"dialConferenceNumberWithConfirmation()"];
     
     // Only works with talkataone for now
-    if (cmiMyConferenceNumber.leaderInfo != nil && _callProvider == google) {
+    if (cmiMyConferenceNumber.leaderInfo != nil && _callProvider == googleTalkatone) {
         [self dialWithConfirmation:cmiMyConferenceNumber.fullConferenceNumber view:view];
     } 
     else {

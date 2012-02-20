@@ -58,6 +58,7 @@ NSString *kFirstRun = @"firstRunKey";
     
 }
 
+
 - (void)loadDefaults
 {
     [CMIUtility Log:@"loadDefaults()"];
@@ -102,10 +103,10 @@ NSString *kFirstRun = @"firstRunKey";
 			{
 				currentTimeframeStartsDefault = defaultValue;
 			}
-			else if ([keyValueStr isEqualToString:kHighlightCurrentEventsKey])
-			{
-				highlightCurrentEventsDefault = [defaultValue boolValue];
-			}
+//			else if ([keyValueStr isEqualToString:kHighlightCurrentEventsKey])
+//			{
+//				highlightCurrentEventsDefault = [defaultValue boolValue];
+//			}
 			else if ([keyValueStr isEqualToString:kCalendarTypeKey])
 			{
 				calendarTypeDefault = defaultValue;
@@ -114,22 +115,17 @@ NSString *kFirstRun = @"firstRunKey";
         }        
                 
 		// since no default values have been set (i.e. no preferences file created), create it here		
-//		NSDictionary *appDefaults = [NSDictionary dictionaryWithObjectsAndKeys:
-//                                     kCalendarTimeframeTypeKey, kCalendarTypeKey,
-//                                     today, @"firstRun",
-//                                     nil];
-//        
-//		[[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 		[[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kFirstRun];
 		[[NSUserDefaults standardUserDefaults] setInteger:filterNone forKey:kFilterTypeKey];
+        
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
 		[[NSUserDefaults standardUserDefaults] setInteger:[callProviderTypeDefault intValue] forKey:kCallProviderTypeKey];
         }
         else {
-            [[NSUserDefaults standardUserDefaults] setInteger:google forKey:kCallProviderTypeKey];            
+            [[NSUserDefaults standardUserDefaults] setInteger:googleTalkatone forKey:kCallProviderTypeKey];            
         }
 		[[NSUserDefaults standardUserDefaults] setInteger:[calendarTimeframeDefault intValue]  forKey:kCalendarTimeframeTypeKey];
-		[[NSUserDefaults standardUserDefaults] setBool:highlightCurrentEventsDefault forKey:kHighlightCurrentEventsKey];
+//		[[NSUserDefaults standardUserDefaults] setBool:highlightCurrentEventsDefault forKey:kHighlightCurrentEventsKey];
 		[[NSUserDefaults standardUserDefaults] setInteger:[currentTimeframeStartsDefault intValue] forKey:kCurrentTimeframeStartsKey];
 		[[NSUserDefaults standardUserDefaults] setInteger:[calendarTypeDefault intValue] forKey:kCalendarTypeKey];
         
@@ -138,14 +134,14 @@ NSString *kFirstRun = @"firstRunKey";
         
         
 	}
-    NSLog(@"NSUserDefaults dump: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+//    NSLog(@"NSUserDefaults dump: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
     
 	// we're ready to go, so lastly set the key preference values
 	self.calendarType = [[NSUserDefaults standardUserDefaults] integerForKey:kCalendarTypeKey];
     
     self.calendarTimeframeType = [[NSUserDefaults standardUserDefaults] integerForKey:kCalendarTimeframeTypeKey];
     self.currentTimeframeStarts = [[NSUserDefaults standardUserDefaults] integerForKey:kCurrentTimeframeStartsKey];
-    self.highlightCurrentEvents = [[NSUserDefaults standardUserDefaults] boolForKey:kHighlightCurrentEventsKey];
+    self.highlightCurrentEvents = (self.currentTimeframeStarts >= 0);
     self.firstRun = firstRun;
     self.filterType = [[NSUserDefaults standardUserDefaults] integerForKey:kFilterTypeKey];
     self.callProviderType = [[NSUserDefaults standardUserDefaults] integerForKey:kCallProviderTypeKey];
