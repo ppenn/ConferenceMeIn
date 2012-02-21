@@ -82,14 +82,12 @@ NSString *kFirstRun = @"firstRunKey";
         NSNumber* callProviderTypeDefault = nil;
         NSNumber* calendarTimeframeDefault = nil;
         NSNumber* currentTimeframeStartsDefault = nil;
-//        BOOL highlightCurrentEventsDefault;
         
 		NSDictionary *prefItem;
 		for (prefItem in prefSpecifierArray)
 		{
 			NSString *keyValueStr = [prefItem objectForKey:@"Key"];
 			id defaultValue = [prefItem objectForKey:@"DefaultValue"];
-            NSLog(@"%@",keyValueStr);
 
 			if ([keyValueStr isEqualToString:kCallProviderTypeKey])
 			{
@@ -103,10 +101,6 @@ NSString *kFirstRun = @"firstRunKey";
 			{
 				currentTimeframeStartsDefault = defaultValue;
 			}
-//			else if ([keyValueStr isEqualToString:kHighlightCurrentEventsKey])
-//			{
-//				highlightCurrentEventsDefault = [defaultValue boolValue];
-//			}
 			else if ([keyValueStr isEqualToString:kCalendarTypeKey])
 			{
 				calendarTypeDefault = defaultValue;
@@ -125,7 +119,6 @@ NSString *kFirstRun = @"firstRunKey";
             [[NSUserDefaults standardUserDefaults] setInteger:googleTalkatone forKey:kCallProviderTypeKey];            
         }
 		[[NSUserDefaults standardUserDefaults] setInteger:[calendarTimeframeDefault intValue]  forKey:kCalendarTimeframeTypeKey];
-//		[[NSUserDefaults standardUserDefaults] setBool:highlightCurrentEventsDefault forKey:kHighlightCurrentEventsKey];
 		[[NSUserDefaults standardUserDefaults] setInteger:[currentTimeframeStartsDefault intValue] forKey:kCurrentTimeframeStartsKey];
 		[[NSUserDefaults standardUserDefaults] setInteger:[calendarTypeDefault intValue] forKey:kCalendarTypeKey];
         
@@ -134,7 +127,7 @@ NSString *kFirstRun = @"firstRunKey";
         
         
 	}
-//    NSLog(@"NSUserDefaults dump: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+//    [CMIUtility Log:@"NSUserDefaults dump: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
     
 	// we're ready to go, so lastly set the key preference values
 	self.calendarType = [[NSUserDefaults standardUserDefaults] integerForKey:kCalendarTypeKey];

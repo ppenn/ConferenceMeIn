@@ -95,7 +95,7 @@ NSDate* _eventsEndDate = nil;
 
 - (void) createCMIEvents
 {
-    NSLog(@"createCMIEvents()");
+    [CMIUtility Log:@"createCMIEvents()"];
     
     if (_eventsList != nil) {
         _eventsList = nil;
@@ -107,7 +107,7 @@ NSDate* _eventsEndDate = nil;
 
 - (void) createCMIDays
 {
-    NSLog(@"createCMIDays()");
+    [CMIUtility Log:@"createCMIDays()"];
 
     [_cmiDaysDictionary removeAllObjects];
     [_cmiDaysArray removeAllObjects];
@@ -135,7 +135,7 @@ NSDate* _eventsEndDate = nil;
 
 - (void) assignCMIEventsToCMIDays
 {
-    NSLog(@"assignCMIEventsToCMIDays()");
+    [CMIUtility Log:@"assignCMIEventsToCMIDays()"];
     
     // Populate the days with events
     for (EKEvent* event in _eventsList) {
@@ -155,7 +155,7 @@ NSDate* _eventsEndDate = nil;
 
 - (void) createCMIDayEvents
 {
-    NSLog(@"createCMIDayEvents()");
+    [CMIUtility Log:@"createCMIDayEvents()"];
 
     // Get the CMIEvents
     [self createCMIEvents];
