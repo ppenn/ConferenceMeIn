@@ -53,7 +53,7 @@
 		[dateFormatter setDateFormat:@"EEEE MMMM d"];
 	}
     
-    NSDate *now = [[NSDate alloc] init];    
+    NSDate *now = [NSDate date];    
     NSDate* tomorrow = [CMIUtility getOffsetDate:now atOffsetDays:1];
     NSDate* yesterday = [CMIUtility getOffsetDate:now atOffsetDays:-1];
     NSString *dateString;
@@ -160,7 +160,7 @@
     [dateFormat setDateFormat:@"yyyyMMdd"];
     startDate = [dateFormat dateFromString:dateStrStart];  	
     
-    NSDate* now = [[NSDate alloc] init];
+    NSDate* now = [NSDate date];
     NSDate* endDate = [CMIUtility getOffsetDate:now atOffsetDays:5];
     
     NSPredicate *predicate;
@@ -197,7 +197,7 @@
     [CMIUtility removeAllSimulatorEvents:eventStore];
     // Create some events
     
-    NSDate* startDate = [[NSDate alloc] init];
+    NSDate* startDate = [NSDate date];
     NSDate* endDate = [[NSDate alloc] initWithTimeInterval:60*60 sinceDate:startDate];
     NSDate* afterEndDate = [[NSDate alloc] initWithTimeInterval:60*60 sinceDate:endDate];
     NSDate* beforeStartDate = [[NSDate alloc] initWithTimeInterval:-(60*60) sinceDate:startDate];

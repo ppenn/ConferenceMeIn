@@ -43,7 +43,7 @@ NSDate* _eventsEndDate = nil;
         
         _cmiDaysDictionary = [[NSMutableDictionary alloc] init]; 
         _cmiDaysArray = [[NSMutableArray alloc] init];
-        
+        _eventsList = [[NSMutableArray alloc] init];
     }
     
     return self;    
@@ -98,11 +98,9 @@ NSDate* _eventsEndDate = nil;
     [CMIUtility Log:@"createCMIEvents()"];
     
     if (_eventsList != nil) {
-        _eventsList = nil;
-//        [_eventsList removeAllObjects];
+        [_eventsList removeAllObjects];
     }
-//    _eventsList = [CMIEvent createCMIEvents:[self fetchEvents]];    
-    _eventsList = [self fetchEvents];    
+    [_eventsList addObjectsFromArray:[self fetchEvents]];    
 }
 
 - (void) createCMIDays
@@ -112,7 +110,7 @@ NSDate* _eventsEndDate = nil;
     [_cmiDaysDictionary removeAllObjects];
     [_cmiDaysArray removeAllObjects];
     
-    NSDate *nextDay = [_eventsStartDate copy];
+    NSDate *nextDay = [ _eventsStartDate copy];
     
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *offset = [[NSDateComponents alloc] init];
@@ -199,7 +197,7 @@ NSDate* _eventsEndDate = nil;
 {
     [CMIUtility Log:@"calculateCurrentStartTime()"];
 
-    NSDate* now = [[NSDate alloc] init];
+    NSDate* now = [NSDate date];
 
     _eventsStartDate = [CMIUtility getOffsetDateByMinutes:now offsetMinutes:-MINUTES_PRIOR_TO_NOW];
 
@@ -221,7 +219,7 @@ NSDate* _eventsEndDate = nil;
 	
     [self calculateCurrentStartTime];
     
-    NSDate* now = [[NSDate alloc] init];
+    NSDate* now = [NSDate date];
     
     switch (_calendarTimeframeType) {
         case restOfToday:

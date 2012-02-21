@@ -8,7 +8,6 @@
 
 #import "CMIDay.h"
 #import "CMIEvent.h"
-//TODO: class forwarding?
 
 @implementation CMIDay
 

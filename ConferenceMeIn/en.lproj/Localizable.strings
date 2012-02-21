@@ -33,6 +33,7 @@
 "NoPhoneNumberAbbreviated" = "No Phone#";
 "AddPhoneNumberQuestion" = "No Phone number found for event\n\rWould you like to add one?";
 "NoPhoneNumberFoundForEvent" = "No Phone number found for event";
-"CancelButtonTitle" = "Cancel";
+"CancelButtonLabel" = "Cancel";
 "AddNumberButtonTitle" = "Add Number";
 "DismissButtonLabel" = "Dismiss";
+"DialButtonLabel" = "Dial";

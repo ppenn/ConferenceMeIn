@@ -39,7 +39,7 @@ typedef enum eventFilterTypes
 @property (strong, nonatomic, readonly) EKEventStore *eventStore;
 @property (strong, nonatomic) EKCalendar *defaultCalendar;
 
-@property (strong, nonatomic, readonly) NSArray* eventsList;
+@property (strong, nonatomic, readonly) NSMutableArray* eventsList;
 
 @property (strong, nonatomic, readonly) NSMutableDictionary* cmiDaysDictionary;
 @property (strong, nonatomic, readonly) NSMutableArray* cmiDaysArray;

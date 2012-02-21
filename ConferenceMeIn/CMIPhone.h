@@ -20,6 +20,7 @@ typedef enum callProviders {
 @interface CMIPhone : NSObject
 
 @property callProviders callProvider;
+@property (readonly, strong) NSURL* phoneURL;
 
 - (void) dialConferenceNumber:(CMIMyConferenceNumber*) cmiMyConferenceNumber;
 - (void) dialConferenceNumberWithConfirmation:(CMIMyConferenceNumber*) cmiMyConferenceNumber view:(UIView*)view;

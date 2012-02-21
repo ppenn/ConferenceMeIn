@@ -10,10 +10,9 @@
 #import "CMIUtility.h"
 #import "CMIMyConferenceNumber.h"
 
-NSURL* _phoneURL;
-
 @implementation CMIPhone
 
+@synthesize phoneURL = _phoneURL;
 @synthesize callProvider = _callProvider;
 
 - (BOOL)talkatoneIsInstalled
@@ -38,7 +37,6 @@ NSURL* _phoneURL;
 
     NSString* phoneNumberURL = nil;
     
-    //TODO: phone vs other
     switch (_callProvider)
     {
         case phoneCarrier:

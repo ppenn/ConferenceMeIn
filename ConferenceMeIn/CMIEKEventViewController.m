@@ -11,8 +11,9 @@
 #import "CMIUserDefaults.h"
 #import "CMIUtility.h"
 
-#define ALERT_NO_NUMBER_FOUND 1
 #define ALERT_ENTER_CONF_DETAILS 0
+#define ALERT_NO_NUMBER_FOUND 1
+#define ALERT_CONFIRM_DIAL 2
 
 BOOL _supportsNotes = false;
 
@@ -23,19 +24,11 @@ BOOL _supportsNotes = false;
 @synthesize eventStore = _eventStore;
 @synthesize hasDisplayedPopup = _hasDisplayedPopup;
 
-callProviders _callProvider = phoneCarrier;
-
-
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    CMIUserDefaults* cmiUserDefaults = ((ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate]).cmiUserDefaults;
-    
-    //TODO: this will not refresh if someone changes the defaults while this screen is open
-    //Need to register for those events ourselves?
-    _callProvider = cmiUserDefaults.callProviderType;
 }
 
 - (void)showEnterConferenceDetailsAlert
@@ -58,26 +51,35 @@ callProviders _callProvider = phoneCarrier;
 {
     if (_cmiEvent == nil)   return;
         
+    UIAlertView* alert = nil;
+    
     if (_cmiEvent.hasConferenceNumber == false) {
-        
-        UIAlertView* alert;
         
         if ([CMIUtility environmentIsAtIOS5OrHigher] == YES) {
         _supportsNotes = YES;
         alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NoPhoneNumberAbbreviated", nil) message:NSLocalizedString(@"AddPhoneNumberQuestion", nil) 
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"CancelButtonTitle", nil) otherButtonTitles: NSLocalizedString(@"AddNumberButtonTitle", nil), nil];
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"CancelButtonLabel", nil) otherButtonTitles: NSLocalizedString(@"AddNumberButtonTitle", nil), nil];
         }
         else {
             alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NoPhoneNumberAbbreviated", nil) message:NSLocalizedString(@"NoPhoneNumberFoundForEvent", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"DismissButtonLabel", nil) otherButtonTitles: nil];            
         }
         alert.tag = ALERT_NO_NUMBER_FOUND;
-        [alert show];
     }
-    else
+    else // We have a phone#, sadly have to act differently depending on provider
     {
-        [_cmiPhone dialWithConfirmation:_cmiEvent.conferenceNumber view:self.view];
-    }
-    
+        if (_cmiPhone.callProvider == phoneCarrier) {
+            [_cmiPhone dialWithConfirmation:_cmiEvent.conferenceNumber view:self.view];
+        }
+        else
+        {
+            // We want confirmation...
+            NSString* dialNumberLabel = _cmiEvent.conferenceNumber;
+            alert = [[UIAlertView alloc] initWithTitle:dialNumberLabel message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"CancelButtonLabel", nil) otherButtonTitles: NSLocalizedString(@"DialButtonLabel", nil), nil];            
+            alert.tag = ALERT_CONFIRM_DIAL;
+        }
+    }    
+    [alert show];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -133,6 +135,9 @@ callProviders _callProvider = phoneCarrier;
         }
         else if (alertView.tag == ALERT_ENTER_CONF_DETAILS && buttonIndex == 0) {
             [self saveNotes:[[alertView textFieldAtIndex:0] text]];
+        }
+        else if (alertView.tag == ALERT_CONFIRM_DIAL && buttonIndex == 1) {
+            [_cmiPhone dial:_cmiEvent.conferenceNumber];            
         }
     }
     @catch (NSException *e) {

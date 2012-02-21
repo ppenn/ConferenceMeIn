@@ -50,11 +50,11 @@ NSString *kFirstRun = @"firstRunKey";
 
 - (void)loadMyConferenceNumberDefaults:(NSString*) settingsBundlePath
 {
-    NSString *finalPath = [settingsBundlePath stringByAppendingPathComponent:@"ChildCMINumber.plist"];
-    
-    NSDictionary *settingsDict = [NSDictionary dictionaryWithContentsOfFile:finalPath];
-    NSArray *prefSpecifierArray = [settingsDict objectForKey:@"PreferenceSpecifiers"];
-    prefSpecifierArray = nil;
+//    NSString *finalPath = [settingsBundlePath stringByAppendingPathComponent:@"ChildCMINumber.plist"];
+//    
+//    NSDictionary *settingsDict = [NSDictionary dictionaryWithContentsOfFile:finalPath];
+//    NSArray *prefSpecifierArray = [settingsDict objectForKey:@"PreferenceSpecifiers"];
+//    prefSpecifierArray = nil;
     
 }
 

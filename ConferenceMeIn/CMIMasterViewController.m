@@ -120,7 +120,6 @@ NSIndexPath* _indexPath;
 }
 
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath  {
     
     @try {
@@ -266,7 +265,7 @@ NSIndexPath* _indexPath;
 {
     [CMIUtility Log:@"scrollToNow()"];
     
-    NSDate* now = [[NSDate alloc] init];
+    NSDate* now = [NSDate date];
 
     NSIndexPath *scrollIndexPath = [_cmiEventCalendar getDayEventIndexForDate:now];
     if (scrollIndexPath != nil) {
@@ -751,7 +750,7 @@ NSIndexPath* _indexPath;
 {
     [CMIUtility Log:@"eventIsNow()"];
     
-    NSDate* now = [[NSDate alloc] init];
+    NSDate* now = [NSDate date];
     // endDate is 1 day = 60*60*24 seconds = 86400 seconds from startDate
     NSDate* trueStartDate = [NSDate dateWithTimeInterval:-(15*60) sinceDate:event.startDate];
 
