@@ -6,6 +6,14 @@
   Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 */
 
+/* Main Window */
+
+"MainWindowTitle" = "Conference Me In";
+"NewEventLabel" = "New Event";
+"NoOrganizerLabel" = "No Organizer";
+"SegmentAllEventsButton" = "All Events";
+"SegmentConfCallEventsButton" = "Conf Call Events";
+"DateFormat" = "h:mm a";
 "MenuButtonTitle" = "Menu";
 "HelpButtonTitle" = "Help";
 "HelpViewTitle" = "Help";
@@ -13,6 +21,18 @@
 "ConferenceNumberFormat" = " Conference Number: %@ PIN %@";
 "CallMyConfNumTitle" = "Call My Conference #";
 "IntroMessage" = "Double-tap calendar event to dial number directly.\r\nSingle-tap item to see event details and dial number";
-"HelpMessage" = "Double-tap calendar event to dial conference number directly.\r\nSingle-tap calendar event to see event details and be prompted to dial conference number";
+"HelpMessage" = "Double-tap calendar event to dial conference number directly.\r\n\r\nSingle-tap calendar event to see event details and be prompted to dial conference number";
 "NoEventsMessage" = "<No calendar events to show>";
 "WarnInvalidPhoneNumberMessage" = "Invalid or Incomplete Conference Phone Number\r\nPlease Review Your Conference Number in Settings";
+
+/* EventViewController Window */
+"ConferenceNumberDetails" = "Conference # Details";
+"EnterConferenceNumberDetails" = "Enter Conference # Details:";
+"ContinueButtonTitle" = "Continue";
+"ConfDetailsNumberPlaceholder" = "Conf Details #";
+"NoPhoneNumberAbbreviated" = "No Phone#";
+"AddPhoneNumberQuestion" = "No Phone number found for event\n\rWould you like to add one?";
+"NoPhoneNumberFoundForEvent" = "No Phone number found for event";
+"CancelButtonTitle" = "Cancel";
+"AddNumberButtonTitle" = "Add Number";
+"DismissButtonLabel" = "Dismiss";
