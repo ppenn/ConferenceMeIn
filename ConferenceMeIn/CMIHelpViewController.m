@@ -40,20 +40,6 @@
 }
 
 
-//- (void)viewDidLoad {
-//    NSLog(@"viewDidLoad()");
-//    
-//	self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-//    _textView = [[UITextView alloc] init];// initWithFrame:CGRectMake(0, 0, 320, 480)]; 
-//    [self.view addSubview: _textView]; 
-//    self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;    
-//    self.view.autoresizesSubviews = true;
-//    
-//	self.title = NSLocalizedString(@"HelpViewTitle", @"");
-//
-//    _textView.text = @"Badgers.\n\nGnadgers.";
-//}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations

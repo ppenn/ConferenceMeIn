@@ -43,11 +43,11 @@ callProviders _callProvider = phoneCarrier;
     [CMIUtility Log:@"showEnterConferenceDetailsAlert()"];
     
     if (_supportsNotes == YES) {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Conference # Details" message:@"Enter Conference # Details:" delegate:self cancelButtonTitle:@"Continue" otherButtonTitles:nil];
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ConferenceNumberDetails", nil) message: NSLocalizedString(@"EnterConferenceNumberDetails", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"ContinueButtonTitle", nil)  otherButtonTitles:nil];
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         UITextField * alertTextField = [alert textFieldAtIndex:0];
-        alertTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;// UIKeyboardTypeDefault;// UIKeyboardTypePhonePad;// UIKeyboardTypeNumberPad;
-        alertTextField.placeholder = @"Conf Details #";
+        alertTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+        alertTextField.placeholder = NSLocalizedString(@"ConfDetailsNumberPlaceholder", nil);
         alert.tag = ALERT_ENTER_CONF_DETAILS;
         [alert show];                
     }
@@ -62,14 +62,13 @@ callProviders _callProvider = phoneCarrier;
         
         UIAlertView* alert;
         
-//        if ([EKEvent instancesRespondToSelector:@selector(notes:)]) {
         if ([CMIUtility environmentIsAtIOS5OrHigher] == YES) {
         _supportsNotes = YES;
-        alert = [[UIAlertView alloc] initWithTitle:@"No Phone#" message:@"No Phone number found for event\n\rWould you like to add one?"
-                                          delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles: @"Add Number",nil];
+        alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NoPhoneNumberAbbreviated", nil) message:NSLocalizedString(@"AddPhoneNumberQuestion", nil) 
+                                          delegate:self cancelButtonTitle:NSLocalizedString(@"CancelButtonTitle", nil) otherButtonTitles: NSLocalizedString(@"AddNumberButtonTitle", nil), nil];
         }
         else {
-            alert = [[UIAlertView alloc] initWithTitle:@"No Phone#" message:@"No Phone number found for event" delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles: nil];            
+            alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NoPhoneNumberAbbreviated", nil) message:NSLocalizedString(@"NoPhoneNumberFoundForEvent", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"DismissButtonLabel", nil) otherButtonTitles: nil];            
         }
         alert.tag = ALERT_NO_NUMBER_FOUND;
         [alert show];

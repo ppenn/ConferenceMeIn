@@ -51,7 +51,7 @@ NSIndexPath* _indexPath;
 
 - (void)showEventNatively:(NSInteger)section row:(NSInteger)row
 {
-    NSLog(@"showEventNatively()");
+    [CMIUtility Log:@"showEventNatively()"];
     
     _detailViewController = [[CMIEKEventViewController alloc] initWithNibName:nil bundle:nil];        
     CMIEvent* cmiEvent = [self.cmiEventCalendar getCMIEventByIndexPath:section eventIndex:row];
@@ -160,7 +160,7 @@ NSIndexPath* _indexPath;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"didSelectRowAtIndexPath()");
+    [CMIUtility Log:@"didSelectRowAtIndexPath()"];
     
     @try {
         
@@ -212,7 +212,7 @@ NSIndexPath* _indexPath;
 
 - (void) showStartDialog
 {
-    NSLog(@"showStartDialog()");
+    [CMIUtility Log:@"showStartDialog()"];
     
     // Create the predicate. Pass it the default calendar.
 
@@ -247,14 +247,14 @@ NSIndexPath* _indexPath;
 
 - (NSArray *)fetchEventsForTable 
 {
-    NSLog(@"fetchEventsForTable()");
+    [CMIUtility Log:@"fetchEventsForTable()"];
     
     return [_cmiEventCalendar fetchEvents];
 }
 
 - (void)reloadTable
 {
-    NSLog(@"reloadTable()");
+    [CMIUtility Log:@"reloadTable()"];
 
 //    [_cmiEventCalendar createCMIEvents];
     [_cmiEventCalendar createCMIDayEvents];
@@ -264,7 +264,7 @@ NSIndexPath* _indexPath;
 
 - (void) scrollToNow
 {
-    NSLog(@"scrollToNow()");
+    [CMIUtility Log:@"scrollToNow()"];
     
     NSDate* now = [[NSDate alloc] init];
 
@@ -277,7 +277,7 @@ NSIndexPath* _indexPath;
 
 - (void) reloadTableScrollToNow
 {
-    NSLog(@"reloadTableScrollToNow()");
+    [CMIUtility Log:@"reloadTableScrollToNow()"];
 
     [self readAppSettings];    
     [self reloadTable];
@@ -439,9 +439,7 @@ NSIndexPath* _indexPath;
         _cmiMyConferenceNumber = [[CMIMyConferenceNumber alloc] initWithUserDefaults:_cmiUserDefaults];
         _cmiPhone = [[CMIPhone alloc] initWithCallProvider:_cmiUserDefaults.callProviderType];
         
-        //TODO: figure this out
-        //	self.title = NSLocalizedString(@"Time Zones", @"Time Zones title");
-        self.title = @"Calendar";
+        self.title = NSLocalizedString(@"MainWindowTitle", nil);
         [self createMenuButton];
         
         self.tableView.rowHeight = ROW_HEIGHT;
@@ -467,7 +465,7 @@ NSIndexPath* _indexPath;
         self.navigationItem.rightBarButtonItem = addButtonItem;
         
         
-        NSArray *segmentedItems = [NSArray arrayWithObjects:@"All Events", @"Conf Call Events", nil];
+        NSArray *segmentedItems = [NSArray arrayWithObjects:NSLocalizedString(@"SegmentAllEventsButton", nil), NSLocalizedString(@"SegmentConfCallEventsButton", nil), nil];
         UISegmentedControl *ctrl = [[UISegmentedControl alloc] initWithItems:segmentedItems];
         ctrl.segmentedControlStyle = UISegmentedControlStyleBar;
         ctrl.selectedSegmentIndex = _cmiEventCalendar.filterType;
@@ -766,7 +764,7 @@ NSIndexPath* _indexPath;
 - (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath {
 
     @try {
-        NSLog(@"configureCell()");
+        [CMIUtility Log:@"configureCell()"];
         
         /*
          Cache the formatter. Normally you would use one of the date formatter styles (such as NSDateFormatterShortStyle), but here we want a specific format that excludes seconds.
@@ -774,7 +772,7 @@ NSIndexPath* _indexPath;
         static NSDateFormatter *dateFormatter = nil;
         if (dateFormatter == nil) {
             dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"h:mm a"];
+            [dateFormatter setDateFormat:NSLocalizedString(@"DateFormat", nil)];
         }
         
         // Get the event at the row selected and display it's title
@@ -796,20 +794,14 @@ NSIndexPath* _indexPath;
         
         // Set the event title name.
         label = (UILabel *)[cell viewWithTag:EVENT_TITLE_TAG];
-        label.text = ([[cmiEvent ekEvent] title] != nil) ? [[cmiEvent ekEvent] title] : @"New Event";// wrapper.localeName;
+        label.text = ([[cmiEvent ekEvent] title] != nil) ? [[cmiEvent ekEvent] title] : NSLocalizedString(@"NewEventLabel", nil);
         
         label = (UILabel *)[cell viewWithTag:EVENT_ORGANIZER_TAG];
-        label.text = ([[cmiEvent ekEvent] organizer] != nil) ? [[[cmiEvent ekEvent] organizer] name] : @"No Organizer";// wrapper.	
+        label.text = ([[cmiEvent ekEvent] organizer] != nil) ? [[[cmiEvent ekEvent] organizer] name] : NSLocalizedString(@"NoOrganizerLabel", nil);
         
-        // Set the time.
-//        if ([eventEndDateStr length] > [eventStartDateStr length]) {
-//            eventStartDateStr = [@" " stringByAppendingString:eventStartDateStr];
-//        }
 
         label = (UILabel *)[cell viewWithTag:START_TIME_TAG];
         label.text = eventStartDateStr;
-//        label = (UILabel *)[cell viewWithTag:TIME_SEPARATOR_TAG];
-//        label.text = @"-";
         label = (UILabel *)[cell viewWithTag:END_TIME_TAG];
         label.text = eventEndDateStr;
         
@@ -910,19 +902,19 @@ NSIndexPath* _indexPath;
         // the user clicked one of the OK/Cancel buttons
         switch (buttonIndex) {
             case 0:
-                NSLog(@"Call My Number");
+                [CMIUtility Log:@"Call My Number"];
                 [self callMyNumber];
                 break;
             case 1:
-                NSLog(@"Settings");
+                [CMIUtility Log:@"Settings"];
                 [self showSettingsDialog];
                 break;
             case 2:
-                NSLog(@"Help");
+                [CMIUtility Log:@"Help"];
                 [self showHelpDialog];
                 break;
             default:
-                NSLog(@"Cancel");
+                [CMIUtility Log:@"Cancel"];
                 break;
         }
     }
