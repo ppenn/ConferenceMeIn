@@ -33,6 +33,9 @@
 {
     NSString* phoneNumber;
 
+    phoneNumber = [EKEventParser parseEventText:@"18776038688 12345678"];
+    [self testPhoneNumberShouldParse:phoneNumber];
+
     phoneNumber = [EKEventParser parseEventText:@"1800 123 4567 xx 12345678"];
     [self testPhoneNumberShouldParse:phoneNumber];
     

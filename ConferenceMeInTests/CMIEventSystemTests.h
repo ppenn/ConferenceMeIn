@@ -13,6 +13,7 @@
 #import "CMIEventCalendar.h"
 #import <EventKit/EventKit.h>
 #import <TargetConditionals.h>
+#import "CMIUtility.h"
 
 @interface CMIEventSystemTests : SenTestCase
 

@@ -98,7 +98,7 @@ NSArray* _calendarEvents;
     {
         CMIEvent* cmiEvent = (CMIEvent*) event;
         STAssertTrue(cmiEvent.hasConferenceNumber == true, @"All Events should have conf numbers");
-        NSLog(@"%@", [NSString stringWithFormat:@"%@", cmiEvent.conferenceNumberURL]);
+        NSLog(@"%@", [NSString stringWithFormat:@"%@", cmiEvent.conferenceNumber]);
     }
 }
 
