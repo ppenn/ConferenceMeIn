@@ -89,6 +89,7 @@
 		A8EAB88F14DA4C90001294B4 /* bottomRowSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EAB88C14DA4C90001294B4 /* bottomRowSelected.png */; };
 		A8EAB89214DA4E82001294B4 /* topAndBottomRow.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EAB89114DA4E82001294B4 /* topAndBottomRow.png */; };
 		A8EAB89414DA51D9001294B4 /* middleRowSelected_red.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EAB89314DA51D9001294B4 /* middleRowSelected_red.png */; };
+		A8F48F1E14F2F4F1004F9B2E /* CMIHelpIPhoneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8F48F1D14F2F4F1004F9B2E /* CMIHelpIPhoneView.xib */; };
 		A8F6211514E3630700B735AC /* middleRowSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F6211414E3630700B735AC /* middleRowSelected.png */; };
 		A8F6211C14E368E900B735AC /* CMIUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6211B14E368E800B735AC /* CMIUtility.m */; };
 		A8F6212314E56A2C00B735AC /* CMIDay.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6212214E56A2C00B735AC /* CMIDay.m */; };
@@ -199,6 +200,7 @@
 		A8EAB88C14DA4C90001294B4 /* bottomRowSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottomRowSelected.png; sourceTree = "<group>"; };
 		A8EAB89114DA4E82001294B4 /* topAndBottomRow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topAndBottomRow.png; sourceTree = "<group>"; };
 		A8EAB89314DA51D9001294B4 /* middleRowSelected_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = middleRowSelected_red.png; sourceTree = "<group>"; };
+		A8F48F1D14F2F4F1004F9B2E /* CMIHelpIPhoneView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMIHelpIPhoneView.xib; sourceTree = "<group>"; };
 		A8F6211414E3630700B735AC /* middleRowSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = middleRowSelected.png; path = ConferenceMeIn/images/middleRowSelected.png; sourceTree = "<group>"; };
 		A8F6211A14E368E800B735AC /* CMIUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIUtility.h; sourceTree = "<group>"; };
 		A8F6211B14E368E800B735AC /* CMIUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIUtility.m; sourceTree = "<group>"; };
@@ -237,6 +239,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A814F94114F3193800A159B9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A8F48F1D14F2F4F1004F9B2E /* CMIHelpIPhoneView.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		A8CFD08F14EF360C00EA8616 /* InAppSettingsKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,6 +322,42 @@
 			path = Xibs;
 			sourceTree = "<group>";
 		};
+		A8CFD0F914F2B93F00EA8616 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A8E1D73E14D279E000E5A877 /* CMIMasterViewController.h */,
+				A8E1D73F14D279E000E5A877 /* CMIMasterViewController.m */,
+				A8E1D71914D1303900E5A877 /* CMIEKEventViewController.h */,
+				A8E1D71A14D1303900E5A877 /* CMIEKEventViewController.m */,
+				A8AEA2FB14E2380500E6ADC6 /* CMIHelpViewController.h */,
+				A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		A8CFD0FA14F2B98E00EA8616 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A8E5254A14CA37A100797C16 /* EKEventParser.h */,
+				A8E5254B14CA37A200797C16 /* EKEventParser.m */,
+				A808AFA814EBF60F00810523 /* CMIPhone.h */,
+				A808AFA914EBF60F00810523 /* CMIPhone.m */,
+				A8E1D70A14D0974700E5A877 /* CMIEvent.h */,
+				A8E1D70B14D0974700E5A877 /* CMIEvent.m */,
+				A8E1D72F14D26AEE00E5A877 /* CMIEventCalendar.h */,
+				A8E1D73014D26AEF00E5A877 /* CMIEventCalendar.m */,
+				A8F6211A14E368E800B735AC /* CMIUtility.h */,
+				A8F6211B14E368E800B735AC /* CMIUtility.m */,
+				A8F6212114E56A2B00B735AC /* CMIDay.h */,
+				A8F6212214E56A2C00B735AC /* CMIDay.m */,
+				A8CFD0E714EFE5C200EA8616 /* CMIMyConferenceNumber.h */,
+				A8CFD0E814EFE5C200EA8616 /* CMIMyConferenceNumber.m */,
+				A856305314E87A52006B24F8 /* CMIUserDefaults.h */,
+				A856305414E87A52006B24F8 /* CMIUserDefaults.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		A8E1D72714D22A9400E5A877 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,31 +426,12 @@
 		A8E5251014CA0EC800797C16 /* ConferenceMeIn */ = {
 			isa = PBXGroup;
 			children = (
+				A814F94114F3193800A159B9 /* Views */,
+				A8CFD0FA14F2B98E00EA8616 /* Model */,
+				A8CFD0F914F2B93F00EA8616 /* Controllers */,
 				A8E5251914CA0EC800797C16 /* ConferenceMeInAppDelegate.h */,
 				A8E5251A14CA0EC800797C16 /* ConferenceMeInAppDelegate.m */,
-				A856305314E87A52006B24F8 /* CMIUserDefaults.h */,
-				A856305414E87A52006B24F8 /* CMIUserDefaults.m */,
-				A8E1D73E14D279E000E5A877 /* CMIMasterViewController.h */,
-				A8E1D73F14D279E000E5A877 /* CMIMasterViewController.m */,
-				A8E1D71914D1303900E5A877 /* CMIEKEventViewController.h */,
-				A8E1D71A14D1303900E5A877 /* CMIEKEventViewController.m */,
 				A8E5251114CA0EC800797C16 /* Supporting Files */,
-				A8E5254A14CA37A100797C16 /* EKEventParser.h */,
-				A8E5254B14CA37A200797C16 /* EKEventParser.m */,
-				A808AFA814EBF60F00810523 /* CMIPhone.h */,
-				A808AFA914EBF60F00810523 /* CMIPhone.m */,
-				A8E1D70A14D0974700E5A877 /* CMIEvent.h */,
-				A8E1D70B14D0974700E5A877 /* CMIEvent.m */,
-				A8E1D72F14D26AEE00E5A877 /* CMIEventCalendar.h */,
-				A8E1D73014D26AEF00E5A877 /* CMIEventCalendar.m */,
-				A8AEA2FB14E2380500E6ADC6 /* CMIHelpViewController.h */,
-				A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */,
-				A8F6211A14E368E800B735AC /* CMIUtility.h */,
-				A8F6211B14E368E800B735AC /* CMIUtility.m */,
-				A8F6212114E56A2B00B735AC /* CMIDay.h */,
-				A8F6212214E56A2C00B735AC /* CMIDay.m */,
-				A8CFD0E714EFE5C200EA8616 /* CMIMyConferenceNumber.h */,
-				A8CFD0E814EFE5C200EA8616 /* CMIMyConferenceNumber.m */,
 			);
 			path = ConferenceMeIn;
 			sourceTree = "<group>";
@@ -536,6 +563,7 @@
 				A8CFD0DC14EF360C00EA8616 /* IASKPSTextFieldSpecifierViewCell.xib in Resources */,
 				A8CFD0DE14EF360C00EA8616 /* IASKPSToggleSwitchSpecifierViewCell.xib in Resources */,
 				A8CFD0E014EF360C00EA8616 /* IASKSpecifierValuesView.xib in Resources */,
+				A8F48F1E14F2F4F1004F9B2E /* CMIHelpIPhoneView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
