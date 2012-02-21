@@ -10,28 +10,11 @@
 
 @implementation CMIHelpViewController
 
-@synthesize textView = _textView;
+@synthesize contentTextView = _contentTextView;
+@synthesize cmiImageView = _cmiImageView;
 
 - (void)setupHelp
 {
-	self.textView = [[UITextView alloc] initWithFrame:self.view.frame];
-	self.textView.textColor = [UIColor blackColor];
-	self.textView.font = [UIFont fontWithName:@"Arial" size:18.0];
-	self.textView.delegate = self;
-	self.textView.backgroundColor = [UIColor whiteColor];
-	
-	self.textView.text = NSLocalizedString(@"HelpMessage", @"");
-	self.textView.returnKeyType = UIReturnKeyDefault;
-	self.textView.keyboardType = UIKeyboardTypeDefault;	// use the default type input method (entire keyboard)
-	self.textView.scrollEnabled = YES;
-	
-	// this will cause automatic vertical resize when the table is resized
-	self.textView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-	
-	// note: for UITextView, if you don't like autocompletion while typing use:
-	// myTextView.autocorrectionType = UITextAutocorrectionTypeNo;
-	
-	[self.view addSubview: self.textView];
     
 }
 
@@ -40,13 +23,14 @@
 
     self.navigationController.toolbarHidden = YES;
 	self.title = NSLocalizedString(@"HelpViewTitle", @"");
-    
+
+    self.contentTextView.text = NSLocalizedString(@"HelpMessage", nil);
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self setupHelp];
+//    [self setupHelp];
     
 }
 - (void)viewDidAppear:(BOOL)animated
@@ -77,4 +61,9 @@
 }
 
 
+- (void)viewDidUnload {
+    [self setContentTextView:nil];
+    [self setCmiImageView:nil];
+    [super viewDidUnload];
+}
 @end

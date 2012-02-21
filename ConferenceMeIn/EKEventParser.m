@@ -9,7 +9,7 @@
 //
 
 #import "EKEventParser.h"
-
+#import "CMIUtility.h"
 
 @implementation EKEventParser
 
@@ -20,6 +20,7 @@
 
 + (NSString*)parsePhoneNumber:(NSString*)eventText
 {
+    [CMIUtility Log:@"parsePhoneNumber()"];
     NSError *error = NULL;
     NSString* phoneNumber = @"";
     
@@ -46,6 +47,8 @@
 
 + (NSString*)parseEventText:(NSString*)eventText
 {
+    [CMIUtility Log:@"parseEventText()"];
+
     NSError *error = NULL;
     NSString* phoneNumber = @"";
     

@@ -837,7 +837,7 @@ NSIndexPath* _indexPath;
 {
     [CMIUtility Log:@"showHelpDialog()"];
 
-    _cmiHelpViewController = [[CMIHelpViewController alloc] initWithNibName:nil bundle:nil];
+    _cmiHelpViewController = [[CMIHelpViewController alloc] initWithNibName:@"CMIHelpIPhoneView" bundle:nil];
     [self.navigationController pushViewController:_cmiHelpViewController animated:YES];
 }
 

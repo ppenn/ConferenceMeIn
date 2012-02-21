@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface CMIHelpViewController : UIViewController <UITextViewDelegate>
+@property (unsafe_unretained, nonatomic) IBOutlet UITextView *contentTextView;
 
-@property (nonatomic, retain) IBOutlet UITextView *textView;
+@property (unsafe_unretained, nonatomic) IBOutlet UIImageView *cmiImageView;
+
 
 @end

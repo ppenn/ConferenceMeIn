@@ -21,7 +21,7 @@
 
 + (NSMutableArray*)createCMIEvents:(NSArray*)events
 {
-    NSLog(@"createCMIEvents()");
+    [CMIUtility Log:@"createCMIEvents()"];
     
     NSMutableArray* cmiEvents = [[NSMutableArray alloc] initWithCapacity:[events count]];
     
@@ -35,7 +35,7 @@
 
 - (id) initWithEKEvent:(EKEvent*)ekEvent
 {
-    NSLog(@"initWithEKEvent()");
+    [CMIUtility Log:@"initWithEKEvent()"];
 
     self = [super init];
     
@@ -59,7 +59,7 @@
 
 - (void) parseEvent
 {
-    NSLog(@"parseEvent()");
+    [CMIUtility Log:@"parseEvent()"];
 
     if (_ekEvent.title != nil && [_ekEvent.title length] > 0) {
         _conferenceNumber = [EKEventParser parseEventText:_ekEvent.title];        

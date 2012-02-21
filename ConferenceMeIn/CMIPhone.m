@@ -18,11 +18,15 @@ NSURL* _phoneURL;
 
 - (BOOL)talkatoneIsInstalled
 {
+    [CMIUtility Log:@"talkatoneIsInstalled()"];
+
     return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tktn://installed"]];    
 }
 
 - (void)validateTalkatoneInstallation
 {
+    [CMIUtility Log:@"validateTalkatoneInstallation()"];
+
     if ([self talkatoneIsInstalled] == NO) {
         [NSException raise:@"Invalid Call Provider" format:@"Google Talkatone is not installed on device"];
     }
@@ -30,6 +34,8 @@ NSURL* _phoneURL;
 
 - (void) setPhoneURL:(NSString*) phoneNumber
 {
+    [CMIUtility Log:@"setPhoneURL()"];
+
     NSString* phoneNumberURL = nil;
     
     //TODO: phone vs other
@@ -70,6 +76,8 @@ NSURL* _phoneURL;
 - (id) initWithCallProvider:(callProviders)callProvider
 {
     self = [super init];
+
+    [CMIUtility Log:@"initWithCallProvider()"];
     
     if (self != nil)
     {    
