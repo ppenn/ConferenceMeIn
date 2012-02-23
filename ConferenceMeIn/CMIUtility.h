@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <EventKit/EventKit.h>
 
+#define PHONE_CALL_SEPARATOR @",,"
+
 @interface CMIUtility : NSObject
 
 + (void)Log:(NSString*)logMessage;

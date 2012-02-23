@@ -13,7 +13,9 @@
 
 + (void)Log:(NSString*)logMessage
 {
+#if 1
     NSLog(@"%@", logMessage);
+#endif
 }
 
 + (void)LogError:(NSString*)logMessage

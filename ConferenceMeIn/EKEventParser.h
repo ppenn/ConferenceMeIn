@@ -13,9 +13,11 @@
 @interface EKEventParser : NSObject
 
 + (NSString*)parseEvent:(EKEvent*)event;
-// NB will have to return an array of candidates
 
 + (NSString*)parseEventText:(NSString*)eventText;
++ (BOOL)phoneNumberContainsCode:(NSString*)phoneNumber;
++ (NSString*)getCodeFromNumber:(NSString*)phoneNumber;
++ (NSString*)getPhoneFromPhoneNumber:(NSString*)phoneNumber;
 
 @end
 
