@@ -28,32 +28,82 @@
     STAssertTrue([phoneNumber length] > 9, @"there needs to be a phone number in there");
 }
 
++ (NSArray*) getFilesInFolder
+{
+    NSString *dir = @"/foo/bar";
+    
+    // OS X 10.5+
+    NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:nil];
+    
+    NSEnumerator *enm = [contents objectEnumerator];
+    NSString *file;
+    while ((file = [enm nextObject]))
+        if ([[file pathExtension] isEqualToString:@"mp3"])
+            NSLog(@"%@", file);    
+    
+    return nil;
+}
+
+- (void)testPhoneNumberCodeShouldParse:(NSString*)phoneText expectedPhoneNumber:(NSString*)expectedPhoneNumber expectedPhoneCode:(NSString*)expectedPhoneCode
+{
+    NSString* phoneNumber = [EKEventParser parseEventText:phoneText];
+    
+    STAssertNotNil(phoneNumber, @"Phone Number shouldn't be nil");
+
+    NSString* phoneNumberOnly = [EKEventParser getPhoneFromPhoneNumber:phoneNumber];
+    NSString* code = [EKEventParser getCodeFromNumber:phoneNumber];
+    if (phoneNumberOnly == nil || code == nil) { 
+        int stopHere = 0;
+    }
+    STAssertNotNil(phoneNumberOnly, @"Phone shouldn't be nil");
+    STAssertNotNil(code, @"Code shouldn't be nil");
+
+    STAssertTrue([expectedPhoneNumber isEqualToString:phoneNumberOnly], @"Phone should be equal");
+    STAssertTrue([expectedPhoneCode isEqualToString:code], @"Code should be equal");
+}
+
+- (void)testInvitesShouldParse
+{
+    NSString* fileContents;
+    
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/livemeeting.txt"];   
+    
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"3123718"];
+    
+}
 
 - (void)testPhoneNumbersShouldParse
 {
-    NSString* phoneNumber;
-
-    phoneNumber = [EKEventParser parseEventText:@"18776038688 12345678"];
-    [self testPhoneNumberShouldParse:phoneNumber];
-
-    phoneNumber = [EKEventParser parseEventText:@"1800 123 4567 xx 12345678"];
-    [self testPhoneNumberShouldParse:phoneNumber];
+    NSString* phoneText;
     
-    phoneNumber = [EKEventParser parseEventText:@"Conference Room - Aspen / Intercall: 877-603-8688 Partipant Code: 6450391 4155138001"];
-    [self testPhoneNumberShouldParse:phoneNumber];
-    
-    phoneNumber = [EKEventParser parseEventText:@"Content of email below:->>>>  Toll-free dial-in number (U.S. and Canada): (877) 603-8688  Conference code: 6567159  -----Original Appointment-----  From:Angel Anderson [mailto:AAnderson@fcg"];
-    [self testPhoneNumberShouldParse:phoneNumber];
+    phoneText = [EKEventParser parseEventText:@"Dial-in\
+                   MeetingPlace Main Number 425-456-2500\
+                   Toll Free Number 888-228-0484\
+                   Meeting ID: 2690\
+                   Password: 123456"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"4254562500" expectedPhoneCode:@"123456"];
 
-    phoneNumber = [EKEventParser parseEventText:@"Body of email                                           When: Wednesday, January 25, 2012 9:30 AM-10:30 AM (GMT-06:00) Central Time (US & Canada).Where: Conference Call 877-603-8688 - Conf Code 1133731826 Note: The GMT offset above does not reflect daylight saving time adjustments."];
-    [self testPhoneNumberShouldParse:phoneNumber];
+    phoneText = [EKEventParser parseEventText:@"18776038688 12345678 1234"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"18776038688" expectedPhoneCode:@"12345678"];
+
+    phoneText = [EKEventParser parseEventText:@"1800 123 4567 xx 12345678"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8001234567" expectedPhoneCode:@"12345678"];
     
-    phoneNumber = [EKEventParser parseEventText:@"1-718-354-1168 Participants 25798249#"];
-    [self testPhoneNumberShouldParse:phoneNumber];
+    phoneText = [EKEventParser parseEventText:@"Conference Room - Aspen / Intercall: 877-603-8688 Partipant Code: 6450391 4155138001"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"6450391"];
+    
+    phoneText = [EKEventParser parseEventText:@"Content of email below:->>>>  Toll-free dial-in number (U.S. and Canada): (877) 603-8688  Conference code: 6567159  -----Original Appointment-----  From:Angel Anderson [mailto:AAnderson@fcg"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"6567159"];
+
+    phoneText = [EKEventParser parseEventText:@"Body of email                                           When: Wednesday, January 25, 2012 9:30 AM-10:30 AM (GMT-06:00) Central Time (US & Canada).Where: Conference Call 877-603-8688 - Conf Code 1133731826 Note: The GMT offset above does not reflect daylight saving time adjustments."];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"1133731826"];
+    
+    phoneText = [EKEventParser parseEventText:@"1-718-354-1168 Participants 25798249#"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"7183541168" expectedPhoneCode:@"25798249"];
 
     // This one is bringing back 5599 as the code. Need to ensure that phone numbers are not included. How?
-    phoneNumber = [EKEventParser parseEventText:@"US Dial In:  866-262-0701    International Dial In: 706-679-5599  code 1234"];
-    [self testPhoneNumberShouldParse:phoneNumber];
+    phoneText = [EKEventParser parseEventText:@"US Dial In:  866-262-0701    International Dial In: 706-679-5599  code 1234"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8662620701" expectedPhoneCode:@"1234"];
     
 }
 

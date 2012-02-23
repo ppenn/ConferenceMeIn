@@ -28,7 +28,7 @@
 
 - (void)testCalculateDateStuff
 {
-    NSDate* nowDate = [[NSDate alloc] init]; 
+    NSDate* nowDate = [NSDate date]; 
     NSDate* yesterdayDate = [CMIUtility getOffsetDate:nowDate atOffsetDays:-1];
     NSDate* tomorrowDate = [CMIUtility getOffsetDate:nowDate atOffsetDays:1];
 
@@ -42,42 +42,8 @@
     
 }
 
-- (void)testCalculateDaysEvents
-{
-    NSDate* nowDate = [[NSDate alloc] init]; 
-    NSDate* startDate = [CMIUtility getOffsetDate:nowDate atOffsetDays:-1];
-    NSDate* endDate = [CMIUtility getOffsetDate:nowDate atOffsetDays:1];
-    
-//    [CMIUtility calculateDaysEvents:startDate atEndDate:endDate];
-//    for(NSString *aKey in _cmiEventSystem.daysEvents){
-//        
-//        NSLog(@"%@", aKey);
-////        NSNumber *num = [_cmiEventSystem.daysEvents objectForKey:aKey];
-//        NSMutableArray *events = [_cmiEventSystem.daysEvents objectForKey:aKey];
-//        NSInteger numEvents = [events count];
-//        NSLog(@"%d", numEvents); //made up method
-//        
-//    }
-//    
-//    STAssertTrue([_cmiEventSystem.daysEvents count] == 3, @"Must have some days"); 
-}
 
-// All code under test must be linked into the Unit Test bundle
-- (void)testFetchEvents
-{
-//    _cmiEventSystem.fetchAllEvents = true;
-//    NSArray* eventsList = [_cmiEventSystem fetchEvents];
-//    STAssertTrue([eventsList count] > 0, @"Need some events :-(");
-//
-//    for(NSString *aKey in _cmiEventSystem.daysEvents){
-//        
-//        NSLog(@"%@", aKey);
-//        NSNumber *num = [_cmiEventSystem.daysEvents objectForKey:aKey];
-//        NSInteger numEvents = [num intValue];
-//        NSLog(@"%d", numEvents); //made up method
-//        
-//    }
     
-}
+
 
 @end
