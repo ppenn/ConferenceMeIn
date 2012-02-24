@@ -11,7 +11,7 @@
 #import "EKEventParser.h"
 #import "CMIUtility.h"
 
-#define REGEX_CODE_SPECIFIC @"(password|code)[\\s:\t\\)\\#]*\\d{3,12}[\\s-]?\\d{1,12}+[\\s-]?\\d{0,12}"
+#define REGEX_CODE_SPECIFIC @"(\\spin|password|code)[\\s:\\)\\#]*\\d{3,12}[\\s-]?\\d{1,12}+[\\s-]?\\d{0,12}"
 #define REGEX_CODE_GENERIC @"\\d{4,12}"
 
 #define REGEX_PHONE_NUMBER_FIRST @"1?(\\d{3}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{4})"
@@ -85,7 +85,6 @@
     NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:eventText options:0 range:NSMakeRange(0, [eventText  length])];
     if (!NSEqualRanges(rangeOfFirstMatch, NSMakeRange(NSNotFound, 0))) {
         substringForFirstMatch = [EKEventParser stripRegex:[eventText substringWithRange:rangeOfFirstMatch] regexToStrip:@"[^\\d]"];
-        substringForFirstMatch = [[[[[[eventText substringWithRange:rangeOfFirstMatch] stringByReplacingOccurrencesOfString:@"(" withString:@""] stringByReplacingOccurrencesOfString:@")" withString:@""] stringByReplacingOccurrencesOfString:@"." withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""] stringByReplacingOccurrencesOfString:@"-" withString:@""];
         
         phoneNumber = [phoneNumber stringByAppendingString:substringForFirstMatch];
     }
@@ -96,13 +95,26 @@
 + (NSString*)tryToGetCodeSpecific:(NSString*)eventText
 {
     [CMIUtility Log:@"tryToGetCodeSpecific()"];
+
+    NSError *error = NULL;
+    NSString* code = nil;
     
-    return nil;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:REGEX_CODE_SPECIFIC
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:&error];
+    
+    
+    NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:eventText options:0 range:NSMakeRange(0, [eventText  length])];
+    if (!NSEqualRanges(rangeOfFirstMatch, NSMakeRange(NSNotFound, 0))) {
+        code = [EKEventParser stripRegex:[eventText substringWithRange:rangeOfFirstMatch] regexToStrip:@"[^\\d]"];
+    }
+        
+    return code;
 }
 
-+ (NSString*)tryToGetPIN:(NSString*)eventText
++ (NSString*)tryToGetCodeGeneric:(NSString*)eventText
 {
-    [CMIUtility Log:@"tryToGetPIN()"];
+    [CMIUtility Log:@"tryToGetCodeGeneric()"];
     if (eventText.length < 4)   return nil;
 
     NSError *error = NULL;
@@ -145,7 +157,7 @@
     NSError *error = NULL;
     NSString* phoneNumber = @"";
     
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"1?(\\d{3}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{4})" 
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:REGEX_PHONE_NUMBER_FIRST
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
     
@@ -154,23 +166,24 @@
     NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:eventText options:0 range:NSMakeRange(0, [eventText  length])];
     if (!NSEqualRanges(rangeOfFirstMatch, NSMakeRange(NSNotFound, 0))) {
         substringForFirstMatch = [EKEventParser stripRegex:[eventText substringWithRange:rangeOfFirstMatch] regexToStrip:@"[^\\d]"];
-//        substringForFirstMatch = [[[[[[eventText substringWithRange:rangeOfFirstMatch] stringByReplacingOccurrencesOfString:@"(" withString:@""] stringByReplacingOccurrencesOfString:@")" withString:@""] stringByReplacingOccurrencesOfString:@"." withString:@""] stringByReplacingOccurrencesOfString:@" " withString:@""] stringByReplacingOccurrencesOfString:@"-" withString:@""];
         
         if ([substringForFirstMatch characterAtIndex:0] == '1') {
             substringForFirstMatch = [substringForFirstMatch substringFromIndex:1];
         }
         
         phoneNumber = [phoneNumber stringByAppendingString:substringForFirstMatch];
-        // Get extension, if there is one?
         
-        // Get PIN
+        // Get PIN / Code. Try a couple of ways...
         NSUInteger afterPhoneNumberPosition = rangeOfFirstMatch.location + rangeOfFirstMatch.length;
         NSString* remainderText = [eventText substringFromIndex:afterPhoneNumberPosition];
-        NSString* PIN = [EKEventParser tryToGetPIN:remainderText];
-
-        if (PIN != nil) {
+        NSString* code;
+        code = [EKEventParser tryToGetCodeSpecific:remainderText];
+        if (code == nil) {
+            code = [EKEventParser tryToGetCodeGeneric:remainderText];
+        }
+        if (code != nil) {
             phoneNumber = [phoneNumber stringByAppendingString:PHONE_CALL_SEPARATOR];
-            phoneNumber = [phoneNumber stringByAppendingString:PIN];            
+            phoneNumber = [phoneNumber stringByAppendingString:code];            
         }        
     }    
     
