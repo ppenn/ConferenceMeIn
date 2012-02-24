@@ -130,6 +130,8 @@ NSIndexPath* _indexPath;
         if (_cmiEventCalendar.eventsList.count == 0) {
             cell = [[UITableViewCell alloc] init];
             cell.textLabel.text = NSLocalizedString(@"NoEventsMessage", @"");
+            UIFont* font = [UIFont systemFontOfSize:15.0];
+            cell.textLabel.font = font;		
             cell.userInteractionEnabled = NO;
             return cell;            
         }
@@ -216,7 +218,14 @@ NSIndexPath* _indexPath;
     // Create the predicate. Pass it the default calendar.
 
     if (_cmiUserDefaults.firstRun == true) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ConferenceMeIn" message:NSLocalizedString(@"IntroMessage", @"")                                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        NSString* alertMessage;
+        if ([CMIUtility environmentIsAtIOS5OrHigher] == false) {
+            alertMessage = [[NSLocalizedString(@"IntroMessage", @"") stringByAppendingString:@"\n\r"] stringByAppendingString:NSLocalizedString(@"IOS5WarningMessage", nil)];
+        }
+        else {
+            alertMessage = NSLocalizedString(@"IntroMessage", @"");
+        }
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"ConferenceMeIn" message:alertMessage                                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];
         
     }
