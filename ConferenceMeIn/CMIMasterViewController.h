@@ -20,6 +20,7 @@
 
 @interface CMIMasterViewController : UITableViewController <UIActionSheetDelegate, EKEventEditViewDelegate, IASKSettingsDelegate>
 
+@property (strong, nonatomic) UIAlertView* megaAlert;
 @property (strong, nonatomic) CMIEKEventViewController *detailViewController;
 @property (strong, nonatomic) CMIHelpViewController* cmiHelpViewController;
 @property (strong, nonatomic) CMIEventCalendar* cmiEventCalendar;

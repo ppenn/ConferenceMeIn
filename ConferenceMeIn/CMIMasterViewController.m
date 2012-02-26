@@ -21,6 +21,7 @@ CMIUserDefaults* _cmiUserDefaults;
 NSTimer* _refreshTimer;
 callProviders _callProvider;
 NSIndexPath* _indexPath;
+BOOL firstLoad = YES;
 
 @implementation CMIMasterViewController
 
@@ -32,6 +33,7 @@ NSIndexPath* _indexPath;
 @synthesize cmiMyConferenceNumber = _cmiMyConferenceNumber;
 @synthesize cmiPhone = _cmiPhone;
 @synthesize reloadDefaultsOnAppear = _reloadDefaultsOnAppear;
+@synthesize megaAlert;
 
 #pragma mark -
 #pragma mark Table view delegate and data source methods
@@ -289,15 +291,38 @@ NSIndexPath* _indexPath;
     }    
 }
 
+-(void)invokeMegaAnnoyingPopup
+{
+    self.megaAlert = [[UIAlertView alloc] initWithTitle:@"Loading Events..."
+                                                 message:nil delegate:self cancelButtonTitle:nil
+                                       otherButtonTitles: nil];
+        
+    [self.megaAlert show];
 
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]
+                                          initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    
+    indicator.center = CGPointMake(self.megaAlert.bounds.size.width / 2,
+                                   self.megaAlert.bounds.size.height - 45);
+    [indicator startAnimating];
+    [self.megaAlert addSubview:indicator];
+}
+
+-(void)dismissMegaAnnoyingPopup
+{
+    if (self.megaAlert != nil) {
+        [self.megaAlert dismissWithClickedButtonIndex:0 animated:YES];
+        self.megaAlert = nil;
+    }
+}
 - (void) reloadTableScrollToNow
 {
     [CMIUtility Log:@"reloadTableScrollToNow()"];
-
     [self readAppSettings];    
     [self reloadTable];
     [self scrollToNow];
-    
+//    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];    
+    [self dismissMegaAnnoyingPopup];
 }
 
 
@@ -535,6 +560,25 @@ NSIndexPath* _indexPath;
     }
     @catch (NSException *e) {
         [CMIUtility LogError:e.reason];
+    }
+}
+
+- (BOOL)reloadDue
+{
+    if (_reloadDefaultsOnAppear == YES && _cmiUserDefaults.defaultsDidChange == YES) {
+        return YES;
+    }    
+    else {
+        return NO;
+    }
+}
+
+
+- (void)viewDidLayoutSubviews
+{
+    if ([self reloadDue] == YES || firstLoad == YES) {
+        firstLoad = NO;
+        [self invokeMegaAnnoyingPopup];    
     }
 }
 
