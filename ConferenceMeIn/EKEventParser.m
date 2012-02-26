@@ -169,7 +169,7 @@
 
 + (NSRange)tryToGetFirstTollFree:(NSString*)eventText
 {
-    [CMIUtility Log:@"tryToGetCountryTollFreePhone()"];
+    [CMIUtility Log:@"tryToGetFirstTollFree()"];
     
     //This regex returns TOLL-FREE numbers...
     NSError *error = NULL;
@@ -229,11 +229,11 @@
 
 + (NSRange)tryToGetPhone:(NSString*)eventText
 {
-    [CMIUtility Log:@"tryToGetCountryTollFreePhone()"];
+    [CMIUtility Log:@"tryToGetPhone()"];
 
     NSRange range = [EKEventParser tryToGetCountryTollFreePhone:eventText];
     if (range.location != NSNotFound) {
-        [CMIUtility Log:@"gotCountryTollFree"];
+        [CMIUtility Log:@"matched CountryTollFree"];
         return range;
     }
     else {
@@ -243,6 +243,15 @@
     // If that didn't work then just try the whole thing
     if (range.location == NSNotFound) {
         range = [EKEventParser tryToGetFirstPhone:eventText];
+        if (range.location != NSNotFound) {
+            [CMIUtility Log:@"matched FirstPhoneNumber"];                    
+        }
+        else {
+            [CMIUtility Log:@"no match"];                                
+        }
+    }
+    else {
+        [CMIUtility Log:@"matched FirstTollFree"];        
     }
     
     return range;
@@ -284,6 +293,12 @@
             }        
         }
     }    
+
+    //TODO: fix this 
+    if ([phoneNumber length] > 1 &&
+        ([phoneNumber characterAtIndex:0] == '1' || [[EKEventParser getPhoneFromPhoneNumber:phoneNumber]  rangeOfString:@","].location != NSNotFound)) {
+        phoneNumber = @"";
+    }
     
     return phoneNumber;
 }

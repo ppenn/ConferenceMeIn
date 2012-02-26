@@ -466,6 +466,42 @@ BOOL firstLoad = YES;
 
 }
 
+- (void)initializeUI
+{
+    [CMIUtility Log:@"initializeUI()"];
+
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;    
+    self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;    
+    self.view.autoresizesSubviews = true;
+    self.tableView.autoresizesSubviews = true;
+    
+    //	Create an Add button 
+    UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:
+                                      UIBarButtonSystemItemAdd target:self action:@selector(addEvent:)];
+    self.navigationItem.rightBarButtonItem = addButtonItem;
+    
+    
+    NSArray *segmentedItems = [NSArray arrayWithObjects:NSLocalizedString(@"SegmentAllEventsButton", nil), NSLocalizedString(@"SegmentConfCallEventsButton", nil), nil];
+    UISegmentedControl *ctrl = [[UISegmentedControl alloc] initWithItems:segmentedItems];
+    ctrl.segmentedControlStyle = UISegmentedControlStyleBar;
+    ctrl.selectedSegmentIndex = _cmiEventCalendar.filterType;
+    
+    [ctrl addTarget:self
+             action:@selector(eventFilterChanged:)
+   forControlEvents:UIControlEventValueChanged];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:ctrl];
+    CGFloat margin = 10.0;
+    CGFloat width = self.navigationController.toolbar.frame.size.width - margin;
+    CGFloat height = self.navigationController.toolbar.frame.size.height - margin; 
+    ctrl.frame = CGRectMake(margin, margin, width, height);
+    ctrl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    NSArray *theToolbarItems = [NSArray arrayWithObjects:item, nil];
+    [self setToolbarItems:theToolbarItems];
+    
+}
+
 #pragma mark -
 #pragma mark View life-cycle
 
@@ -496,37 +532,8 @@ BOOL firstLoad = YES;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
                                                      name:EKEventStoreChangedNotification object:_cmiEventCalendar.eventStore];
 
-        self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;    
-        self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;    
-        self.view.autoresizesSubviews = true;
-        self.tableView.autoresizesSubviews = true;
-
-        //	Create an Add button 
-        UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:
-                                          UIBarButtonSystemItemAdd target:self action:@selector(addEvent:)];
-        self.navigationItem.rightBarButtonItem = addButtonItem;
-        
-        
-        NSArray *segmentedItems = [NSArray arrayWithObjects:NSLocalizedString(@"SegmentAllEventsButton", nil), NSLocalizedString(@"SegmentConfCallEventsButton", nil), nil];
-        UISegmentedControl *ctrl = [[UISegmentedControl alloc] initWithItems:segmentedItems];
-        ctrl.segmentedControlStyle = UISegmentedControlStyleBar;
-        ctrl.selectedSegmentIndex = _cmiEventCalendar.filterType;
-
-        [ctrl addTarget:self
-              action:@selector(eventFilterChanged:)
-              forControlEvents:UIControlEventValueChanged];
-        
-        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:ctrl];
-        CGFloat margin = 10.0;
-        CGFloat width = self.navigationController.toolbar.frame.size.width - margin;
-        CGFloat height = self.navigationController.toolbar.frame.size.height - margin; 
-        ctrl.frame = CGRectMake(margin, margin, width, height);
-        ctrl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        
-        NSArray *theToolbarItems = [NSArray arrayWithObjects:item, nil];
-        [self setToolbarItems:theToolbarItems];
+        [self initializeUI];
             
- //       [self reloadTableScrollToNow];        
         [self showStartDialog];
             
     }

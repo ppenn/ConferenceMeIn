@@ -52,44 +52,139 @@
 
     NSString* phoneNumberOnly = [EKEventParser getPhoneFromPhoneNumber:phoneNumber];
     NSString* code = [EKEventParser getCodeFromNumber:phoneNumber];
-    if (phoneNumberOnly == nil || code == nil) { 
-        int stopHere = 0;
+    if (phoneNumberOnly == nil || code == nil || 
+        ![expectedPhoneNumber isEqualToString:phoneNumberOnly] || ![expectedPhoneCode isEqualToString:code])  { 
+        NSLog(@"stopHere");
     }
     STAssertNotNil(phoneNumberOnly, @"Phone shouldn't be nil");
     STAssertNotNil(code, @"Code shouldn't be nil");
 
-    STAssertTrue([expectedPhoneNumber isEqualToString:phoneNumberOnly], @"Phone should be equal");
-    STAssertTrue([expectedPhoneCode isEqualToString:code], @"Code should be equal");
+    STAssertTrue([expectedPhoneNumber isEqualToString:phoneNumberOnly], [@"Phone should be equal :" stringByAppendingFormat:@"phoneText[ %@ ] expected#[ %@ ] got [ %@ ]", phoneText, expectedPhoneNumber, phoneNumberOnly]);
+    STAssertTrue([expectedPhoneCode isEqualToString:code], [@"Codes should be equal :" stringByAppendingFormat:@"phoneText[ %@ ] expected#[ %@ ] got [ %@ ]", phoneText, expectedPhoneCode, code]);
 }
 
 - (void)testInvitesShouldParse
 {
     NSString* fileContents;
+    NSError* error;
     
-    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/livemeeting.txt"];   
+    //NB: encoding seems to work differently depending on device vs simulator
+    //NSUTF8StringEncoding
     
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/att_connect.txt" encoding:NSASCIIStringEncoding error:&error];   
+    if (!fileContents) {
+        NSLog(@"%@", [error localizedDescription]);
+    }
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8888582144" expectedPhoneCode:@"4259370"];
+
+    
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/livemeeting.txt" encoding:NSASCIIStringEncoding error:nil];   
     [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"3123718"];
+
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/livemeeting2.txt" encoding:NSASCIIStringEncoding error:&error];   
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"2222683"];
+
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/livemeeting3.txt" encoding:NSASCIIStringEncoding error:nil];   
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"2222683"];
+
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/livemeeting4.txt" encoding:NSASCIIStringEncoding error:nil];       
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"7677379"];
+    
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/livemeeting5.txt" encoding:NSASCIIStringEncoding error:nil];       
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"3128783081" expectedPhoneCode:@"499626030"];
+    
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/code_as_phonenumber.txt" encoding:NSASCIIStringEncoding error:nil];   
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8663561046" expectedPhoneCode:@"7528210973"];
+    
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/gotomeeting_1.txt" encoding:NSASCIIStringEncoding error:nil];   
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8775684106" expectedPhoneCode:@"575876633"];
+    
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/gotomeeting_4.txt" encoding:NSASCIIStringEncoding error:nil];       
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8663422541" expectedPhoneCode:@"6738196610"];
+    
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/gotomeeting_3_intl.txt" encoding:NSASCIIStringEncoding error:nil];   
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8775684106" expectedPhoneCode:@"655784168"];
+    
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/gotomeeting_2_code_first.txt" encoding:NSASCIIStringEncoding error:nil];   
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8663422541" expectedPhoneCode:@"4155367256"];
+
+    
+}
+
+- (void)testPhoneNumbersShouldNotParse
+{
+    NSString* phoneText;
+    
+    phoneText = [EKEventParser parseEventText:@"1876038688 12345678"];    
+    STAssertTrue(phoneText == nil || [phoneText length] == 0, @"PhoneNumber should be nil");
+
+    phoneText = [EKEventParser parseEventText:@"877a6038688 12345678"];    
+    STAssertTrue(phoneText == nil || [phoneText length] == 0, @"PhoneNumber should be nil");
+
+    phoneText = [EKEventParser parseEventText:@"877789"];    
+    STAssertTrue(phoneText == nil || [phoneText length] == 0, @"PhoneNumber should be nil");
+
+    phoneText = [EKEventParser parseEventText:@"415513800 1"];    
+    STAssertTrue(phoneText == nil || [phoneText length] == 0, @"PhoneNumber should be nil");
+
+    phoneText = [EKEventParser parseEventText:@""];    
+    STAssertTrue(phoneText == nil || [phoneText length] == 0, @"PhoneNumber should be nil");
+
+    phoneText = [EKEventParser parseEventText:@" "];    
+    STAssertTrue(phoneText == nil || [phoneText length] == 0, @"PhoneNumber should be nil");
     
 }
 
 - (void)testPhoneNumbersShouldParse
 {
     NSString* phoneText;
+
+    phoneText = [EKEventParser parseEventText:@"8776038688"];
+    STAssertNotNil([EKEventParser getPhoneFromPhoneNumber:phoneText], @"Phone Text shouldn't be nil");
+    STAssertNil([EKEventParser getCodeFromNumber:phoneText], @"Code should be nil");
+
+    phoneText = [EKEventParser parseEventText:@"8776038688 12"];
+    STAssertNotNil([EKEventParser getPhoneFromPhoneNumber:phoneText], @"Phone Text shouldn't be nil");
+    STAssertNil([EKEventParser getCodeFromNumber:phoneText], @"Code should be nil");    
     
+    phoneText = [EKEventParser parseEventText:@"18776038688 12345678"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"12345678"];
+
+    phoneText = [EKEventParser parseEventText:@"8776038688 12345678"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"12345678"];
+
+    phoneText = [EKEventParser parseEventText:@"18776038688 #12345678"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"12345678"];
+
     phoneText = [EKEventParser parseEventText:@"Dial-in\
                    MeetingPlace Main Number 425-456-2500\
                    Toll Free Number 888-228-0484\
                    Meeting ID: 2690\
                    Password: 123456"];
-    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"4254562500" expectedPhoneCode:@"123456"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8882280484" expectedPhoneCode:@"123456"];
 
+    phoneText = [EKEventParser parseEventText:@"Dial-in\
+                 MeetingPlace Main Number 425-456-2500\
+                 united states Toll Free Number 888-228-0484\
+                 Meeting ID: 2690\
+                 Password: 123456"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8882280484" expectedPhoneCode:@"123456"];
+
+    phoneText = [EKEventParser parseEventText:@"Dial-in\
+                 MeetingPlace Main Number 425-456-2500\
+                 U.S. Toll Free Number 888-228-0484\
+                 Meeting ID: 2690\
+                 Password: 123456"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8882280484" expectedPhoneCode:@"123456"];
+    
+    
     phoneText = [EKEventParser parseEventText:@"18776038688 12345678 1234"];
-    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"18776038688" expectedPhoneCode:@"12345678"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"12345678"];
 
     phoneText = [EKEventParser parseEventText:@"1800 123 4567 xx 12345678"];
     [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8001234567" expectedPhoneCode:@"12345678"];
     
-    phoneText = [EKEventParser parseEventText:@"Conference Room - Aspen / Intercall: 877-603-8688 Partipant Code: 6450391 4155138001"];
+    phoneText = [EKEventParser parseEventText:@"Conference Room - Aspen / Intercall: 877-603-8688 Partipant Code: 6450391.4155138001"];
     [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"6450391"];
     
     phoneText = [EKEventParser parseEventText:@"Content of email below:->>>>  Toll-free dial-in number (U.S. and Canada): (877) 603-8688  Conference code: 6567159  -----Original Appointment-----  From:Angel Anderson [mailto:AAnderson@fcg"];
