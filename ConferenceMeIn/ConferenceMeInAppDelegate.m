@@ -1,4 +1,4 @@
-//
+    //
 //  ConferenceMeInAppDelegate.m
 //  ConferenceMeIn
 //
@@ -49,9 +49,6 @@ CMIMasterViewController* _cmiMasterViewController;
     @catch (NSException * e) {
         [CMIUtility LogError:e.reason];
          }
-    @finally {
-        // Insert any cleanup...
-    }    
 }
 
 
@@ -78,9 +75,7 @@ CMIMasterViewController* _cmiMasterViewController;
         self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
         self.window.rootViewController = self.navigationController;
         [self.window makeKeyAndVisible];
-        
-//        [NSException raise:@"Invalid foo value" format:@"foo of %d is invalid", 3];
-        
+                
         return YES;
     }
     @catch (NSException * e) {
@@ -111,9 +106,6 @@ CMIMasterViewController* _cmiMasterViewController;
     @catch (NSException * e) {
         [CMIUtility LogError:e.reason];
     }
-    @finally {
-        // Insert any cleanup...
-    }    
     
 }
 
