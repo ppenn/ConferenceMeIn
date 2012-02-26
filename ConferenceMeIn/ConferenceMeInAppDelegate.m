@@ -35,6 +35,8 @@ CMIMasterViewController* _cmiMasterViewController;
 {
     @try {
         [CMIUtility Log:[@"defaultsChanged() " stringByAppendingString:notif.name]];
+        if (_cmiMasterViewController == nil)    return;
+
         // Get the user defaults
 
         if (self.navigationController.visibleViewController == _cmiMasterViewController) {
@@ -70,7 +72,7 @@ CMIMasterViewController* _cmiMasterViewController;
                                                      name:NSUserDefaultsDidChangeNotification
                                                    object:nil];
 
-        CMIMasterViewController *masterViewController = [[CMIMasterViewController alloc] init];// bundle:nil];
+        CMIMasterViewController *masterViewController = [[CMIMasterViewController alloc] init];
         _cmiMasterViewController = masterViewController;
         self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
         self.window.rootViewController = self.navigationController;
@@ -141,19 +143,6 @@ CMIMasterViewController* _cmiMasterViewController;
     @finally {
         // Insert any cleanup...
     }    
-
-    @try {
-        [CMIUtility Log:@"()"];
-        
-    }
-    @catch (NSException * e) {
-        [CMIUtility LogError:e.reason];
-    }
-    @finally {
-        // Insert any cleanup...
-    }    
-    
-    
     
 }
 
