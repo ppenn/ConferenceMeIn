@@ -60,7 +60,8 @@
 - (void) parseEvent
 {
     [CMIUtility Log:@"parseEvent()"];
-
+    [CMIUtility LogEvent:_ekEvent];
+    
     if (_ekEvent.title != nil && [_ekEvent.title length] > 0) {
         _conferenceNumber = [EKEventParser parseEventText:_ekEvent.title];        
     }
@@ -76,7 +77,9 @@
         _conferenceNumber = [EKEventParser parseEventText:_ekEvent.notes];        
     }
     
-    
+    if (_conferenceNumber != nil && [_conferenceNumber length] > 0) {
+        [CMIUtility Log:[NSString stringWithFormat:@"Found Number [ %@ ]", _conferenceNumber]];        
+    }
 
 }
 

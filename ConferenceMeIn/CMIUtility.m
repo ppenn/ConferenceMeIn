@@ -26,6 +26,22 @@
     [alert show];    
 }
 
++ (void)LogEvent:(EKEvent*)event
+{
+    if (event == nil) {
+        NSLog(@"Event is nil!!");        
+        return;
+    }
+
+    NSLog(@"EventID [ %@ ]", event.UUID);
+
+    NSLog(@"Title [ %@ ]", (event.title == nil)? @"<nil>" : event.title);
+    NSLog(@"Location [ %@ ]", (event.location == nil)? @"<nil>" : event.location);
+    if ([CMIUtility environmentIsAtIOS5OrHigher] == YES) {
+        NSLog(@"Notes [ %@ ]", (event.notes == nil)? @"<nil>" : event.notes);
+    }    
+}
+
 + (BOOL)isSameDay:(NSDate*)date1 atDate2:(NSDate*)date2 {
     NSCalendar* calendar = [NSCalendar currentCalendar];
     

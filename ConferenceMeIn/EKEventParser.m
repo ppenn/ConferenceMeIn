@@ -14,8 +14,6 @@
 #define REGEX_CODE_SPECIFIC @"(\\spin|password|code)[\\s:\\)\\#]*\\d{3,12}[\\s-]?\\d{1,12}+[\\s-]?\\d{0,12}"
 #define REGEX_CODE_GENERIC @"\\d{4,12}"
 
-//#define REGEX_PHONE_NUMBER_FIRST @"1?(\\d{3}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{4})"
-
 #define REGEX_PHONE_NUMBER_FIRST @"(?<![\\d\\/])1?(\\d{3}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{4})(?!\\w)"
 
 #define REGEX_PHONE_NUMBER_COUNTRY_TOLLFREE @"(u\\.s\\.|united\\ss)[\\D]*[toll(\\-|\\s)?free\\D]*?(?=[18])"
@@ -235,6 +233,7 @@
 
     NSRange range = [EKEventParser tryToGetCountryTollFreePhone:eventText];
     if (range.location != NSNotFound) {
+        [CMIUtility Log:@"gotCountryTollFree"];
         return range;
     }
     else {

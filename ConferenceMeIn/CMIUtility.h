@@ -15,6 +15,8 @@
 
 + (void)Log:(NSString*)logMessage;
 + (void)LogError:(NSString*)logMessage;
++ (void)LogEvent:(EKEvent*)event;
+
 + (NSDate*) getOffsetDate:(NSDate*)day atOffsetDays:(NSInteger)offsetDays;
 + (NSDate*) getOffsetDateByHours:(NSDate*)date offsetHours:(NSInteger)offsetHours;
 + (NSDate*) getOffsetDateByMinutes:(NSDate*)date offsetMinutes:(NSInteger)offsetMinutes;
