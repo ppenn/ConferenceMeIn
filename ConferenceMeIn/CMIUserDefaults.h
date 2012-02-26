@@ -35,4 +35,8 @@
 - (void)loadDefaults;
 - (void)saveDefaults;
 
+- (BOOL)defaultsAreDifferent;
+
+@property BOOL defaultsDidChange;
+
 @end

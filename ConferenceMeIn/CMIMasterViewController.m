@@ -37,15 +37,24 @@ NSIndexPath* _indexPath;
 #pragma mark Table view delegate and data source methods
 
 - (void)tapTimerFired:(NSTimer *)aTimer{
-    //timer fired, there was a single tap on indexPath.row = tappedRow
-    NSInteger row = _tappedRow;
-    NSInteger section = _tappedSection;
-    if(_tapTimer != nil){
-        _tapCount = 0;
-        _tappedRow = -1;
-        _tappedSection = -1;
+    
+    @try {
+        [CMIUtility Log:@"tapTimerFired()"];
+
+        //timer fired, there was a single tap on indexPath.row = tappedRow
+        NSInteger row = _tappedRow;
+        NSInteger section = _tappedSection;
+        if(_tapTimer != nil){
+            _tapCount = 0;
+            _tappedRow = -1;
+            _tappedSection = -1;
+        }
+        [self showEventNatively:section row:row];
+    
     }
-    [self showEventNatively:section row:row];
+    @catch (NSException * e) {
+        [CMIUtility LogError:e.reason];
+    }
 }
 
 
@@ -239,7 +248,6 @@ NSIndexPath* _indexPath;
     //TODO rm
     _callProvider = _cmiUserDefaults.callProviderType;
     _cmiPhone.callProvider = _cmiUserDefaults.callProviderType;
-   // _cmiEventCalendar.fetchAllEvents = true;//TODO: _cmiUserDefaults.debugMode;
     _cmiEventCalendar.calendarType = _cmiUserDefaults.calendarType;
     _cmiEventCalendar.filterType = _cmiUserDefaults.filterType;
     _cmiEventCalendar.currentTimeframeStarts = _cmiUserDefaults.currentTimeframeStarts;
@@ -264,7 +272,6 @@ NSIndexPath* _indexPath;
 {
     [CMIUtility Log:@"reloadTable()"];
 
-//    [_cmiEventCalendar createCMIEvents];
     [_cmiEventCalendar createCMIDayEvents];
     
 	[self.tableView reloadData];    
@@ -456,6 +463,8 @@ NSIndexPath* _indexPath;
         _cmiEventCalendar = [[CMIEventCalendar alloc] init];
         // NB: you cannot read app settings before instantiating the calendar
         [self readAppSettings];
+        _cmiUserDefaults.defaultsDidChange = NO;
+
         // This will only do anything if we are in the Simulator
         [CMIUtility createTestEvents:_cmiEventCalendar.eventStore];
         
@@ -492,8 +501,7 @@ NSIndexPath* _indexPath;
         NSArray *theToolbarItems = [NSArray arrayWithObjects:item, nil];
         [self setToolbarItems:theToolbarItems];
             
-        [self reloadTableScrollToNow];
-        
+        [self reloadTableScrollToNow];        
         [self showStartDialog];
             
     }
@@ -535,8 +543,9 @@ NSIndexPath* _indexPath;
     [CMIUtility Log:@"viewDidAppear()"];
     
     @try {
-        if (_reloadDefaultsOnAppear == YES) {
+        if (_reloadDefaultsOnAppear == YES && _cmiUserDefaults.defaultsDidChange == YES) {
             _reloadDefaultsOnAppear = NO;
+            _cmiUserDefaults.defaultsDidChange = NO;
             [self reloadTableScrollToNow];
         }
         else {
