@@ -526,7 +526,7 @@ BOOL firstLoad = YES;
         NSArray *theToolbarItems = [NSArray arrayWithObjects:item, nil];
         [self setToolbarItems:theToolbarItems];
             
-        [self reloadTableScrollToNow];        
+ //       [self reloadTableScrollToNow];        
         [self showStartDialog];
             
     }
@@ -577,7 +577,6 @@ BOOL firstLoad = YES;
 - (void)viewDidLayoutSubviews
 {
     if ([self reloadDue] == YES || firstLoad == YES) {
-        firstLoad = NO;
         [self invokeMegaAnnoyingPopup];    
     }
 }
@@ -587,9 +586,11 @@ BOOL firstLoad = YES;
     [CMIUtility Log:@"viewDidAppear()"];
     
     @try {
-        if (_reloadDefaultsOnAppear == YES && _cmiUserDefaults.defaultsDidChange == YES) {
+        if ((_reloadDefaultsOnAppear == YES && _cmiUserDefaults.defaultsDidChange == YES) ||
+            firstLoad == YES) {
             _reloadDefaultsOnAppear = NO;
             _cmiUserDefaults.defaultsDidChange = NO;
+            firstLoad = NO;
             [self reloadTableScrollToNow];
         }
         else {
