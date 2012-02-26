@@ -33,8 +33,10 @@
         return;
     }
 
-    NSLog(@"EventID [ %@ ]", event.UUID);
-
+    if ([CMIUtility environmentIsAtIOS5OrHigher] == YES) {
+        NSLog(@"EventID [ %@ ]", event.UUID);
+    }
+    
     NSLog(@"Title [ %@ ]", (event.title == nil)? @"<nil>" : event.title);
     NSLog(@"Location [ %@ ]", (event.location == nil)? @"<nil>" : event.location);
     if ([CMIUtility environmentIsAtIOS5OrHigher] == YES) {

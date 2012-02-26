@@ -9,6 +9,7 @@
 #import "CMIMasterViewController.h"
 #import "CMIUtility.h"
 #import "CMIUserDefaults.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define ROW_HEIGHT 90
 
@@ -37,6 +38,22 @@ BOOL firstLoad = YES;
 
 #pragma mark -
 #pragma mark Table view delegate and data source methods
+
+- (void)refreshTimerFired:(NSTimer *)aTimer{
+    
+    @try {
+        [CMIUtility Log:@"refreshTimerFired()"];
+        
+        if(_refreshTimer != nil){
+            [self reloadTableScrollToNow];
+        }
+        _refreshTimer = nil;
+    }
+    @catch (NSException * e) {
+        [CMIUtility LogError:e.reason];
+    }
+}
+
 
 - (void)tapTimerFired:(NSTimer *)aTimer{
     
@@ -301,7 +318,13 @@ BOOL firstLoad = YES;
 
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]
                                           initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    
+
+    if([CMIUtility environmentIsAtIOS5OrHigher] == NO) {
+        indicator.layer.shadowColor = [UIColor grayColor].CGColor;
+        indicator.layer.shadowRadius = 1;
+        indicator.layer.shadowOpacity = 0.5;
+        indicator.layer.shadowOffset = CGSizeMake(0, 1);        
+    }
     indicator.center = CGPointMake(self.megaAlert.bounds.size.width / 2,
                                    self.megaAlert.bounds.size.height - 45);
     [indicator startAnimating];
@@ -581,25 +604,41 @@ BOOL firstLoad = YES;
 }
 
 
-- (void)viewDidLayoutSubviews
-{
-    if ([self reloadDue] == YES || firstLoad == YES) {
-        [self invokeMegaAnnoyingPopup];    
-    }
-}
+//- (void)viewDidLayoutSubviews
+//{
+//    [CMIUtility Log:@"viewDidLayoutSubviews()"];
+//    
+//    @try {
+//        if ([self reloadDue] == YES || firstLoad == YES) {
+//        }
+//    }
+//    @catch (NSException *e) {
+//        [CMIUtility LogError:e.reason];
+//    }
+//        
+//}
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [CMIUtility Log:@"viewDidAppear()"];
     
     @try {
-        if ((_reloadDefaultsOnAppear == YES && _cmiUserDefaults.defaultsDidChange == YES) ||
-            firstLoad == YES) {
+        if (firstLoad == YES ||
+            (_reloadDefaultsOnAppear == YES && _cmiUserDefaults.defaultsDidChange == YES)) {
             _reloadDefaultsOnAppear = NO;
             _cmiUserDefaults.defaultsDidChange = NO;
             firstLoad = NO;
-            [self reloadTableScrollToNow];
+            
+            [self invokeMegaAnnoyingPopup];    
+            _refreshTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(refreshTimerFired:) userInfo:nil repeats:NO];
+            
         }
+//        else if ((_reloadDefaultsOnAppear == YES && _cmiUserDefaults.defaultsDidChange == YES)) {
+//            _reloadDefaultsOnAppear = NO;
+//            _cmiUserDefaults.defaultsDidChange = NO;
+//            firstLoad = NO;
+//            [self reloadTableScrollToNow];
+//        }
         else {
             if (_indexPath != nil) {
                 [self.tableView deselectRowAtIndexPath:_indexPath animated:YES];        
