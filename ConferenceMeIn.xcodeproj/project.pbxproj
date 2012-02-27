@@ -17,6 +17,7 @@
 		A856305514E87A53006B24F8 /* CMIUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A856305414E87A52006B24F8 /* CMIUserDefaults.m */; };
 		A856305614E87A53006B24F8 /* CMIUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A856305414E87A52006B24F8 /* CMIUserDefaults.m */; };
 		A85FF3B614CEF90100F2CD1C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A85FF3B514CEF90100F2CD1C /* Settings.bundle */; };
+		A868D58A14F853A300DEBC17 /* att_connect.txt in Resources */ = {isa = PBXBuildFile; fileRef = A868D58914F853A300DEBC17 /* att_connect.txt */; };
 		A8AEA2FD14E2380500E6ADC6 /* CMIHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */; };
 		A8AEA2FE14E2380500E6ADC6 /* CMIHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */; };
 		A8B6321414E229440006E3A5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A8B6321314E229430006E3A5 /* Default.png */; };
@@ -89,6 +90,16 @@
 		A8EAB88F14DA4C90001294B4 /* bottomRowSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EAB88C14DA4C90001294B4 /* bottomRowSelected.png */; };
 		A8EAB89214DA4E82001294B4 /* topAndBottomRow.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EAB89114DA4E82001294B4 /* topAndBottomRow.png */; };
 		A8EAB89414DA51D9001294B4 /* middleRowSelected_red.png in Resources */ = {isa = PBXBuildFile; fileRef = A8EAB89314DA51D9001294B4 /* middleRowSelected_red.png */; };
+		A8F0178D14F58C3F0046E849 /* livemeeting.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8F0178C14F58C3F0046E849 /* livemeeting.txt */; };
+		A8F0179B14F681420046E849 /* code_as_phonenumber.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8F0179214F681420046E849 /* code_as_phonenumber.txt */; };
+		A8F0179C14F681420046E849 /* gotomeeting_2_code_first.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8F0179314F681420046E849 /* gotomeeting_2_code_first.txt */; };
+		A8F0179D14F681420046E849 /* gotomeeting_3_intl.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8F0179414F681420046E849 /* gotomeeting_3_intl.txt */; };
+		A8F0179E14F681420046E849 /* gotomeeting_4.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8F0179514F681420046E849 /* gotomeeting_4.txt */; };
+		A8F0179F14F681420046E849 /* gotomeeting_1.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8F0179614F681420046E849 /* gotomeeting_1.txt */; };
+		A8F017A014F681420046E849 /* livemeeting2.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8F0179714F681420046E849 /* livemeeting2.txt */; };
+		A8F017A114F681420046E849 /* livemeeting3.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8F0179814F681420046E849 /* livemeeting3.txt */; };
+		A8F017A214F681420046E849 /* livemeeting4.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8F0179914F681420046E849 /* livemeeting4.txt */; };
+		A8F017A314F681420046E849 /* livemeeting5.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8F0179A14F681420046E849 /* livemeeting5.txt */; };
 		A8F48F1E14F2F4F1004F9B2E /* CMIHelpIPhoneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8F48F1D14F2F4F1004F9B2E /* CMIHelpIPhoneView.xib */; };
 		A8F6211514E3630700B735AC /* middleRowSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = A8F6211414E3630700B735AC /* middleRowSelected.png */; };
 		A8F6211C14E368E900B735AC /* CMIUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6211B14E368E800B735AC /* CMIUtility.m */; };
@@ -116,6 +127,7 @@
 		A856305314E87A52006B24F8 /* CMIUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIUserDefaults.h; sourceTree = "<group>"; };
 		A856305414E87A52006B24F8 /* CMIUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIUserDefaults.m; sourceTree = "<group>"; };
 		A85FF3B514CEF90100F2CD1C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		A868D58914F853A300DEBC17 /* att_connect.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = att_connect.txt; path = test_invites/att_connect.txt; sourceTree = "<group>"; };
 		A8AEA2FB14E2380500E6ADC6 /* CMIHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIHelpViewController.h; sourceTree = "<group>"; };
 		A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIHelpViewController.m; sourceTree = "<group>"; };
 		A8B6321314E229430006E3A5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ConferenceMeIn/images/Default.png; sourceTree = "<group>"; };
@@ -200,6 +212,16 @@
 		A8EAB88C14DA4C90001294B4 /* bottomRowSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottomRowSelected.png; sourceTree = "<group>"; };
 		A8EAB89114DA4E82001294B4 /* topAndBottomRow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topAndBottomRow.png; sourceTree = "<group>"; };
 		A8EAB89314DA51D9001294B4 /* middleRowSelected_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = middleRowSelected_red.png; sourceTree = "<group>"; };
+		A8F0178C14F58C3F0046E849 /* livemeeting.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = livemeeting.txt; path = test_invites/livemeeting.txt; sourceTree = "<group>"; };
+		A8F0179214F681420046E849 /* code_as_phonenumber.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = code_as_phonenumber.txt; path = test_invites/code_as_phonenumber.txt; sourceTree = "<group>"; };
+		A8F0179314F681420046E849 /* gotomeeting_2_code_first.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = gotomeeting_2_code_first.txt; path = test_invites/gotomeeting_2_code_first.txt; sourceTree = "<group>"; };
+		A8F0179414F681420046E849 /* gotomeeting_3_intl.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = gotomeeting_3_intl.txt; path = test_invites/gotomeeting_3_intl.txt; sourceTree = "<group>"; };
+		A8F0179514F681420046E849 /* gotomeeting_4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = gotomeeting_4.txt; path = test_invites/gotomeeting_4.txt; sourceTree = "<group>"; };
+		A8F0179614F681420046E849 /* gotomeeting_1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = gotomeeting_1.txt; path = test_invites/gotomeeting_1.txt; sourceTree = "<group>"; };
+		A8F0179714F681420046E849 /* livemeeting2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = livemeeting2.txt; path = test_invites/livemeeting2.txt; sourceTree = "<group>"; };
+		A8F0179814F681420046E849 /* livemeeting3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = livemeeting3.txt; path = test_invites/livemeeting3.txt; sourceTree = "<group>"; };
+		A8F0179914F681420046E849 /* livemeeting4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = livemeeting4.txt; path = test_invites/livemeeting4.txt; sourceTree = "<group>"; };
+		A8F0179A14F681420046E849 /* livemeeting5.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = livemeeting5.txt; path = test_invites/livemeeting5.txt; sourceTree = "<group>"; };
 		A8F48F1D14F2F4F1004F9B2E /* CMIHelpIPhoneView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CMIHelpIPhoneView.xib; sourceTree = "<group>"; };
 		A8F6211414E3630700B735AC /* middleRowSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = middleRowSelected.png; path = ConferenceMeIn/images/middleRowSelected.png; sourceTree = "<group>"; };
 		A8F6211A14E368E800B735AC /* CMIUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIUtility.h; sourceTree = "<group>"; };
@@ -450,6 +472,7 @@
 		A8E5253414CA0EC800797C16 /* ConferenceMeInTests */ = {
 			isa = PBXGroup;
 			children = (
+				A8F0178B14F58C080046E849 /* test_invites */,
 				A8E1D70E14D09D7A00E5A877 /* CMIEventTests.h */,
 				A8E1D70F14D09D7A00E5A877 /* CMIEventTests.m */,
 				A8E1D73B14D2718900E5A877 /* CMIEventSystemTests.h */,
@@ -470,6 +493,24 @@
 				A8E5253714CA0EC800797C16 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A8F0178B14F58C080046E849 /* test_invites */ = {
+			isa = PBXGroup;
+			children = (
+				A868D58914F853A300DEBC17 /* att_connect.txt */,
+				A8F0179214F681420046E849 /* code_as_phonenumber.txt */,
+				A8F0179314F681420046E849 /* gotomeeting_2_code_first.txt */,
+				A8F0179414F681420046E849 /* gotomeeting_3_intl.txt */,
+				A8F0179514F681420046E849 /* gotomeeting_4.txt */,
+				A8F0179614F681420046E849 /* gotomeeting_1.txt */,
+				A8F0179714F681420046E849 /* livemeeting2.txt */,
+				A8F0179814F681420046E849 /* livemeeting3.txt */,
+				A8F0179914F681420046E849 /* livemeeting4.txt */,
+				A8F0179A14F681420046E849 /* livemeeting5.txt */,
+				A8F0178C14F58C3F0046E849 /* livemeeting.txt */,
+			);
+			name = test_invites;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -564,6 +605,7 @@
 				A8CFD0DE14EF360C00EA8616 /* IASKPSToggleSwitchSpecifierViewCell.xib in Resources */,
 				A8CFD0E014EF360C00EA8616 /* IASKSpecifierValuesView.xib in Resources */,
 				A8F48F1E14F2F4F1004F9B2E /* CMIHelpIPhoneView.xib in Resources */,
+				A8F0178D14F58C3F0046E849 /* livemeeting.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -581,6 +623,16 @@
 				A8CFD0DD14EF360C00EA8616 /* IASKPSTextFieldSpecifierViewCell.xib in Resources */,
 				A8CFD0DF14EF360C00EA8616 /* IASKPSToggleSwitchSpecifierViewCell.xib in Resources */,
 				A8CFD0E114EF360C00EA8616 /* IASKSpecifierValuesView.xib in Resources */,
+				A8F0179B14F681420046E849 /* code_as_phonenumber.txt in Resources */,
+				A8F0179C14F681420046E849 /* gotomeeting_2_code_first.txt in Resources */,
+				A8F0179D14F681420046E849 /* gotomeeting_3_intl.txt in Resources */,
+				A8F0179E14F681420046E849 /* gotomeeting_4.txt in Resources */,
+				A8F0179F14F681420046E849 /* gotomeeting_1.txt in Resources */,
+				A8F017A014F681420046E849 /* livemeeting2.txt in Resources */,
+				A8F017A114F681420046E849 /* livemeeting3.txt in Resources */,
+				A8F017A214F681420046E849 /* livemeeting4.txt in Resources */,
+				A8F017A314F681420046E849 /* livemeeting5.txt in Resources */,
+				A868D58A14F853A300DEBC17 /* att_connect.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -703,7 +755,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: philip penn (SPPMQBL3XX)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -723,7 +775,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -753,7 +805,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: philip penn (SPPMQBL3XX)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -767,7 +819,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -778,14 +830,14 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: philip penn (SPPMQBL3XX)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -798,7 +850,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -811,9 +863,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0C30BD6C-6375-4877-95B9-E4928AE4E722";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
