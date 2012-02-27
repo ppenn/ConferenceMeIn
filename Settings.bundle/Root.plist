@@ -47,7 +47,7 @@
 				<string>Next 24 hours</string>
 				<string>Today</string>
 				<string>Today &amp; Tomorrow</string>
-				<string>Debug (since 1/1/2012)</string>
+<!--				<string>Debug (since 1/1/2012)</string> -->
 			</array>
 			<key>Values</key>
 			<array>
@@ -55,7 +55,7 @@
 				<integer>1</integer>
 				<integer>2</integer>
 				<integer>3</integer>
-				<integer>4</integer>
+<!--				<integer>4</integer> -->
 			</array>
 		</dict>
 		<dict>
@@ -69,6 +69,7 @@
 			<integer>5</integer>
 			<key>Titles</key>
 			<array>
+				<string>Never</string>
 				<string>Current</string>
 				<string>5 minutes before</string>
 				<string>15 minutes before</string>
@@ -77,22 +78,13 @@
 			</array>
 			<key>Values</key>
 			<array>
-				<integer>0</integer>
+				<integer>-1</integer>
+				<string>0</string>
 				<integer>5</integer>
 				<integer>10</integer>
 				<integer>30</integer>
 				<integer>60</integer>
 			</array>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>HighlightCurrentEvents</string>
-			<key>Key</key>
-			<string>highlightCurrentEventsKey</string>
-			<key>DefaultValue</key>
-			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
@@ -120,15 +112,15 @@
 			<key>Title</key>
 			<string>User</string>
 		</dict>
-        <dict>
-            <key>Type</key>
-            <string>PSChildPaneSpecifier</string>
-            <key>Title</key>
-            <string>My Conference Number</string>
-            <key>File</key>
-            <string>ChildCMINumber</string>
-        </dict>		
-        <dict>
+		<dict>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+			<key>Title</key>
+			<string>My Conference Number</string>
+			<key>File</key>
+			<string>ChildCMINumber</string>
+		</dict>
+		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>

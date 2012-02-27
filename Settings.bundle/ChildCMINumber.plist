@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>StringsTable</key>
+	<string>ChildCMINumber</string>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Title</key>
+			<string>My Conference Number</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>Key</key>
+			<string>myConfPhoneNumberKey</string>
+			<key>Title</key>
+			<string>Phone Number</string>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>KeyboardType</key>
+			<string>NumberPad</string>
+            <key>PlaceHolder</key> 
+            <string>Enter Number</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>Key</key>
+			<string>myConfConfNumberKey</string>
+			<key>Title</key>
+			<string>Conference Number</string>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>KeyboardType</key>
+			<string>NumberPad</string>
+            <key>PlaceHolder</key> 
+            <string>Enter Number</string>
+		</dict>
+		<dict>
+			<key>Title</key>
+			<string>Leader Information</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+            <key>FooterText</key>
+            <string>Leader# may not work with all providers (e.g. Phone)</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<string>#,*,</string>
+			<key>Key</key>
+			<string>myConfLeaderSeparatorKey</string>
+			<key>Title</key>
+			<string>Leader Separator</string>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+		</dict>
+		<dict>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>Key</key>
+			<string>myConfLeaderPINKey</string>
+			<key>Title</key>
+			<string>Leader Number</string>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>IsSecure</key>
+			<string>Yes</string>
+		</dict>
+	</array>
+</dict>
+</plist>
