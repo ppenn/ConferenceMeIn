@@ -18,6 +18,7 @@
     
 }
 
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
@@ -25,8 +26,16 @@
 	self.title = NSLocalizedString(@"HelpViewTitle", @"");
 
     self.contentTextView.text = NSLocalizedString(@"HelpMessage", nil);
+    if ([self.view isKindOfClass:[UIScrollView class]]) {
+        UIScrollView* scrollView = (UIScrollView*)self.view;  
+        [scrollView setContentSize:self.view.frame.size];
+        scrollView.clipsToBounds = YES;
+
+    }
+
 }
 
+    
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];

@@ -18,7 +18,7 @@
 #import "CMIMyConferenceNumber.h"
 #import "CMIPhone.h"
 
-@interface CMIMasterViewController : UITableViewController <UIActionSheetDelegate, EKEventEditViewDelegate, IASKSettingsDelegate>
+@interface CMIMasterViewController : UITableViewController <UIActionSheetDelegate, EKEventEditViewDelegate, IASKSettingsDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) UIAlertView* megaAlert;
 @property (strong, nonatomic) CMIEKEventViewController *detailViewController;

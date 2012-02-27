@@ -9,7 +9,7 @@
 #import "CMIUtility.h"
 
 //TOGGLE THIS BETWEEN 0 (release) and 1 (debug)
-#define CMI_DEBUG 0
+#define CMI_DEBUG 1
 
 @implementation CMIUtility
 

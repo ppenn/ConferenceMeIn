@@ -189,6 +189,7 @@ BOOL firstLoad = YES;
 
 }
 
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [CMIUtility Log:@"didSelectRowAtIndexPath()"];
@@ -528,7 +529,43 @@ BOOL firstLoad = YES;
     
     NSArray *theToolbarItems = [NSArray arrayWithObjects:item, nil];
     [self setToolbarItems:theToolbarItems];
-    
+
+    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc] 
+                                          initWithTarget:self action:@selector(handleLongPress:)];
+    lpgr.minimumPressDuration = 2.0; //seconds
+    lpgr.delegate = self;
+    [self.tableView addGestureRecognizer:lpgr];    
+}
+
+-(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
+{
+    @try {
+        [CMIUtility Log:@"handleLongPress()"];
+        CGPoint p = [gestureRecognizer locationInView:self.tableView];
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+        if (indexPath == nil) {
+            [CMIUtility Log:@"long press on table view but not on a row"];
+        }
+        else {
+//            [CMIUtility Log:@"long press on table view at row %d", indexPath.row];
+            CMIEvent* cmiEvent = [_cmiEventCalendar getCMIEventByIndexPath:indexPath.section eventIndex:indexPath.row];
+            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+            _tappedRow = -1;
+            _tappedSection = -1;
+            if ([cmiEvent hasConferenceNumber] == true) {
+                [_cmiPhone dial:cmiEvent.conferenceNumber];
+            }
+            else {
+                [self showEventNatively:indexPath.section row:indexPath.row];
+            }
+            
+        }
+    }
+    @catch (NSException *e) {
+        [CMIUtility LogError:e.reason];
+    }
+
 }
 
 #pragma mark -
