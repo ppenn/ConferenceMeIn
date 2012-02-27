@@ -8,12 +8,14 @@
 
 #import "CMIUtility.h"
 
+//TOGGLE THIS BETWEEN 0 (release) and 1 (debug)
+#define CMI_DEBUG 0
 
 @implementation CMIUtility
 
 + (void)Log:(NSString*)logMessage
 {
-#if 1
+#if CMI_DEBUG
     NSLog(@"%@", logMessage);
 #endif
 }
@@ -28,6 +30,8 @@
 
 + (void)LogEvent:(EKEvent*)event
 {
+#if CMI_DEBUG
+
     if (event == nil) {
         NSLog(@"Event is nil!!");        
         return;
@@ -42,6 +46,7 @@
     if ([CMIUtility environmentIsAtIOS5OrHigher] == YES) {
         NSLog(@"Notes [ %@ ]", (event.notes == nil)? @"<nil>" : event.notes);
     }    
+#endif
 }
 
 + (BOOL)isSameDay:(NSDate*)date1 atDate2:(NSDate*)date2 {

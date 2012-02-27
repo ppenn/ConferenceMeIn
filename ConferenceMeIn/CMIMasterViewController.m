@@ -48,6 +48,8 @@ BOOL firstLoad = YES;
             [self reloadTableScrollToNow];
         }
         _refreshTimer = nil;
+
+        [self showStartDialog];        
     }
     @catch (NSException * e) {
         [CMIUtility LogError:e.reason];
@@ -480,7 +482,11 @@ BOOL firstLoad = YES;
         if (selectionIndex != _cmiEventCalendar.filterType) {    
             _cmiUserDefaults.filterType = selectionIndex;
         
+            [self invokeMegaAnnoyingPopup]; 
+            // Next line is equivalent of old VB6's DoEvents :)
+            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate date]];
             [self reloadTableScrollToNow];
+            [self dismissMegaAnnoyingPopup];    
         }    
     }
     @catch (NSException *e) {
@@ -556,9 +562,7 @@ BOOL firstLoad = YES;
                                                      name:EKEventStoreChangedNotification object:_cmiEventCalendar.eventStore];
 
         [self initializeUI];
-            
-        [self showStartDialog];
-            
+                        
     }
     @catch (NSException *e) {
         [CMIUtility LogError:e.reason];
