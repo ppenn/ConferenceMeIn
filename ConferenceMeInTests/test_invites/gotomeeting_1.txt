@@ -1,0 +1,78 @@
+When: Tuesday, February 07, 2012 9:30 AM-4:00 PM (UTC-08:00) Pacific Time (US & Canada).
+Where: Lokahi - 7th Landmark
+ 
+Note: The GMT offset above does not reflect daylight saving time adjustments.
+ 
+*~*~*~*~*~*~*~*~*~*
+ 
+================= Goto Meeting details  =============
+1.  https://www1.gotomeeting.com/join/575876633
+ 
+2.  Use your microphone and speakers (VoIP) - a headset is recommended.  Or, call in using your telephone.
+Israel (toll-free): 1 809 212 875
+United States: +1 (914) 339-0025
+United States (toll-free): 1 877 568 4106
+ 
+Access Code: 575-876-633
+Audio PIN: Shown after joining the meeting  <make sure you enter the Audio PIN or you will be automatically muted>
+ 
+================== Schedule =================
+Please join the Platform Sprint Reviews GUS Chatter group for up to the minute schedule and meeting information:
+https://gus.soma.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F9B000000000bC
+ 
+Start   Team
+***** MORNING STATUS REVIEWS *****
+9:30    Data Residency Option (DRO)
+9:35    Core Security
+9:40    Authentication & Identity
+9:45    Tech Docs
+9:50    BREAK
+**** DEMO ONLY - Developer Experience ****
+10:00   Identity
+10:10   Data Residency Option (DRO) Ð
+10:15   Core Security
+10:20   Connect and Metadata API
+10:35   Admin  (Developer assisted Admin Tools)
+10:50   ISVforce Signup (Heroku & db.com)
+10:55   Commerce Platform
+11:05   ISVforce Core
+11:10   Raiden
+11:20   Declarative App Builder
+11:30   Lumen
+11:40   Tech docs
+**** DEMO ONLY - Admin Experience ****
+11:45   Personal Apps
+11:50   Visual Workflow
+12:00   Sharing
+12:05   LUNCH
+***** AFTERNOON STATUS REVIEWS *****
+1:00    Process Super Engine
+1:05    Process Designer
+1:10    Personal Apps
+1:15    Platform Experience
+1:20    DAB
+1:25    Database.com Product
+1:30    Globalization
+1:35    Custom Schema
+1:40    Siteforce: Bells
+1:45    Siteforce: Whistles
+1:50    Performane Engineering
+2:05    Apex Code
+2:10    Platform Dev Tools
+2:15    App Container
+2:20    ISVforce: Services
+2:25    ISVforce: Core
+2:30    ISVforce: Sign-up
+2:35    L&P
+2:40    Commerce Platform: Services
+2:45    BREAK
+2:50    API
+2:55    Metadata
+3:00    Connect
+3:05    Raiden
+3:10    Sandbox
+3:15    Snapshots
+3:20    Secure Data Sharing
+3:25    Sharing
+3:30    Administration
+3:35    Retrospective

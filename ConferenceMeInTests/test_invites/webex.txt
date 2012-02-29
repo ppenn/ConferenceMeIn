@@ -1,0 +1,9 @@
+﻿WebEx: URL (VOIP enabled)
+Meeting Number: *some number*
+Meeting Password: optional password.
+
+Teleconference Participant Code: 123 456 789
+Teleconference bridge number in USA: 1-877-561-6828 or (972) 995 7777
+Teleconference bridge numbers for other countries please visit: http://www.ticonferencing.com/globalaccess/
+
+We invite you to present in a future session – please suggest your topics at: http://www.omappedia.org/wiki/Tutorial_Hour_Topics
