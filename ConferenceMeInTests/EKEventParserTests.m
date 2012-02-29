@@ -77,6 +77,18 @@
     }
     [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8888582144" expectedPhoneCode:@"4259370"];
 
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/lotuslive.txt" encoding:NSASCIIStringEncoding error:nil];   
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8773660711" expectedPhoneCode:@"54466542"];
+
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/webex.txt" encoding:NSASCIIStringEncoding error:nil];   
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8775616828" expectedPhoneCode:@"123456789"];
+
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/webex2.txt" encoding:NSASCIIStringEncoding error:nil];   
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8776693239" expectedPhoneCode:@"929759712"];
+
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/verizon.txt" encoding:NSASCIIStringEncoding error:nil];   
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"5174662084" expectedPhoneCode:@"8711113"];
+    
     
     fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/livemeeting.txt" encoding:NSASCIIStringEncoding error:nil];   
     [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"3123718"];
