@@ -14,19 +14,24 @@
 "SegmentAllEventsButton" = "All Events";
 "SegmentConfCallEventsButton" = "Conf Call Events";
 "DateFormat" = "h:mm a";
-"MenuButtonTitle" = "Menu";
+"MenuButtonTitle" = "My #";
+"MenuSheetTitle" = "My Conference #";
 "HelpButtonTitle" = "Help";
 "HelpViewTitle" = "Help";
 "SettingsTitle" = "Settings";
 "ConferenceNumberFormat" = " Conference Number: %@ Code: %@";
-"CallMyConfNumTitle" = "Call My Conference #";
-"EmailMyConfNumTitle" = "Email My Conference #";
+"CallMyConfNumTitle" = "Dial";
+"EmailMyConfNumTitle" = "Email";
+"AddToContactTitle" = "Add To Contact";
+"OpenContactTitle" = "Import From Contact";
+"SettingsButtonTitle" = "Edit";
 "IntroMessage" = "Double-tap or tap-and-hold calendar event to dial number directly.\r\nSingle-tap event to see  details and dial number";
 "HelpMessage" = "This application works with your iPhone calendar events, enabling you to quickly call a conference number without remembering the code.\n\rDouble-tap or tap-and-hold calendar event to dial conference number directly.\r\n\r\nSingle-tap calendar event to see event details and be prompted to dial conference number.\n\rUse Menu > Settings to set up your own conference number, which will be used in the location section of a new event if you add it from the + button.";
 "AddEventMessage" = "You have not entered your own conference number, which is included in this event. Would you like to set it up now?";
-"SettingsButtonLabel" = "Settings";
 "NoEventsMessage" = "<No calendar events to show for this day>";
-"WarnInvalidPhoneNumberMessage" = "Invalid or Incomplete Conference Phone Number\r\nPlease Review Your Conference Number in Settings";
+"WarnInvalidPhoneNumberTitle" = "Incomplete or Invalid Conference #";
+"WarnInvalidPhoneNumberQuestion" = "Would you like to set your conference #?";
+"EnterInSettingsTitle" = "Enter in Settings";
 "EmailSubject" = "Conference%20Call%20Details";
 
 
@@ -36,7 +41,7 @@
 "ContinueButtonTitle" = "Continue";
 "ConfDetailsNumberPlaceholder" = "Conf Details #";
 "NoPhoneNumberAbbreviated" = "No Phone#";
-"AddPhoneNumberQuestion" = "No Phone number found for event\n\rWould you like to add one?";
+"AddPhoneNumberQuestion" = "To add phone #, edit the event";
 "NoPhoneNumberFoundForEvent" = "No Phone number found for event";
 "CancelButtonLabel" = "Cancel";
 "AddNumberButtonTitle" = "Add Number";

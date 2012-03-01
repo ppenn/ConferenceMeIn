@@ -18,6 +18,16 @@
 #import "CMIMyConferenceNumber.h"
 #import "CMIPhone.h"
 
+
+typedef enum menuActionButtons
+{
+    menuActionDial = 0,
+    menuActionEmail,
+    menuActionAddToContacts,
+    menuActionSettings
+}menuActionButtons;
+
+
 @interface CMIMasterViewController : UITableViewController <UIActionSheetDelegate, EKEventEditViewDelegate, IASKSettingsDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) UIAlertView* megaAlert;

@@ -26,7 +26,7 @@ NSTimer* _refreshTimer;
 callProviders _callProvider;
 NSIndexPath* _indexPath;
 BOOL firstLoad = YES;
-BOOL _settingsRequestedForEmail = NO;
+NSInteger _actionSheetChoice = -1;
 
 @implementation CMIMasterViewController
 
@@ -379,10 +379,9 @@ BOOL _settingsRequestedForEmail = NO;
     @try {
         [CMIUtility Log:@"menuAction()"];
         
-        // open a dialog with just an OK button
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"MenuSheetTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"CallMyConfNumTitle",@""), NSLocalizedString(@"EmailMyConfNumTitle",@""), NSLocalizedString(@"SettingsTitle", @""), NSLocalizedString(@"HelpButtonTitle",@""),nil];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"MenuSheetTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"CallMyConfNumTitle",@""), NSLocalizedString(@"EmailMyConfNumTitle",@""), NSLocalizedString(@"AddToContactTitle", @""), NSLocalizedString(@"SettingsButtonTitle",@""),nil];
         actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-        actionSheet.tag = 0;
+        actionSheet.tag = ACTIONSHEET_MENU;
         [actionSheet showFromToolbar:self.navigationController.toolbar];	// show from our table view (pops up in the middle of the table)
     }
     @catch (NSException *e) {
@@ -1008,7 +1007,7 @@ BOOL _settingsRequestedForEmail = NO;
     if ([self.appSettingsViewController.file isEqualToString:@"ChildCMINumber"]) {
         _appSettingsViewController = nil;
     }
-    self.appSettingsViewController.file = @"Root";
+    self.appSettingsViewController.file = @"ChildCMINumber"; // @"Root" would be the whole lot...
     self.appSettingsViewController.showDoneButton = YES;
     UINavigationController *aNavController = [[UINavigationController alloc] initWithRootViewController:self.appSettingsViewController];
     [self presentModalViewController:aNavController animated:YES];
@@ -1019,17 +1018,11 @@ BOOL _settingsRequestedForEmail = NO;
 {
     [CMIUtility Log:@"warnPhoneNumberNotInSettings()"];
 
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"ConferenceMeIn" message:NSLocalizedString(@"WarnInvalidPhoneNumberMessage", @"")                                                       delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alert show];
-    
-    if ([self.appSettingsViewController.file isEqualToString:@"ChildCMINumber"]) {
-        _appSettingsViewController = nil;
-    }
-    self.appSettingsViewController.file = @"ChildCMINumber";
-    self.appSettingsViewController.showDoneButton = YES;
-    UINavigationController *aNavController = [[UINavigationController alloc] initWithRootViewController:self.appSettingsViewController];
-    [self presentModalViewController:aNavController animated:YES];
-    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"WarnInvalidPhoneNumberTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"EnterInSettingsTitle",@""),nil];
+    actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+    actionSheet.tag = ACTIONSHEET_SET_CONF_NUM;
+    [actionSheet showFromToolbar:self.navigationController.toolbar];	// show from our table view (pops up in the middle of the table)
+        
 }
 
 - (void) callMyNumber
@@ -1037,7 +1030,6 @@ BOOL _settingsRequestedForEmail = NO;
     [CMIUtility Log:@"callMyNumber()"];
 
     if(_cmiMyConferenceNumber.isValid == FALSE) {
-        _settingsRequestedForEmail = NO;
         [self warnPhoneNumberNotInSettings];
     }
     else {
@@ -1063,12 +1055,61 @@ BOOL _settingsRequestedForEmail = NO;
     [CMIUtility Log:@"emailMyConferenceDetails()"];
     
     if(_cmiMyConferenceNumber.isValid == FALSE) {
-        _settingsRequestedForEmail = YES;
         [self warnPhoneNumberNotInSettings];
     }
     else {
         // Email the number...
         [self email];
+    }
+}
+
+- (void)handleSetNumberActionSheetClick
+{
+    [CMIUtility Log:@"handleSetNumberActionSheetClick()"];
+    UINavigationController *aNavController;
+    
+    // the user clicked one of the OK/Cancel buttons
+    switch (_actionSheetChoice) {
+        case 0:
+            if ([self.appSettingsViewController.file isEqualToString:@"ChildCMINumber"]) {
+                _appSettingsViewController = nil;
+            }
+            self.appSettingsViewController.file = @"ChildCMINumber";
+            self.appSettingsViewController.showDoneButton = YES;
+            aNavController = [[UINavigationController alloc]  initWithRootViewController:self.appSettingsViewController];
+            [self presentModalViewController:aNavController animated:YES];
+            break;
+        default:
+            [CMIUtility Log:@"Cancel"];
+            break;
+    }
+}
+
+- (void)handleMainActionSheetClick
+{
+    [CMIUtility Log:@"handleMainActionSheetClick()"];
+    
+    // the user clicked one of the OK/Cancel buttons
+    switch (_actionSheetChoice) {
+        case menuActionDial:
+            [CMIUtility Log:@"Call My Number"];
+            [self callMyNumber];
+            break;
+        case menuActionEmail:
+            [CMIUtility Log:@"Email My Number"];
+            [self emailMyConferenceDetails];
+            break;
+        case menuActionAddToContacts:
+            [CMIUtility Log:@"Add To Contacts"];
+            [self showHelpDialog];
+            break;
+        case menuActionSettings:
+            [CMIUtility Log:@"Settings"];
+            [self showSettingsDialog];
+            break;
+        default:
+            [CMIUtility Log:@"Cancel"];
+            break;
     }
 }
 
@@ -1081,29 +1122,16 @@ BOOL _settingsRequestedForEmail = NO;
     
     @try {
         [CMIUtility Log:@"clickedButtonAtIndex()"];
+        
+        _actionSheetChoice = buttonIndex;
 
-        // the user clicked one of the OK/Cancel buttons
-        switch (buttonIndex) {
-            case 0:
-                [CMIUtility Log:@"Call My Number"];
-                [self callMyNumber];
-                break;
-            case 1:
-                [CMIUtility Log:@"Email My Number"];
-                [self emailMyConferenceDetails];
-                break;
-            case 2:
-                [CMIUtility Log:@"Settings"];
-                [self showSettingsDialog];
-                break;
-            case 3:
-                [CMIUtility Log:@"Help"];
-                [self showHelpDialog];
-                break;
-            default:
-                [CMIUtility Log:@"Cancel"];
-                break;
+        if (actionSheet.tag == ACTIONSHEET_MENU) {
+            [self handleMainActionSheetClick];
         }
+        else { // set number
+            [self handleSetNumberActionSheetClick];
+        }
+
     }
     @catch (NSException * e) {
         [CMIUtility LogError:e.reason];
@@ -1124,14 +1152,22 @@ BOOL _settingsRequestedForEmail = NO;
         [_cmiUserDefaults loadDefaults];
         [self readAppSettings];
 
-//TODO: This may come back from the Call My Number or Email My Number
+        // Was this invoked indirectly (because the user's # was not set)?        
         if([sender.file isEqualToString:@"ChildCMINumber"] && _cmiMyConferenceNumber.isValid) {
-            if (_settingsRequestedForEmail == NO) {
-                // Call the number...
-                [_cmiPhone dialConferenceNumberWithConfirmation:_cmiMyConferenceNumber view:self.tableView];
-            }
-            else {
-                [self email];
+            switch (_actionSheetChoice) {
+                case menuActionDial:
+                    [_cmiPhone dialConferenceNumberWithConfirmation:_cmiMyConferenceNumber view:self.tableView];
+                    break;
+                case menuActionEmail:
+                    [self email];
+                    break;
+                case menuActionAddToContacts:
+                    break;
+                case menuActionSettings:
+                    // Do nothing, user just chose to change it themselves
+                    break;
+                default:
+                    break;
             }
         }    
 
