@@ -13,6 +13,9 @@
 
 #define ROW_HEIGHT 90
 
+#define ACTIONSHEET_MENU 0
+#define ACTIONSHEET_SET_CONF_NUM 1
+
 static UIImage *_phoneImage;
 NSInteger _tapCount = 0;
 NSInteger _tappedRow = 0;
@@ -377,8 +380,9 @@ BOOL _settingsRequestedForEmail = NO;
         [CMIUtility Log:@"menuAction()"];
         
         // open a dialog with just an OK button
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"MenuButtonTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"CallMyConfNumTitle",@""), NSLocalizedString(@"EmailMyConfNumTitle",@""), NSLocalizedString(@"SettingsTitle", @""), NSLocalizedString(@"HelpButtonTitle",@""),nil];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"MenuSheetTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"CallMyConfNumTitle",@""), NSLocalizedString(@"EmailMyConfNumTitle",@""), NSLocalizedString(@"SettingsTitle", @""), NSLocalizedString(@"HelpButtonTitle",@""),nil];
         actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+        actionSheet.tag = 0;
         [actionSheet showFromToolbar:self.navigationController.toolbar];	// show from our table view (pops up in the middle of the table)
     }
     @catch (NSException *e) {

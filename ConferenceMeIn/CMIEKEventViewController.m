@@ -16,6 +16,7 @@
 #define ALERT_CONFIRM_DIAL 2
 
 BOOL _supportsNotes = false;
+NSTimer* myTimer;
 
 @implementation CMIEKEventViewController
 
@@ -23,7 +24,7 @@ BOOL _supportsNotes = false;
 @synthesize cmiPhone = _cmiPhone;
 @synthesize eventStore = _eventStore;
 @synthesize hasDisplayedPopup = _hasDisplayedPopup;
-
+@synthesize megaAlert = _megaAlert;
 
 - (void)viewDidLoad
 {
@@ -46,6 +47,13 @@ BOOL _supportsNotes = false;
     }
 }
 
+-(void)dismissMegaAnnoyingPopup:(NSTimer*) t
+{
+    if (self.megaAlert != nil) {
+        [self.megaAlert dismissWithClickedButtonIndex:0 animated:YES];
+        self.megaAlert = nil;
+    }
+}
 
 - (void)tryToDial
 {
@@ -54,16 +62,25 @@ BOOL _supportsNotes = false;
     UIAlertView* alert = nil;
     
     if (_cmiEvent.hasConferenceNumber == false) {
+        self.megaAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NoPhoneNumberAbbreviated", nil)
+                                                    message:NSLocalizedString(@"AddPhoneNumberQuestion", nil) delegate:self cancelButtonTitle:nil
+                                          otherButtonTitles: nil];
         
-        if ([CMIUtility environmentIsAtIOS5OrHigher] == YES) {
-        _supportsNotes = YES;
-        alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NoPhoneNumberAbbreviated", nil) message:NSLocalizedString(@"AddPhoneNumberQuestion", nil) 
-                                          delegate:self cancelButtonTitle:NSLocalizedString(@"CancelButtonLabel", nil) otherButtonTitles: NSLocalizedString(@"AddNumberButtonTitle", nil), nil];
-        }
-        else {
-            alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NoPhoneNumberAbbreviated", nil) message:NSLocalizedString(@"NoPhoneNumberFoundForEvent", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"DismissButtonLabel", nil) otherButtonTitles: nil];            
-        }
-        alert.tag = ALERT_NO_NUMBER_FOUND;
+        self.megaAlert.tag = ALERT_NO_NUMBER_FOUND;
+        self.megaAlert.alpha = 0.5;
+        [self.megaAlert show];
+        myTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self
+                                                          selector:@selector(dismissMegaAnnoyingPopup:) userInfo:nil repeats:NO];        
+//TODO: Test        
+//        if ([CMIUtility environmentIsAtIOS5OrHigher] == YES) {
+//        _supportsNotes = YES;
+//        alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NoPhoneNumberAbbreviated", nil) message:NSLocalizedString(@"AddPhoneNumberQuestion", nil) 
+//                                          delegate:self cancelButtonTitle:NSLocalizedString(@"CancelButtonLabel", nil) otherButtonTitles: NSLocalizedString(@"AddNumberButtonTitle", nil), nil];
+//        }
+//        else {
+//            alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NoPhoneNumberAbbreviated", nil) message:NSLocalizedString(@"NoPhoneNumberFoundForEvent", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"DismissButtonLabel", nil) otherButtonTitles: nil];            
+//        }
+        
     }
     else // We have a phone#, sadly have to act differently depending on provider
     {

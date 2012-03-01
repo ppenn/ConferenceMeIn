@@ -17,6 +17,11 @@
 @property (strong, nonatomic) CMIEvent* cmiEvent;
 @property (strong, nonatomic) CMIPhone* cmiPhone;
 @property (strong, nonatomic) EKEventStore* eventStore;
+@property (strong, nonatomic) UIAlertView* megaAlert;
 
 @property BOOL hasDisplayedPopup;
+
+-(void)dismissMegaAnnoyingPopup:(NSTimer*) t;
+
+
 @end
