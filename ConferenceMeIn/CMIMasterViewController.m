@@ -121,7 +121,8 @@ BOOL _settingsRequestedForEmail = NO;
     @try {
         [CMIUtility Log:@"numberOfRowsInSection()"];
         
-        if (_cmiEventCalendar.eventsList.count == 0) {
+        if (_cmiEventCalendar.eventsList.count == 0 ||
+            (_cmiEventCalendar.filterType != filterNone && _cmiEventCalendar.numConfEvents == 0)) {
             return 1;
         }
         
@@ -158,7 +159,8 @@ BOOL _settingsRequestedForEmail = NO;
 
         UITableViewCell* cell;
         
-        if (_cmiEventCalendar.eventsList.count == 0) {
+        if (_cmiEventCalendar.eventsList.count == 0 ||
+            (_cmiEventCalendar.filterType != filterNone && _cmiEventCalendar.numConfEvents == 0)) {
             cell = [[UITableViewCell alloc] init];
             cell.textLabel.text = NSLocalizedString(@"NoEventsMessage", @"");
             UIFont* font = [UIFont systemFontOfSize:15.0];

@@ -49,6 +49,7 @@ typedef enum eventFilterTypes
 @property calendarTimeframes calendarTimeframeType;
 @property calendarTypes calendarType;
 @property (nonatomic, assign) NSInteger currentTimeframeStarts;
+@property (readonly) NSInteger numConfEvents;
 
 - (id) init;
 - (void) createCMIEvents;

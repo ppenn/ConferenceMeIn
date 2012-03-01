@@ -22,7 +22,7 @@
 @synthesize filterType = _filterType;
 @synthesize calendarTimeframeType = _calendarTimeframeType;
 @synthesize currentTimeframeStarts = _currentTimeframeStarts;
-
+@synthesize numConfEvents = _numConfEvents;
 NSDate* _eventsStartDate = nil;
 NSDate* _eventsEndDate = nil;
 
@@ -92,7 +92,6 @@ NSDate* _eventsEndDate = nil;
     return scrollIndexPath;
 }
 
-
 - (void) createCMIEvents
 {
     [CMIUtility Log:@"createCMIEvents()"];
@@ -135,12 +134,18 @@ NSDate* _eventsEndDate = nil;
 {
     [CMIUtility Log:@"assignCMIEventsToCMIDays()"];
     
+    _numConfEvents = 0;
+    
     // Populate the days with events
     for (EKEvent* event in _eventsList) {
         // Need to convert date into day
         NSDate* eventDay = [CMIUtility getMidnightDate:event.startDate];  	
         // Should we be creating CMIEvent?
         CMIEvent* cmiEvent = [[CMIEvent alloc] initWithEKEvent:event];
+        
+        if (cmiEvent.hasConferenceNumber == true) {
+            _numConfEvents++;
+        }
         
         if (_filterType == filterNone || cmiEvent.hasConferenceNumber == true) {
             CMIDay* cmiDay = [_cmiDaysDictionary objectForKey:eventDay];
@@ -280,13 +285,6 @@ NSDate* _eventsEndDate = nil;
 	NSArray *events = [self.eventStore eventsMatchingPredicate:predicate];
     NSArray *sortedEvents =
     [events sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)];
-
-    // What's this for?? Resetting Start Date to first event...not sure about that, want all days, period
-//    if (sortedEvents != nil && sortedEvents.count > 0) {
-//       startDate = [[sortedEvents objectAtIndex:0] startDate];
-//    }
-
-//    [self assignCMIEventsToDayEvents:_eventsStartDate atEndDate:_eventsEndDate atEvents:sortedEvents];
     
 	return sortedEvents;
     
