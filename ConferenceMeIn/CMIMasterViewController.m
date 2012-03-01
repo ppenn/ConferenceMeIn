@@ -23,6 +23,7 @@ NSTimer* _refreshTimer;
 callProviders _callProvider;
 NSIndexPath* _indexPath;
 BOOL firstLoad = YES;
+BOOL _settingsRequestedForEmail = NO;
 
 @implementation CMIMasterViewController
 
@@ -374,7 +375,7 @@ BOOL firstLoad = YES;
         [CMIUtility Log:@"menuAction()"];
         
         // open a dialog with just an OK button
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"MenuButtonTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"CallMyConfNumTitle",@""), NSLocalizedString(@"SettingsTitle", @""), NSLocalizedString(@"HelpButtonTitle",@""),nil];
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"MenuButtonTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"CallMyConfNumTitle",@""), NSLocalizedString(@"EmailMyConfNumTitle",@""), NSLocalizedString(@"SettingsTitle", @""), NSLocalizedString(@"HelpButtonTitle",@""),nil];
         actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
         [actionSheet showFromToolbar:self.navigationController.toolbar];	// show from our table view (pops up in the middle of the table)
     }
@@ -1030,11 +1031,38 @@ BOOL firstLoad = YES;
     [CMIUtility Log:@"callMyNumber()"];
 
     if(_cmiMyConferenceNumber.isValid == FALSE) {
+        _settingsRequestedForEmail = NO;
         [self warnPhoneNumberNotInSettings];
     }
     else {
         // Call the number...
         [_cmiPhone dialConferenceNumber:_cmiMyConferenceNumber];
+    }
+}
+
+-(void) email
+{
+    [CMIUtility Log:@"email()"];
+
+    NSString* escapedConferenceNumberFormatted =
+    [_cmiMyConferenceNumber.conferenceNumberFormatted stringByAddingPercentEscapesUsingEncoding:
+     NSASCIIStringEncoding];    
+    NSString* mailTo = [[[@"mailto:?subject=" stringByAppendingString:NSLocalizedString(@"EmailSubject", nil)]  stringByAppendingString:@"&body="] stringByAppendingString:escapedConferenceNumberFormatted];
+    NSURL* mailURL = [NSURL URLWithString:mailTo];
+    [[UIApplication sharedApplication] openURL: mailURL];
+    
+}
+-(void) emailMyConferenceDetails 
+{
+    [CMIUtility Log:@"emailMyConferenceDetails()"];
+    
+    if(_cmiMyConferenceNumber.isValid == FALSE) {
+        _settingsRequestedForEmail = YES;
+        [self warnPhoneNumberNotInSettings];
+    }
+    else {
+        // Email the number...
+        [self email];
     }
 }
 
@@ -1055,10 +1083,14 @@ BOOL firstLoad = YES;
                 [self callMyNumber];
                 break;
             case 1:
+                [CMIUtility Log:@"Email My Number"];
+                [self emailMyConferenceDetails];
+                break;
+            case 2:
                 [CMIUtility Log:@"Settings"];
                 [self showSettingsDialog];
                 break;
-            case 2:
+            case 3:
                 [CMIUtility Log:@"Help"];
                 [self showHelpDialog];
                 break;
@@ -1085,9 +1117,16 @@ BOOL firstLoad = YES;
         // If we now have phone and conf numbers...then we can proceed
         [_cmiUserDefaults loadDefaults];
         [self readAppSettings];
+
+//TODO: This may come back from the Call My Number or Email My Number
         if([sender.file isEqualToString:@"ChildCMINumber"] && _cmiMyConferenceNumber.isValid) {
-            // Call the number...
-            [_cmiPhone dialConferenceNumberWithConfirmation:_cmiMyConferenceNumber view:self.tableView];
+            if (_settingsRequestedForEmail == NO) {
+                // Call the number...
+                [_cmiPhone dialConferenceNumberWithConfirmation:_cmiMyConferenceNumber view:self.tableView];
+            }
+            else {
+                [self email];
+            }
         }    
 
     }

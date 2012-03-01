@@ -48,10 +48,14 @@ NSString *kFirstRun = @"firstRunKey";
     if (self.highlightCurrentEvents != (self.currentTimeframeStarts >= 0)) return true;
     if (self.filterType != [[NSUserDefaults standardUserDefaults] integerForKey:kFilterTypeKey]) return true;
     if (self.callProviderType != [[NSUserDefaults standardUserDefaults] integerForKey:kCallProviderTypeKey]) return true;
-    if (self.myConfPhoneNumber != [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfPhoneNumberKey]) return true;
-    if (self.myConfConfNumber != [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfConfNumberKey]) return true;
-    if (self.myConfLeaderSeparator != [[NSUserDefaults standardUserDefaults]objectForKey:kMyConfLeaderSeparatorKey]) return true;
-    if (self.myConfLeaderPIN != [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfLeaderPINKey]) return true;
+    if (![self.myConfPhoneNumber isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfPhoneNumberKey])]) 
+          return true;
+    if (![self.myConfConfNumber isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfConfNumberKey])]) 
+        return true;
+    if (![self.myConfLeaderSeparator isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfLeaderSeparatorKey])]) 
+        return true;
+    if (![self.myConfLeaderPIN isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfLeaderPINKey])]) 
+        return true;
     
     return false;
 }
@@ -84,6 +88,7 @@ NSString *kFirstRun = @"firstRunKey";
     NSNumber* callProviderTypeDefault = nil;
     NSNumber* calendarTimeframeDefault = nil;
     NSNumber* currentTimeframeStartsDefault = nil;
+    NSString* leaderSeparatorDefault = nil;
     
     NSDictionary *prefItem;
     for (prefItem in prefSpecifierArray)
@@ -107,12 +112,19 @@ NSString *kFirstRun = @"firstRunKey";
         {
             calendarTypeDefault = defaultValue;
         }
+        else if ([keyValueStr isEqualToString:kMyConfLeaderSeparatorKey])
+        {
+            leaderSeparatorDefault = defaultValue;
+        }
         
     }        
-    
     // since no default values have been set (i.e. no preferences file created), create it here		
     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kFirstRun];
     [[NSUserDefaults standardUserDefaults] setInteger:filterNone forKey:kFilterTypeKey];
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kMyConfConfNumberKey];
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kMyConfPhoneNumberKey];
+    [[NSUserDefaults standardUserDefaults] setObject:leaderSeparatorDefault forKey:kMyConfLeaderSeparatorKey];
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kMyConfConfNumberKey];
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
 		[[NSUserDefaults standardUserDefaults] setInteger:[callProviderTypeDefault intValue] forKey:kCallProviderTypeKey];

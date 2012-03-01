@@ -14,21 +14,21 @@
 @interface CMIUserDefaults : NSObject
 
 // Settings app settings
-@property (nonatomic, assign) NSInteger calendarType;
-@property (nonatomic, assign) NSInteger currentTimeframeStarts;
-@property (nonatomic, assign) calendarTimeframes calendarTimeframeType;
-@property (nonatomic, assign) BOOL highlightCurrentEvents;
+@property NSInteger calendarType;
+@property NSInteger currentTimeframeStarts;
+@property calendarTimeframes calendarTimeframeType;
+@property BOOL highlightCurrentEvents;
 
-@property (nonatomic, assign) NSString* myConfPhoneNumber;
-@property (nonatomic, assign) NSString* myConfConfNumber;
-@property (nonatomic, assign) NSString* myConfLeaderSeparator;
-@property (nonatomic, assign) NSString* myConfLeaderPIN;
+@property (nonatomic, strong) NSString* myConfPhoneNumber;
+@property (nonatomic, strong) NSString* myConfConfNumber;
+@property (nonatomic, strong) NSString* myConfLeaderSeparator;
+@property (nonatomic, strong) NSString* myConfLeaderPIN;
 
 // Invisible setting
-@property (nonatomic, assign) BOOL firstRun;
+@property BOOL firstRun;
 
 // Runtime-only settings
-@property (nonatomic, assign) NSInteger filterType;
+@property NSInteger filterType;
 
 @property callProviders callProviderType;
 

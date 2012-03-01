@@ -11,12 +11,12 @@
 #import "EKEventParser.h"
 #import "CMIUtility.h"
 
-#define REGEX_CODE_SPECIFIC @"(\\bpin|password|code)[\\s:\\)\\#]*\\d{3,12}[\\s-]?\\d{1,12}+[\\s-]?\\d{0,12}"
+#define REGEX_CODE_SPECIFIC @"(\\bpin|participant|password|code)[\\s:\\)\\#]*\\d{3,12}[\\s-]?\\d{1,12}+[\\s-]?\\d{0,12}"
 #define REGEX_CODE_GENERIC @"\\d{4,12}"
 
 #define REGEX_PHONE_NUMBER_FIRST @"(?<![\\d\\/])1?(\\d{3}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{4})(?!\\w)"
 
-#define REGEX_PHONE_NUMBER_COUNTRY_TOLLFREE @"(u\\.s\\.|united\\ss)[\\D]*[toll(\\-|\\s)?free\\D]*?(?=[18])"
+#define REGEX_PHONE_NUMBER_COUNTRY_TOLLFREE @"(u\\.s\\.|usa|united\\ss)[\\D]*[toll(\\-|\\s)?free\\D]*?(?=[18])"
 #define REGEX_PHONE_NUMBER_TOLLFREE @"toll(\\-|\\s)?free\\D*(?=[18])"
 
 #define PHONE_NUMBER_LENGTH 10
