@@ -31,11 +31,28 @@
     }
 }
 
+- (NSString*)internationalizePhoneNumber:(NSString*)phoneNumber
+{
+    [CMIUtility Log:@"internationalizePhoneNumber()"];
+    
+    //TODO: Internationalize...use Regex
+    // Hack! Maybe works in Europe...
+    NSLocale* currentLocale = [NSLocale currentLocale];  // get the current locale.
+    NSString* countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
+    if (![countryCode isEqualToString:@"US"] && ![countryCode isEqualToString:@"CA"] && [countryCode isEqualToString:@"MX"] && ![countryCode isEqualToString:@"AU"] && ![countryCode isEqualToString:@"IE"]) {
+        phoneNumber = [@"0" stringByAppendingString:phoneNumber];
+    }
+
+    return phoneNumber;
+}
+
 - (void) setPhoneURL:(NSString*) phoneNumber
 {
     [CMIUtility Log:@"setPhoneURL()"];
 
     NSString* phoneNumberURL = nil;
+    
+    phoneNumber = [self internationalizePhoneNumber:phoneNumber];
     
     switch (_callProvider)
     {

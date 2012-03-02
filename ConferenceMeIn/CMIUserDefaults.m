@@ -48,14 +48,15 @@ NSString *kFirstRun = @"firstRunKey";
     if (self.highlightCurrentEvents != (self.currentTimeframeStarts >= 0)) return true;
     if (self.filterType != [[NSUserDefaults standardUserDefaults] integerForKey:kFilterTypeKey]) return true;
     if (self.callProviderType != [[NSUserDefaults standardUserDefaults] integerForKey:kCallProviderTypeKey]) return true;
-    if (![self.myConfPhoneNumber isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfPhoneNumberKey])]) 
-          return true;
-    if (![self.myConfConfNumber isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfConfNumberKey])]) 
-        return true;
-    if (![self.myConfLeaderSeparator isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfLeaderSeparatorKey])]) 
-        return true;
-    if (![self.myConfLeaderPIN isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfLeaderPINKey])]) 
-        return true;
+    //I don't think we care about the Conf# details...hopefully
+//    if (![self.myConfPhoneNumber isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfPhoneNumberKey])]) 
+//          return true;
+//    if (![self.myConfConfNumber isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfConfNumberKey])]) 
+//        return true;
+//    if (![self.myConfLeaderSeparator isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfLeaderSeparatorKey])]) 
+//        return true;
+//    if (![self.myConfLeaderPIN isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfLeaderPINKey])]) 
+//        return true;
     
     return false;
 }
