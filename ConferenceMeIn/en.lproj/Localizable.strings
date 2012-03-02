@@ -23,7 +23,7 @@
 "CallMyConfNumTitle" = "Dial";
 "EmailMyConfNumTitle" = "Email";
 "AddToContactTitle" = "Add To Contact";
-"OpenContactTitle" = "Import From Contact";
+"ImportContactTitle" = "Import From Contacts";
 "SettingsButtonTitle" = "Edit";
 "IntroMessage" = "Double-tap or tap-and-hold calendar event to dial number directly.\r\nSingle-tap event to see  details and dial number";
 "HelpMessage" = "This application works with your iPhone calendar events, enabling you to quickly call a conference number without remembering the code.\n\rDouble-tap or tap-and-hold calendar event to dial conference number directly.\r\n\r\nSingle-tap calendar event to see event details and be prompted to dial conference number.\n\rUse Menu > Settings to set up your own conference number, which will be used in the location section of a new event if you add it from the + button.";
