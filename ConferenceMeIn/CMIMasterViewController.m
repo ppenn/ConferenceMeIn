@@ -9,7 +9,7 @@
 #import "CMIMasterViewController.h"
 #import "CMIUtility.h"
 #import "CMIUserDefaults.h"
-#import "CMIContacts.h"
+#import "CMIImportFromContactsController.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define ROW_HEIGHT 90
@@ -1067,13 +1067,20 @@ NSInteger _actionSheetChoice = -1;
 }
 
 // Implement the delegate methods for ChildViewControllerDelegate
-- (void)cmiContactsControllerDidFinish:(CMIContacts *)viewController {
+- (void)cmiContactsControllerDidFinish:(CMIImportFromContactsController *)viewController {
 
     [CMIUtility Log:@"onContactsFinishedGettingNumber()"];
-    
-    if (_cmiContacts.userDidCancel == NO) {
-        // Should have a number
-        [CMIUtility Log:_cmiContacts.selectedPhoneNumber];
+    @try {
+        if (_cmiContacts.userDidCancel == NO) {
+            // Should have a number
+            [CMIUtility Log:_cmiContacts.selectedPhoneNumber];
+            
+            // Need to parse this
+            //        NSString* parsedNumber = [EKEVENTPa
+        }
+    }
+    @catch (NSException *exception) {
+        [CMIUtility LogError:exception.reason];
     }
 //    [self.navigationController popViewControllerAnimated:YES];
 }
@@ -1097,7 +1104,7 @@ NSInteger _actionSheetChoice = -1;
             break;
         case enterConfNumberImportFromContacts:
             [CMIUtility Log:@"Import"];
-            _cmiContacts = [[CMIContacts alloc] initWithViewController:self];
+            _cmiContacts = [[CMIImportFromContactsController alloc] initWithViewController:self];
             _cmiContacts.delegate = self;
             [_cmiContacts tryToGetConfNumber];
             break;

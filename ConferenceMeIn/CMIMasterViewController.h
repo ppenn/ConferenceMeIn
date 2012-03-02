@@ -17,7 +17,7 @@
 #import "IASKAppSettingsViewController.h"
 #import "CMIMyConferenceNumber.h"
 #import "CMIPhone.h"
-#import "CMIContacts.h"
+#import "CMIImportFromContactsController.h"
 
 typedef enum menuActionButtons
 {
@@ -45,7 +45,7 @@ typedef enum enterConfNumberActionButtons
 @property (strong, nonatomic) CMIMyConferenceNumber* cmiMyConferenceNumber;
 @property (strong, nonatomic) CMIPhone* cmiPhone;
 @property BOOL reloadDefaultsOnAppear;
-@property (strong, nonatomic) CMIContacts* cmiContacts;
+@property (strong, nonatomic) CMIImportFromContactsController* cmiContacts;
 
 - (void) storeChanged:(NSNotification *) notification;
 - (NSArray *)fetchEventsForTable;
