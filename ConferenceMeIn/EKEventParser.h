@@ -18,6 +18,10 @@
 + (BOOL)phoneNumberContainsCode:(NSString*)phoneNumber;
 + (NSString*)getCodeFromNumber:(NSString*)phoneNumber;
 + (NSString*)getPhoneFromPhoneNumber:(NSString*)phoneNumber;
++ (NSString*)getLeaderSeparatorFromNumber:(NSString*)phoneNumber;
++ (NSString*)getLeaderCodeFromNumber:(NSString*)phoneNumber;
++ (NSString*)parseIOSPhoneText:(NSString*)eventText;
++ (NSString*)stripLeadingZeroOrOne:(NSString*)phoneText;
 
 @end
 

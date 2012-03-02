@@ -13,13 +13,19 @@
 
 #define REGEX_CODE_SPECIFIC @"(\\bpin|participant|password|code)[\\s:\\)\\#]*\\d{3,12}[\\s-]?\\d{1,12}+[\\s-]?\\d{0,12}"
 #define REGEX_CODE_GENERIC @"\\d{4,12}"
+#define REGEX_SEPARATOR @"[^\\d]*"
+#define REGEX_CODE_IN_FORMATTED_NUMBER @"(?<=,,)\\d{4,12}"
 
-#define REGEX_PHONE_NUMBER_FIRST @"(?<![\\d\\/])1?(\\d{3}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{4})(?!\\w)"
+#define REGEX_PHONE_NUMBER_FIRST @"(?<![\\d\\/])[01]?(\\d{3}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{4})(?!\\w)"
 
 #define REGEX_PHONE_NUMBER_COUNTRY_TOLLFREE @"(u\\.s\\.|usa|united\\ss)[\\D]*[toll(\\-|\\s)?free\\D]*?(?=[18])"
 #define REGEX_PHONE_NUMBER_TOLLFREE @"toll(\\-|\\s)?free\\D*(?=[18])"
 
+#define REGEX_LEADER_SEPARATOR_START @"(?<=,,)\\d{4,12}[^\\d]+"
+#define REGEX_LEADER_CODE @"(?<=,,)\\d{4,12}[^\\d]+[\\d]{4,12}"
+
 #define PHONE_NUMBER_LENGTH 10
+#define MAX_PHONE_NUMBER_LENGTH 11
 
 @implementation EKEventParser
 
@@ -55,19 +61,82 @@
 	return newSearchString;
 }
 
-+ (NSString*)getPhoneFromPhoneNumber:(NSString*)phoneNumber
++ (NSString*)getLeaderSeparatorFromNumber:(NSString*)phoneNumber
 {
-    return [phoneNumber substringToIndex:PHONE_NUMBER_LENGTH];
+    [CMIUtility Log:@"getLeaderSeparatorFromNumber()"];
+    NSString* separator = nil;
+    NSError* error = nil;
+    
+    NSRegularExpression *regexSeparator = [NSRegularExpression regularExpressionWithPattern:REGEX_LEADER_SEPARATOR_START
+                                                                                    options:NSRegularExpressionCaseInsensitive
+                                                                                      error:&error];
+    
+    NSRange range = [regexSeparator rangeOfFirstMatchInString:phoneNumber options:0 range:NSMakeRange(0, [phoneNumber  length])];
+    if (range.location != NSNotFound) {
+        separator = [EKEventParser stripRegex:[phoneNumber substringWithRange:range] regexToStrip:@"[\\d]"];
+    }
+
+    return separator;
+}
++ (NSString*)getLeaderCodeFromNumber:(NSString*)phoneNumber
+{
+    [CMIUtility Log:@"getLeaderCodeFromNumber()"];
+    NSString* leaderCode = nil;
+    NSError* error = nil;
+    
+    NSRegularExpression *regexLeader = [NSRegularExpression regularExpressionWithPattern:REGEX_LEADER_SEPARATOR_START
+                                                                                    options:NSRegularExpressionCaseInsensitive
+                                                                                      error:&error];
+    NSRegularExpression *regexCode = [NSRegularExpression regularExpressionWithPattern:REGEX_CODE_GENERIC
+                                                                                 options:NSRegularExpressionCaseInsensitive
+                                                                                   error:&error];
+
+    NSRange range = [regexLeader rangeOfFirstMatchInString:phoneNumber options:0 range:NSMakeRange(0, [phoneNumber  length])];
+    if (range.location != NSNotFound) {
+        NSString* remainderText = [phoneNumber substringFromIndex:range.location];
+        
+        NSArray* codes = [regexCode matchesInString:remainderText options:0 range:NSMakeRange(0, [remainderText length])];
+        
+        if (codes != nil && [codes count] == 2) {
+            NSTextCheckingResult* codeResult = (NSTextCheckingResult*)[codes objectAtIndex:1]; 
+            leaderCode = [remainderText substringWithRange:codeResult.range];    
+        }
+    }
+    
+    return leaderCode;
 }
 
-+ (NSString*)getCodeFromNumber:(NSString*)phoneNumber
++ (NSString*)getPhoneFromPhoneNumber:(NSString*)phoneText
+{
+    NSString* phoneNumber;
+
+    //UGH 10 vs 11 digit phone#s...
+    
+    //    if ([phoneText length] >= MAX_PHONE_NUMBER_LENGTH) {
+//        phoneNumber = [EKEventParser stripRegex:[phoneText substringToIndex:MAX_PHONE_NUMBER_LENGTH] regexToStrip:@"[^\\d]"];
+//    }
+//    else {
+//        phoneNumber = [phoneNumber substringToIndex:PHONE_NUMBER_LENGTH];
+//    } 
+    phoneNumber = [[EKEventParser stripLeadingZeroOrOne:phoneText] substringToIndex:PHONE_NUMBER_LENGTH];
+    
+    return phoneNumber;
+}
+
++ (NSString*)getCodeFromNumber:(NSString*)phoneText
 {
     [CMIUtility Log:@"getCodeFromNumber()"];
 
     NSString* code = nil;
     
-    if (!([phoneNumber rangeOfString:PHONE_CALL_SEPARATOR].location == NSNotFound)) {
-        code = [phoneNumber substringFromIndex:[phoneNumber rangeOfString:PHONE_CALL_SEPARATOR].location + [PHONE_CALL_SEPARATOR length]];
+	NSError *error = NULL;
+	//Create the regular expression to match against
+	NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:REGEX_CODE_IN_FORMATTED_NUMBER options:NSRegularExpressionCaseInsensitive error:&error];
+
+    NSRange range = [regex rangeOfFirstMatchInString:phoneText options:0 range:NSMakeRange(0, [phoneText  length])];
+    
+    if (range.location != NSNotFound) {
+        code = [phoneText substringWithRange:range];
     }
     return code;
 }
@@ -258,10 +327,21 @@
     
 }
 
++ (NSString*)stripLeadingZeroOrOne:(NSString*)phoneText
+{
+    //Remove leading 0 or 1...this should be safe to do, the regex should ensure we have a real phone # after it (i.e. 10 digits)
+    if ([phoneText characterAtIndex:0] == '1' ||
+        [phoneText characterAtIndex:0] == '0') {
+        phoneText = [phoneText substringFromIndex:1];
+    }
+    
+    return phoneText;
+}
+
 + (NSString*)parseEventText:(NSString*)eventText
 {
     [CMIUtility Log:@"parseEventText()"];
-    if (eventText.length < 9)   return nil;
+    if (eventText.length < 10)   return nil;
 
     NSString* phoneNumber = @"";
 
@@ -273,9 +353,7 @@
         if (rangeOfSecondMatch.location != NSNotFound) {
             NSString *substringForSecondMatch = [EKEventParser stripRegex:[firstSubstring substringWithRange:rangeOfSecondMatch] regexToStrip:@"[^\\d]"];
             
-            if ([substringForSecondMatch characterAtIndex:0] == '1') {
-                substringForSecondMatch = [substringForSecondMatch substringFromIndex:1];
-            }
+            substringForSecondMatch = [EKEventParser stripLeadingZeroOrOne:substringForSecondMatch];
             
             phoneNumber = [phoneNumber stringByAppendingString:substringForSecondMatch];
             
@@ -303,6 +381,45 @@
     return phoneNumber;
 }
 
++ (NSString*)parseIOSPhoneText:(NSString*)eventText
+{
+    [CMIUtility Log:@"parseIOSPhoneText()"];
+    if (eventText.length < 10)   return nil;
 
+    NSError *error = NULL;
+    NSRegularExpression *regexCode = [NSRegularExpression regularExpressionWithPattern:REGEX_CODE_GENERIC 
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:&error];
+    NSRegularExpression *regexSeparator = [NSRegularExpression regularExpressionWithPattern:REGEX_SEPARATOR 
+                                                                               options:NSRegularExpressionCaseInsensitive
+                                                                                 error:&error];
+        
+    NSString* phoneNumber = nil;
+    NSRange range = [EKEventParser tryToGetFirstPhone:eventText];
+    if (range.location != NSNotFound) {
+        phoneNumber = [eventText substringWithRange:range];        
+        phoneNumber = [EKEventParser stripRegex:phoneNumber regexToStrip:@"[^\\d]"];        
+        
+        NSRange rangeOfCode = [regexCode rangeOfFirstMatchInString:eventText options:0 range:NSMakeRange(range.location + range.length, [eventText  length]-(range.location + range.length))];
+        if (rangeOfCode.location != NSNotFound) {
+            phoneNumber = [phoneNumber stringByAppendingString:PHONE_CALL_SEPARATOR];
+            phoneNumber = [phoneNumber stringByAppendingString:[eventText substringWithRange:rangeOfCode]];            
+            
+            NSRange rangeOfSeparator = [regexSeparator rangeOfFirstMatchInString:eventText options:0 range:NSMakeRange(rangeOfCode.location + rangeOfCode.length, [eventText  length] - (rangeOfCode.location + rangeOfCode.length))];
+            if (rangeOfSeparator.location != NSNotFound) {
+                phoneNumber = [phoneNumber stringByAppendingString:[eventText substringWithRange:rangeOfSeparator]];            
+
+                NSRange rangeOfLeader = [regexCode rangeOfFirstMatchInString:eventText options:0 range:NSMakeRange(rangeOfSeparator.location + rangeOfSeparator.length, [eventText  length] - (rangeOfSeparator.location + rangeOfSeparator.length))];
+                if (rangeOfLeader.location != NSNotFound) {
+                    phoneNumber = [phoneNumber stringByAppendingString:[eventText substringWithRange:rangeOfLeader]];            
+                }
+
+            }
+            
+        }
+    }    
+    return phoneNumber;
+    
+}
 
 @end
