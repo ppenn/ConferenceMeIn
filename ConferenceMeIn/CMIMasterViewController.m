@@ -10,6 +10,7 @@
 #import "CMIUtility.h"
 #import "CMIUserDefaults.h"
 #import "CMIImportFromContactsController.h"
+#import "EKEventParser.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define ROW_HEIGHT 90
@@ -284,7 +285,10 @@ NSInteger _actionSheetChoice = -1;
     _cmiEventCalendar.currentTimeframeStarts = _cmiUserDefaults.currentTimeframeStarts;
     _cmiEventCalendar.calendarTimeframeType = _cmiUserDefaults.calendarTimeframeType;
     _highlightCurrentEvents = _cmiUserDefaults.highlightCurrentEvents;
-    _cmiMyConferenceNumber.cmiUserDefaults = _cmiUserDefaults;
+//    _cmiMyConferenceNumber.cmiUserDefaults = _cmiUserDefaults;
+    // Is this a memory leak or does ARC take care of it?
+    _cmiMyConferenceNumber = [[CMIMyConferenceNumber alloc] initWithUserDefaults:_cmiUserDefaults];
+    _cmiPhone = [[CMIPhone alloc] initWithCallProvider:_cmiUserDefaults.callProviderType];
 }
 
 - (void)viewWillUnload
@@ -1076,7 +1080,21 @@ NSInteger _actionSheetChoice = -1;
             [CMIUtility Log:_cmiContacts.selectedPhoneNumber];
             
             // Need to parse this
-            //        NSString* parsedNumber = [EKEVENTPa
+            NSString* parsedNumber = [EKEventParser parseIOSPhoneText:_cmiContacts.selectedPhoneNumber];
+            NSString* phoneNumber = [EKEventParser getPhoneFromPhoneNumber:parsedNumber];
+            if (phoneNumber != nil && phoneNumber.length > 0) {
+                _cmiUserDefaults.myConfPhoneNumber = phoneNumber;
+                _cmiUserDefaults.myConfConfNumber = [EKEventParser getCodeFromNumber:parsedNumber];
+                _cmiUserDefaults.myConfLeaderSeparator = [EKEventParser getLeaderSeparatorFromNumber:parsedNumber];
+                _cmiUserDefaults.myConfLeaderPIN = [EKEventParser getLeaderCodeFromNumber:parsedNumber];
+                
+                // Now write them to settings
+                [_cmiUserDefaults save];
+                // Now reload settings
+                [_cmiUserDefaults loadDefaults];
+                [self readAppSettings];
+            }
+            
         }
     }
     @catch (NSException *exception) {

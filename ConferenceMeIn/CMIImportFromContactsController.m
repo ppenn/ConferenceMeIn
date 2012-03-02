@@ -80,7 +80,7 @@
 {
     ABMutableMultiValueRef multi = ABRecordCopyValue(person, property);
     CFStringRef phone = ABMultiValueCopyValueAtIndex(multi, identifier);
-    _selectedPhoneNumber = (__bridge_transfer NSString *)phone;
+    _selectedPhoneNumber = [(__bridge NSString *)phone copy];
     CFRelease(phone);
     
     [_viewController dismissModalViewControllerAnimated:YES];

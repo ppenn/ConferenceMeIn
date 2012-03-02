@@ -34,6 +34,7 @@
 
 - (void)loadDefaults;
 - (void)saveDefaults;
+- (void)save;
 
 - (BOOL)defaultsAreDifferent;
 

@@ -36,6 +36,26 @@ NSString *kFirstRun = @"firstRunKey";
 @synthesize myConfLeaderPIN = _myConfLeaderPIN;
 @synthesize defaultsDidChange = _defaultsDidChange;
 
+- (void)setMyConfPhoneNumber:(NSString *)myConfPhoneNumber
+{
+    [[NSUserDefaults standardUserDefaults] setObject:myConfPhoneNumber forKey:kMyConfPhoneNumberKey];    
+}
+- (void)setMyConfConfNumber:(NSString *)myConfConfNumber
+{
+    [[NSUserDefaults standardUserDefaults] setObject:myConfConfNumber forKey:kMyConfConfNumberKey];    
+    
+}
+
+- (void)setMyConfLeaderSeparator:(NSString *)myConfLeaderSeparator
+{
+    [[NSUserDefaults standardUserDefaults] setObject:myConfLeaderSeparator forKey:kMyConfLeaderSeparatorKey];    
+    
+}
+- (void)setMyConfLeaderPIN:(NSString *)myConfLeaderPIN
+{
+    [[NSUserDefaults standardUserDefaults] setObject:myConfLeaderPIN forKey:kMyConfLeaderPINKey];        
+}
+
 - (BOOL)defaultsAreDifferent
 {
     [CMIUtility Log:@"defaultsHaveChanged()"];
@@ -61,6 +81,12 @@ NSString *kFirstRun = @"firstRunKey";
     return false;
 }
 
+- (void)save
+{
+    [CMIUtility Log:@"save()"];
+
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 - (void)saveDefaults
 {
@@ -159,17 +185,17 @@ NSString *kFirstRun = @"firstRunKey";
 //    [CMIUtility Log:@"NSUserDefaults dump: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]];
     
 	// we're ready to go, so lastly set the key preference values
-	self.calendarType = [[NSUserDefaults standardUserDefaults] integerForKey:kCalendarTypeKey];    
-    self.calendarTimeframeType = [[NSUserDefaults standardUserDefaults] integerForKey:kCalendarTimeframeTypeKey];
-    self.currentTimeframeStarts = [[NSUserDefaults standardUserDefaults] integerForKey:kCurrentTimeframeStartsKey];
-    self.highlightCurrentEvents = (self.currentTimeframeStarts >= 0);
-    self.firstRun = firstRun;
-    self.filterType = [[NSUserDefaults standardUserDefaults] integerForKey:kFilterTypeKey];
-    self.callProviderType = [[NSUserDefaults standardUserDefaults] integerForKey:kCallProviderTypeKey];
-    self.myConfPhoneNumber = [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfPhoneNumberKey];
-    self.myConfConfNumber = [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfConfNumberKey];
-    self.myConfLeaderSeparator = [[NSUserDefaults standardUserDefaults]objectForKey:kMyConfLeaderSeparatorKey];
-    self.myConfLeaderPIN = [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfLeaderPINKey];
+	_calendarType = [[NSUserDefaults standardUserDefaults] integerForKey:kCalendarTypeKey];    
+    _calendarTimeframeType = [[NSUserDefaults standardUserDefaults] integerForKey:kCalendarTimeframeTypeKey];
+    _currentTimeframeStarts = [[NSUserDefaults standardUserDefaults] integerForKey:kCurrentTimeframeStartsKey];
+    _highlightCurrentEvents = (_currentTimeframeStarts >= 0);
+    _firstRun = firstRun;
+    _filterType = [[NSUserDefaults standardUserDefaults] integerForKey:kFilterTypeKey];
+    _callProviderType = [[NSUserDefaults standardUserDefaults] integerForKey:kCallProviderTypeKey];
+    _myConfPhoneNumber = [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfPhoneNumberKey];
+    _myConfConfNumber = [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfConfNumberKey];
+    _myConfLeaderSeparator = [[NSUserDefaults standardUserDefaults]objectForKey:kMyConfLeaderSeparatorKey];
+    _myConfLeaderPIN = [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfLeaderPINKey];
     
 }
 

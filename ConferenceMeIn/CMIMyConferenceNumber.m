@@ -41,8 +41,15 @@
     [CMIUtility Log:@"validateConferenceNumber()"];
     
     // Need to parse all phone number info
-    if (_cmiUserDefaults.myConfPhoneNumber != nil && _cmiUserDefaults.myConfConfNumber != nil) {
-        _conferenceNumber = [EKEventParser parseEventText:[[_cmiUserDefaults.myConfPhoneNumber stringByAppendingString:@":"] stringByAppendingString:_cmiUserDefaults.myConfConfNumber]];        
+    if (_cmiUserDefaults.myConfPhoneNumber != nil && 
+        _cmiUserDefaults.myConfPhoneNumber.length > 0)  {
+        if (_cmiUserDefaults.myConfConfNumber != nil) {
+            _conferenceNumber = [EKEventParser parseEventText:[[_cmiUserDefaults.myConfPhoneNumber stringByAppendingString:@":"] stringByAppendingString:_cmiUserDefaults.myConfConfNumber]];
+        }
+        else {
+                _conferenceNumber = [EKEventParser parseEventText:_cmiUserDefaults.myConfPhoneNumber ];        
+                
+        }
     }
     if (_conferenceNumber != nil && _conferenceNumber.length > 0) {
         _isValid = true;
@@ -50,6 +57,7 @@
     else {
         _isValid = false;
     }
+    
     
     // Parse Leader Info
     if (_cmiUserDefaults.myConfLeaderPIN != nil) {
