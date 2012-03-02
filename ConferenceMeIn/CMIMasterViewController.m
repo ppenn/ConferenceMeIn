@@ -9,6 +9,7 @@
 #import "CMIMasterViewController.h"
 #import "CMIUtility.h"
 #import "CMIUserDefaults.h"
+#import "CMIContacts.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define ROW_HEIGHT 90
@@ -28,6 +29,7 @@ NSIndexPath* _indexPath;
 BOOL firstLoad = YES;
 NSInteger _actionSheetChoice = -1;
 
+
 @implementation CMIMasterViewController
 
 @synthesize detailViewController = _detailViewController;
@@ -39,6 +41,7 @@ NSInteger _actionSheetChoice = -1;
 @synthesize cmiPhone = _cmiPhone;
 @synthesize reloadDefaultsOnAppear = _reloadDefaultsOnAppear;
 @synthesize megaAlert;
+@synthesize cmiContacts = _cmiContacts;
 
 #pragma mark -
 #pragma mark Table view delegate and data source methods
@@ -1018,7 +1021,7 @@ NSInteger _actionSheetChoice = -1;
 {
     [CMIUtility Log:@"warnPhoneNumberNotInSettings()"];
 
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"WarnInvalidPhoneNumberTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"EnterInSettingsTitle",@""),nil];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"WarnInvalidPhoneNumberTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"EnterInSettingsTitle",@""),NSLocalizedString(@"ImportContactTitle",@""),nil];
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     actionSheet.tag = ACTIONSHEET_SET_CONF_NUM;
     [actionSheet showFromToolbar:self.navigationController.toolbar];	// show from our table view (pops up in the middle of the table)
@@ -1063,6 +1066,19 @@ NSInteger _actionSheetChoice = -1;
     }
 }
 
+// Implement the delegate methods for ChildViewControllerDelegate
+- (void)cmiContactsControllerDidFinish:(CMIContacts *)viewController {
+
+    [CMIUtility Log:@"onContactsFinishedGettingNumber()"];
+    
+    if (_cmiContacts.userDidCancel == NO) {
+        // Should have a number
+        [CMIUtility Log:_cmiContacts.selectedPhoneNumber];
+    }
+//    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 - (void)handleSetNumberActionSheetClick
 {
     [CMIUtility Log:@"handleSetNumberActionSheetClick()"];
@@ -1070,7 +1086,7 @@ NSInteger _actionSheetChoice = -1;
     
     // the user clicked one of the OK/Cancel buttons
     switch (_actionSheetChoice) {
-        case 0:
+        case enterConfNumberEnterSettings:
             if ([self.appSettingsViewController.file isEqualToString:@"ChildCMINumber"]) {
                 _appSettingsViewController = nil;
             }
@@ -1078,6 +1094,12 @@ NSInteger _actionSheetChoice = -1;
             self.appSettingsViewController.showDoneButton = YES;
             aNavController = [[UINavigationController alloc]  initWithRootViewController:self.appSettingsViewController];
             [self presentModalViewController:aNavController animated:YES];
+            break;
+        case enterConfNumberImportFromContacts:
+            [CMIUtility Log:@"Import"];
+            _cmiContacts = [[CMIContacts alloc] initWithViewController:self];
+            _cmiContacts.delegate = self;
+            [_cmiContacts tryToGetConfNumber];
             break;
         default:
             [CMIUtility Log:@"Cancel"];

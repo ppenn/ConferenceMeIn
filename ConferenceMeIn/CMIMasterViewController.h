@@ -17,7 +17,7 @@
 #import "IASKAppSettingsViewController.h"
 #import "CMIMyConferenceNumber.h"
 #import "CMIPhone.h"
-
+#import "CMIContacts.h"
 
 typedef enum menuActionButtons
 {
@@ -27,8 +27,14 @@ typedef enum menuActionButtons
     menuActionSettings
 }menuActionButtons;
 
+typedef enum enterConfNumberActionButtons
+{
+    enterConfNumberEnterSettings = 0,
+    enterConfNumberImportFromContacts
+}enterConfNumberActionButtons;
 
-@interface CMIMasterViewController : UITableViewController <UIActionSheetDelegate, EKEventEditViewDelegate, IASKSettingsDelegate, UIGestureRecognizerDelegate>
+
+@interface CMIMasterViewController : UITableViewController <UIActionSheetDelegate, EKEventEditViewDelegate, IASKSettingsDelegate, UIGestureRecognizerDelegate, CMIContactsControllerDelegate>
 
 @property (strong, nonatomic) UIAlertView* megaAlert;
 @property (strong, nonatomic) CMIEKEventViewController *detailViewController;
@@ -39,6 +45,7 @@ typedef enum menuActionButtons
 @property (strong, nonatomic) CMIMyConferenceNumber* cmiMyConferenceNumber;
 @property (strong, nonatomic) CMIPhone* cmiPhone;
 @property BOOL reloadDefaultsOnAppear;
+@property (strong, nonatomic) CMIContacts* cmiContacts;
 
 - (void) storeChanged:(NSNotification *) notification;
 - (NSArray *)fetchEventsForTable;
