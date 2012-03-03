@@ -1240,7 +1240,7 @@ NSInteger _actionSheetChoice = -1;
             break;
         case contextMenuActionEmail:
             [CMIUtility Log:@"Email"];
-            [self email:[CMIConferenceNumber conferenceNumberFormatted:_selectedCMIEvent.conferenceNumber]];
+            [self email:_selectedCMIEvent.cmiConferenceNumber.formatted];
             break;
         case contextMenuActionAddToContacts:
             [CMIUtility Log:@"Add To Contacts"];
@@ -1249,7 +1249,7 @@ NSInteger _actionSheetChoice = -1;
         case contextMenuActionCopy:
             [CMIUtility Log:@"Copy"];
             [self copyToClipboard];
-            [actionSheet dismissWithClickedButtonIndex:-1 animated:YES];
+//            [actionSheet dismissWithClickedButtonIndex:-1 animated:YES];
             break;
         default:
             [CMIUtility Log:@"Cancel"];

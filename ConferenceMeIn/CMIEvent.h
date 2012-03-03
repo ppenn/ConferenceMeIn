@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <EventKit/EventKit.h>
 #import "CMIPhone.h"
+#import "CMIConferenceNumber.h"
 
 @interface CMIEvent : NSObject
 
@@ -22,6 +23,7 @@
 @property (readonly, nonatomic,strong) NSString* conferenceNumber;
 @property (readonly, nonatomic) bool hasConferenceNumber;
 @property callProviders callProvider;
+@property (readonly, nonatomic,strong) CMIConferenceNumber* cmiConferenceNumber;
 
 
 

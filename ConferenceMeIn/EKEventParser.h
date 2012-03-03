@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <EventKit/EventKit.h>
 #import <Foundation/NSRegularExpression.h>
+#import "CMIConferenceNumber.h"
 
 @interface EKEventParser : NSObject
 
@@ -22,6 +23,8 @@
 + (NSString*)getLeaderCodeFromNumber:(NSString*)phoneNumber;
 + (NSString*)parseIOSPhoneText:(NSString*)eventText;
 + (NSString*)stripLeadingZeroOrOne:(NSString*)phoneText;
+
++ (CMIConferenceNumber*)eventTextToConferenceNumber:(NSString*)eventText;
 
 @end
 

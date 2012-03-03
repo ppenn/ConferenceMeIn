@@ -15,8 +15,9 @@
 
 @property (nonatomic,strong) CMIUserDefaults* cmiUserDefaults;
 @property BOOL isValid;
-@property (readonly, nonatomic,strong) NSString* conferenceNumber;
 @property (readonly, nonatomic,strong) NSString* conferenceNumberFormatted;
+
+@property (readonly, nonatomic,strong) NSString* conferenceNumber;
 @property (readonly, nonatomic,strong) NSString* leaderInfo;
 @property (readonly, nonatomic,strong) NSString* fullConferenceNumber;
 

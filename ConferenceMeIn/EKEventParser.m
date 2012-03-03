@@ -381,6 +381,44 @@
     return phoneNumber;
 }
 
++ (CMIConferenceNumber*)eventTextToConferenceNumber:(NSString*)eventText
+{
+    [CMIUtility Log:@"eventTextToConferenceNumber()"];
+
+    CMIConferenceNumber* cmiConferenceNumber = [[CMIConferenceNumber alloc] init];
+
+    if (eventText.length < 10)   return nil;
+    
+    NSString* phoneNumber = @"";
+    
+    // 2-phase pass, first of all find 
+    NSRange rangeOfFirstMatch = [EKEventParser tryToGetPhone:eventText];
+    if (!NSEqualRanges(rangeOfFirstMatch, NSMakeRange(NSNotFound, 0))) {
+        NSString* firstSubstring = [eventText substringWithRange:rangeOfFirstMatch];
+        NSRange rangeOfSecondMatch = [EKEventParser tryToGetFirstPhone:firstSubstring];
+        if (rangeOfSecondMatch.location != NSNotFound) {
+            NSString *substringForSecondMatch = [EKEventParser stripRegex:[firstSubstring substringWithRange:rangeOfSecondMatch] regexToStrip:@"[^\\d]"];
+            
+            substringForSecondMatch = [EKEventParser stripLeadingZeroOrOne:substringForSecondMatch];
+            
+            cmiConferenceNumber.phoneNumber = [phoneNumber stringByAppendingString:substringForSecondMatch];
+            
+            // Get PIN / Code. Try a couple of ways...
+            NSUInteger afterPhoneNumberPosition = rangeOfFirstMatch.location + rangeOfSecondMatch.location + rangeOfSecondMatch.length;
+            NSString* remainderText = [eventText substringFromIndex:afterPhoneNumberPosition];
+            cmiConferenceNumber.code = [EKEventParser tryToGetCodeSpecific:eventText];
+            if (cmiConferenceNumber.code == nil) {
+                cmiConferenceNumber.code = [EKEventParser tryToGetCodeGeneric:remainderText];
+            }
+            if (cmiConferenceNumber.code != nil) {
+                cmiConferenceNumber.codeSeparator = PHONE_CALL_SEPARATOR;
+            }        
+        }
+    }    
+    
+    return cmiConferenceNumber;
+}
+
 + (NSString*)parseIOSPhoneText:(NSString*)eventText
 {
     [CMIUtility Log:@"parseIOSPhoneText()"];

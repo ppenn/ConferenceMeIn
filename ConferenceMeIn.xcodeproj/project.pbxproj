@@ -15,18 +15,20 @@
 		A8081C9F1500396400CEC9A6 /* ABGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = A8081C9C1500396400CEC9A6 /* ABGroup.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A8081CA715003C2D00CEC9A6 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8081CA515003C2C00CEC9A6 /* AddressBook.framework */; };
 		A8081CA815003C2D00CEC9A6 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8081CA615003C2C00CEC9A6 /* AddressBookUI.framework */; };
-		A8081CAF150040BF00CEC9A6 /* CMIImportFromContactsController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8081CAE150040BF00CEC9A6 /* CMIImportFromContactsController.m */; };
+		A8081CAF150040BF00CEC9A6 /* CMIContactsController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8081CAE150040BF00CEC9A6 /* CMIContactsController.m */; };
 		A8081CB11501350600CEC9A6 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8081CA515003C2C00CEC9A6 /* AddressBook.framework */; };
 		A8081CB21501350600CEC9A6 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8081CA615003C2C00CEC9A6 /* AddressBookUI.framework */; };
 		A8081CB4150137B900CEC9A6 /* ABContact.m in Sources */ = {isa = PBXBuildFile; fileRef = A8081C9A1500396400CEC9A6 /* ABContact.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A8081CB6150137B900CEC9A6 /* ABGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = A8081C9C1500396400CEC9A6 /* ABGroup.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A8081CB8150137B900CEC9A6 /* ABContactsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A8081C921500384D00CEC9A6 /* ABContactsHelper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		A8081CBA150137B900CEC9A6 /* CMIImportFromContactsController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8081CAE150040BF00CEC9A6 /* CMIImportFromContactsController.m */; };
+		A8081CBA150137B900CEC9A6 /* CMIContactsController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8081CAE150040BF00CEC9A6 /* CMIContactsController.m */; };
 		A808AFAA14EBF60F00810523 /* CMIPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = A808AFA914EBF60F00810523 /* CMIPhone.m */; };
 		A808AFAB14EBF60F00810523 /* CMIPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = A808AFA914EBF60F00810523 /* CMIPhone.m */; };
 		A81E2F9C14EAD07A0005B411 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A81E2F9914EAD07A0005B411 /* Icon.png */; };
 		A81E2F9D14EAD07A0005B411 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A81E2F9A14EAD07A0005B411 /* Icon@2x.png */; };
 		A81E2F9E14EAD07A0005B411 /* ITunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = A81E2F9B14EAD07A0005B411 /* ITunesArtwork.png */; };
+		A82727D6150260CB005190EE /* CMIConferenceNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A82727D5150260CB005190EE /* CMIConferenceNumber.m */; };
+		A82727D7150260CB005190EE /* CMIConferenceNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A82727D5150260CB005190EE /* CMIConferenceNumber.m */; };
 		A847419D14E0C8FD0017A7C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A847419B14E0C8FD0017A7C8 /* Localizable.strings */; };
 		A847419E14E0C8FD0017A7C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A847419B14E0C8FD0017A7C8 /* Localizable.strings */; };
 		A856305514E87A53006B24F8 /* CMIUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A856305414E87A52006B24F8 /* CMIUserDefaults.m */; };
@@ -144,13 +146,15 @@
 		A8081C9C1500396400CEC9A6 /* ABGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABGroup.m; sourceTree = "<group>"; };
 		A8081CA515003C2C00CEC9A6 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		A8081CA615003C2C00CEC9A6 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
-		A8081CAD150040BF00CEC9A6 /* CMIImportFromContactsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIImportFromContactsController.h; sourceTree = "<group>"; };
-		A8081CAE150040BF00CEC9A6 /* CMIImportFromContactsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIImportFromContactsController.m; sourceTree = "<group>"; };
+		A8081CAD150040BF00CEC9A6 /* CMIContactsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIContactsController.h; sourceTree = "<group>"; };
+		A8081CAE150040BF00CEC9A6 /* CMIContactsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIContactsController.m; sourceTree = "<group>"; };
 		A808AFA814EBF60F00810523 /* CMIPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIPhone.h; sourceTree = "<group>"; };
 		A808AFA914EBF60F00810523 /* CMIPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIPhone.m; sourceTree = "<group>"; };
 		A81E2F9914EAD07A0005B411 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ConferenceMeIn/images/Icon.png; sourceTree = "<group>"; };
 		A81E2F9A14EAD07A0005B411 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "ConferenceMeIn/images/Icon@2x.png"; sourceTree = "<group>"; };
 		A81E2F9B14EAD07A0005B411 /* ITunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ITunesArtwork.png; path = ConferenceMeIn/images/ITunesArtwork.png; sourceTree = "<group>"; };
+		A82727D4150260CB005190EE /* CMIConferenceNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIConferenceNumber.h; sourceTree = "<group>"; };
+		A82727D5150260CB005190EE /* CMIConferenceNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIConferenceNumber.m; sourceTree = "<group>"; };
 		A847419C14E0C8FD0017A7C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ConferenceMeIn/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A856305314E87A52006B24F8 /* CMIUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIUserDefaults.h; sourceTree = "<group>"; };
 		A856305414E87A52006B24F8 /* CMIUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIUserDefaults.m; sourceTree = "<group>"; };
@@ -303,8 +307,8 @@
 				A8081C9C1500396400CEC9A6 /* ABGroup.m */,
 				A8081C911500384D00CEC9A6 /* ABContactsHelper.h */,
 				A8081C921500384D00CEC9A6 /* ABContactsHelper.m */,
-				A8081CAD150040BF00CEC9A6 /* CMIImportFromContactsController.h */,
-				A8081CAE150040BF00CEC9A6 /* CMIImportFromContactsController.m */,
+				A8081CAD150040BF00CEC9A6 /* CMIContactsController.h */,
+				A8081CAE150040BF00CEC9A6 /* CMIContactsController.m */,
 			);
 			name = AddressBook;
 			sourceTree = "<group>";
@@ -425,6 +429,8 @@
 				A8CFD0E814EFE5C200EA8616 /* CMIMyConferenceNumber.m */,
 				A856305314E87A52006B24F8 /* CMIUserDefaults.h */,
 				A856305414E87A52006B24F8 /* CMIUserDefaults.m */,
+				A82727D4150260CB005190EE /* CMIConferenceNumber.h */,
+				A82727D5150260CB005190EE /* CMIConferenceNumber.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -749,7 +755,8 @@
 				A8081C931500384D00CEC9A6 /* ABContactsHelper.m in Sources */,
 				A8081C9F1500396400CEC9A6 /* ABGroup.m in Sources */,
 				A8081C9D1500396400CEC9A6 /* ABContact.m in Sources */,
-				A8081CAF150040BF00CEC9A6 /* CMIImportFromContactsController.m in Sources */,
+				A8081CAF150040BF00CEC9A6 /* CMIContactsController.m in Sources */,
+				A82727D6150260CB005190EE /* CMIConferenceNumber.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -760,7 +767,7 @@
 				A8081CB4150137B900CEC9A6 /* ABContact.m in Sources */,
 				A8081CB6150137B900CEC9A6 /* ABGroup.m in Sources */,
 				A8081CB8150137B900CEC9A6 /* ABContactsHelper.m in Sources */,
-				A8081CBA150137B900CEC9A6 /* CMIImportFromContactsController.m in Sources */,
+				A8081CBA150137B900CEC9A6 /* CMIContactsController.m in Sources */,
 				A8E5254D14CA37A200797C16 /* EKEventParser.m in Sources */,
 				A8E1D70514D08F2800E5A877 /* EKEventParserTests.m in Sources */,
 				A8E1D70D14D0974700E5A877 /* CMIEvent.m in Sources */,
@@ -774,6 +781,7 @@
 				A856305614E87A53006B24F8 /* CMIUserDefaults.m in Sources */,
 				A808AFAB14EBF60F00810523 /* CMIPhone.m in Sources */,
 				A8CFD0EA14EFE5C200EA8616 /* CMIMyConferenceNumber.m in Sources */,
+				A82727D7150260CB005190EE /* CMIConferenceNumber.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
