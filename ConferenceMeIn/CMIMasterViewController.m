@@ -9,7 +9,7 @@
 #import "CMIMasterViewController.h"
 #import "CMIUtility.h"
 #import "CMIUserDefaults.h"
-#import "CMIImportFromContactsController.h"
+#import "CMIContactsController.h"
 #import "EKEventParser.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -1036,13 +1036,8 @@ NSInteger _actionSheetChoice = -1;
 {
     [CMIUtility Log:@"callMyNumber()"];
 
-    if(_cmiMyConferenceNumber.isValid == FALSE) {
-        [self warnPhoneNumberNotInSettings];
-    }
-    else {
-        // Call the number...
-        [_cmiPhone dialConferenceNumber:_cmiMyConferenceNumber];
-    }
+    // Call the number...
+    [_cmiPhone dialConferenceNumber:_cmiMyConferenceNumber];
 }
 
 -(void) email
@@ -1070,8 +1065,21 @@ NSInteger _actionSheetChoice = -1;
     }
 }
 
+- (void)cmiContactsControllerAddToContactsDidFinish:(CMIContactsController *)viewController {
+    @try {
+        [CMIUtility Log:@"cmiContactsControllerAddToContactsDidFinish()"];
+        if (_cmiContacts.userDidCancel == NO) {
+            // Do we care to do anything? Maybe open the newly changed contact?
+            [_cmiContacts showSelectedContact];
+        }
+    }
+    @catch (NSException *exception) {
+        [CMIUtility LogError:exception.reason];
+    }
+}
+
 // Implement the delegate methods for ChildViewControllerDelegate
-- (void)cmiContactsControllerDidFinish:(CMIImportFromContactsController *)viewController {
+- (void)cmiContactsControllerDidFinish:(CMIContactsController *)viewController {
 
     [CMIUtility Log:@"onContactsFinishedGettingNumber()"];
     @try {
@@ -1093,6 +1101,8 @@ NSInteger _actionSheetChoice = -1;
                 // Now reload settings
                 [_cmiUserDefaults loadDefaults];
                 [self readAppSettings];
+                // Now what? Actually do the thing the user wanted...
+                [self handleMainActionSheetClick];
             }
             
         }
@@ -1122,7 +1132,7 @@ NSInteger _actionSheetChoice = -1;
             break;
         case enterConfNumberImportFromContacts:
             [CMIUtility Log:@"Import"];
-            _cmiContacts = [[CMIImportFromContactsController alloc] initWithViewController:self];
+            _cmiContacts = [[CMIContactsController alloc] initWithViewController:self];
             _cmiContacts.delegate = self;
             [_cmiContacts tryToGetConfNumber];
             break;
@@ -1132,31 +1142,47 @@ NSInteger _actionSheetChoice = -1;
     }
 }
 
+- (void)addToContacts
+{
+    [CMIUtility Log:@"addToContacts()"];
+    
+    _cmiContacts = [[CMIContactsController alloc] initWithViewController:self];
+    _cmiContacts.delegate = self;
+    [_cmiContacts tryToSaveToContact:_cmiMyConferenceNumber.conferenceNumber];
+}
+
 - (void)handleMainActionSheetClick
 {
     [CMIUtility Log:@"handleMainActionSheetClick()"];
-    
-    // the user clicked one of the OK/Cancel buttons
-    switch (_actionSheetChoice) {
-        case menuActionDial:
-            [CMIUtility Log:@"Call My Number"];
-            [self callMyNumber];
-            break;
-        case menuActionEmail:
-            [CMIUtility Log:@"Email My Number"];
-            [self emailMyConferenceDetails];
-            break;
-        case menuActionAddToContacts:
-            [CMIUtility Log:@"Add To Contacts"];
-            [self showHelpDialog];
-            break;
-        case menuActionSettings:
-            [CMIUtility Log:@"Settings"];
-            [self showSettingsDialog];
-            break;
-        default:
-            [CMIUtility Log:@"Cancel"];
-            break;
+
+    // All of these are actions against an existing Conf#, so if it doesn't exist or is invalid
+    // then 
+    if(_cmiMyConferenceNumber.isValid == FALSE) {
+        [self warnPhoneNumberNotInSettings];
+    }
+    else {    
+        // the user clicked one of the OK/Cancel buttons
+        switch (_actionSheetChoice) {
+            case menuActionDial:
+                [CMIUtility Log:@"Call My Number"];
+                [self callMyNumber];
+                break;
+            case menuActionEmail:
+                [CMIUtility Log:@"Email My Number"];
+                [self emailMyConferenceDetails];
+                break;
+            case menuActionAddToContacts:
+                [CMIUtility Log:@"Add To Contacts"];
+                [self addToContacts];
+                break;
+            case menuActionSettings:
+                [CMIUtility Log:@"Settings"];
+                [self showSettingsDialog];
+                break;
+            default:
+                [CMIUtility Log:@"Cancel"];
+                break;
+        }
     }
 }
 
