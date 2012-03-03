@@ -22,7 +22,7 @@
 "ConferenceNumberFormat" = " Conference Number: %@ Code: %@";
 "CallMyConfNumTitle" = "Dial";
 "EmailMyConfNumTitle" = "Email";
-"AddToContactTitle" = "Add To Contact";
+"AddToContactTitle" = "Add To Contacts";
 "ImportContactTitle" = "Import From Contacts";
 "SettingsButtonTitle" = "Edit";
 "IntroMessage" = "Double-tap or tap-and-hold calendar event to dial number directly.\r\nSingle-tap event to see  details and dial number";
