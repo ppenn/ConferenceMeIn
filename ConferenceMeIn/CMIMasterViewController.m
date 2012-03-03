@@ -12,8 +12,10 @@
 #import "CMIContactsController.h"
 #import "EKEventParser.h"
 #import <QuartzCore/QuartzCore.h>
+#import "CMIConferenceNumber.h"
 
 #define ROW_HEIGHT 90
+#define LONG_PRESS_DURATION 1.5
 
 #define ACTIONSHEET_MENU 0
 #define ACTIONSHEET_SET_CONF_NUM 1
@@ -327,9 +329,9 @@ NSInteger _actionSheetChoice = -1;
     }    
 }
 
--(void)invokeMegaAnnoyingPopup
+-(void)invokeMegaAnnoyingPopup:(NSString*)message
 {
-    self.megaAlert = [[UIAlertView alloc] initWithTitle:@"Loading Events..."
+    self.megaAlert = [[UIAlertView alloc] initWithTitle:message
                                                  message:nil delegate:self cancelButtonTitle:nil
                                        otherButtonTitles: nil];
         
@@ -499,7 +501,7 @@ NSInteger _actionSheetChoice = -1;
         if (selectionIndex != _cmiEventCalendar.filterType) {    
             _cmiUserDefaults.filterType = selectionIndex;
         
-            [self invokeMegaAnnoyingPopup]; 
+            [self invokeMegaAnnoyingPopup:NSLocalizedString(@"LoadingEventsMessage", nil)]; 
             // Next line is equivalent of old VB6's DoEvents :)
             [[NSRunLoop currentRunLoop] runUntilDate:[NSDate date]];
             [self reloadTableScrollToNow];
@@ -548,7 +550,7 @@ NSInteger _actionSheetChoice = -1;
 
     UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc] 
                                           initWithTarget:self action:@selector(handleLongPress:)];
-    lpgr.minimumPressDuration = 2.0; //seconds
+    lpgr.minimumPressDuration = LONG_PRESS_DURATION; //seconds
     lpgr.delegate = self;
     [self.tableView addGestureRecognizer:lpgr];    
 }
@@ -571,26 +573,28 @@ NSInteger _actionSheetChoice = -1;
 {
     @try {
         [CMIUtility Log:@"handleLongPress()"];
-        
-        _selectedCMIEvent = nil;
-        CGPoint p = [gestureRecognizer locationInView:self.tableView];
-        
-        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
-        if (indexPath == nil) {
-            [CMIUtility Log:@"long press on table view but not on a row"];
-        }
-        else {
-//            [CMIUtility Log:@"long press on table view at row %d", indexPath.row];
-            CMIEvent* cmiEvent = [_cmiEventCalendar getCMIEventByIndexPath:indexPath.section eventIndex:indexPath.row];
-            _selectedCMIEvent = cmiEvent;
-            [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-            _tappedRow = -1;
-            _tappedSection = -1;
-            if ([cmiEvent hasConferenceNumber] == true) {            
-                [self createContextMenu:cmiEvent];           
+
+        if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {        
+            _selectedCMIEvent = nil;
+            CGPoint p = [gestureRecognizer locationInView:self.tableView];
+            
+            NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+            if (indexPath == nil) {
+                [CMIUtility Log:@"long press on table view but not on a row"];
             }
             else {
-                [self showEventNatively:indexPath.section row:indexPath.row];
+    //            [CMIUtility Log:@"long press on table view at row %d", indexPath.row];
+                CMIEvent* cmiEvent = [_cmiEventCalendar getCMIEventByIndexPath:indexPath.section eventIndex:indexPath.row];
+                _selectedCMIEvent = cmiEvent;
+                [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+                _tappedRow = -1;
+                _tappedSection = -1;
+                if ([cmiEvent hasConferenceNumber] == true) {            
+                    [self createContextMenu:cmiEvent];           
+                }
+                else {
+                    [self showEventNatively:indexPath.section row:indexPath.row];
+                }
             }
         }
     }
@@ -702,7 +706,7 @@ NSInteger _actionSheetChoice = -1;
             _cmiUserDefaults.defaultsDidChange = NO;
             firstLoad = NO;
             
-            [self invokeMegaAnnoyingPopup];    
+            [self invokeMegaAnnoyingPopup:NSLocalizedString(@"LoadingEventsMessage", nil)];    
             _refreshTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(refreshTimerFired:) userInfo:nil repeats:NO];
             
         }
@@ -1066,12 +1070,12 @@ NSInteger _actionSheetChoice = -1;
     [_cmiPhone dialConferenceNumber:_cmiMyConferenceNumber];
 }
 
--(void) email
+-(void) email:(NSString*)formattedConferenceNumber
 {
     [CMIUtility Log:@"email()"];
 
     NSString* escapedConferenceNumberFormatted =
-    [_cmiMyConferenceNumber.conferenceNumberFormatted stringByAddingPercentEscapesUsingEncoding:
+    [formattedConferenceNumber stringByAddingPercentEscapesUsingEncoding:
      NSASCIIStringEncoding];    
     NSString* mailTo = [[[@"mailto:?subject=" stringByAppendingString:NSLocalizedString(@"EmailSubject", nil)]  stringByAppendingString:@"&body="] stringByAppendingString:escapedConferenceNumberFormatted];
     NSURL* mailURL = [NSURL URLWithString:mailTo];
@@ -1087,7 +1091,7 @@ NSInteger _actionSheetChoice = -1;
     }
     else {
         // Email the number...
-        [self email];
+        [self email:_cmiMyConferenceNumber.conferenceNumberFormatted];
     }
 }
 
@@ -1168,13 +1172,13 @@ NSInteger _actionSheetChoice = -1;
     }
 }
 
-- (void)addToContacts
+- (void)addToContacts:(NSString*)conferenceNumber
 {
     [CMIUtility Log:@"addToContacts()"];
     
     _cmiContacts = [[CMIContactsController alloc] initWithViewController:self];
     _cmiContacts.delegate = self;
-    [_cmiContacts tryToSaveToContact:_cmiMyConferenceNumber.conferenceNumber];
+    [_cmiContacts tryToSaveToContact:conferenceNumber];
 }
 
 - (void)handleMainActionSheetClick
@@ -1199,7 +1203,7 @@ NSInteger _actionSheetChoice = -1;
                 break;
             case menuActionAddToContacts:
                 [CMIUtility Log:@"Add To Contacts"];
-                [self addToContacts];
+                [self addToContacts:_cmiMyConferenceNumber.conferenceNumber];
                 break;
             case menuActionSettings:
                 [CMIUtility Log:@"Settings"];
@@ -1212,7 +1216,18 @@ NSInteger _actionSheetChoice = -1;
     }
 }
 
-- (void)handleContextMenu
+- (void)copyToClipboard
+{
+    [CMIUtility Log:@"copyToClipboard()"];
+
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];    
+
+    if (_selectedCMIEvent != nil && _selectedCMIEvent.hasConferenceNumber == YES) {
+        pasteboard.string = _selectedCMIEvent.conferenceNumber;
+    }
+}
+
+- (void)handleContextMenu:(UIActionSheet *)actionSheet
 {
     [CMIUtility Log:@"handleContextMenu()"];
     
@@ -1225,15 +1240,16 @@ NSInteger _actionSheetChoice = -1;
             break;
         case contextMenuActionEmail:
             [CMIUtility Log:@"Email"];
-            [self emailMyConferenceDetails];
+            [self email:[CMIConferenceNumber conferenceNumberFormatted:_selectedCMIEvent.conferenceNumber]];
             break;
         case contextMenuActionAddToContacts:
             [CMIUtility Log:@"Add To Contacts"];
-            [self addToContacts];
+            [self addToContacts:_selectedCMIEvent.conferenceNumber];
             break;
         case contextMenuActionCopy:
             [CMIUtility Log:@"Copy"];
-            [self showSettingsDialog];
+            [self copyToClipboard];
+            [actionSheet dismissWithClickedButtonIndex:-1 animated:YES];
             break;
         default:
             [CMIUtility Log:@"Cancel"];
@@ -1260,7 +1276,7 @@ NSInteger _actionSheetChoice = -1;
                 [self handleSetNumberActionSheetClick];
                 break;
             case ACTIONSHEET_CONTEXT_MENU_CONF:
-                [self handleContextMenu];
+                [self handleContextMenu:actionSheet];
                 break;
             default:
                 break;
@@ -1293,7 +1309,7 @@ NSInteger _actionSheetChoice = -1;
                     [_cmiPhone dialConferenceNumberWithConfirmation:_cmiMyConferenceNumber view:self.tableView];
                     break;
                 case menuActionEmail:
-                    [self email];
+                    [self email:_cmiMyConferenceNumber.conferenceNumberFormatted];
                     break;
                 case menuActionAddToContacts:
                     break;

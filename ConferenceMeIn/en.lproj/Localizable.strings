@@ -35,6 +35,8 @@
 "EmailSubject" = "Conference%20Call%20Details";
 "ContextMenuButtonTitle" = "Calendar Event";
 "CopyButtonTitle" = "Copy #";
+"LoadingEventsMessage" = "Loading Events...";
+"SavingContactMessage" = "Saving Contact...";
 
 /* EventViewController Window */
 "ConferenceNumberDetails" = "Conference # Details";
