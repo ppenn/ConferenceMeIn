@@ -250,7 +250,7 @@ NSDate* _eventsEndDate = nil;
             _eventsEndDate = [CMIUtility getOffsetDateByMinutes:_eventsEndDate offsetMinutes:-1];
             break;
         case debugTimeframe:
-            _eventsStartDate = [CMIUtility dayToDate:@"20120101"];
+            _eventsStartDate = [CMIUtility dayToDate:@"20120201"];
             _eventsEndDate = [CMIUtility getOffsetDate:now atOffsetDays:1];
             break;
             

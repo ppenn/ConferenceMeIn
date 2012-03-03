@@ -17,6 +17,8 @@
 
 #define ACTIONSHEET_MENU 0
 #define ACTIONSHEET_SET_CONF_NUM 1
+#define ACTIONSHEET_CONTEXT_MENU 2
+#define ACTIONSHEET_CONTEXT_MENU_CONF 3
 
 static UIImage *_phoneImage;
 NSInteger _tapCount = 0;
@@ -43,6 +45,7 @@ NSInteger _actionSheetChoice = -1;
 @synthesize reloadDefaultsOnAppear = _reloadDefaultsOnAppear;
 @synthesize megaAlert;
 @synthesize cmiContacts = _cmiContacts;
+@synthesize selectedCMIEvent = _selectedCMIEvent;
 
 #pragma mark -
 #pragma mark Table view delegate and data source methods
@@ -550,10 +553,26 @@ NSInteger _actionSheetChoice = -1;
     [self.tableView addGestureRecognizer:lpgr];    
 }
 
+-(void)createContextMenu:(CMIEvent*)cmiEvent
+{
+    [CMIUtility Log:@"createContextMenu()"];
+
+    UIActionSheet* actionSheet;
+
+    actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"ContextMenuButtonTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"CallMyConfNumTitle",@""), NSLocalizedString(@"EmailMyConfNumTitle",@""), NSLocalizedString(@"AddToContactTitle", @""), NSLocalizedString(@"CopyButtonTitle",@""),nil];
+    actionSheet.tag = ACTIONSHEET_CONTEXT_MENU_CONF;
+
+    actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+    [actionSheet showFromToolbar:self.navigationController.toolbar];	// show from our table 
+    
+}
+
 -(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
 {
     @try {
         [CMIUtility Log:@"handleLongPress()"];
+        
+        _selectedCMIEvent = nil;
         CGPoint p = [gestureRecognizer locationInView:self.tableView];
         
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
@@ -563,16 +582,16 @@ NSInteger _actionSheetChoice = -1;
         else {
 //            [CMIUtility Log:@"long press on table view at row %d", indexPath.row];
             CMIEvent* cmiEvent = [_cmiEventCalendar getCMIEventByIndexPath:indexPath.section eventIndex:indexPath.row];
+            _selectedCMIEvent = cmiEvent;
             [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
             _tappedRow = -1;
             _tappedSection = -1;
-            if ([cmiEvent hasConferenceNumber] == true) {
-                [_cmiPhone dial:cmiEvent.conferenceNumber];
+            if ([cmiEvent hasConferenceNumber] == true) {            
+                [self createContextMenu:cmiEvent];           
             }
             else {
                 [self showEventNatively:indexPath.section row:indexPath.row];
             }
-            
         }
     }
     @catch (NSException *e) {
@@ -1007,17 +1026,24 @@ NSInteger _actionSheetChoice = -1;
 {
     [CMIUtility Log:@"showSettingsDialog()"];
 
-    if ([self.appSettingsViewController.file isEqualToString:@"Root"]) {
-        _appSettingsViewController = nil;
+    if(_cmiMyConferenceNumber.isValid == FALSE) {
+        [self warnPhoneNumberNotInSettings];
+    }
+    else {
+        if ([self.appSettingsViewController.file isEqualToString:@"Root"]) {
+            _appSettingsViewController = nil;
+        }
+        
+        if ([self.appSettingsViewController.file isEqualToString:@"ChildCMINumber"]) {
+            _appSettingsViewController = nil;
+        }
+        self.appSettingsViewController.file = @"ChildCMINumber"; // @"Root" would be the whole lot...
+        self.appSettingsViewController.showDoneButton = YES;
+        UINavigationController *aNavController = [[UINavigationController alloc] initWithRootViewController:self.appSettingsViewController];
+        [self presentModalViewController:aNavController animated:YES];
     }
     
-    if ([self.appSettingsViewController.file isEqualToString:@"ChildCMINumber"]) {
-        _appSettingsViewController = nil;
-    }
-    self.appSettingsViewController.file = @"ChildCMINumber"; // @"Root" would be the whole lot...
-    self.appSettingsViewController.showDoneButton = YES;
-    UINavigationController *aNavController = [[UINavigationController alloc] initWithRootViewController:self.appSettingsViewController];
-    [self presentModalViewController:aNavController animated:YES];
+    
     
 }
 
@@ -1186,6 +1212,34 @@ NSInteger _actionSheetChoice = -1;
     }
 }
 
+- (void)handleContextMenu
+{
+    [CMIUtility Log:@"handleContextMenu()"];
+    
+    switch (_actionSheetChoice) {
+        case contextMenuActionDial:
+            [CMIUtility Log:@"Dial"];
+            if (_selectedCMIEvent != nil && [_selectedCMIEvent hasConferenceNumber] == true) {
+                [_cmiPhone dial:_selectedCMIEvent.conferenceNumber];
+            }
+            break;
+        case contextMenuActionEmail:
+            [CMIUtility Log:@"Email"];
+            [self emailMyConferenceDetails];
+            break;
+        case contextMenuActionAddToContacts:
+            [CMIUtility Log:@"Add To Contacts"];
+            [self addToContacts];
+            break;
+        case contextMenuActionCopy:
+            [CMIUtility Log:@"Copy"];
+            [self showSettingsDialog];
+            break;
+        default:
+            [CMIUtility Log:@"Cancel"];
+            break;
+    }
+}
 
 #pragma mark -
 #pragma mark - UIActionSheetDelegate
@@ -1198,11 +1252,18 @@ NSInteger _actionSheetChoice = -1;
         
         _actionSheetChoice = buttonIndex;
 
-        if (actionSheet.tag == ACTIONSHEET_MENU) {
-            [self handleMainActionSheetClick];
-        }
-        else { // set number
-            [self handleSetNumberActionSheetClick];
+        switch (actionSheet.tag) {
+            case ACTIONSHEET_MENU:
+                [self handleMainActionSheetClick];                
+                break;
+            case ACTIONSHEET_SET_CONF_NUM:
+                [self handleSetNumberActionSheetClick];
+                break;
+            case ACTIONSHEET_CONTEXT_MENU_CONF:
+                [self handleContextMenu];
+                break;
+            default:
+                break;
         }
 
     }

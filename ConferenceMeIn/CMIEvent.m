@@ -17,8 +17,6 @@
 @synthesize callProvider = _callProvider;
 
 
-//UIPasteboard *pasteboard;
-
 + (NSMutableArray*)createCMIEvents:(NSArray*)events
 {
     [CMIUtility Log:@"createCMIEvents()"];

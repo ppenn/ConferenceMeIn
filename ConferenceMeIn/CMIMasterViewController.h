@@ -27,6 +27,14 @@ typedef enum menuActionButtons
     menuActionSettings
 }menuActionButtons;
 
+typedef enum contextMenuActionButtons
+{
+    contextMenuActionDial = 0,
+    contextMenuActionEmail,
+    contextMenuActionAddToContacts,
+    contextMenuActionCopy
+}contextMenuActionButtons;
+
 typedef enum enterConfNumberActionButtons
 {
     enterConfNumberEnterSettings = 0,
@@ -46,6 +54,7 @@ typedef enum enterConfNumberActionButtons
 @property (strong, nonatomic) CMIPhone* cmiPhone;
 @property BOOL reloadDefaultsOnAppear;
 @property (strong, nonatomic) CMIContactsController* cmiContacts;
+@property (strong, nonatomic) CMIEvent* selectedCMIEvent;
 
 - (void) storeChanged:(NSNotification *) notification;
 - (NSArray *)fetchEventsForTable;
@@ -58,5 +67,6 @@ typedef enum enterConfNumberActionButtons
 - (void) showStartDialog;
 - (void)readAppSettings;
 - (void)handleMainActionSheetClick;
+- (void) warnPhoneNumberNotInSettings;
 
 @end
