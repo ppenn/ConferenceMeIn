@@ -24,6 +24,7 @@
 
 #define EVENT_CHANGE_DELAY 0.2
 
+#define ADMOB_PUBLISHER_ID @""
 
 static UIImage *_phoneImage;
 NSInteger _tapCount = 0;
@@ -94,38 +95,47 @@ NSInteger _actionSheetChoice = -1;
         [CMIUtility LogError:e.reason];
     }
 }
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    NSLog(@"I am starting to rotate");
+//    [self.view.subviews
+}
+
 - (void)createTestAdMobBanner
 {
+    CGFloat y = self.parentViewController.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - GAD_SIZE_320x50.height;
 	UIView *containerView2 =
     [[UIView alloc]
-      initWithFrame:CGRectMake(0.0, self.tableView.frame.origin.y + 
-                               self.tableView.frame.size.height,
+      initWithFrame:CGRectMake(0.0, y,
                                GAD_SIZE_320x50.width,
                                GAD_SIZE_320x50.height)];
      ;
     containerView2.backgroundColor = [UIColor redColor];
-    [self.view addSubview:containerView2];
+    containerView2.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    [self.parentViewController.view addSubview:containerView2];
     
 }
+
 - (void)createAdMobBanner
 {
     [CMIUtility Log:@"createAdMobBanner()"];
 
+    CGFloat y = self.parentViewController.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - GAD_SIZE_320x50.height;
     // Create a view of the standard size at the bottom of the screen.
     bannerView_ = [[GADBannerView alloc]
                    initWithFrame:CGRectMake(0.0,
-                                            self.view.frame.size.height -
-                                            GAD_SIZE_320x50.height,
+                                            y,
                                             GAD_SIZE_320x50.width,
                                             GAD_SIZE_320x50.height)];
     
     // Specify the ad's "unit identifier." This is your AdMob Publisher ID.
-    bannerView_.adUnitID = @"";
+    bannerView_.adUnitID = ADMOB_PUBLISHER_ID;
     
     // Let the runtime know which UIViewController to restore after taking
     // the user wherever the ad goes and add it to the view hierarchy.
     bannerView_.rootViewController = self;
-    [self.view addSubview:bannerView_];
+    bannerView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    [self.parentViewController.view addSubview:bannerView_];
     
     // Initiate a generic request to load it with an ad.
     [bannerView_ loadRequest:[GADRequest request]];    
@@ -335,10 +345,6 @@ NSInteger _actionSheetChoice = -1;
     _cmiPhone = [[CMIPhone alloc] initWithCallProvider:_cmiUserDefaults.callProviderType];
 }
 
-- (void)viewWillUnload
-{
-    
-}
 
 - (NSArray *)fetchEventsForTable 
 {
@@ -616,6 +622,9 @@ NSInteger _actionSheetChoice = -1;
     lpgr.minimumPressDuration = LONG_PRESS_DURATION; //seconds
     lpgr.delegate = self;
     [self.tableView addGestureRecognizer:lpgr];    
+
+    [self createTestAdMobBanner];
+    
 }
 
 -(void)createContextMenu:(CMIEvent*)cmiEvent
@@ -674,6 +683,8 @@ NSInteger _actionSheetChoice = -1;
     
     @try {
         [CMIUtility Log:@"viewDidLoad()"];
+        
+        [super viewDidLoad];
         
         _cmiUserDefaults = ((ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate]).cmiUserDefaults;
         
@@ -747,9 +758,11 @@ NSInteger _actionSheetChoice = -1;
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [CMIUtility Log:@"viewDidAppear()"];
+    [super viewDidAppear:animated];
     
     @try {
+        [CMIUtility Log:@"viewDidAppear()"];
+
         if (firstLoad == YES ||
             (_reloadDefaultsOnAppear == YES && _cmiUserDefaults.defaultsDidChange == YES)) {
             _reloadDefaultsOnAppear = NO;
@@ -773,6 +786,7 @@ NSInteger _actionSheetChoice = -1;
             }
         }    
         self.navigationController.toolbarHidden = NO;
+        
     }
     @catch (NSException *e) {
         [CMIUtility LogError:e.reason];
@@ -987,7 +1001,6 @@ NSInteger _actionSheetChoice = -1;
     return [CMIUtility date:now isBetweenDate:trueStartDate andDate:event.endDate];
     
 }
-
 
 
 - (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath {
