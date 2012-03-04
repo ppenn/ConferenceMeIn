@@ -40,6 +40,9 @@ CMIMasterViewController* _cmiMasterViewController;
         // Get the user defaults
 
         if (self.navigationController.visibleViewController == _cmiMasterViewController) {
+            [_cmiMasterViewController invokeMegaAnnoyingPopup:NSLocalizedString(@"LoadingEventsMessage", nil)]; 
+            // Next line is equivalent of old VB6's DoEvents :)
+            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate date]];
             [_cmiUserDefaults loadDefaults];
             [_cmiMasterViewController reloadTableScrollToNow];
         }

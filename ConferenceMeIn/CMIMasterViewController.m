@@ -22,6 +22,9 @@
 #define ACTIONSHEET_CONTEXT_MENU 2
 #define ACTIONSHEET_CONTEXT_MENU_CONF 3
 
+#define EVENT_CHANGE_DELAY 0.2
+
+
 static UIImage *_phoneImage;
 NSInteger _tapCount = 0;
 NSInteger _tappedRow = 0;
@@ -48,6 +51,7 @@ NSInteger _actionSheetChoice = -1;
 @synthesize megaAlert;
 @synthesize cmiContacts = _cmiContacts;
 @synthesize selectedCMIEvent = _selectedCMIEvent;
+@synthesize eventStoreChangeTimerWillFire = _eventStoreChangeTimerWillFire;
 
 #pragma mark -
 #pragma mark Table view delegate and data source methods
@@ -90,7 +94,42 @@ NSInteger _actionSheetChoice = -1;
         [CMIUtility LogError:e.reason];
     }
 }
+- (void)createTestAdMobBanner
+{
+	UIView *containerView2 =
+    [[UIView alloc]
+      initWithFrame:CGRectMake(0.0, self.tableView.frame.origin.y + 
+                               self.tableView.frame.size.height,
+                               GAD_SIZE_320x50.width,
+                               GAD_SIZE_320x50.height)];
+     ;
+    containerView2.backgroundColor = [UIColor redColor];
+    [self.view addSubview:containerView2];
+    
+}
+- (void)createAdMobBanner
+{
+    [CMIUtility Log:@"createAdMobBanner()"];
 
+    // Create a view of the standard size at the bottom of the screen.
+    bannerView_ = [[GADBannerView alloc]
+                   initWithFrame:CGRectMake(0.0,
+                                            self.view.frame.size.height -
+                                            GAD_SIZE_320x50.height,
+                                            GAD_SIZE_320x50.width,
+                                            GAD_SIZE_320x50.height)];
+    
+    // Specify the ad's "unit identifier." This is your AdMob Publisher ID.
+    bannerView_.adUnitID = @"";
+    
+    // Let the runtime know which UIViewController to restore after taking
+    // the user wherever the ad goes and add it to the view hierarchy.
+    bannerView_.rootViewController = self;
+    [self.view addSubview:bannerView_];
+    
+    // Initiate a generic request to load it with an ad.
+    [bannerView_ loadRequest:[GADRequest request]];    
+}
 
 - (void)showEventNatively:(NSInteger)section row:(NSInteger)row
 {
@@ -362,6 +401,7 @@ NSInteger _actionSheetChoice = -1;
 - (void) reloadTableScrollToNow
 {
     [CMIUtility Log:@"reloadTableScrollToNow()"];
+    
     [self readAppSettings];    
     [self reloadTable];
     [self scrollToNow];
@@ -369,16 +409,39 @@ NSInteger _actionSheetChoice = -1;
     [self dismissMegaAnnoyingPopup];
 }
 
+- (void)eventStoreChangeTimerFired:(NSTimer *)aTimer
+{
+    @try {
+        [CMIUtility Log:@"eventStoreChangeTimerFired()"];
 
+        _cmiEventCalendar.calendarType = _cmiUserDefaults.calendarType;
+        
+        [self invokeMegaAnnoyingPopup:NSLocalizedString(@"LoadingEventsMessage", nil)]; 
+        // Next line is equivalent of old VB6's DoEvents :)
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate date]];
+        [self reloadTableScrollToNow];
+
+        _eventStoreChangeTimerWillFire = NO;
+    }
+    @catch (NSException *exception) {
+        [CMIUtility LogError:exception.reason];
+    }
+}
+
+// Looking for EKEventStoreChangedNotification
 - (void) storeChanged:(NSNotification *) notification
 {
     
     @try {
         [CMIUtility Log:[@"storeChanged() notification" stringByAppendingFormat:@"[ %@ ] ", notification.name ]];
 
-        _cmiEventCalendar.calendarType = _cmiUserDefaults.calendarType;
-        
-        [self reloadTableScrollToNow];
+        if ([notification.name isEqualToString:EKEventStoreChangedNotification] &&
+            _eventStoreChangeTimerWillFire == NO) {
+
+            _eventStoreChangeTimerWillFire = YES;
+            [NSTimer scheduledTimerWithTimeInterval:EVENT_CHANGE_DELAY target:self selector:@selector(eventStoreChangeTimerFired:) userInfo:nil repeats:NO];
+            
+        }
     }
     @catch (NSException *e) {
         [CMIUtility LogError:e.reason];
@@ -631,6 +694,7 @@ NSInteger _actionSheetChoice = -1;
         // This will only do anything if we are in the Simulator
         [CMIUtility createTestEvents:_cmiEventCalendar.eventStore];
         
+        _eventStoreChangeTimerWillFire = NO;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
                                                      name:EKEventStoreChangedNotification object:_cmiEventCalendar.eventStore];
 
@@ -681,20 +745,6 @@ NSInteger _actionSheetChoice = -1;
 }
 
 
-//- (void)viewDidLayoutSubviews
-//{
-//    [CMIUtility Log:@"viewDidLayoutSubviews()"];
-//    
-//    @try {
-//        if ([self reloadDue] == YES || firstLoad == YES) {
-//        }
-//    }
-//    @catch (NSException *e) {
-//        [CMIUtility LogError:e.reason];
-//    }
-//        
-//}
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [CMIUtility Log:@"viewDidAppear()"];
@@ -710,12 +760,6 @@ NSInteger _actionSheetChoice = -1;
             _refreshTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(refreshTimerFired:) userInfo:nil repeats:NO];
             
         }
-//        else if ((_reloadDefaultsOnAppear == YES && _cmiUserDefaults.defaultsDidChange == YES)) {
-//            _reloadDefaultsOnAppear = NO;
-//            _cmiUserDefaults.defaultsDidChange = NO;
-//            firstLoad = NO;
-//            [self reloadTableScrollToNow];
-//        }
         else {
             if (_indexPath != nil) {
                 [self.tableView deselectRowAtIndexPath:_indexPath animated:YES];        

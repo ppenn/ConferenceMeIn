@@ -18,4 +18,5 @@
 
 @property (strong, nonatomic, readonly) CMIUserDefaults* cmiUserDefaults;
 
+
 @end

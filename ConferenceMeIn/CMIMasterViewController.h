@@ -18,6 +18,7 @@
 #import "CMIMyConferenceNumber.h"
 #import "CMIPhone.h"
 #import "CMIContactsController.h"
+#import "GADBannerView.h"
 
 typedef enum menuActionButtons
 {
@@ -43,6 +44,9 @@ typedef enum enterConfNumberActionButtons
 
 
 @interface CMIMasterViewController : UITableViewController <UIActionSheetDelegate, EKEventEditViewDelegate, IASKSettingsDelegate, UIGestureRecognizerDelegate, CMIContactsControllerDelegate>
+{
+  GADBannerView *bannerView_;    
+}
 
 @property (strong, nonatomic) UIAlertView* megaAlert;
 @property (strong, nonatomic) CMIEKEventViewController *detailViewController;
@@ -55,6 +59,7 @@ typedef enum enterConfNumberActionButtons
 @property BOOL reloadDefaultsOnAppear;
 @property (strong, nonatomic) CMIContactsController* cmiContacts;
 @property (strong, nonatomic) CMIEvent* selectedCMIEvent;
+@property (atomic) BOOL eventStoreChangeTimerWillFire;
 
 - (void) storeChanged:(NSNotification *) notification;
 - (NSArray *)fetchEventsForTable;
@@ -68,5 +73,6 @@ typedef enum enterConfNumberActionButtons
 - (void)readAppSettings;
 - (void)handleMainActionSheetClick;
 - (void) warnPhoneNumberNotInSettings;
+- (void)invokeMegaAnnoyingPopup:(NSString*)message;
 
 @end

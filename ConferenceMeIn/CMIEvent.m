@@ -10,6 +10,8 @@
 #import "EKEventParser.h"
 #import "CMIUtility.h"
 
+#define EVENT_CONTENT_SEPARATOR @"   "
+
 @implementation CMIEvent
 
 @synthesize ekEvent = _ekEvent;
@@ -67,26 +69,31 @@
 {
     [CMIUtility Log:@"parseEvent()"];
     [CMIUtility LogEvent:_ekEvent];
+
+    NSString* eventContent = @"";
+    
+//    if ([_ekEvent.title isEqualToString:@"testtitle2"]) {
+//        int stophere = 0;
+//    }
     
     if (_ekEvent.title != nil && [_ekEvent.title length] > 0) {
-//        _conferenceNumber = [EKEventParser parseEventText:_ekEvent.title];      
-        _cmiConferenceNumber = [EKEventParser eventTextToConferenceNumber:_ekEvent.title];
+//        _cmiConferenceNumber = [EKEventParser eventTextToConferenceNumber:_ekEvent.title];
+        eventContent = [eventContent stringByAppendingString:_ekEvent.title];
     }
 
-    if ( (_conferenceNumber == nil || [_conferenceNumber length] == 0) && 
-       _ekEvent.location != nil && [_ekEvent.location length] > 0) {
-//        _conferenceNumber = [EKEventParser parseEventText:_ekEvent.location];        
-        _cmiConferenceNumber = [EKEventParser eventTextToConferenceNumber:_ekEvent.location];
+    if ( _ekEvent.location != nil && [_ekEvent.location length] > 0) {
+//        _cmiConferenceNumber = [EKEventParser eventTextToConferenceNumber:_ekEvent.location];
+        eventContent = [[eventContent stringByAppendingString:EVENT_CONTENT_SEPARATOR] stringByAppendingString:_ekEvent.location];
     }
 
-    if ( [CMIUtility environmentIsAtIOS5OrHigher] == YES &&
-        (_conferenceNumber == nil || [_conferenceNumber length] == 0) && 
-        _ekEvent.hasNotes == YES && [_ekEvent.notes length] > 0 ) {
-//        _conferenceNumber = [EKEventParser parseEventText:_ekEvent.notes];        
-        _cmiConferenceNumber = [EKEventParser eventTextToConferenceNumber:_ekEvent.notes];
+    if ( _ekEvent.hasNotes == YES && [_ekEvent.notes length] > 0 ) {
+//        _cmiConferenceNumber = [EKEventParser eventTextToConferenceNumber:_ekEvent.notes];
+        eventContent = [[eventContent stringByAppendingString:EVENT_CONTENT_SEPARATOR] stringByAppendingString:_ekEvent.notes];
     }
     
-    if (_conferenceNumber != nil && [_conferenceNumber length] > 0) {
+    _cmiConferenceNumber = [EKEventParser eventTextToConferenceNumber:eventContent];
+
+    if (self.conferenceNumber != nil && [self.conferenceNumber length] > 0) {
         [CMIUtility Log:[NSString stringWithFormat:@"Found Number [ %@ ]", self.conferenceNumber]];        
     }
 
