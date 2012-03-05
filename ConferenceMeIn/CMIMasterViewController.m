@@ -24,7 +24,7 @@
 
 #define EVENT_CHANGE_DELAY 0.2
 
-#define ADMOB_PUBLISHER_ID @""
+#define ADMOB_PUBLISHER_ID @"a14f53ae2321351"
 
 static UIImage *_phoneImage;
 NSInteger _tapCount = 0;
@@ -53,6 +53,20 @@ NSInteger _actionSheetChoice = -1;
 @synthesize cmiContacts = _cmiContacts;
 @synthesize selectedCMIEvent = _selectedCMIEvent;
 @synthesize eventStoreChangeTimerWillFire = _eventStoreChangeTimerWillFire;
+@synthesize admobIsLoaded = _admobIsLoaded;
+
+- (void)loadAdMobBanner:(NSTimer *)aTimer
+{
+    [CMIUtility Log:@"loadAdMobBanner()"];
+    
+    if (_admobIsLoaded != YES) {
+        [self createAdMobBanner];
+        // Initiate a generic request to load it with an ad.
+        [bannerView_ loadRequest:[GADRequest request]];    
+        _admobIsLoaded = YES;
+    }
+    
+}
 
 #pragma mark -
 #pragma mark Table view delegate and data source methods
@@ -96,10 +110,6 @@ NSInteger _actionSheetChoice = -1;
     }
 }
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    NSLog(@"I am starting to rotate");
-//    [self.view.subviews
-}
 
 - (void)createTestAdMobBanner
 {
@@ -116,15 +126,23 @@ NSInteger _actionSheetChoice = -1;
     
 }
 
+
 - (void)createAdMobBanner
 {
     [CMIUtility Log:@"createAdMobBanner()"];
 
     CGFloat y = self.parentViewController.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - GAD_SIZE_320x50.height;
+	UIView *containerView =
+    [[UIView alloc]
+     initWithFrame:CGRectMake(0.0, y,
+                              GAD_SIZE_320x50.width,
+                              GAD_SIZE_320x50.height)];
+    containerView.backgroundColor = [UIColor blackColor];
+    
     // Create a view of the standard size at the bottom of the screen.
     bannerView_ = [[GADBannerView alloc]
                    initWithFrame:CGRectMake(0.0,
-                                            y,
+                                            0.0,
                                             GAD_SIZE_320x50.width,
                                             GAD_SIZE_320x50.height)];
     
@@ -134,11 +152,14 @@ NSInteger _actionSheetChoice = -1;
     // Let the runtime know which UIViewController to restore after taking
     // the user wherever the ad goes and add it to the view hierarchy.
     bannerView_.rootViewController = self;
-    bannerView_.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-    [self.parentViewController.view addSubview:bannerView_];
+    [containerView addSubview:bannerView_];
+ 
+    containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+
+    bannerView_.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     
-    // Initiate a generic request to load it with an ad.
-    [bannerView_ loadRequest:[GADRequest request]];    
+    [self.parentViewController.view addSubview:containerView];
+    
 }
 
 - (void)showEventNatively:(NSInteger)section row:(NSInteger)row
@@ -412,6 +433,11 @@ NSInteger _actionSheetChoice = -1;
     [self reloadTable];
     [self scrollToNow];
 //    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];    
+
+    if (_admobIsLoaded == NO) {
+        [self loadAdMobBanner:nil];
+    }
+    
     [self dismissMegaAnnoyingPopup];
 }
 
@@ -622,8 +648,6 @@ NSInteger _actionSheetChoice = -1;
     lpgr.minimumPressDuration = LONG_PRESS_DURATION; //seconds
     lpgr.delegate = self;
     [self.tableView addGestureRecognizer:lpgr];    
-
-    [self createTestAdMobBanner];
     
 }
 
@@ -681,10 +705,11 @@ NSInteger _actionSheetChoice = -1;
 
 - (void)viewDidLoad {
     
+    [super viewDidLoad];
+
     @try {
         [CMIUtility Log:@"viewDidLoad()"];
-        
-        [super viewDidLoad];
+        _admobIsLoaded = NO;
         
         _cmiUserDefaults = ((ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate]).cmiUserDefaults;
         

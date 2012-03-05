@@ -9,11 +9,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeIn/ConferenceMeInMasterViewController.m"
-         timestampString = "349341328.238002"
+         timestampString = "349682184.812863"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "335"
-         endingLineNumber = "335"
+         startingLineNumber = "326"
+         endingLineNumber = "326"
          landmarkName = "-tableView:didSelectRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -32,86 +32,30 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "ConferenceMeIn/ConferenceMeInAppDelegate.m"
-         timestampString = "349341328.238002"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "86"
-         endingLineNumber = "86"
-         landmarkName = "-setupByPreferences"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeIn/ConferenceMeInAppDelegate.m"
-         timestampString = "349341328.238002"
+         timestampString = "352564640.905721"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "29"
-         endingLineNumber = "29"
+         startingLineNumber = "22"
+         endingLineNumber = "22"
          landmarkName = "-dealloc"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "ConferenceMeIn/ConferenceMeInAppDelegate.m"
-         timestampString = "349345614.828315"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "106"
-         endingLineNumber = "106"
-         landmarkName = "-defaultsChanged:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "ConferenceMeInTests/EKEventParserTests.m"
-         timestampString = "349332118.811765"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "35"
-         endingLineNumber = "35"
-         landmarkName = "-testPhoneNumbersShouldParse"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeInTests/CMIEventTests.m"
-         timestampString = "349232578.743377"
+         timestampString = "350349870.955645"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "78"
-         endingLineNumber = "78"
-         landmarkName = "-testConferenceEventsCreeation"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "ConferenceMeInTests/CMIEventTests.m"
-         timestampString = "349232622.864583"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "88"
-         endingLineNumber = "88"
+         startingLineNumber = "95"
+         endingLineNumber = "95"
          landmarkName = "-testCMIHasConferenceNumber"
          landmarkType = "5">
       </FileBreakpoint>
@@ -121,11 +65,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeIn/ConferenceMeInMasterViewController.m"
-         timestampString = "349318354.12684"
+         timestampString = "349682184.812863"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "154"
-         endingLineNumber = "154"
+         startingLineNumber = "145"
+         endingLineNumber = "145"
          landmarkName = "-reloadTable"
          landmarkType = "5">
       </FileBreakpoint>
@@ -144,58 +88,16 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "ConferenceMeIn/CMIEvent.m"
-         timestampString = "349309111.203774"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "35"
-         endingLineNumber = "35"
-         landmarkName = "-initWithEKEvent:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "ConferenceMeIn/CMIEvent.m"
-         timestampString = "349309314.788535"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "58"
-         endingLineNumber = "58"
-         landmarkName = "-parseEvent"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "ConferenceMeInTests/EKEventParserTests.m"
-         timestampString = "349332103.060629"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "43"
-         endingLineNumber = "43"
-         landmarkName = "-testPhoneNumbersShouldParse"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeIn/CMIEventSystem.h"
-         timestampString = "349337484.176591"
+         timestampString = "350588375.79837"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "23"
-         endingLineNumber = "23"
+         startingLineNumber = "34"
+         endingLineNumber = "34"
          landmarkName = "fetchAllEvents"
          landmarkType = "19">
       </FileBreakpoint>
@@ -205,12 +107,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeInTests/CMIEventSystemTests.m"
-         timestampString = "349337468.194484"
+         timestampString = "350582283.856271"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "28"
-         endingLineNumber = "28"
-         landmarkName = "-testFetchEvents"
+         startingLineNumber = "35"
+         endingLineNumber = "35"
+         landmarkName = "-testCalculateDateStuff"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -218,13 +120,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "ConferenceMeIn/CMIMasterViewController.m"
-         timestampString = "349344481.154414"
+         filePath = "ConferenceMeInTests/CMIEventSystemTests.m"
+         timestampString = "350582283.856271"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "34"
-         endingLineNumber = "34"
-         landmarkName = "-tableView:numberOfRowsInSection:"
+         startingLineNumber = "31"
+         endingLineNumber = "31"
+         landmarkName = "-testCalculateDateStuff"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -232,13 +134,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "ConferenceMeIn/CMIMasterViewController.m"
-         timestampString = "349344481.154414"
+         filePath = "ConferenceMeIn/CMIEventSystem.m"
+         timestampString = "350588375.79837"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "104"
-         endingLineNumber = "104"
-         landmarkName = "-reloadTable"
+         startingLineNumber = "106"
+         endingLineNumber = "106"
+         landmarkName = "-calculateDaysEvents:atEndDate:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -246,13 +148,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "ConferenceMeIn/CMIMasterViewController.m"
-         timestampString = "349344481.154414"
+         filePath = "ConferenceMeIn/CMIEventSystem.m"
+         timestampString = "350588375.79837"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "92"
-         endingLineNumber = "92"
-         landmarkName = "-fetchEventsForTable"
+         startingLineNumber = "87"
+         endingLineNumber = "87"
+         landmarkName = "-assignCMIEventsToDayEvents:atEndDate:atEvents:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -260,13 +162,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "ConferenceMeIn/CMIMasterViewController.m"
-         timestampString = "349575588.510596"
+         filePath = "ConferenceMeIn/CMIEventSystem.m"
+         timestampString = "350588375.79837"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "283"
-         endingLineNumber = "283"
-         landmarkName = "-configureCell:forIndexPath:"
+         startingLineNumber = "84"
+         endingLineNumber = "84"
+         landmarkName = "-assignCMIEventsToDayEvents:atEndDate:atEvents:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -274,13 +176,13 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "ConferenceMeIn/CMIMasterViewController.m"
-         timestampString = "349575588.510596"
+         filePath = "ConferenceMeIn/CMIEventSystem.m"
+         timestampString = "350588375.79837"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "272"
-         endingLineNumber = "272"
-         landmarkName = "-configureCell:forIndexPath:"
+         startingLineNumber = "101"
+         endingLineNumber = "101"
+         landmarkName = "-calculateDaysEvents:atEndDate:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -288,13 +190,165 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "ConferenceMeIn/CMIMasterViewController.m"
-         timestampString = "349575588.510596"
+         filePath = "ConferenceMeInTests/CMIEventSystemTests.m"
+         timestampString = "350582283.856271"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "210"
-         endingLineNumber = "210"
-         landmarkName = "-tableViewCellWithReuseIdentifier:"
+         startingLineNumber = "32"
+         endingLineNumber = "32"
+         landmarkName = "-testCalculateDateStuff"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeIn/CMIEventCalendar.m"
+         timestampString = "352272155.939478"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "140"
+         endingLineNumber = "140"
+         landmarkName = "-assignCMIEventsToCMIDays"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeIn/CMIUtility.m"
+         timestampString = "352004213.44533"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "170"
+         endingLineNumber = "170"
+         landmarkName = "+createTestEvent:startDate:endDate:title:withConfNumber:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeIn/CMIUserDefaults.h"
+         timestampString = "351356116.167545"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "11"
+         endingLineNumber = "11">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeIn/ConferenceMeInAppDelegate.m"
+         timestampString = "352598464.767853"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "43"
+         endingLineNumber = "43"
+         landmarkName = "-defaultsChanged:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeInTests/EKEventParserTests.m"
+         timestampString = "351632163.285166"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "39"
+         endingLineNumber = "39"
+         landmarkName = "+getFilesInFolder"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeInTests/EKEventParserTests.m"
+         timestampString = "351824705.19154"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "57"
+         endingLineNumber = "57"
+         landmarkName = "-testPhoneNumberCodeShouldParse:expectedPhoneNumber:expectedPhoneCode:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeIn/CMIEKEventViewController.m"
+         timestampString = "352320109.361574"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "139"
+         endingLineNumber = "139"
+         landmarkName = "-alertView:clickedButtonAtIndex:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeIn/CMIContacts.m"
+         timestampString = "352341920.54441"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "14"
+         endingLineNumber = "14"
+         landmarkName = "@implementation CMIContacts"
+         landmarkType = "3">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeInTests/EKEventParserTests.m"
+         timestampString = "352410669.137208"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "101"
+         endingLineNumber = "101"
+         landmarkName = "-testInvitesShouldParse"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeInTests/EKEventParserTests.m"
+         timestampString = "352410653.846431"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "68"
+         endingLineNumber = "68"
+         landmarkName = "-testLeaderCodeShouldParse:expectedPhoneNumber:expectedPhoneCode:expectedLeaderSeparator:expectedLeaderCode:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeIn/CMIUserDefaults.m"
+         timestampString = "352419951.660371"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "51"
+         endingLineNumber = "51"
+         landmarkName = "-setMyConfLeaderSeparator:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

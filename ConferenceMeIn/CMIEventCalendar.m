@@ -37,7 +37,7 @@ NSDate* _eventsEndDate = nil;
         // Get the default calendar from store.
         _defaultCalendar = [_eventStore defaultCalendarForNewEvents];
         _calendarType = allCalendars;
-        _calendarTimeframeType = restOfToday;
+        _calendarTimeframeType = weekAhead;
         _filterType = filterNone;
         _currentTimeframeStarts = 0;
         
@@ -227,15 +227,11 @@ NSDate* _eventsEndDate = nil;
     NSDate* now = [NSDate date];
     
     switch (_calendarTimeframeType) {
-        case restOfToday:
+        case weekAhead:
             _eventsEndDate = [CMIUtility getMidnightDate:now];
-            _eventsEndDate = [CMIUtility getOffsetDate:_eventsEndDate atOffsetDays:1];
+            _eventsEndDate = [CMIUtility getOffsetDate:_eventsEndDate atOffsetDays:7];
             _eventsEndDate = [CMIUtility getOffsetDateByMinutes:_eventsEndDate offsetMinutes:-1];
             
-            break;
-        case next24Hours:
-//            _eventsStartDate = now;
-            _eventsEndDate = [CMIUtility getOffsetDate:now atOffsetDays:1];
             break;
         case today:
             _eventsStartDate = [CMIUtility getMidnightDate:now];

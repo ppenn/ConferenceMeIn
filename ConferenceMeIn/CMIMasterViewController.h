@@ -60,9 +60,11 @@ typedef enum enterConfNumberActionButtons
 @property (strong, nonatomic) CMIContactsController* cmiContacts;
 @property (strong, nonatomic) CMIEvent* selectedCMIEvent;
 @property (atomic) BOOL eventStoreChangeTimerWillFire;
+@property BOOL admobIsLoaded;
 
 - (void) storeChanged:(NSNotification *) notification;
 - (NSArray *)fetchEventsForTable;
+- (void)createAdMobBanner;
 
 - (UITableViewCell *)tableViewCellWithReuseIdentifier:(NSString *)identifier;
 - (void)configureCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath;

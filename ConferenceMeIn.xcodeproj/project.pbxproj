@@ -29,6 +29,10 @@
 		A81E2F9E14EAD07A0005B411 /* ITunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = A81E2F9B14EAD07A0005B411 /* ITunesArtwork.png */; };
 		A82727D6150260CB005190EE /* CMIConferenceNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A82727D5150260CB005190EE /* CMIConferenceNumber.m */; };
 		A82727D7150260CB005190EE /* CMIConferenceNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A82727D5150260CB005190EE /* CMIConferenceNumber.m */; };
+		A82728061502FE42005190EE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728041502FE42005190EE /* AudioToolbox.framework */; };
+		A82728071502FE42005190EE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728051502FE42005190EE /* SystemConfiguration.framework */; };
+		A827280F1502FF08005190EE /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728081502FF08005190EE /* libGoogleAdMobAds.a */; };
+		A82728101502FF08005190EE /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728081502FF08005190EE /* libGoogleAdMobAds.a */; };
 		A847419D14E0C8FD0017A7C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A847419B14E0C8FD0017A7C8 /* Localizable.strings */; };
 		A847419E14E0C8FD0017A7C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A847419B14E0C8FD0017A7C8 /* Localizable.strings */; };
 		A856305514E87A53006B24F8 /* CMIUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A856305414E87A52006B24F8 /* CMIUserDefaults.m */; };
@@ -155,6 +159,15 @@
 		A81E2F9B14EAD07A0005B411 /* ITunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ITunesArtwork.png; path = ConferenceMeIn/images/ITunesArtwork.png; sourceTree = "<group>"; };
 		A82727D4150260CB005190EE /* CMIConferenceNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIConferenceNumber.h; sourceTree = "<group>"; };
 		A82727D5150260CB005190EE /* CMIConferenceNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIConferenceNumber.m; sourceTree = "<group>"; };
+		A82728041502FE42005190EE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		A82728051502FE42005190EE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		A82728081502FF08005190EE /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAdMobAds.a; path = AdMob/libGoogleAdMobAds.a; sourceTree = "<group>"; };
+		A82728091502FF08005190EE /* GADRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADRequest.h; path = AdMob/GADRequest.h; sourceTree = "<group>"; };
+		A827280A1502FF08005190EE /* GADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADBannerView.h; path = AdMob/GADBannerView.h; sourceTree = "<group>"; };
+		A827280B1502FF08005190EE /* GADInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInterstitial.h; path = AdMob/GADInterstitial.h; sourceTree = "<group>"; };
+		A827280C1502FF08005190EE /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADBannerViewDelegate.h; path = AdMob/GADBannerViewDelegate.h; sourceTree = "<group>"; };
+		A827280D1502FF08005190EE /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInterstitialDelegate.h; path = AdMob/GADInterstitialDelegate.h; sourceTree = "<group>"; };
+		A827280E1502FF08005190EE /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADRequestError.h; path = AdMob/GADRequestError.h; sourceTree = "<group>"; };
 		A847419C14E0C8FD0017A7C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ConferenceMeIn/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A856305314E87A52006B24F8 /* CMIUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIUserDefaults.h; sourceTree = "<group>"; };
 		A856305414E87A52006B24F8 /* CMIUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIUserDefaults.m; sourceTree = "<group>"; };
@@ -268,6 +281,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A82728061502FE42005190EE /* AudioToolbox.framework in Frameworks */,
+				A82728071502FE42005190EE /* SystemConfiguration.framework in Frameworks */,
 				A8081CA715003C2D00CEC9A6 /* AddressBook.framework in Frameworks */,
 				A8081CA815003C2D00CEC9A6 /* AddressBookUI.framework in Frameworks */,
 				A8CFD0E314EF403A00EA8616 /* MessageUI.framework in Frameworks */,
@@ -277,6 +292,7 @@
 				A8E5250D14CA0EC800797C16 /* Foundation.framework in Frameworks */,
 				A8E5250F14CA0EC800797C16 /* CoreGraphics.framework in Frameworks */,
 				A8CFD0E514EF404500EA8616 /* MessageUI.framework in Frameworks */,
+				A827280F1502FF08005190EE /* libGoogleAdMobAds.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +308,7 @@
 				A8E5253014CA0EC800797C16 /* UIKit.framework in Frameworks */,
 				A8E5253114CA0EC800797C16 /* Foundation.framework in Frameworks */,
 				A8CFD0E614EF404500EA8616 /* MessageUI.framework in Frameworks */,
+				A82728101502FF08005190EE /* libGoogleAdMobAds.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +336,20 @@
 				A8F48F1D14F2F4F1004F9B2E /* CMIHelpIPhoneView.xib */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		A82728031502FE0F005190EE /* AdMob */ = {
+			isa = PBXGroup;
+			children = (
+				A82728081502FF08005190EE /* libGoogleAdMobAds.a */,
+				A82728091502FF08005190EE /* GADRequest.h */,
+				A827280A1502FF08005190EE /* GADBannerView.h */,
+				A827280B1502FF08005190EE /* GADInterstitial.h */,
+				A827280C1502FF08005190EE /* GADBannerViewDelegate.h */,
+				A827280D1502FF08005190EE /* GADInterstitialDelegate.h */,
+				A827280E1502FF08005190EE /* GADRequestError.h */,
+			);
+			name = AdMob;
 			sourceTree = "<group>";
 		};
 		A8CFD08F14EF360C00EA8616 /* InAppSettingsKit */ = {
@@ -488,6 +519,8 @@
 		A8E5250914CA0EC800797C16 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A82728041502FE42005190EE /* AudioToolbox.framework */,
+				A82728051502FE42005190EE /* SystemConfiguration.framework */,
 				A8081CA515003C2C00CEC9A6 /* AddressBook.framework */,
 				A8081CA615003C2C00CEC9A6 /* AddressBookUI.framework */,
 				A8CFD0E214EF403A00EA8616 /* MessageUI.framework */,
@@ -505,6 +538,7 @@
 		A8E5251014CA0EC800797C16 /* ConferenceMeIn */ = {
 			isa = PBXGroup;
 			children = (
+				A82728031502FE0F005190EE /* AdMob */,
 				A814F94114F3193800A159B9 /* Views */,
 				A8CFD0FA14F2B98E00EA8616 /* Model */,
 				A8CFD0F914F2B93F00EA8616 /* Controllers */,
@@ -850,6 +884,10 @@
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -867,6 +905,10 @@
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeInTests/ConferenceMeInTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -926,6 +968,10 @@
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -939,6 +985,10 @@
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -956,6 +1006,10 @@
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeInTests/ConferenceMeInTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -974,6 +1028,10 @@
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeInTests/ConferenceMeInTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;

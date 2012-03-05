@@ -19,6 +19,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "-[CMIEventSystemTests testCalculateDaysEvents]:CMIEventSystemTests.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(CMIEventSystem *)(((&apos;CMIEventSystemTests&apos; *) (self)))-&gt;_cmiEventSystem">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "-[ConferenceMeInMasterViewController tableView:cellForRowAtIndexPath:]:ConferenceMeInMasterViewController.m">
       </ContextState>
       <ContextState

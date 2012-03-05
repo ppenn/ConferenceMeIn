@@ -35,8 +35,9 @@ CMIMasterViewController* _cmiMasterViewController;
 {
     @try {
         [CMIUtility Log:[@"defaultsChanged() " stringByAppendingString:notif.name]];
-        if (_cmiMasterViewController == nil)    return;
-
+        if (_cmiMasterViewController == nil || _cmiMasterViewController.admobIsLoaded != YES)    return;
+// Ensure that the app has loaded, don't sign up for changes until it has
+        
         // Get the user defaults
 
         if (self.navigationController.visibleViewController == _cmiMasterViewController) {

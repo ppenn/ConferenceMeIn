@@ -13,8 +13,7 @@
 
 typedef enum calendarTimeframes
 {
-    restOfToday = 0,
-    next24Hours,
+    weekAhead = 0,
     today,
     todayAndTomorrow,
     debugTimeframe
