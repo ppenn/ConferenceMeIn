@@ -43,12 +43,16 @@ typedef enum eventFilterTypes
 @property (strong, nonatomic, readonly) NSMutableDictionary* cmiDaysDictionary;
 @property (strong, nonatomic, readonly) NSMutableArray* cmiDaysArray;
 
+@property (strong, nonatomic, readonly) NSMutableDictionary* cmiFilteredDaysDictionary;
+@property (strong, nonatomic, readonly) NSMutableArray* cmiFilteredDaysArray;
+
 @property (nonatomic) eventFilterTypes filterType;
 
 @property calendarTimeframes calendarTimeframeType;
 @property calendarTypes calendarType;
 @property (nonatomic, assign) NSInteger currentTimeframeStarts;
 @property (readonly, nonatomic) NSInteger numConfEvents;
+@property (readonly, nonatomic) NSInteger numDays;
 
 - (id) init;
 - (void) createCMIEvents;

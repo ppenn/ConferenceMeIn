@@ -40,9 +40,9 @@ NSString *kFirstRun = @"firstRunKey";
 {
     _filterType = filterType;
     
-    NSNumber *number = [NSNumber numberWithInt:_filterType];    
-    [[NSUserDefaults standardUserDefaults] setObject:number forKey:kFilterTypeKey];        
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    NSNumber *number = [NSNumber numberWithInt:_filterType];    
+//    [[NSUserDefaults standardUserDefaults] setObject:number forKey:kFilterTypeKey];        
+//    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 - (void)setMyConfPhoneNumber:(NSString *)myConfPhoneNumber
 {
@@ -77,16 +77,40 @@ NSString *kFirstRun = @"firstRunKey";
     if (self.filterType != [[NSUserDefaults standardUserDefaults] integerForKey:kFilterTypeKey]) return true;
     if (self.callProviderType != [[NSUserDefaults standardUserDefaults] integerForKey:kCallProviderTypeKey]) return true;
     //I don't think we care about the Conf# details...hopefully
-//    if (![self.myConfPhoneNumber isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfPhoneNumberKey])]) 
-//          return true;
-//    if (![self.myConfConfNumber isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfConfNumberKey])]) 
-//        return true;
-//    if (![self.myConfLeaderSeparator isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfLeaderSeparatorKey])]) 
-//        return true;
-//    if (![self.myConfLeaderPIN isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfLeaderPINKey])]) 
-//        return true;
     
     return false;
+}
+
+- (BOOL)stringValueIsIdenticalToDefaultValue:(NSString*)stringValue stringKey:(NSString*)stringKey
+{
+    if (stringValue == nil && [[NSUserDefaults standardUserDefaults] objectForKey:stringKey] == nil)
+        return YES;
+    
+    if (stringValue == nil || [[NSUserDefaults standardUserDefaults] objectForKey:stringKey] == nil)
+        return NO;
+    if ([stringValue isEqualToString:((NSString*) [[NSUserDefaults standardUserDefaults] objectForKey:stringKey])] == NO) 
+        return NO;
+
+    return YES;
+}
+
+- (BOOL)allDefaultsAreIdentical
+{
+    [CMIUtility Log:@"defaultsAreIdentical()"];
+
+    if ([self defaultsAreDifferent] == YES)
+        return NO;
+    
+    if ([self stringValueIsIdenticalToDefaultValue:self.myConfPhoneNumber stringKey:kMyConfPhoneNumberKey] == NO)
+        return NO;
+    if ([self stringValueIsIdenticalToDefaultValue:self.myConfConfNumber stringKey:kMyConfConfNumberKey] == NO)
+        return NO;
+    if ([self stringValueIsIdenticalToDefaultValue:self.myConfLeaderSeparator stringKey:kMyConfLeaderSeparatorKey] == NO)
+        return NO;
+    if ([self stringValueIsIdenticalToDefaultValue:self.myConfLeaderPIN stringKey:kMyConfLeaderPINKey] == NO)
+        return NO;
+    
+    return YES;
 }
 
 - (void)save

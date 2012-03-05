@@ -37,11 +37,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeIn/ConferenceMeInAppDelegate.m"
-         timestampString = "352564640.905721"
+         timestampString = "352676666.741835"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "22"
-         endingLineNumber = "22"
+         startingLineNumber = "56"
+         endingLineNumber = "56"
          landmarkName = "-dealloc"
          landmarkType = "5">
       </FileBreakpoint>
@@ -205,11 +205,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeIn/CMIEventCalendar.m"
-         timestampString = "352663049.057802"
+         timestampString = "352669824.791356"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "144"
-         endingLineNumber = "144"
+         startingLineNumber = "179"
+         endingLineNumber = "179"
          landmarkName = "-assignCMIEventsToCMIDays"
          landmarkType = "5">
       </FileBreakpoint>
@@ -238,20 +238,6 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "11"
          endingLineNumber = "11">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "ConferenceMeIn/ConferenceMeInAppDelegate.m"
-         timestampString = "352598464.767853"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "43"
-         endingLineNumber = "43"
-         landmarkName = "-defaultsChanged:"
-         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
@@ -335,6 +321,34 @@
          startingLineNumber = "68"
          endingLineNumber = "68"
          landmarkName = "-testLeaderCodeShouldParse:expectedPhoneNumber:expectedPhoneCode:expectedLeaderSeparator:expectedLeaderCode:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeIn/CMIEventCalendar.m"
+         timestampString = "352671516.205017"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "140"
+         endingLineNumber = "140"
+         landmarkName = "-createCMIDays"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeIn/CMIUserDefaults.m"
+         timestampString = "352676472.894962"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "113"
+         endingLineNumber = "113"
+         landmarkName = "-allDefaultsAreIdentical"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

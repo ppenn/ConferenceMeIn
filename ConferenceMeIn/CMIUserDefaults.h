@@ -37,6 +37,7 @@
 - (void)save;
 
 - (BOOL)defaultsAreDifferent;
+- (BOOL)allDefaultsAreIdentical;
 
 @property BOOL defaultsDidChange;
 

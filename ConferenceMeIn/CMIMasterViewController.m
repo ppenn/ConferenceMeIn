@@ -62,9 +62,8 @@ NSInteger _activeMenu = -1;
     @try {
         [CMIUtility Log:@"loadAdMobBanner()"];
         
-        if (_admobIsLoaded != YES) {
+        if (bannerView_ == nil) {
             [self createAdMobBanner];
-            _admobIsLoaded = YES;
         }
         // Initiate a generic request to load it with an ad.
         [bannerView_ loadRequest:[GADRequest request]];    
@@ -199,7 +198,7 @@ NSInteger _activeMenu = -1;
     @try {
         [CMIUtility Log:@"numberOfSectionsInTableView()"];
         // Number of days in calendar
-        NSInteger numSections = [_cmiEventCalendar.cmiDaysArray count];
+        NSInteger numSections = _cmiEventCalendar.numDays;
 
         return numSections;
     }
@@ -606,11 +605,12 @@ NSInteger _activeMenu = -1;
 
         if (selectionIndex != _cmiEventCalendar.filterType) {    
             _cmiUserDefaults.filterType = selectionIndex;
-        
+            _cmiEventCalendar.filterType = selectionIndex;
             [self invokeMegaAnnoyingPopup:NSLocalizedString(@"LoadingEventsMessage", nil)]; 
             // Next line is equivalent of old VB6's DoEvents :)
             [[NSRunLoop currentRunLoop] runUntilDate:[NSDate date]];
-            [self reloadTableScrollToNow];
+            [self.tableView reloadData];    
+            [self scrollToNow];
             [self dismissMegaAnnoyingPopup];    
         }    
     }
@@ -720,7 +720,9 @@ NSInteger _activeMenu = -1;
 
     @try {
         [CMIUtility Log:@"viewDidLoad()"];
+        //TODO: remove this var
         _admobIsLoaded = NO;
+        bannerView_ = nil;
         
         _cmiUserDefaults = ((ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate]).cmiUserDefaults;
         
@@ -1432,12 +1434,21 @@ NSInteger _activeMenu = -1;
 
 -(void)adViewDidReceiveAd:(GADBannerView *)view
 {
-    NSLog(@"didReceiveAd()");
-    bannerView_.superview.backgroundColor = [UIColor blackColor];
+    @try {
+        [CMIUtility Log:@"adViewDidReceiveAd()"];
+
+        bannerView_.superview.backgroundColor = [UIColor blackColor];        
+        _admobIsLoaded = YES;
+    }
+    @catch (NSException *exception) {
+        [CMIUtility LogError:exception.reason];
+    }
+    
 }
 -(void)adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error
 {
-    NSLog(@"didNOTReceiveAd()");
+    [CMIUtility Log:@"didFailToReceiveAdWithError()"];
     
+    _admobIsLoaded = YES;
 }
 @end

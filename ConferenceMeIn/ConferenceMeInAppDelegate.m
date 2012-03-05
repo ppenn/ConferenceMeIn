@@ -10,14 +10,48 @@
 #import "CMIMasterViewController.h"
 #import "CMIUtility.h"
 
+#define EVENT_CHANGE_DELAY 0.5
+
 
 @implementation ConferenceMeInAppDelegate
 
 @synthesize window = _window;
 @synthesize navigationController = _navigationController;
 @synthesize cmiUserDefaults = _cmiUserDefaults;
+@synthesize defaultsChangedTimerWillFire = _defaultsChangedTimerWillFire;
+
 
 CMIMasterViewController* _cmiMasterViewController;
+
+- (void)defaultsChangedTimerFired:(NSTimer *)aTimer
+{
+    @try {
+        [CMIUtility Log:@"defaultsChangedTimerFired()"];
+        
+        if (self.navigationController.visibleViewController == _cmiMasterViewController) {
+            if ([_cmiUserDefaults allDefaultsAreIdentical] == NO ) {
+                [_cmiMasterViewController invokeMegaAnnoyingPopup:NSLocalizedString(@"LoadingEventsMessage", nil)]; 
+                // Next line is equivalent of old VB6's DoEvents :)
+                [[NSRunLoop currentRunLoop] runUntilDate:[NSDate date]];
+                [_cmiUserDefaults loadDefaults];
+                [_cmiMasterViewController reloadTableScrollToNow];
+            }
+            else {
+                [CMIUtility Log:@"Defaults were Identical -- Not Reloading"];
+            }
+        }
+        else {
+            [CMIUtility Log:@"CMI MasterView not visible, will reload later"];
+            _cmiMasterViewController.reloadDefaultsOnAppear = YES;                        
+        }
+        
+        _defaultsChangedTimerWillFire = NO;
+    }
+    @catch (NSException *exception) {
+        [CMIUtility LogError:exception.reason];
+    }
+
+}
 
 - (void)dealloc
 {
@@ -31,26 +65,20 @@ CMIMasterViewController* _cmiMasterViewController;
 // we are being notified that our preferences have changed (user changed them in the Settings app)
 // so read in the changes and update our UI.
 //
-- (void)defaultsChanged:(NSNotification *)notif
+- (void)defaultsChanged:(NSNotification *)notification
 {
     @try {
-        [CMIUtility Log:[@"defaultsChanged() " stringByAppendingString:notif.name]];
-        if (_cmiMasterViewController == nil || _cmiMasterViewController.admobIsLoaded != YES)    return;
-// Ensure that the app has loaded, don't sign up for changes until it has
-        
-        // Get the user defaults
+        [CMIUtility Log:[@"defaultsChanged() " stringByAppendingString:notification.name]];
+        if (_cmiMasterViewController == nil)    return;
 
-        if (self.navigationController.visibleViewController == _cmiMasterViewController) {
-            [_cmiMasterViewController invokeMegaAnnoyingPopup:NSLocalizedString(@"LoadingEventsMessage", nil)]; 
-            // Next line is equivalent of old VB6's DoEvents :)
-            [[NSRunLoop currentRunLoop] runUntilDate:[NSDate date]];
-            [_cmiUserDefaults loadDefaults];
-            [_cmiMasterViewController reloadTableScrollToNow];
+        if ([notification.name isEqualToString:NSUserDefaultsDidChangeNotification] &&
+            _defaultsChangedTimerWillFire == NO) {
+            
+            _defaultsChangedTimerWillFire = YES;
+            [NSTimer scheduledTimerWithTimeInterval:EVENT_CHANGE_DELAY target:self selector:@selector(defaultsChangedTimerFired:) userInfo:nil repeats:NO];
+            
         }
-        else {
-            [CMIUtility Log:@"CMI MasterView not visible, will reload later"];
-            _cmiMasterViewController.reloadDefaultsOnAppear = YES;                        
-        }
+        
     }
     @catch (NSException * e) {
         [CMIUtility LogError:e.reason];
@@ -67,6 +95,8 @@ CMIMasterViewController* _cmiMasterViewController;
         // Override point for customization after application launch.
         _cmiUserDefaults = [[CMIUserDefaults alloc] init];
         [_cmiUserDefaults loadDefaults];
+        _cmiMasterViewController = nil;
+        _defaultsChangedTimerWillFire = NO;
 
         // listen for changes to our preferences when the Settings app does so,
         // when we are resumed from the backround, this will give us a chance to update our UI
@@ -97,6 +127,23 @@ CMIMasterViewController* _cmiMasterViewController;
      */
 }
 
+- (void)saveDefaults
+{
+    [CMIUtility Log:@"saveDefaults()"];
+    
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NSUserDefaultsDidChangeNotification
+                                                  object:nil];
+    [_cmiUserDefaults saveDefaults];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(defaultsChanged:)
+                                                 name:NSUserDefaultsDidChangeNotification
+                                               object:nil];
+    
+}
+
+
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     /*
@@ -107,7 +154,7 @@ CMIMasterViewController* _cmiMasterViewController;
     @try {
         [CMIUtility Log:@"applicationDidEnterBackground()"];
 
-        [_cmiUserDefaults saveDefaults];
+        [self saveDefaults];
     }
     @catch (NSException * e) {
         [CMIUtility LogError:e.reason];
@@ -138,8 +185,8 @@ CMIMasterViewController* _cmiMasterViewController;
      */
     @try {
         [CMIUtility Log:@"applicationWillTerminate()"];
-        
-        [_cmiUserDefaults saveDefaults];
+
+        [self saveDefaults];
     }
     @catch (NSException * e) {
         [CMIUtility LogError:e.reason];

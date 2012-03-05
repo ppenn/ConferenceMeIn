@@ -23,13 +23,25 @@
 @synthesize calendarTimeframeType = _calendarTimeframeType;
 @synthesize currentTimeframeStarts = _currentTimeframeStarts;
 @synthesize numConfEvents = _numConfEvents;
+@synthesize cmiFilteredDaysArray = _cmiFilteredDaysArray;
+@synthesize cmiFilteredDaysDictionary = _cmiFilteredDaysDictionary;
 NSDate* _eventsStartDate = nil;
 NSDate* _eventsEndDate = nil;
+
+NSMutableDictionary* _currentDaysDictionary;
+NSMutableArray* _currentDaysArray;
+
+- (NSInteger)numDays
+{
+    return _currentDaysArray.count;
+}
 
 - (id) init
 {
     self = [super init];
-    
+
+    [CMIUtility Log:@"CMICalendar::init()"];
+
     if (self != nil)
     {
         // your code here
@@ -38,12 +50,15 @@ NSDate* _eventsEndDate = nil;
         _defaultCalendar = [_eventStore defaultCalendarForNewEvents];
         _calendarType = allCalendars;
         _calendarTimeframeType = weekAhead;
-        _filterType = filterNone;
         _currentTimeframeStarts = 0;
         
         _cmiDaysDictionary = [[NSMutableDictionary alloc] init]; 
         _cmiDaysArray = [[NSMutableArray alloc] init];
+        _cmiFilteredDaysDictionary = [[NSMutableDictionary alloc] init]; 
+        _cmiFilteredDaysArray = [[NSMutableArray alloc] init];
         _eventsList = [[NSMutableArray alloc] init];
+        
+        self.filterType = filterNone;
     }
     
     return self;    
@@ -51,16 +66,30 @@ NSDate* _eventsEndDate = nil;
 
 - (void)setFilterType:(eventFilterTypes)filterType
 {
+    [CMIUtility Log:@"setFilterType()"];
+
     _filterType = filterType;
+    
+    if (_filterType == filterNone) {
+        _currentDaysDictionary = _cmiDaysDictionary;
+        _currentDaysArray = _cmiDaysArray;        
+    }
+    else {
+        _currentDaysDictionary = _cmiFilteredDaysDictionary;
+        _currentDaysArray = _cmiFilteredDaysArray;        
+    }
 }
+
 - (NSIndexPath*)getDayEventIndexForDate:(NSDate*)date
 {
+    [CMIUtility Log:@"getDayEventIndexForDate()"];
+
     NSDate* currentDay = [CMIUtility getMidnightDate:date];
     NSInteger currentDaySection = -1;
     NSInteger currentDayRow = -1;
     
-    for (NSInteger i = 0; i < [_cmiDaysArray count]; i++ ) {
-        NSDate* date = [[_cmiDaysArray objectAtIndex:i] dateAtMidnight];
+    for (NSInteger i = 0; i < [_currentDaysArray count]; i++ ) {
+        NSDate* date = [[_currentDaysArray objectAtIndex:i] dateAtMidnight];
         if ([date isEqualToDate:currentDay] == TRUE) {
             currentDaySection = i;
             break;
@@ -68,7 +97,7 @@ NSDate* _eventsEndDate = nil;
     }
     
     if (currentDaySection != -1) {
-        NSArray* events = [[_cmiDaysDictionary objectForKey:currentDay] cmiEvents];
+        NSArray* events = [[_currentDaysDictionary objectForKey:currentDay] cmiEvents];
         if (events.count > 0) {
             for (currentDayRow = 0; currentDayRow < (events.count -1); currentDayRow++) {
                 CMIEvent* event = [events objectAtIndex:currentDayRow];
@@ -112,6 +141,8 @@ NSDate* _eventsEndDate = nil;
 
     [_cmiDaysDictionary removeAllObjects];
     [_cmiDaysArray removeAllObjects];
+    [_cmiFilteredDaysDictionary removeAllObjects];
+    [_cmiFilteredDaysArray removeAllObjects];
     
     NSDate *nextDay = [ _eventsStartDate copy];
     
@@ -126,11 +157,15 @@ NSDate* _eventsEndDate = nil;
         CMIDay* cmiDay = [[CMIDay alloc] initWithDay:nextDayMidnight];
         [_cmiDaysDictionary setObject:cmiDay forKey:nextDayMidnight];        
         [_cmiDaysArray addObject:cmiDay];        
+        CMIDay* cmiDayCopy = [[CMIDay alloc] initWithDay:nextDayMidnight];
+        [_cmiFilteredDaysDictionary setObject:cmiDayCopy forKey:nextDayMidnight];        
+        [_cmiFilteredDaysArray addObject:cmiDayCopy];        
         
         // Move to next day
         [offset setDay:++i];
         nextDay = [calendar dateByAddingComponents:offset toDate:_eventsStartDate options:0];
     }
+//    self.filterType = _filterType;
     
 }
 
@@ -151,9 +186,11 @@ NSDate* _eventsEndDate = nil;
             _numConfEvents++;
         }
         
-        if (_filterType == filterNone || cmiEvent.hasConferenceNumber == true) {
-            CMIDay* cmiDay = [_cmiDaysDictionary objectForKey:eventDay];
-            [cmiDay.cmiEvents addObject:cmiEvent];
+        CMIDay* cmiDay = [_cmiDaysDictionary objectForKey:eventDay];
+        [cmiDay.cmiEvents addObject:cmiEvent];
+        if (cmiEvent.hasConferenceNumber == true) {
+            CMIDay* cmiConfDay = [_cmiFilteredDaysDictionary objectForKey:eventDay];
+            [cmiConfDay.cmiEvents addObject:cmiEvent];
         }
     }
     
@@ -179,14 +216,18 @@ NSDate* _eventsEndDate = nil;
 
 - (CMIEvent*)getCMIEventByIndexPath:(NSInteger)dayEventIndex eventIndex:(NSInteger)eventIndex
 {
-    CMIDay* cmiDay = [_cmiDaysArray objectAtIndex:dayEventIndex];
+    [CMIUtility Log:@"getCMIEventByIndexPath()"];
     
+    CMIDay* cmiDay = [_currentDaysArray objectAtIndex:dayEventIndex];
+
     return (CMIEvent*)[cmiDay.cmiEvents objectAtIndex:eventIndex];
 }
 
 - (CMIDay*)getCMIDayByIndex:(NSInteger)dayIndex
 {
-    CMIDay* cmiDay = [_cmiDaysArray objectAtIndex:dayIndex];
+    [CMIUtility Log:@"getCMIDayByIndex()"];
+
+    CMIDay* cmiDay = [_currentDaysArray objectAtIndex:dayIndex];
     
     return cmiDay;
 }
@@ -209,13 +250,6 @@ NSDate* _eventsEndDate = nil;
     NSDate* now = [NSDate date];
 
     _eventsStartDate = [CMIUtility getOffsetDateByMinutes:now offsetMinutes:-MINUTES_PRIOR_TO_NOW];
-
-//    if (_currentTimeframeStarts > 0) {
-//        _eventsStartDate = [CMIUtility getOffsetDateByMinutes:now offsetMinutes:-_currentTimeframeStarts];
-//    }
-//    else {
-//        _eventsStartDate = now;
-//    }
 
 }
 

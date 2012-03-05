@@ -18,5 +18,7 @@
 
 @property (strong, nonatomic, readonly) CMIUserDefaults* cmiUserDefaults;
 
+@property (atomic) BOOL defaultsChangedTimerWillFire;
+
 
 @end
