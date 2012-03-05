@@ -62,15 +62,16 @@ NSTimer* myTimer;
     UIAlertView* alert = nil;
     
     if (_cmiEvent.hasConferenceNumber == false) {
-        self.megaAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NoPhoneNumberAbbreviated", nil)
-                                                    message:NSLocalizedString(@"AddPhoneNumberQuestion", nil) delegate:self cancelButtonTitle:nil
-                                          otherButtonTitles: nil];
-        
-        self.megaAlert.tag = ALERT_NO_NUMBER_FOUND;
-        self.megaAlert.alpha = 0.5;
-        [self.megaAlert show];
-        myTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self
-                                                          selector:@selector(dismissMegaAnnoyingPopup:) userInfo:nil repeats:NO];        
+        [CMIUtility Log:@"No conf# for this event"];
+//        self.megaAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"NoPhoneNumberAbbreviated", nil)
+//                                                    message:NSLocalizedString(@"AddPhoneNumberQuestion", nil) delegate:self cancelButtonTitle:nil
+//                                          otherButtonTitles: nil];
+//        
+//        self.megaAlert.tag = ALERT_NO_NUMBER_FOUND;
+//        self.megaAlert.alpha = 0.5;
+//        [self.megaAlert show];
+//        myTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self
+//                                                          selector:@selector(dismissMegaAnnoyingPopup:) userInfo:nil repeats:NO];        
         
     }
     else // We have a phone#, sadly have to act differently depending on provider

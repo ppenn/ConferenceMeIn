@@ -48,7 +48,8 @@ typedef enum enterConfNumberActionButtons
 
 @interface CMIMasterViewController : UITableViewController <UIActionSheetDelegate, EKEventEditViewDelegate, IASKSettingsDelegate, UIGestureRecognizerDelegate, CMIContactsControllerDelegate, GADBannerViewDelegate>
 {
-  GADBannerView *bannerView_;    
+    GADBannerView *bannerView_;    
+    UIView *admobContainerView;
 }
 
 @property (strong, nonatomic) UIAlertView* megaAlert;
@@ -65,6 +66,7 @@ typedef enum enterConfNumberActionButtons
 @property (atomic) BOOL eventStoreChangeTimerWillFire;
 @property BOOL admobIsLoaded;
 
+- (void)setToolbarHidden:(BOOL)hide;
 - (void) storeChanged:(NSNotification *) notification;
 - (NSArray *)fetchEventsForTable;
 - (void)createAdMobBanner;

@@ -133,19 +133,23 @@ NSInteger _activeMenu = -1;
     [self.parentViewController.view addSubview:containerView2];
     
 }
-
+- (void)setToolbarHidden:(BOOL)hide
+{
+    self.navigationController.toolbarHidden = hide;
+    admobContainerView.hidden = hide;    
+}
 
 - (void)createAdMobBanner
 {
     [CMIUtility Log:@"createAdMobBanner()"];
 
     CGFloat y = self.parentViewController.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - GAD_SIZE_320x50.height;
-	UIView *containerView =
+	admobContainerView =
     [[UIView alloc]
      initWithFrame:CGRectMake(0.0, y,
                               GAD_SIZE_320x50.width,
                               GAD_SIZE_320x50.height)];
-    containerView.backgroundColor = [UIColor clearColor];
+    admobContainerView.backgroundColor = [UIColor clearColor];
     
     // Create a view of the standard size at the bottom of the screen.
     bannerView_ = [[GADBannerView alloc]
@@ -161,13 +165,14 @@ NSInteger _activeMenu = -1;
     // the user wherever the ad goes and add it to the view hierarchy.
     bannerView_.rootViewController = self;
     bannerView_.delegate = self;
-    [containerView addSubview:bannerView_];
+    [admobContainerView addSubview:bannerView_];
  
-    containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    admobContainerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 
     bannerView_.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     
-    [self.parentViewController.view addSubview:containerView];
+    [self.parentViewController.view addSubview:admobContainerView];
+    
     
 }
 
@@ -186,7 +191,7 @@ NSInteger _activeMenu = -1;
     //	Push detailViewController onto the navigation controller stack
     //	If the underlying event gets deleted, detailViewController will remove itself from
     //	the stack and clear its event property.
-   self.navigationController.toolbarHidden = YES;
+    [self setToolbarHidden:YES];
 
 //    _detailViewController.delegate = _detailViewController;
     _detailViewController.allowsEditing = YES;
@@ -802,7 +807,7 @@ NSInteger _activeMenu = -1;
         [CMIUtility Log:@"viewDidAppear()"];
 
         if (firstLoad == YES ||
-            (_reloadDefaultsOnAppear == YES && _cmiUserDefaults.defaultsDidChange == YES)) {
+            (_reloadDefaultsOnAppear == YES && [_cmiUserDefaults defaultsAreDifferent] == YES)) {
             _reloadDefaultsOnAppear = NO;
             _cmiUserDefaults.defaultsDidChange = NO;
             firstLoad = NO;
@@ -823,8 +828,7 @@ NSInteger _activeMenu = -1;
                 [self scrollToNow];
             }
         }    
-        self.navigationController.toolbarHidden = NO;
-        
+        [self setToolbarHidden:NO];
     }
     @catch (NSException *e) {
         [CMIUtility LogError:e.reason];
