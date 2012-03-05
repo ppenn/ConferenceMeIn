@@ -28,7 +28,7 @@
 @property BOOL firstRun;
 
 // Runtime-only settings
-@property NSInteger filterType;
+@property (nonatomic) NSInteger filterType;
 
 @property callProviders callProviderType;
 

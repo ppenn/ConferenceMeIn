@@ -19,13 +19,15 @@
 #import "CMIPhone.h"
 #import "CMIContactsController.h"
 #import "GADBannerView.h"
+#import "GADBannerViewDelegate.h"
 
 typedef enum menuActionButtons
 {
     menuActionDial = 0,
     menuActionEmail,
     menuActionAddToContacts,
-    menuActionSettings
+    menuActionSettings,
+    menuActionCancel
 }menuActionButtons;
 
 typedef enum contextMenuActionButtons
@@ -33,7 +35,8 @@ typedef enum contextMenuActionButtons
     contextMenuActionDial = 0,
     contextMenuActionEmail,
     contextMenuActionAddToContacts,
-    contextMenuActionCopy
+    contextMenuActionCopy,
+    contextMenuActionCancel
 }contextMenuActionButtons;
 
 typedef enum enterConfNumberActionButtons
@@ -43,7 +46,7 @@ typedef enum enterConfNumberActionButtons
 }enterConfNumberActionButtons;
 
 
-@interface CMIMasterViewController : UITableViewController <UIActionSheetDelegate, EKEventEditViewDelegate, IASKSettingsDelegate, UIGestureRecognizerDelegate, CMIContactsControllerDelegate>
+@interface CMIMasterViewController : UITableViewController <UIActionSheetDelegate, EKEventEditViewDelegate, IASKSettingsDelegate, UIGestureRecognizerDelegate, CMIContactsControllerDelegate, GADBannerViewDelegate>
 {
   GADBannerView *bannerView_;    
 }
@@ -73,8 +76,9 @@ typedef enum enterConfNumberActionButtons
 - (void) reloadTableScrollToNow;
 - (void) showStartDialog;
 - (void)readAppSettings;
-- (void)handleMainActionSheetClick;
 - (void) warnPhoneNumberNotInSettings;
 - (void)invokeMegaAnnoyingPopup:(NSString*)message;
+- (void)handleMainActionSheetClick:(NSInteger)buttonIndex;
+- (void)handleContextMenu:(NSInteger)buttonIndex;
 
 @end

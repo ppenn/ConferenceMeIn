@@ -49,6 +49,10 @@ NSDate* _eventsEndDate = nil;
     return self;    
 }
 
+- (void)setFilterType:(eventFilterTypes)filterType
+{
+    _filterType = filterType;
+}
 - (NSIndexPath*)getDayEventIndexForDate:(NSDate*)date
 {
     NSDate* currentDay = [CMIUtility getMidnightDate:date];

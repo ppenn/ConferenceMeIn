@@ -33,8 +33,8 @@
 "WarnInvalidPhoneNumberQuestion" = "Would you like to set your conference #?";
 "EnterInSettingsTitle" = "Enter in Settings";
 "EmailSubject" = "Conference%20Call%20Details";
-"ContextMenuButtonTitle" = "Calendar Event";
-"CopyButtonTitle" = "Copy #";
+"ContextMenuButtonTitle" = "Conference Number";
+"CopyButtonTitle" = "Copy";
 "LoadingEventsMessage" = "Loading Events...";
 "SavingContactMessage" = "Saving Contact...";
 

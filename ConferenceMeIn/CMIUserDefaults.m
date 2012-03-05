@@ -36,6 +36,14 @@ NSString *kFirstRun = @"firstRunKey";
 @synthesize myConfLeaderPIN = _myConfLeaderPIN;
 @synthesize defaultsDidChange = _defaultsDidChange;
 
+- (void)setFilterType:(NSInteger)filterType
+{
+    _filterType = filterType;
+    
+    NSNumber *number = [NSNumber numberWithInt:_filterType];    
+    [[NSUserDefaults standardUserDefaults] setObject:number forKey:kFilterTypeKey];        
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 - (void)setMyConfPhoneNumber:(NSString *)myConfPhoneNumber
 {
     [[NSUserDefaults standardUserDefaults] setObject:myConfPhoneNumber forKey:kMyConfPhoneNumberKey];    

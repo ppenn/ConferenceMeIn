@@ -36,8 +36,10 @@ NSTimer* _refreshTimer;
 callProviders _callProvider;
 NSIndexPath* _indexPath;
 BOOL firstLoad = YES;
-NSInteger _actionSheetChoice = -1;
 
+NSInteger _actionSheetChoice = -1;
+NSInteger _actionSheetContextChoice = -1;
+NSInteger _activeMenu = -1;
 
 @implementation CMIMasterViewController
 
@@ -57,13 +59,20 @@ NSInteger _actionSheetChoice = -1;
 
 - (void)loadAdMobBanner:(NSTimer *)aTimer
 {
-    [CMIUtility Log:@"loadAdMobBanner()"];
-    
-    if (_admobIsLoaded != YES) {
-        [self createAdMobBanner];
+    @try {
+        [CMIUtility Log:@"loadAdMobBanner()"];
+        
+        if (_admobIsLoaded != YES) {
+            [self createAdMobBanner];
+            _admobIsLoaded = YES;
+        }
         // Initiate a generic request to load it with an ad.
         [bannerView_ loadRequest:[GADRequest request]];    
-        _admobIsLoaded = YES;
+        
+        [CMIUtility Log:@"exiting loadAdMobBanner()"];
+    }
+    @catch (NSException *exception) {
+        [CMIUtility LogError:exception.reason];
     }
     
 }
@@ -137,7 +146,7 @@ NSInteger _actionSheetChoice = -1;
      initWithFrame:CGRectMake(0.0, y,
                               GAD_SIZE_320x50.width,
                               GAD_SIZE_320x50.height)];
-    containerView.backgroundColor = [UIColor blackColor];
+    containerView.backgroundColor = [UIColor clearColor];
     
     // Create a view of the standard size at the bottom of the screen.
     bannerView_ = [[GADBannerView alloc]
@@ -152,6 +161,7 @@ NSInteger _actionSheetChoice = -1;
     // Let the runtime know which UIViewController to restore after taking
     // the user wherever the ad goes and add it to the view hierarchy.
     bannerView_.rootViewController = self;
+    bannerView_.delegate = self;
     [containerView addSubview:bannerView_];
  
     containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
@@ -434,11 +444,12 @@ NSInteger _actionSheetChoice = -1;
     [self scrollToNow];
 //    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];    
 
-    if (_admobIsLoaded == NO) {
-        [self loadAdMobBanner:nil];
-    }
+//    if (_admobIsLoaded == NO) {
+//        [self loadAdMobBanner:nil];
+//    }
     
     [self dismissMegaAnnoyingPopup];
+    [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(loadAdMobBanner:) userInfo:nil repeats:NO];
 }
 
 - (void)eventStoreChangeTimerFired:(NSTimer *)aTimer
@@ -1213,8 +1224,13 @@ NSInteger _actionSheetChoice = -1;
                 // Now reload settings
                 [_cmiUserDefaults loadDefaults];
                 [self readAppSettings];
-                // Now what? Actually do the thing the user wanted...
-                [self handleMainActionSheetClick];
+                // Now what? Actually do the thing the user originally wanted...
+                if (_activeMenu == ACTIONSHEET_MENU) {
+                    [self handleMainActionSheetClick:_actionSheetChoice];
+                }
+                else if (_activeMenu == ACTIONSHEET_CONTEXT_MENU_CONF) {
+                    [self handleContextMenu:_actionSheetContextChoice];                    
+                }
             }
             
         }
@@ -1226,13 +1242,13 @@ NSInteger _actionSheetChoice = -1;
 }
 
 
-- (void)handleSetNumberActionSheetClick
+- (void)handleSetNumberActionSheetClick:(NSInteger)buttonIndex
 {
     [CMIUtility Log:@"handleSetNumberActionSheetClick()"];
     UINavigationController *aNavController;
     
     // the user clicked one of the OK/Cancel buttons
-    switch (_actionSheetChoice) {
+    switch (buttonIndex) {
         case enterConfNumberEnterSettings:
             if ([self.appSettingsViewController.file isEqualToString:@"ChildCMINumber"]) {
                 _appSettingsViewController = nil;
@@ -1263,18 +1279,20 @@ NSInteger _actionSheetChoice = -1;
     [_cmiContacts tryToSaveToContact:conferenceNumber];
 }
 
-- (void)handleMainActionSheetClick
+- (void)handleMainActionSheetClick:(NSInteger)buttonIndex
 {
     [CMIUtility Log:@"handleMainActionSheetClick()"];
 
+    _activeMenu = ACTIONSHEET_MENU;
+    _actionSheetChoice = buttonIndex;
     // All of these are actions against an existing Conf#, so if it doesn't exist or is invalid
     // then 
-    if(_cmiMyConferenceNumber.isValid == FALSE) {
+    if(buttonIndex != menuActionCancel && _cmiMyConferenceNumber.isValid == FALSE) {
         [self warnPhoneNumberNotInSettings];
     }
     else {    
         // the user clicked one of the OK/Cancel buttons
-        switch (_actionSheetChoice) {
+        switch (buttonIndex) {
             case menuActionDial:
                 [CMIUtility Log:@"Call My Number"];
                 [self callMyNumber];
@@ -1309,11 +1327,14 @@ NSInteger _actionSheetChoice = -1;
     }
 }
 
-- (void)handleContextMenu:(UIActionSheet *)actionSheet
+- (void)handleContextMenu:(NSInteger)buttonIndex
 {
     [CMIUtility Log:@"handleContextMenu()"];
     
-    switch (_actionSheetChoice) {
+    _activeMenu = ACTIONSHEET_CONTEXT_MENU_CONF;
+    _actionSheetContextChoice = buttonIndex;
+    
+    switch (buttonIndex) {
         case contextMenuActionDial:
             [CMIUtility Log:@"Dial"];
             if (_selectedCMIEvent != nil && [_selectedCMIEvent hasConferenceNumber] == true) {
@@ -1348,17 +1369,15 @@ NSInteger _actionSheetChoice = -1;
     @try {
         [CMIUtility Log:@"clickedButtonAtIndex()"];
         
-        _actionSheetChoice = buttonIndex;
-
         switch (actionSheet.tag) {
             case ACTIONSHEET_MENU:
-                [self handleMainActionSheetClick];                
+                [self handleMainActionSheetClick:buttonIndex];                
                 break;
             case ACTIONSHEET_SET_CONF_NUM:
-                [self handleSetNumberActionSheetClick];
+                [self handleSetNumberActionSheetClick:buttonIndex];
                 break;
             case ACTIONSHEET_CONTEXT_MENU_CONF:
-                [self handleContextMenu:actionSheet];
+                [self handleContextMenu:buttonIndex];
                 break;
             default:
                 break;
@@ -1394,6 +1413,7 @@ NSInteger _actionSheetChoice = -1;
                     [self email:_cmiMyConferenceNumber.conferenceNumberFormatted];
                     break;
                 case menuActionAddToContacts:
+                    // Should never be here
                     break;
                 case menuActionSettings:
                     // Do nothing, user just chose to change it themselves
@@ -1410,5 +1430,14 @@ NSInteger _actionSheetChoice = -1;
         
 }
 
-
+-(void)adViewDidReceiveAd:(GADBannerView *)view
+{
+    NSLog(@"didReceiveAd()");
+    bannerView_.superview.backgroundColor = [UIColor blackColor];
+}
+-(void)adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error
+{
+    NSLog(@"didNOTReceiveAd()");
+    
+}
 @end
