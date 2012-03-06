@@ -77,6 +77,8 @@
 		A8CFD0EA14EFE5C200EA8616 /* CMIMyConferenceNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0E814EFE5C200EA8616 /* CMIMyConferenceNumber.m */; };
 		A8DF7CED15058C2D00C42A5D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728041502FE42005190EE /* AudioToolbox.framework */; };
 		A8DF7CEE15058C2D00C42A5D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728051502FE42005190EE /* SystemConfiguration.framework */; };
+		A8DF7CF11505D5E500C42A5D /* faux_fax.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8DF7CF01505D5E400C42A5D /* faux_fax.txt */; };
+		A8DF7CF215068BA100C42A5D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8E5250E14CA0EC800797C16 /* CoreGraphics.framework */; };
 		A8E1D70514D08F2800E5A877 /* EKEventParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D70414D08F2800E5A877 /* EKEventParserTests.m */; };
 		A8E1D70C14D0974700E5A877 /* CMIEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D70B14D0974700E5A877 /* CMIEvent.m */; };
 		A8E1D70D14D0974700E5A877 /* CMIEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D70B14D0974700E5A877 /* CMIEvent.m */; };
@@ -219,6 +221,7 @@
 		A8CFD0E414EF404500EA8616 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		A8CFD0E714EFE5C200EA8616 /* CMIMyConferenceNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIMyConferenceNumber.h; sourceTree = "<group>"; };
 		A8CFD0E814EFE5C200EA8616 /* CMIMyConferenceNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIMyConferenceNumber.m; sourceTree = "<group>"; };
+		A8DF7CF01505D5E400C42A5D /* faux_fax.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = faux_fax.txt; path = test_invites/faux_fax.txt; sourceTree = "<group>"; };
 		A8E1D70314D08F2800E5A877 /* EKEventParserTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKEventParserTests.h; sourceTree = "<group>"; };
 		A8E1D70414D08F2800E5A877 /* EKEventParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKEventParserTests.m; sourceTree = "<group>"; };
 		A8E1D70A14D0974700E5A877 /* CMIEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIEvent.h; sourceTree = "<group>"; };
@@ -302,6 +305,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8DF7CF215068BA100C42A5D /* CoreGraphics.framework in Frameworks */,
 				A8DF7CED15058C2D00C42A5D /* AudioToolbox.framework in Frameworks */,
 				A8DF7CEE15058C2D00C42A5D /* SystemConfiguration.framework in Frameworks */,
 				A8E5252F14CA0EC800797C16 /* SenTestingKit.framework in Frameworks */,
@@ -593,6 +597,7 @@
 		A8F0178B14F58C080046E849 /* test_invites */ = {
 			isa = PBXGroup;
 			children = (
+				A8DF7CF01505D5E400C42A5D /* faux_fax.txt */,
 				A8081C5414FDC82800CEC9A6 /* lotuslive.txt */,
 				A8081C4F14FDA65500CEC9A6 /* webex.txt */,
 				A8081C5014FDA65500CEC9A6 /* webex2.txt */,
@@ -736,6 +741,7 @@
 				A8081C5114FDA65500CEC9A6 /* webex.txt in Resources */,
 				A8081C5214FDA65500CEC9A6 /* webex2.txt in Resources */,
 				A8081C5514FDC82800CEC9A6 /* lotuslive.txt in Resources */,
+				A8DF7CF11505D5E500C42A5D /* faux_fax.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

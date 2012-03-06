@@ -154,6 +154,27 @@
     return nextDate;
 }
 
++ (BOOL)createTestEventUK:(EKEventStore*)eventStore startDate:(NSDate*) startDate endDate:(NSDate*)endDate title:(NSString*)title withConfNumber:(BOOL)withConfNumber
+{
+    EKEvent *event = [EKEvent eventWithEventStore:eventStore];
+    
+    event.title = title; 
+    
+    event.startDate = startDate;
+    event.endDate = endDate;// 
+    if (withConfNumber == TRUE) {
+        event.location = withConfNumber ? @"United Kingdom (toll-free): 0 800 014 8182" : @"nada" ;         
+    }
+    else {
+        event.location = @"nada" ;                 
+    }
+    
+    [event setCalendar:[eventStore defaultCalendarForNewEvents]];
+    NSError *err;
+    BOOL isSuccess=[eventStore saveEvent:event span:EKSpanThisEvent error:&err];
+    
+    return isSuccess;
+}
 
 + (BOOL)createTestEvent:(EKEventStore*)eventStore startDate:(NSDate*) startDate endDate:(NSDate*)endDate title:(NSString*)title withConfNumber:(BOOL)withConfNumber
 {
@@ -233,6 +254,7 @@
     [self createTestEvent:eventStore startDate:startDate endDate:endDate title:@"testtitle2" withConfNumber:TRUE];    
     [self createTestEvent:eventStore startDate:endDate endDate:afterEndDate title:@"futureEvent" withConfNumber:TRUE];    
     [self createTestEvent:eventStore startDate:tomorrowStartDate endDate:tomorrowEndDate title:@"tomorrowEvent" withConfNumber:TRUE];    
+    [self createTestEventUK:eventStore startDate:tomorrowStartDate endDate:tomorrowEndDate title:@"tomorrowEvent2" withConfNumber:TRUE];    
     [self createTestEvent:eventStore startDate:beforeStartDate endDate:startDate title:@"testtitle1" withConfNumber:TRUE];
     [self createTestEvent:eventStore startDate:beforeStartDate endDate:startDate title:@"NoConfNumEvent1" withConfNumber:FALSE];
     [self createTestEvent:eventStore startDate:beforeBeforeStartDate endDate:beforeStartDate title:@"testtitle0" withConfNumber:TRUE];

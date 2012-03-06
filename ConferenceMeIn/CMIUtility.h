@@ -27,6 +27,7 @@
 + (void)createTestEvents:(EKEventStore*)eventStore;
 + (void)removeAllSimulatorEvents:(EKEventStore*)eventStore;
 + (BOOL)createTestEvent:(EKEventStore*)eventStore startDate:(NSDate*) startDate endDate:(NSDate*)endDate title:(NSString*)title withConfNumber:(BOOL)withConfNumber;
++ (BOOL)createTestEventUK:(EKEventStore*)eventStore startDate:(NSDate*) startDate endDate:(NSDate*)endDate title:(NSString*)title withConfNumber:(BOOL)withConfNumber;
 + (BOOL)isSameDay:(NSDate*)date1 atDate2:(NSDate*)date2;
 + (NSString*)formatDateAsDay:(NSDate*)date;
 + (NSDate*) getMidnightDate:(NSDate*) date;

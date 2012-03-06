@@ -10,10 +10,33 @@
 #import "CMIUtility.h"
 #import "CMIMyConferenceNumber.h"
 
+#define REGEX_1_PREFIX_COUNTRIES @"[us|ca|au|ie|mx]"
+
 @implementation CMIPhone
 
 @synthesize phoneURL = _phoneURL;
 @synthesize callProvider = _callProvider;
+
+- (BOOL)countryHas0Prefix
+{
+    [CMIUtility Log:@"countryHas0Prefix()"];
+    NSError* error = nil;
+    
+    NSRegularExpression *regexCountry = [NSRegularExpression regularExpressionWithPattern:REGEX_1_PREFIX_COUNTRIES
+                                                                               options:NSRegularExpressionCaseInsensitive
+                                                                                 error:&error];
+    
+    NSLocale* currentLocale = [NSLocale currentLocale];  // get the current locale.
+    NSString* countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
+    NSRange range = [regexCountry rangeOfFirstMatchInString:countryCode options:0 range:NSMakeRange(0, [countryCode  length])];
+    if (range.location == NSNotFound) {
+        return YES;
+    }
+    else {
+        return FALSE;
+    }
+    
+}
 
 - (BOOL)talkatoneIsInstalled
 {
@@ -35,11 +58,9 @@
 {
     [CMIUtility Log:@"internationalizePhoneNumber()"];
     
-    //TODO: Internationalize...use Regex
+    //TODO: Internationalize...use Regex in resource files
     // Hack! Maybe works in Europe...
-    NSLocale* currentLocale = [NSLocale currentLocale];  // get the current locale.
-    NSString* countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
-    if (![countryCode isEqualToString:@"US"] && ![countryCode isEqualToString:@"CA"] && [countryCode isEqualToString:@"MX"] && ![countryCode isEqualToString:@"AU"] && ![countryCode isEqualToString:@"IE"]) {
+    if ([self countryHas0Prefix] == YES) {
         phoneNumber = [@"0" stringByAppendingString:phoneNumber];
     }
 

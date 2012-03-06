@@ -70,9 +70,12 @@ NSInteger _activeMenu = -1;
             [self createAdMobBanner];
         }
         // Initiate a generic request to load it with an ad.
-        [bannerView_ loadRequest:[GADRequest request]];    
+        // NB This changes defaults so we have to momentarily unhook eventlistener on delegate
         
-        [CMIUtility Log:@"exiting loadAdMobBanner()"];
+        [((ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate]) removeDefaultsEventListener];
+        [bannerView_ loadRequest:[GADRequest request]];    
+        [((ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate]) addDefaultsEventListener];
+        
     }
     @catch (NSException *exception) {
         [CMIUtility LogError:exception.reason];
@@ -181,7 +184,7 @@ NSInteger _activeMenu = -1;
     
     [self.parentViewController.view addSubview:admobContainerView];
     
-    
+    self.admobIsLoaded = YES;
 }
 
 - (void)showEventNatively:(NSInteger)section row:(NSInteger)row
@@ -618,7 +621,8 @@ NSInteger _activeMenu = -1;
             [[NSRunLoop currentRunLoop] runUntilDate:[NSDate date]];
             [self.tableView reloadData];    
             [self scrollToNow];
-            [self dismissMegaAnnoyingPopup];    
+            [self dismissMegaAnnoyingPopup];  
+            [self loadAdMobBanner:nil];
         }    
     }
     @catch (NSException *e) {
@@ -831,6 +835,7 @@ NSInteger _activeMenu = -1;
             }
         }    
         [self setToolbarHidden:NO];
+        [self loadAdMobBanner:nil];
     }
     @catch (NSException *e) {
         [CMIUtility LogError:e.reason];
@@ -1443,7 +1448,9 @@ NSInteger _activeMenu = -1;
     @try {
         [CMIUtility Log:@"adViewDidReceiveAd()"];
 
-        bannerView_.superview.backgroundColor = [UIColor blackColor];        
+        if (bannerView_.superview.backgroundColor != [UIColor blackColor]) {
+            bannerView_.superview.backgroundColor = [UIColor blackColor];   
+        }
         _admobIsLoaded = YES;
     }
     @catch (NSException *exception) {

@@ -21,4 +21,7 @@
 @property (atomic) BOOL defaultsChangedTimerWillFire;
 
 
+- (void)addDefaultsEventListener;
+- (void)removeDefaultsEventListener;
+
 @end

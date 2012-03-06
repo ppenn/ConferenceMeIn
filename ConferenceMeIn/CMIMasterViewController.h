@@ -83,5 +83,6 @@ typedef enum enterConfNumberActionButtons
 - (void)dismissMegaAnnoyingPopup;
 - (void)handleMainActionSheetClick:(NSInteger)buttonIndex;
 - (void)handleContextMenu:(NSInteger)buttonIndex;
+- (void)loadAdMobBanner:(NSTimer *)aTimer;
 
 @end

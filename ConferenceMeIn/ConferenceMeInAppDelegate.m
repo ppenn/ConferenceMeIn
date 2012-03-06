@@ -23,6 +23,7 @@
 
 CMIMasterViewController* _cmiMasterViewController;
 
+
 - (void)defaultsChangedTimerFired:(NSTimer *)aTimer
 {
     @try {
@@ -127,19 +128,32 @@ CMIMasterViewController* _cmiMasterViewController;
      */
 }
 
-- (void)saveDefaults
+- (void)addDefaultsEventListener
 {
-    [CMIUtility Log:@"saveDefaults()"];
-    
-	[[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:NSUserDefaultsDidChangeNotification
-                                                  object:nil];
-    [_cmiUserDefaults saveDefaults];
+    [CMIUtility Log:@"addDefaultsEventListener()"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(defaultsChanged:)
                                                  name:NSUserDefaultsDidChangeNotification
                                                object:nil];
+}
+- (void)removeDefaultsEventListener
+{
+    [CMIUtility Log:@"removeDefaultsEventListener()"];
+
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NSUserDefaultsDidChangeNotification
+                                                  object:nil];
+    
+}
+
+- (void)saveDefaults
+{
+    [CMIUtility Log:@"saveDefaults()"];
+
+    [self removeDefaultsEventListener];
+    [_cmiUserDefaults saveDefaults];
+    [self addDefaultsEventListener];
     
 }
 
@@ -174,6 +188,18 @@ CMIMasterViewController* _cmiMasterViewController;
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+    @try {
+        [CMIUtility Log:@"applicationDidBecomeActive()"];
+        
+        
+        if (_cmiMasterViewController != nil && _cmiMasterViewController.admobIsLoaded == YES)
+        {
+            [_cmiMasterViewController loadAdMobBanner:nil];
+        }
+    }
+    @catch (NSException *exception) {
+        [CMIUtility LogError:exception.reason];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
