@@ -25,6 +25,8 @@
 @synthesize numConfEvents = _numConfEvents;
 @synthesize cmiFilteredDaysArray = _cmiFilteredDaysArray;
 @synthesize cmiFilteredDaysDictionary = _cmiFilteredDaysDictionary;
+@synthesize lastRefreshTime = _lastRefreshTime;
+
 NSDate* _eventsStartDate = nil;
 NSDate* _eventsEndDate = nil;
 
@@ -317,6 +319,7 @@ NSMutableArray* _currentDaysArray;
 	
 	// Fetch all events that match the predicate.
 	NSArray *events = [self.eventStore eventsMatchingPredicate:predicate];
+    _lastRefreshTime = [NSDate date];
     NSArray *sortedEvents =
     [events sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)];
     

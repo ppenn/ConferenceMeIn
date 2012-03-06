@@ -53,6 +53,7 @@ typedef enum eventFilterTypes
 @property (nonatomic, assign) NSInteger currentTimeframeStarts;
 @property (readonly, nonatomic) NSInteger numConfEvents;
 @property (readonly, nonatomic) NSInteger numDays;
+@property (strong, nonatomic) NSDate* lastRefreshTime;
 
 - (id) init;
 - (void) createCMIEvents;

@@ -18,7 +18,6 @@
 
 #define INTERVAL_LONG_PRESS 1.5
 #define INTERVAL_DOUBLE_CLICK 0.3
-#define INTERVAL_REFRESH_TABLE 0.1
 #define INTERVAL_EVENT_CHANGE 0.2
 #define INTERVAL_LOAD_ADMOB 0.1
 
@@ -86,8 +85,8 @@ NSInteger _activeMenu = -1;
 #pragma mark -
 #pragma mark Table view delegate and data source methods
 
-- (void)refreshTimerFired:(NSTimer *)aTimer{
-    
+- (void)refreshTimerFired:(NSTimer *)aTimer
+{    
     @try {
         [CMIUtility Log:@"refreshTimerFired()"];
 
@@ -95,10 +94,8 @@ NSInteger _activeMenu = -1;
             [self dismissMegaAnnoyingPopup];
             return;
         }
-        if(_refreshTimer != nil){
-            [self reloadTableScrollToNow];
-        }
-        _refreshTimer = nil;
+
+        [self reloadTableScrollToNow];
 
         [self showStartDialog];        
     }
@@ -392,12 +389,6 @@ NSInteger _activeMenu = -1;
 }
 
 
-- (NSArray *)fetchEventsForTable 
-{
-    [CMIUtility Log:@"fetchEventsForTable()"];
-    
-    return [_cmiEventCalendar fetchEvents];
-}
 
 - (void)reloadTable
 {

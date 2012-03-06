@@ -21,6 +21,8 @@
 #import "GADBannerView.h"
 #import "GADBannerViewDelegate.h"
 
+#define INTERVAL_REFRESH_TABLE 0.1
+
 typedef enum menuActionButtons
 {
     menuActionDial = 0,
@@ -68,7 +70,6 @@ typedef enum enterConfNumberActionButtons
 
 - (void)setToolbarHidden:(BOOL)hide;
 - (void) storeChanged:(NSNotification *) notification;
-- (NSArray *)fetchEventsForTable;
 - (void)createAdMobBanner;
 
 - (UITableViewCell *)tableViewCellWithReuseIdentifier:(NSString *)identifier;
@@ -84,5 +85,7 @@ typedef enum enterConfNumberActionButtons
 - (void)handleMainActionSheetClick:(NSInteger)buttonIndex;
 - (void)handleContextMenu:(NSInteger)buttonIndex;
 - (void)loadAdMobBanner:(NSTimer *)aTimer;
+- (void) scrollToNow;
+- (void)refreshTimerFired:(NSTimer *)aTimer;
 
 @end

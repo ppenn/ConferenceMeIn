@@ -12,7 +12,7 @@
 #import "CMIUtility.h"
 
 #define REGEX_CODE_SPECIFIC @"(\\bpin|participant|password|code)[\\s:\\)\\#]*\\d{3,12}[\\s-]?\\d{1,12}+[\\s-]?\\d{0,12}"
-#define REGEX_CODE_GENERIC @"\\d{4,12}"
+#define REGEX_CODE_GENERIC @"(?<![^\\d]\\d\\d\\d[^\\d])[\\d]{4,12}"
 #define REGEX_SEPARATOR @"[^\\d]*"
 #define REGEX_CODE_IN_FORMATTED_NUMBER @"(?<=,,)\\d{4,12}"
 
