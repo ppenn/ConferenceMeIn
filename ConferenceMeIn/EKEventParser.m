@@ -12,7 +12,10 @@
 #import "CMIUtility.h"
 
 #define REGEX_CODE_SPECIFIC @"(\\bpin|participant|password|code)[\\s:\\)\\#]*\\d{3,12}[\\s-]?\\d{1,12}+[\\s-]?\\d{0,12}"
+
 #define REGEX_CODE_GENERIC @"(?<![^\\d]\\d\\d\\d[^\\d])[\\d]{4,12}"
+#define REGEX_NEWLINE @"[\\r|\\n]"
+
 #define REGEX_SEPARATOR @"[^\\d]*"
 #define REGEX_CODE_IN_FORMATTED_NUMBER @"(?<=,,)\\d{4,12}"
 
@@ -26,6 +29,7 @@
 
 #define PHONE_NUMBER_LENGTH 10
 #define MAX_PHONE_NUMBER_LENGTH 11
+#define MAX_NEWLINES 4
 
 @implementation EKEventParser
 
@@ -194,6 +198,7 @@
 
     NSArray* possiblePINs = [regexPIN matchesInString:eventText options:0 range:NSMakeRange(0, [eventText length])];
 
+    NSRange rangePIN;
     // for each potential pin, check it's not part of a phone number. return the first.
     for (NSTextCheckingResult* possiblePIN in possiblePINs) 
     {
@@ -207,12 +212,25 @@
             NSString* secondPhoneNumber = [EKEventParser parsePhoneNumber:[eventText substringWithRange:substringToCheck]];
             if ([secondPhoneNumber rangeOfString:pinNumber].location == NSNotFound) {
                 PIN = pinNumber;
+                rangePIN = possiblePIN.range;
                 break;
             }
         }
         else {
             PIN = pinNumber;
+            rangePIN = possiblePIN.range;
             break;
+        }
+    }
+    
+    if (PIN != nil) {
+        // Maybe check to see how many linebreaks there were to reach here?
+        NSRegularExpression *regexNewline = [NSRegularExpression regularExpressionWithPattern:REGEX_NEWLINE                                                                                                 options:NSRegularExpressionCaseInsensitive                                                                                  error:&error];
+        
+        NSArray* possibleNewLines = [regexNewline matchesInString:eventText options:0 range:NSMakeRange(0, rangePIN.location)];
+        if (possibleNewLines != nil && possibleNewLines.count > MAX_NEWLINES) {
+            [CMIUtility Log:@"Maximum NewLines exceeded"];
+            PIN = nil;
         }
     }
 

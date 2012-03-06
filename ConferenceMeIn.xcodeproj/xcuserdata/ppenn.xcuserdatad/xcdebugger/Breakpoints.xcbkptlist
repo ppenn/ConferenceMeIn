@@ -301,11 +301,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeInTests/EKEventParserTests.m"
-         timestampString = "352410669.137208"
+         timestampString = "352767513.727721"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "101"
-         endingLineNumber = "101"
+         startingLineNumber = "108"
+         endingLineNumber = "108"
          landmarkName = "-testInvitesShouldParse"
          landmarkType = "5">
       </FileBreakpoint>
@@ -315,11 +315,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeInTests/EKEventParserTests.m"
-         timestampString = "352410653.846431"
+         timestampString = "352767513.727721"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "68"
-         endingLineNumber = "68"
+         startingLineNumber = "75"
+         endingLineNumber = "75"
          landmarkName = "-testLeaderCodeShouldParse:expectedPhoneNumber:expectedPhoneCode:expectedLeaderSeparator:expectedLeaderCode:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -356,13 +356,41 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "ConferenceMeIn/ConferenceMeInAppDelegate.m"
-         timestampString = "352764544.91565"
+         filePath = "ConferenceMeInTests/EKEventParserTests.m"
+         timestampString = "352767513.727721"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "194"
-         endingLineNumber = "194"
-         landmarkName = "-applicationDidBecomeActive:"
+         startingLineNumber = "66"
+         endingLineNumber = "66"
+         landmarkName = "-testPhoneNumberCodeShouldParse:expectedPhoneNumber:expectedPhoneCode:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeInTests/EKEventParserTests.m"
+         timestampString = "352767513.727721"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "112"
+         endingLineNumber = "112"
+         landmarkName = "-testInvitesShouldParse"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeIn/EKEventParser.m"
+         timestampString = "352768383.061516"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "232"
+         endingLineNumber = "232"
+         landmarkName = "+tryToGetCodeGeneric:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

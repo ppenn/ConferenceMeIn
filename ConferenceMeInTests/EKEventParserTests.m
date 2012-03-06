@@ -52,15 +52,22 @@
 
     NSString* phoneNumberOnly = [EKEventParser getPhoneFromPhoneNumber:phoneNumber];
     NSString* code = [EKEventParser getCodeFromNumber:phoneNumber];
-    if (phoneNumberOnly == nil || code == nil || 
-        ![expectedPhoneNumber isEqualToString:phoneNumberOnly] || ![expectedPhoneCode isEqualToString:code])  { 
-        NSLog(@"stopHere");
+    if (phoneNumberOnly == nil ||  
+        ![expectedPhoneNumber isEqualToString:phoneNumberOnly])  { 
+        NSLog(@"stopHere PhoneBadgered");
     }
     STAssertNotNil(phoneNumberOnly, @"Phone shouldn't be nil");
-    STAssertNotNil(code, @"Code shouldn't be nil");
 
     STAssertTrue([expectedPhoneNumber isEqualToString:phoneNumberOnly], [@"Phone should be equal :" stringByAppendingFormat:@"phoneText[ %@ ] expected#[ %@ ] got [ %@ ]", phoneText, expectedPhoneNumber, phoneNumberOnly]);
-    STAssertTrue([expectedPhoneCode isEqualToString:code], [@"Codes should be equal :" stringByAppendingFormat:@"phoneText[ %@ ] expected#[ %@ ] got [ %@ ]", phoneText, expectedPhoneCode, code]);
+
+    if ((expectedPhoneCode != nil && (code == nil || ![expectedPhoneCode isEqualToString:code]))
+        || (expectedPhoneCode == nil && code != nil)) {
+          { 
+            NSLog(@"stopHere Code Badgered");
+        }
+        STAssertNotNil(code, @"Code shouldn't be nil");
+        STAssertTrue([expectedPhoneCode isEqualToString:code], [@"Codes should be equal :" stringByAppendingFormat:@"phoneText[ %@ ] expected#[ %@ ] got [ %@ ]", phoneText, expectedPhoneCode, code]);
+    }
 }
 
 - (void)testLeaderCodeShouldParse:(NSString*)phoneText expectedPhoneNumber:(NSString*)expectedPhoneNumber expectedPhoneCode:(NSString*)expectedPhoneCode expectedLeaderSeparator:(NSString*)expectedLeaderSeparator expectedLeaderCode:(NSString*)expectedLeaderCode
@@ -102,6 +109,9 @@
     }
     [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8888582144" expectedPhoneCode:@"4259370"];
 
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/faux_fax.txt" encoding:stringEncoding error:nil];   
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"3037796161" expectedPhoneCode:nil];
+    
     fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/lotuslive.txt" encoding:stringEncoding error:nil];   
     [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8773660711" expectedPhoneCode:@"54466542"];
 
