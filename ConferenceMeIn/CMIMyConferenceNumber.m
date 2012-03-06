@@ -29,8 +29,15 @@
     NSString* retval = nil;
     
     if ([self isValid]) {
-        NSString* format = NSLocalizedString(@"ConferenceNumberFormat", @"");
-        retval = [NSString stringWithFormat:format,_cmiUserDefaults.myConfPhoneNumber, _cmiUserDefaults.myConfConfNumber];
+        NSString* format;
+        if (_cmiUserDefaults.myConfConfNumber == nil || _cmiUserDefaults.myConfConfNumber.length == 0) {
+            format = NSLocalizedString(@"PhoneNumberFormat", nil);
+            retval = [NSString stringWithFormat:format,_cmiUserDefaults.myConfPhoneNumber];
+        }
+        else {
+            format = NSLocalizedString(@"ConferenceNumberFormat", nil);            
+            retval = [NSString stringWithFormat:format,_cmiUserDefaults.myConfPhoneNumber, _cmiUserDefaults.myConfConfNumber];
+        }
     }
     
     return retval;

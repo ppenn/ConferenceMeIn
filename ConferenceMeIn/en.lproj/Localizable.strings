@@ -20,6 +20,7 @@
 "HelpViewTitle" = "Help";
 "SettingsTitle" = "Settings";
 "ConferenceNumberFormat" = " Conference Number: %@ Code: %@";
+"PhoneNumberFormat" = " Conference Number: %@";
 "CallMyConfNumTitle" = "Dial";
 "EmailMyConfNumTitle" = "Email";
 "AddToContactTitle" = "Add To Contacts";

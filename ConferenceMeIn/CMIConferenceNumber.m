@@ -46,8 +46,17 @@
 {
     if (_conferenceNumber != nil && _conferenceNumber.length > 0 &&
         _formatted == nil) {
-        NSString* format = NSLocalizedString(@"ConferenceNumberFormat", @"");
-        _formatted = [NSString stringWithFormat:format, _phoneNumber, _code];
+        
+        NSString* format;
+        if (_code == nil || _code.length == 0) {
+            format = NSLocalizedString(@"PhoneNumberFormat", nil);
+            _formatted = [NSString stringWithFormat:format,_phoneNumber];
+        }
+        else {
+            format = NSLocalizedString(@"ConferenceNumberFormat", nil);            
+            _formatted = [NSString stringWithFormat:format,_phoneNumber, _code];
+        }
+        
     }
 
     return _formatted;

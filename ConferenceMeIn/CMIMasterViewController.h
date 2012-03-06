@@ -80,6 +80,7 @@ typedef enum enterConfNumberActionButtons
 - (void)readAppSettings;
 - (void) warnPhoneNumberNotInSettings;
 - (void)invokeMegaAnnoyingPopup:(NSString*)message;
+- (void)dismissMegaAnnoyingPopup;
 - (void)handleMainActionSheetClick:(NSInteger)buttonIndex;
 - (void)handleContextMenu:(NSInteger)buttonIndex;
 

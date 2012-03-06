@@ -15,14 +15,18 @@
 #import "CMIConferenceNumber.h"
 
 #define ROW_HEIGHT 90
-#define LONG_PRESS_DURATION 1.5
+
+#define INTERVAL_LONG_PRESS 1.5
+#define INTERVAL_DOUBLE_CLICK 0.3
+#define INTERVAL_REFRESH_TABLE 0.1
+#define INTERVAL_EVENT_CHANGE 0.2
+#define INTERVAL_LOAD_ADMOB 0.1
 
 #define ACTIONSHEET_MENU 0
 #define ACTIONSHEET_SET_CONF_NUM 1
 #define ACTIONSHEET_CONTEXT_MENU 2
 #define ACTIONSHEET_CONTEXT_MENU_CONF 3
 
-#define EVENT_CHANGE_DELAY 0.2
 
 #define ADMOB_PUBLISHER_ID @"a14f53ae2321351"
 
@@ -83,7 +87,11 @@ NSInteger _activeMenu = -1;
     
     @try {
         [CMIUtility Log:@"refreshTimerFired()"];
-        
+
+        if (self.navigationController.visibleViewController != self) {
+            [self dismissMegaAnnoyingPopup];
+            return;
+        }
         if(_refreshTimer != nil){
             [self reloadTableScrollToNow];
         }
@@ -320,7 +328,7 @@ NSInteger _activeMenu = -1;
             _tapCount = _tapCount + 1;
             _tappedRow = indexPath.row;
             _tappedSection = indexPath.section;
-            _tapTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(tapTimerFired:) userInfo:nil repeats:NO];
+            _tapTimer = [NSTimer scheduledTimerWithTimeInterval:INTERVAL_DOUBLE_CLICK target:self selector:@selector(tapTimerFired:) userInfo:nil repeats:NO];
         }        
         else if(_tappedRow != indexPath.row){
             //tap on new row
@@ -331,7 +339,7 @@ NSInteger _activeMenu = -1;
             }
             _tappedRow = indexPath.row;
             _tappedSection = indexPath.section;
-            _tapTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(tapTimerFired:) userInfo:nil repeats:NO];
+            _tapTimer = [NSTimer scheduledTimerWithTimeInterval:INTERVAL_DOUBLE_CLICK target:self selector:@selector(tapTimerFired:) userInfo:nil repeats:NO];
             
         }
         
@@ -446,14 +454,8 @@ NSInteger _activeMenu = -1;
     [self readAppSettings];    
     [self reloadTable];
     [self scrollToNow];
-//    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];    
-
-//    if (_admobIsLoaded == NO) {
-//        [self loadAdMobBanner:nil];
-//    }
-    
     [self dismissMegaAnnoyingPopup];
-    [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(loadAdMobBanner:) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:INTERVAL_LOAD_ADMOB target:self selector:@selector(loadAdMobBanner:) userInfo:nil repeats:NO];
 }
 
 - (void)eventStoreChangeTimerFired:(NSTimer *)aTimer
@@ -486,7 +488,7 @@ NSInteger _activeMenu = -1;
             _eventStoreChangeTimerWillFire == NO) {
 
             _eventStoreChangeTimerWillFire = YES;
-            [NSTimer scheduledTimerWithTimeInterval:EVENT_CHANGE_DELAY target:self selector:@selector(eventStoreChangeTimerFired:) userInfo:nil repeats:NO];
+            [NSTimer scheduledTimerWithTimeInterval:INTERVAL_EVENT_CHANGE target:self selector:@selector(eventStoreChangeTimerFired:) userInfo:nil repeats:NO];
             
         }
     }
@@ -661,7 +663,7 @@ NSInteger _activeMenu = -1;
 
     UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc] 
                                           initWithTarget:self action:@selector(handleLongPress:)];
-    lpgr.minimumPressDuration = LONG_PRESS_DURATION; //seconds
+    lpgr.minimumPressDuration = INTERVAL_LONG_PRESS; 
     lpgr.delegate = self;
     [self.tableView addGestureRecognizer:lpgr];    
     
@@ -813,7 +815,7 @@ NSInteger _activeMenu = -1;
             firstLoad = NO;
             
             [self invokeMegaAnnoyingPopup:NSLocalizedString(@"LoadingEventsMessage", nil)];    
-            _refreshTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(refreshTimerFired:) userInfo:nil repeats:NO];
+            _refreshTimer = [NSTimer scheduledTimerWithTimeInterval:INTERVAL_REFRESH_TABLE target:self selector:@selector(refreshTimerFired:) userInfo:nil repeats:NO];
             
         }
         else {

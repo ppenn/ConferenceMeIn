@@ -75,6 +75,8 @@
 		A8CFD0E614EF404500EA8616 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8CFD0E414EF404500EA8616 /* MessageUI.framework */; };
 		A8CFD0E914EFE5C200EA8616 /* CMIMyConferenceNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0E814EFE5C200EA8616 /* CMIMyConferenceNumber.m */; };
 		A8CFD0EA14EFE5C200EA8616 /* CMIMyConferenceNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0E814EFE5C200EA8616 /* CMIMyConferenceNumber.m */; };
+		A8DF7CED15058C2D00C42A5D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728041502FE42005190EE /* AudioToolbox.framework */; };
+		A8DF7CEE15058C2D00C42A5D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728051502FE42005190EE /* SystemConfiguration.framework */; };
 		A8E1D70514D08F2800E5A877 /* EKEventParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D70414D08F2800E5A877 /* EKEventParserTests.m */; };
 		A8E1D70C14D0974700E5A877 /* CMIEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D70B14D0974700E5A877 /* CMIEvent.m */; };
 		A8E1D70D14D0974700E5A877 /* CMIEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E1D70B14D0974700E5A877 /* CMIEvent.m */; };
@@ -300,6 +302,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8DF7CED15058C2D00C42A5D /* AudioToolbox.framework in Frameworks */,
+				A8DF7CEE15058C2D00C42A5D /* SystemConfiguration.framework in Frameworks */,
 				A8E5252F14CA0EC800797C16 /* SenTestingKit.framework in Frameworks */,
 				A8081CB11501350600CEC9A6 /* AddressBook.framework in Frameworks */,
 				A8081CB21501350600CEC9A6 /* AddressBookUI.framework in Frameworks */,
@@ -870,7 +874,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -936,7 +940,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -954,7 +958,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

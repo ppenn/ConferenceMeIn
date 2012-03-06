@@ -138,6 +138,7 @@ contactsControllerModes _contactsControllerMode;
     picker.allowsEditing = NO;
     picker.allowsActions = YES;
 
+    CFRelease(addressBook);
     [_viewController.navigationController pushViewController:picker animated:YES];
 
 }
@@ -151,7 +152,7 @@ contactsControllerModes _contactsControllerMode;
         CFStringRef phone = ABMultiValueCopyValueAtIndex(multi, identifier);
         _selectedPhoneNumber = [(__bridge NSString *)phone copy];
         CFRelease(phone);
-        
+        CFRelease(multi);
         [_viewController dismissModalViewControllerAnimated:YES];
         [self.delegate cmiContactsControllerDidFinish:self];
         return YES;
