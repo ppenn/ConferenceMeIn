@@ -19,7 +19,7 @@
 #define REGEX_SEPARATOR @"[^\\d]*"
 #define REGEX_CODE_IN_FORMATTED_NUMBER @"(?<=,,)\\d{4,12}"
 
-#define REGEX_PHONE_NUMBER_FIRST @"(?<![\\d\\/])[01]?(\\d{3}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{4})(?!\\w)"
+#define REGEX_PHONE_NUMBER_FIRST @"(?<![\\d\\/])[1]?([2-9]\\d{2}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{4})(?!\\w)"
 
 #define REGEX_PHONE_NUMBER_COUNTRY_TOLLFREE @"(u\\.s\\.|usa|united\\ss)[\\D]*[toll(\\-|\\s)?free\\D]*?(?=[18])"
 #define REGEX_PHONE_NUMBER_TOLLFREE @"toll(\\-|\\s)?free\\D*(?=[18])"
@@ -359,44 +359,14 @@
 + (NSString*)parseEventText:(NSString*)eventText
 {
     [CMIUtility Log:@"parseEventText()"];
-    if (eventText.length < 10)   return nil;
 
-    NSString* phoneNumber = @"";
-
-    // 2-phase pass, first of all find 
-    NSRange rangeOfFirstMatch = [EKEventParser tryToGetPhone:eventText];
-    if (!NSEqualRanges(rangeOfFirstMatch, NSMakeRange(NSNotFound, 0))) {
-        NSString* firstSubstring = [eventText substringWithRange:rangeOfFirstMatch];
-        NSRange rangeOfSecondMatch = [EKEventParser tryToGetFirstPhone:firstSubstring];
-        if (rangeOfSecondMatch.location != NSNotFound) {
-            NSString *substringForSecondMatch = [EKEventParser stripRegex:[firstSubstring substringWithRange:rangeOfSecondMatch] regexToStrip:@"[^\\d]"];
-            
-            substringForSecondMatch = [EKEventParser stripLeadingZeroOrOne:substringForSecondMatch];
-            
-            phoneNumber = [phoneNumber stringByAppendingString:substringForSecondMatch];
-            
-            // Get PIN / Code. Try a couple of ways...
-            NSUInteger afterPhoneNumberPosition = rangeOfFirstMatch.location + rangeOfSecondMatch.location + rangeOfSecondMatch.length;
-            NSString* remainderText = [eventText substringFromIndex:afterPhoneNumberPosition];
-            NSString* code;
-            code = [EKEventParser tryToGetCodeSpecific:eventText];
-            if (code == nil) {
-                code = [EKEventParser tryToGetCodeGeneric:remainderText];
-            }
-            if (code != nil) {
-                phoneNumber = [phoneNumber stringByAppendingString:PHONE_CALL_SEPARATOR];
-                phoneNumber = [phoneNumber stringByAppendingString:code];            
-            }        
-        }
-    }    
-
-    //TODO: fix this 
-    if ([phoneNumber length] > 1 &&
-        ([phoneNumber characterAtIndex:0] == '1' || [[EKEventParser getPhoneFromPhoneNumber:phoneNumber]  rangeOfString:@","].location != NSNotFound)) {
-        phoneNumber = @"";
-    }
+    NSString* conferenceNumber;
     
-    return phoneNumber;
+    CMIConferenceNumber* cmiConferenceNumber = [EKEventParser eventTextToConferenceNumber:eventText];
+
+    conferenceNumber = cmiConferenceNumber.conferenceNumber == nil ? @"" : cmiConferenceNumber.conferenceNumber;
+
+    return conferenceNumber;
 }
 
 + (CMIConferenceNumber*)eventTextToConferenceNumber:(NSString*)eventText

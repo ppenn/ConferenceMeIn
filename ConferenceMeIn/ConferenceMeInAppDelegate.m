@@ -191,17 +191,17 @@ CMIMasterViewController* _cmiMasterViewController;
     @try {
         [CMIUtility Log:@"applicationDidBecomeActive()"];
         
-//        NSDate* testTomorrow = [CMIUtility dayToDate:@"20120307"];
+        NSDate* testTomorrow = [CMIUtility dayToDate:@"20120317"];
 
         if (_cmiMasterViewController != nil && _cmiMasterViewController.admobIsLoaded == YES)
         {
-            if ([CMIUtility isSameDay:[NSDate date] atDate2:_cmiMasterViewController.cmiEventCalendar.lastRefreshTime] == YES) {
+            if ([CMIUtility isSameDay:testTomorrow atDate2:_cmiMasterViewController.cmiEventCalendar.lastRefreshTime] == YES) {
                 [_cmiMasterViewController scrollToNow];
             }
             else {
                 // Refresh List?
                 [_cmiMasterViewController invokeMegaAnnoyingPopup:NSLocalizedString(@"LoadingEventsMessage", nil)];
-                [NSTimer scheduledTimerWithTimeInterval:INTERVAL_REFRESH_TABLE target:_cmiMasterViewController selector:@selector(refreshTimerFired:) userInfo:nil repeats:NO];
+                [NSTimer scheduledTimerWithTimeInterval:EVENT_CHANGE_DELAY target:_cmiMasterViewController selector:@selector(refreshTimerFired:) userInfo:nil repeats:NO];
             }
             
             [_cmiMasterViewController loadAdMobBanner:nil];

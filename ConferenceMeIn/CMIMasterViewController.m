@@ -18,7 +18,7 @@
 
 #define INTERVAL_LONG_PRESS 1.5
 #define INTERVAL_DOUBLE_CLICK 0.3
-#define INTERVAL_EVENT_CHANGE 0.2
+#define INTERVAL_EVENT_CHANGE 1.0
 #define INTERVAL_LOAD_ADMOB 0.1
 
 #define ACTIONSHEET_MENU 0
@@ -71,9 +71,9 @@ NSInteger _activeMenu = -1;
         // Initiate a generic request to load it with an ad.
         // NB This changes defaults so we have to momentarily unhook eventlistener on delegate
         
-        [((ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate]) removeDefaultsEventListener];
+//        [((ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate]) removeDefaultsEventListener];
         [bannerView_ loadRequest:[GADRequest request]];    
-        [((ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate]) addDefaultsEventListener];
+//        [((ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate]) addDefaultsEventListener];
         
     }
     @catch (NSException *exception) {
@@ -570,7 +570,7 @@ NSInteger _activeMenu = -1;
                 // If the new event is being added to the default calendar, then update its 
                 // eventsList.
                 [controller.eventStore saveEvent:controller.event span:EKSpanThisEvent error:&error];
-                [self reloadTableScrollToNow];
+                // Reload will happen via eventstore listener
                 break;
                 
             case EKEventEditViewActionDeleted:
@@ -579,7 +579,7 @@ NSInteger _activeMenu = -1;
                 // If deleting an event from the currenly default calendar, then update its 
                 // eventsList.
                 [controller.eventStore removeEvent:thisEvent span:EKSpanThisEvent error:&error];
-                [self reloadTableScrollToNow];
+                // Reload will happen via eventstore listener
                 break;
                 
             default:

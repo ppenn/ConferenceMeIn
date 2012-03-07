@@ -324,20 +324,6 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "ConferenceMeIn/CMIPhone.m"
-         timestampString = "352703683.010852"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "63"
-         endingLineNumber = "63"
-         landmarkName = "-internationalizePhoneNumber:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
@@ -370,20 +356,6 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          isPathRelative = "1"
-         filePath = "ConferenceMeInTests/EKEventParserTests.m"
-         timestampString = "352767513.727721"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "112"
-         endingLineNumber = "112"
-         landmarkName = "-testInvitesShouldParse"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
          filePath = "ConferenceMeIn/EKEventParser.m"
          timestampString = "352768383.061516"
          startingColumnNumber = "9223372036854775807"
@@ -391,6 +363,20 @@
          startingLineNumber = "232"
          endingLineNumber = "232"
          landmarkName = "+tryToGetCodeGeneric:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeIn/ConferenceMeInAppDelegate.m"
+         timestampString = "352836092.564997"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "196"
+         endingLineNumber = "196"
+         landmarkName = "-applicationDidBecomeActive:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
