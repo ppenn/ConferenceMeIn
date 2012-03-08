@@ -23,6 +23,13 @@
 
 #define INTERVAL_REFRESH_TABLE 0.1
 
+typedef enum masterViewWakeUpActions
+{
+    masterViewWakeUpDoNothing = 0,
+    masterViewWakeUpScrollToNow,
+    masterViewWakeUpReload
+}masterViewWakeUpActions;
+
 typedef enum menuActionButtons
 {
     menuActionDial = 0,
@@ -67,6 +74,7 @@ typedef enum enterConfNumberActionButtons
 @property (strong, nonatomic) CMIEvent* selectedCMIEvent;
 @property (atomic) BOOL eventStoreChangeTimerWillFire;
 @property BOOL admobIsLoaded;
+@property masterViewWakeUpActions wakeUpAction;
 
 - (void)setToolbarHidden:(BOOL)hide;
 - (void) storeChanged:(NSNotification *) notification;

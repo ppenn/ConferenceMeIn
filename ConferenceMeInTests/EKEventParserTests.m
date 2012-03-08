@@ -193,7 +193,7 @@
     [self testLeaderCodeShouldParse:phoneText expectedPhoneNumber:@"3035643459" expectedPhoneCode:@"123456" expectedLeaderSeparator:@",,*,," expectedLeaderCode:@"1234678"];
 
     phoneText = [EKEventParser parseIOSPhoneText:@"13035643459,,12346 1234678"];
-    [self testLeaderCodeShouldParse:phoneText expectedPhoneNumber:@"3035643459" expectedPhoneCode:@"12346" expectedLeaderSeparator:@" " expectedLeaderCode:@"1234678"];
+    [self testLeaderCodeShouldParse:phoneText expectedPhoneNumber:@"13035643459" expectedPhoneCode:@"12346" expectedLeaderSeparator:@" " expectedLeaderCode:@"1234678"];
 
     NSString* phoneNumberOnly;
     NSString* code;
@@ -203,7 +203,7 @@
     
     phoneText = [EKEventParser parseIOSPhoneText:@"13035643459"];
     phoneNumberOnly = [EKEventParser getPhoneFromPhoneNumber:phoneText];
-    STAssertTrue([phoneNumberOnly isEqualToString:@"3035643459"], @"phoneNumberOnly should be nil");
+    STAssertTrue([phoneNumberOnly isEqualToString:@"13035643459"], @"phoneNumberOnly should be nil");
     code = [EKEventParser getCodeFromNumber:phoneText];
     STAssertNil(code, @"Code should be nil");
 
@@ -225,7 +225,7 @@
 
     phoneText = [EKEventParser parseIOSPhoneText:@"13035643459,123456#,*"];
     phoneNumberOnly = [EKEventParser getPhoneFromPhoneNumber:phoneText];
-    STAssertTrue([phoneNumberOnly isEqualToString:@"3035643459"], @"Code should be nil");
+    STAssertTrue([phoneNumberOnly isEqualToString:@"13035643459"], @"Code should be nil");
     code = [EKEventParser getCodeFromNumber:phoneText];
     STAssertTrue([code isEqualToString:@"123456"], @"Code should be same");
 
@@ -249,13 +249,13 @@
     STAssertNil([EKEventParser getCodeFromNumber:phoneText], @"Code should be nil");    
     
     phoneText = [EKEventParser parseEventText:@"18776038688 12345678"];
-    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"12345678"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"18776038688" expectedPhoneCode:@"12345678"];
 
     phoneText = [EKEventParser parseEventText:@"8776038688 12345678"];
     [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"12345678"];
 
     phoneText = [EKEventParser parseEventText:@"18776038688 #12345678"];
-    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"12345678"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"18776038688" expectedPhoneCode:@"12345678"];
 
     phoneText = [EKEventParser parseEventText:@"Dial-in\
                    MeetingPlace Main Number 425-456-2500\
@@ -280,10 +280,10 @@
     
     
     phoneText = [EKEventParser parseEventText:@"18776038688 12345678 1234"];
-    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"12345678"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"18776038688" expectedPhoneCode:@"12345678"];
 
     phoneText = [EKEventParser parseEventText:@"1800 123 4567 xx 12345678"];
-    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8001234567" expectedPhoneCode:@"12345678"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"18001234567" expectedPhoneCode:@"12345678"];
     
     phoneText = [EKEventParser parseEventText:@"Conference Room - Aspen / Intercall: 877-603-8688 Partipant Code: 6450391.4155138001"];
     [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"8776038688" expectedPhoneCode:@"6450391"];

@@ -27,8 +27,6 @@
 #define REGEX_LEADER_SEPARATOR_START @"(?<=,,)\\d{4,12}[^\\d]+"
 #define REGEX_LEADER_CODE @"(?<=,,)\\d{4,12}[^\\d]+[\\d]{4,12}"
 
-#define PHONE_NUMBER_LENGTH 10
-#define MAX_PHONE_NUMBER_LENGTH 11
 #define MAX_NEWLINES 4
 
 @implementation EKEventParser
@@ -114,15 +112,14 @@
 {
     NSString* phoneNumber;
 
-    //UGH 10 vs 11 digit phone#s...
+    NSRange range = [phoneText rangeOfString:PHONE_CALL_SEPARATOR];
     
-    //    if ([phoneText length] >= MAX_PHONE_NUMBER_LENGTH) {
-//        phoneNumber = [EKEventParser stripRegex:[phoneText substringToIndex:MAX_PHONE_NUMBER_LENGTH] regexToStrip:@"[^\\d]"];
-//    }
-//    else {
-//        phoneNumber = [phoneNumber substringToIndex:PHONE_NUMBER_LENGTH];
-//    } 
-    phoneNumber = [[EKEventParser stripLeadingZeroOrOne:phoneText] substringToIndex:PHONE_NUMBER_LENGTH];
+    if (range.location != NSNotFound) {
+        phoneNumber = [phoneText substringToIndex:range.location];
+    }
+    else {
+        phoneNumber = phoneText;
+    }    
     
     return phoneNumber;
 }
@@ -387,7 +384,7 @@
         if (rangeOfSecondMatch.location != NSNotFound) {
             NSString *substringForSecondMatch = [EKEventParser stripRegex:[firstSubstring substringWithRange:rangeOfSecondMatch] regexToStrip:@"[^\\d]"];
             
-            substringForSecondMatch = [EKEventParser stripLeadingZeroOrOne:substringForSecondMatch];
+//            substringForSecondMatch = [EKEventParser stripLeadingZeroOrOne:substringForSecondMatch];
             
             cmiConferenceNumber.phoneNumber = [phoneNumber stringByAppendingString:substringForSecondMatch];
             

@@ -357,11 +357,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeIn/EKEventParser.m"
-         timestampString = "352768383.061516"
+         timestampString = "352839123.850089"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "232"
-         endingLineNumber = "232"
+         startingLineNumber = "229"
+         endingLineNumber = "229"
          landmarkName = "+tryToGetCodeGeneric:"
          landmarkType = "5">
       </FileBreakpoint>

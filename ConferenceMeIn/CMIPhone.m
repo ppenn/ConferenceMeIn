@@ -73,7 +73,7 @@
 
     NSString* phoneNumberURL = nil;
     
-    phoneNumber = [self internationalizePhoneNumber:phoneNumber];
+//    phoneNumber = [self internationalizePhoneNumber:phoneNumber];
     
     switch (_callProvider)
     {

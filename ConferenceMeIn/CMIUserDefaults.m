@@ -70,7 +70,7 @@ NSString *kFirstRun = @"firstRunKey";
     if (self.calendarTimeframeType != [[NSUserDefaults standardUserDefaults] integerForKey:kCalendarTimeframeTypeKey]) return true;
     if (self.currentTimeframeStarts != [[NSUserDefaults standardUserDefaults] integerForKey:kCurrentTimeframeStartsKey]) return true;
     if (self.highlightCurrentEvents != (self.currentTimeframeStarts >= 0)) return true;
-    if (self.filterType != [[NSUserDefaults standardUserDefaults] integerForKey:kFilterTypeKey]) return true;
+//    if (self.filterType != [[NSUserDefaults standardUserDefaults] integerForKey:kFilterTypeKey]) return true;
     if (self.callProviderType != [[NSUserDefaults standardUserDefaults] integerForKey:kCallProviderTypeKey]) return true;
     //I don't think we care about the Conf# details...hopefully
     

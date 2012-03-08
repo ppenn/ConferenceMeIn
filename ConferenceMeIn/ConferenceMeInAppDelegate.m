@@ -191,20 +191,31 @@ CMIMasterViewController* _cmiMasterViewController;
     @try {
         [CMIUtility Log:@"applicationDidBecomeActive()"];
         
-        NSDate* testTomorrow = [CMIUtility dayToDate:@"20120317"];
+//        NSDate* testTomorrow = [CMIUtility dayToDate:@"20120317"];
 
         if (_cmiMasterViewController != nil && _cmiMasterViewController.admobIsLoaded == YES)
         {
-            if ([CMIUtility isSameDay:testTomorrow atDate2:_cmiMasterViewController.cmiEventCalendar.lastRefreshTime] == YES) {
-                [_cmiMasterViewController scrollToNow];
+            // What if MVC is not visible?
+            if ([CMIUtility isSameDay:[NSDate date] atDate2:_cmiMasterViewController.cmiEventCalendar.lastRefreshTime] == YES) {
+
+                if (self.navigationController.visibleViewController == _cmiMasterViewController) {
+                    [_cmiMasterViewController scrollToNow];
+                }
+                else {
+                    _cmiMasterViewController.wakeUpAction = masterViewWakeUpScrollToNow;
+                }
             }
             else {
-                // Refresh List?
-                [_cmiMasterViewController invokeMegaAnnoyingPopup:NSLocalizedString(@"LoadingEventsMessage", nil)];
-                [NSTimer scheduledTimerWithTimeInterval:EVENT_CHANGE_DELAY target:_cmiMasterViewController selector:@selector(refreshTimerFired:) userInfo:nil repeats:NO];
+                if (self.navigationController.visibleViewController == _cmiMasterViewController) {                    
+                    [_cmiMasterViewController invokeMegaAnnoyingPopup:NSLocalizedString(@"LoadingEventsMessage", nil)];
+                    [NSTimer scheduledTimerWithTimeInterval:EVENT_CHANGE_DELAY target:_cmiMasterViewController selector:@selector(refreshTimerFired:) userInfo:nil repeats:NO];
+                    [_cmiMasterViewController loadAdMobBanner:nil];                    
+                }
+                else {
+                    _cmiMasterViewController.wakeUpAction = masterViewWakeUpReload;
+                }
             }
             
-            [_cmiMasterViewController loadAdMobBanner:nil];
         }
     }
     @catch (NSException *exception) {

@@ -38,7 +38,6 @@ CMIUserDefaults* _cmiUserDefaults;
 NSTimer* _refreshTimer;
 callProviders _callProvider;
 NSIndexPath* _indexPath;
-BOOL firstLoad = YES;
 
 NSInteger _actionSheetChoice = -1;
 NSInteger _actionSheetContextChoice = -1;
@@ -59,6 +58,7 @@ NSInteger _activeMenu = -1;
 @synthesize selectedCMIEvent = _selectedCMIEvent;
 @synthesize eventStoreChangeTimerWillFire = _eventStoreChangeTimerWillFire;
 @synthesize admobIsLoaded = _admobIsLoaded;
+@synthesize wakeUpAction = _wakeUpAction;
 
 - (void)loadAdMobBanner:(NSTimer *)aTimer
 {
@@ -615,6 +615,9 @@ NSInteger _activeMenu = -1;
             [self dismissMegaAnnoyingPopup];  
             [self loadAdMobBanner:nil];
         }    
+        else {
+            [CMIUtility Log:@"Filter same as calendar"];
+        }
     }
     @catch (NSException *e) {
         [CMIUtility LogError:e.reason];
@@ -725,6 +728,7 @@ NSInteger _activeMenu = -1;
         //TODO: remove this var
         _admobIsLoaded = NO;
         bannerView_ = nil;
+        _wakeUpAction = masterViewWakeUpReload;
         
         _cmiUserDefaults = ((ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate]).cmiUserDefaults;
         
@@ -803,11 +807,10 @@ NSInteger _activeMenu = -1;
     @try {
         [CMIUtility Log:@"viewDidAppear()"];
 
-        if (firstLoad == YES ||
+        if (_wakeUpAction == masterViewWakeUpReload ||
             (_reloadDefaultsOnAppear == YES && [_cmiUserDefaults defaultsAreDifferent] == YES)) {
             _reloadDefaultsOnAppear = NO;
             _cmiUserDefaults.defaultsDidChange = NO;
-            firstLoad = NO;
             
             [self invokeMegaAnnoyingPopup:NSLocalizedString(@"LoadingEventsMessage", nil)];    
             _refreshTimer = [NSTimer scheduledTimerWithTimeInterval:INTERVAL_REFRESH_TABLE target:self selector:@selector(refreshTimerFired:) userInfo:nil repeats:NO];
@@ -826,6 +829,7 @@ NSInteger _activeMenu = -1;
             }
         }    
         [self setToolbarHidden:NO];
+        _wakeUpAction = masterViewWakeUpDoNothing;
         [self loadAdMobBanner:nil];
     }
     @catch (NSException *e) {
