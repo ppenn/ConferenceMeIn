@@ -7,8 +7,10 @@
 //
 
 #import "EKEventParserTests.h"
+#import "CMIUtility.h"
 
 @implementation EKEventParserTests
+
 
 // All code under test must be linked into the Unit Test bundle
 - (void)testMath
@@ -98,6 +100,8 @@
 
 - (void)testInvitesShouldParse
 {
+    if ([CMIUtility countryHas0Prefix] == YES) return;
+
     NSString* fileContents;
     NSError* error;
     
@@ -172,6 +176,8 @@
 
 - (void)testPhoneNumbersShouldNotParse
 {
+    if ([CMIUtility countryHas0Prefix] == YES) return;
+
     NSString* phoneText;
     
     phoneText = [EKEventParser parseEventText:@"1876038688 12345678"];    
@@ -196,6 +202,8 @@
 
 - (void)testLeaderNumbersShouldParse
 {
+    if ([CMIUtility countryHas0Prefix] == YES) return;
+
     NSString* phoneText;
     
     phoneText = [EKEventParser parseIOSPhoneText:@"(303)564-3459,123456#*,1234"];
@@ -248,8 +256,30 @@
                                     
 }
 
+- (void)testUKPhoneNumbersShouldParse
+{
+    if ([CMIUtility countryHas0Prefix] == NO) return;
+    
+    NSString* test = NSLocalizedString(@"RegexPhoneNumber", nil);
+    
+    NSString* phoneText;
+
+    phoneText = [EKEventParser parseEventText:@"08776038688 12345678"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"08776038688" expectedPhoneCode:@"12345678"];
+
+    phoneText = [EKEventParser parseEventText:@"Dial-in\
+                 MeetingPlace Main Number 425-456-2500\
+                 Toll Free Number 0-888-228-0484\
+                 Meeting ID: 2690\
+                 Password: 123456"];
+    [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"08882280484" expectedPhoneCode:@"123456"];
+
+}
+
 - (void)testPhoneNumbersShouldParse
 {
+    if ([CMIUtility countryHas0Prefix] == YES) return;
+
     NSString* phoneText;
 
     phoneText = [EKEventParser parseEventText:@"8776038688"];

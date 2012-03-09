@@ -20,6 +20,7 @@ NSString *kMyConfConfNumberKey = @"myConfConfNumberKey";
 NSString *kMyConfLeaderSeparatorKey = @"myConfLeaderSeparatorKey";
 NSString *kMyConfLeaderPINKey = @"myConfLeaderPINKey";
 NSString *kFirstRun = @"firstRunKey";
+NSString *kShowCompletedEvents = @"showCompletedEventsKey";
 
 @implementation CMIUserDefaults
 
@@ -35,6 +36,7 @@ NSString *kFirstRun = @"firstRunKey";
 @synthesize myConfLeaderSeparator = _myConfLeaderSeparator;
 @synthesize myConfLeaderPIN = _myConfLeaderPIN;
 @synthesize defaultsDidChange = _defaultsDidChange;
+@synthesize showCompletedEvents = _showCompletedEvents;
 
 - (void)setFilterType:(NSInteger)filterType
 {
@@ -67,6 +69,7 @@ NSString *kFirstRun = @"firstRunKey";
     if(![[NSUserDefaults standardUserDefaults] objectForKey:kFirstRun]) return true;
 
 	if (self.calendarType != [[NSUserDefaults standardUserDefaults] integerForKey:kCalendarTypeKey]) return true;    
+	if (self.showCompletedEvents != [[NSUserDefaults standardUserDefaults] boolForKey:kShowCompletedEvents]) return true;    
     if (self.calendarTimeframeType != [[NSUserDefaults standardUserDefaults] integerForKey:kCalendarTimeframeTypeKey]) return true;
     if (self.currentTimeframeStarts != [[NSUserDefaults standardUserDefaults] integerForKey:kCurrentTimeframeStartsKey]) return true;
     if (self.highlightCurrentEvents != (self.currentTimeframeStarts >= 0)) return true;
@@ -151,7 +154,11 @@ NSString *kFirstRun = @"firstRunKey";
         NSString *keyValueStr = [prefItem objectForKey:@"Key"];
         id defaultValue = [prefItem objectForKey:@"DefaultValue"];
         
-        if ([keyValueStr isEqualToString:kCallProviderTypeKey])
+        if ([keyValueStr isEqualToString:kShowCompletedEvents])
+        {
+//            callProviderTypeDefault = [prefItem boolForKey:@"DefaultValue"];
+        }
+        else if ([keyValueStr isEqualToString:kCallProviderTypeKey])
         {
             callProviderTypeDefault = defaultValue;
         }
@@ -174,6 +181,7 @@ NSString *kFirstRun = @"firstRunKey";
         
     }        
     // since no default values have been set (i.e. no preferences file created), create it here		
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kShowCompletedEvents];
     [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:kFirstRun];
     [[NSUserDefaults standardUserDefaults] setInteger:filterNone forKey:kFilterTypeKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kMyConfConfNumberKey];
@@ -218,6 +226,7 @@ NSString *kFirstRun = @"firstRunKey";
     _currentTimeframeStarts = [[NSUserDefaults standardUserDefaults] integerForKey:kCurrentTimeframeStartsKey];
     _highlightCurrentEvents = (_currentTimeframeStarts >= 0);
     _firstRun = firstRun;
+    _showCompletedEvents = [[NSUserDefaults standardUserDefaults] boolForKey:kShowCompletedEvents];
     _filterType = [[NSUserDefaults standardUserDefaults] integerForKey:kFilterTypeKey];
     _callProviderType = [[NSUserDefaults standardUserDefaults] integerForKey:kCallProviderTypeKey];
     _myConfPhoneNumber = [[NSUserDefaults standardUserDefaults] objectForKey:kMyConfPhoneNumberKey];

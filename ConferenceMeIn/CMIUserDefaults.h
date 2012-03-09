@@ -18,6 +18,7 @@
 @property NSInteger currentTimeframeStarts;
 @property calendarTimeframes calendarTimeframeType;
 @property BOOL highlightCurrentEvents;
+@property BOOL showCompletedEvents;
 
 @property (nonatomic, strong) NSString* myConfPhoneNumber;
 @property (nonatomic, strong) NSString* myConfConfNumber;

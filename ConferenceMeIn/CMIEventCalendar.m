@@ -26,6 +26,7 @@
 @synthesize cmiFilteredDaysArray = _cmiFilteredDaysArray;
 @synthesize cmiFilteredDaysDictionary = _cmiFilteredDaysDictionary;
 @synthesize lastRefreshTime = _lastRefreshTime;
+@synthesize showCompletedEvents = _showCompletedEvents;
 
 NSDate* _eventsStartDate = nil;
 NSDate* _eventsEndDate = nil;
@@ -53,6 +54,7 @@ NSMutableArray* _currentDaysArray;
         _calendarType = allCalendars;
         _calendarTimeframeType = weekAhead;
         _currentTimeframeStarts = 0;
+        _showCompletedEvents = NO;
         
         _cmiDaysDictionary = [[NSMutableDictionary alloc] init]; 
         _cmiDaysArray = [[NSMutableArray alloc] init];
@@ -251,8 +253,12 @@ NSMutableArray* _currentDaysArray;
 
     NSDate* now = [NSDate date];
 
-    _eventsStartDate = [CMIUtility getOffsetDateByMinutes:now offsetMinutes:-MINUTES_PRIOR_TO_NOW];
-
+    if (_showCompletedEvents == YES) {
+        _eventsStartDate = [CMIUtility getMidnightDate:now];
+    }
+    else {
+        _eventsStartDate = [CMIUtility getOffsetDateByMinutes:now offsetMinutes:-MINUTES_PRIOR_TO_NOW];
+    }
 }
 
 - (void)calculateCalendarTimeframe
@@ -274,13 +280,11 @@ NSMutableArray* _currentDaysArray;
             
             break;
         case today:
-            _eventsStartDate = [CMIUtility getMidnightDate:now];
             _eventsEndDate = [CMIUtility getMidnightDate:now];
             _eventsEndDate = [CMIUtility getOffsetDate:_eventsEndDate atOffsetDays:1];
             _eventsEndDate = [CMIUtility getOffsetDateByMinutes:_eventsEndDate offsetMinutes:-1];
             break;
         case todayAndTomorrow:
-            _eventsStartDate = [CMIUtility getMidnightDate:now];
             _eventsEndDate = [CMIUtility getOffsetDate:now atOffsetDays:2];
             _eventsEndDate = [CMIUtility getMidnightDate:_eventsEndDate];
             _eventsEndDate = [CMIUtility getOffsetDateByMinutes:_eventsEndDate offsetMinutes:-1];

@@ -205,11 +205,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeIn/CMIEventCalendar.m"
-         timestampString = "352762630.792615"
+         timestampString = "353019961.501184"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "181"
-         endingLineNumber = "181"
+         startingLineNumber = "183"
+         endingLineNumber = "183"
          landmarkName = "-assignCMIEventsToCMIDays"
          landmarkType = "5">
       </FileBreakpoint>
@@ -219,11 +219,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeIn/CMIUtility.m"
-         timestampString = "352699957.329969"
+         timestampString = "353018163.264116"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "191"
-         endingLineNumber = "191"
+         startingLineNumber = "224"
+         endingLineNumber = "224"
          landmarkName = "+createTestEvent:startDate:endDate:title:withConfNumber:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -245,11 +245,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeInTests/EKEventParserTests.m"
-         timestampString = "352947037.426957"
+         timestampString = "353018163.264116"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "48"
-         endingLineNumber = "48"
+         startingLineNumber = "50"
+         endingLineNumber = "50"
          landmarkName = "+getFilesInFolder"
          landmarkType = "5">
       </FileBreakpoint>
@@ -259,11 +259,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeInTests/EKEventParserTests.m"
-         timestampString = "352947037.426957"
+         timestampString = "353018163.264116"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "66"
-         endingLineNumber = "66"
+         startingLineNumber = "68"
+         endingLineNumber = "68"
          landmarkName = "-testPhoneNumberCodeShouldParse:expectedPhoneNumber:expectedPhoneCode:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -301,11 +301,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeInTests/EKEventParserTests.m"
-         timestampString = "352947037.426957"
+         timestampString = "353018163.264116"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "117"
-         endingLineNumber = "117"
+         startingLineNumber = "121"
+         endingLineNumber = "121"
          landmarkName = "-testInvitesShouldParse"
          landmarkType = "5">
       </FileBreakpoint>
@@ -315,11 +315,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeInTests/EKEventParserTests.m"
-         timestampString = "352947037.426957"
+         timestampString = "353018163.264116"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "84"
-         endingLineNumber = "84"
+         startingLineNumber = "86"
+         endingLineNumber = "86"
          landmarkName = "-testLeaderCodeShouldParse:expectedPhoneNumber:expectedPhoneCode:expectedLeaderSeparator:expectedLeaderCode:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -329,11 +329,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeIn/CMIUserDefaults.m"
-         timestampString = "352749613.657347"
+         timestampString = "353019750.324811"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "67"
-         endingLineNumber = "67"
+         startingLineNumber = "69"
+         endingLineNumber = "69"
          landmarkName = "-defaultsAreDifferent"
          landmarkType = "5">
       </FileBreakpoint>
@@ -343,11 +343,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeInTests/EKEventParserTests.m"
-         timestampString = "352947037.426957"
+         timestampString = "353018163.264116"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "75"
-         endingLineNumber = "75"
+         startingLineNumber = "77"
+         endingLineNumber = "77"
          landmarkName = "-testPhoneNumberCodeShouldParse:expectedPhoneNumber:expectedPhoneCode:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -363,6 +363,20 @@
          startingLineNumber = "196"
          endingLineNumber = "196"
          landmarkName = "-applicationDidBecomeActive:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "ConferenceMeInTests/EKEventParserTests.m"
+         timestampString = "353018163.264116"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "267"
+         endingLineNumber = "267"
+         landmarkName = "-testUKPhoneNumbersShouldParse"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

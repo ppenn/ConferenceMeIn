@@ -11,7 +11,40 @@
 //TOGGLE THIS BETWEEN 0 (release) and 1 (debug)
 #define CMI_DEBUG 1
 
+#define REGEX_1_PREFIX_COUNTRIES @"[us|ca|au|ie|mx]"
+
+
 @implementation CMIUtility
+
++ (NSString*)getCountryName
+{
+    NSLocale* currentLocale = [NSLocale currentLocale];  // get the current locale.
+    NSString* countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
+    
+    NSString *country = [currentLocale displayNameForKey: NSLocaleCountryCode value: countryCode];
+    return country;
+}
+
++ (BOOL)countryHas0Prefix
+{
+    NSError* error = nil;
+    
+    NSRegularExpression *regexCountry = [NSRegularExpression regularExpressionWithPattern:REGEX_1_PREFIX_COUNTRIES
+                                                                                  options:NSRegularExpressionCaseInsensitive
+                                                                                    error:&error];
+    
+    NSLocale* currentLocale = [NSLocale currentLocale];  // get the current locale.
+    NSString* countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
+    
+    NSRange range = [regexCountry rangeOfFirstMatchInString:countryCode options:0 range:NSMakeRange(0, [countryCode  length])];
+    if (range.location == NSNotFound) {
+        return YES;
+    }
+    else {
+        return FALSE;
+    }
+    
+}
 
 + (void)Log:(NSString*)logMessage
 {

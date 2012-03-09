@@ -378,6 +378,7 @@ NSInteger _activeMenu = -1;
     _callProvider = _cmiUserDefaults.callProviderType;
     _cmiPhone.callProvider = _cmiUserDefaults.callProviderType;
     _cmiEventCalendar.calendarType = _cmiUserDefaults.calendarType;
+    _cmiEventCalendar.showCompletedEvents = _cmiUserDefaults.showCompletedEvents;
     _cmiEventCalendar.filterType = _cmiUserDefaults.filterType;
     _cmiEventCalendar.currentTimeframeStarts = _cmiUserDefaults.currentTimeframeStarts;
     _cmiEventCalendar.calendarTimeframeType = _cmiUserDefaults.calendarTimeframeType;

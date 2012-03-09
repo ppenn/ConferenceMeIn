@@ -36,13 +36,13 @@
 		A82728071502FE42005190EE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728051502FE42005190EE /* SystemConfiguration.framework */; };
 		A827280F1502FF08005190EE /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728081502FF08005190EE /* libGoogleAdMobAds.a */; };
 		A82728101502FF08005190EE /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728081502FF08005190EE /* libGoogleAdMobAds.a */; };
-		A847419D14E0C8FD0017A7C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A847419B14E0C8FD0017A7C8 /* Localizable.strings */; };
-		A847419E14E0C8FD0017A7C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A847419B14E0C8FD0017A7C8 /* Localizable.strings */; };
 		A856305514E87A53006B24F8 /* CMIUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A856305414E87A52006B24F8 /* CMIUserDefaults.m */; };
 		A856305614E87A53006B24F8 /* CMIUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A856305414E87A52006B24F8 /* CMIUserDefaults.m */; };
 		A85FF3B614CEF90100F2CD1C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A85FF3B514CEF90100F2CD1C /* Settings.bundle */; };
 		A868D58A14F853A300DEBC17 /* att_connect.txt in Resources */ = {isa = PBXBuildFile; fileRef = A868D58914F853A300DEBC17 /* att_connect.txt */; };
 		A86C356D14FC39250079BE4E /* verizon.txt in Resources */ = {isa = PBXBuildFile; fileRef = A86C356C14FC39250079BE4E /* verizon.txt */; };
+		A8791461150A824200553EDD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8791464150A824200553EDD /* Localizable.strings */; };
+		A8791462150A824200553EDD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8791464150A824200553EDD /* Localizable.strings */; };
 		A8AEA2FD14E2380500E6ADC6 /* CMIHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */; };
 		A8AEA2FE14E2380500E6ADC6 /* CMIHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */; };
 		A8B6321414E229440006E3A5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A8B6321314E229430006E3A5 /* Default.png */; };
@@ -164,7 +164,6 @@
 		A81E2F9914EAD07A0005B411 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ConferenceMeIn/images/Icon.png; sourceTree = "<group>"; };
 		A81E2F9A14EAD07A0005B411 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "ConferenceMeIn/images/Icon@2x.png"; sourceTree = "<group>"; };
 		A81E2F9B14EAD07A0005B411 /* ITunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ITunesArtwork.png; path = ConferenceMeIn/images/ITunesArtwork.png; sourceTree = "<group>"; };
-		A82018B61507E23500C5FC6F /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		A82018B715095FF200C5FC6F /* accuconference.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = accuconference.txt; path = test_invites/accuconference.txt; sourceTree = "<group>"; };
 		A82727D4150260CB005190EE /* CMIConferenceNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIConferenceNumber.h; sourceTree = "<group>"; };
 		A82727D5150260CB005190EE /* CMIConferenceNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIConferenceNumber.m; sourceTree = "<group>"; };
@@ -177,12 +176,13 @@
 		A827280C1502FF08005190EE /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADBannerViewDelegate.h; path = AdMob/GADBannerViewDelegate.h; sourceTree = "<group>"; };
 		A827280D1502FF08005190EE /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInterstitialDelegate.h; path = AdMob/GADInterstitialDelegate.h; sourceTree = "<group>"; };
 		A827280E1502FF08005190EE /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADRequestError.h; path = AdMob/GADRequestError.h; sourceTree = "<group>"; };
-		A847419C14E0C8FD0017A7C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = ConferenceMeIn/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A856305314E87A52006B24F8 /* CMIUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIUserDefaults.h; sourceTree = "<group>"; };
 		A856305414E87A52006B24F8 /* CMIUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIUserDefaults.m; sourceTree = "<group>"; };
 		A85FF3B514CEF90100F2CD1C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		A868D58914F853A300DEBC17 /* att_connect.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = att_connect.txt; path = test_invites/att_connect.txt; sourceTree = "<group>"; };
 		A86C356C14FC39250079BE4E /* verizon.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = verizon.txt; path = test_invites/verizon.txt; sourceTree = "<group>"; };
+		A8791463150A824200553EDD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A8791465150A825E00553EDD /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		A8AEA2FB14E2380500E6ADC6 /* CMIHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIHelpViewController.h; sourceTree = "<group>"; };
 		A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIHelpViewController.m; sourceTree = "<group>"; };
 		A8B6321314E229430006E3A5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ConferenceMeIn/images/Default.png; sourceTree = "<group>"; };
@@ -482,8 +482,8 @@
 		A8E1D72714D22A9400E5A877 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A847419B14E0C8FD0017A7C8 /* Localizable.strings */,
 				A8E1D72814D22AB700E5A877 /* Images */,
+				A8791464150A824200553EDD /* Localizable.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -703,7 +703,6 @@
 				A8EAB88F14DA4C90001294B4 /* bottomRowSelected.png in Resources */,
 				A8EAB89214DA4E82001294B4 /* topAndBottomRow.png in Resources */,
 				A8EAB89414DA51D9001294B4 /* middleRowSelected_red.png in Resources */,
-				A847419D14E0C8FD0017A7C8 /* Localizable.strings in Resources */,
 				A8B6321414E229440006E3A5 /* Default.png in Resources */,
 				A8F6211514E3630700B735AC /* middleRowSelected.png in Resources */,
 				A81E2F9C14EAD07A0005B411 /* Icon.png in Resources */,
@@ -718,6 +717,7 @@
 				A8F48F1E14F2F4F1004F9B2E /* CMIHelpIPhoneView.xib in Resources */,
 				A8F0178D14F58C3F0046E849 /* livemeeting.txt in Resources */,
 				A82018B815095FF300C5FC6F /* accuconference.txt in Resources */,
+				A8791461150A824200553EDD /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -730,7 +730,6 @@
 				A8E5253914CA0EC800797C16 /* InfoPlist.strings in Resources */,
 				A8E1D72B14D22AE400E5A877 /* gradientBackground.png in Resources */,
 				A8E1D74414D322CA00E5A877 /* phone.png in Resources */,
-				A847419E14E0C8FD0017A7C8 /* Localizable.strings in Resources */,
 				A8CFD0D714EF360C00EA8616 /* IASKAppSettingsView.xib in Resources */,
 				A8CFD0D914EF360C00EA8616 /* IASKAppSettingsWebView.xib in Resources */,
 				A8CFD0DB14EF360C00EA8616 /* IASKPSSliderSpecifierViewCell.xib in Resources */,
@@ -752,6 +751,7 @@
 				A8081C5214FDA65500CEC9A6 /* webex2.txt in Resources */,
 				A8081C5514FDC82800CEC9A6 /* lotuslive.txt in Resources */,
 				A8DF7CF11505D5E500C42A5D /* faux_fax.txt in Resources */,
+				A8791462150A824200553EDD /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -850,11 +850,11 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		A847419B14E0C8FD0017A7C8 /* Localizable.strings */ = {
+		A8791464150A824200553EDD /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A847419C14E0C8FD0017A7C8 /* en */,
-				A82018B61507E23500C5FC6F /* en-GB */,
+				A8791463150A824200553EDD /* en */,
+				A8791465150A825E00553EDD /* en-GB */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

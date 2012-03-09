@@ -22,6 +22,8 @@
 + (NSDate*) getOffsetDateByMinutes:(NSDate*)date offsetMinutes:(NSInteger)offsetMinutes;
 + (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate;
 
++ (NSString*)getCountryName;
++ (BOOL)countryHas0Prefix;
 
 + (BOOL)environmentIsAtIOS5OrHigher;
 + (void)createTestEvents:(EKEventStore*)eventStore;

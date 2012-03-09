@@ -17,26 +17,6 @@
 @synthesize phoneURL = _phoneURL;
 @synthesize callProvider = _callProvider;
 
-- (BOOL)countryHas0Prefix
-{
-    [CMIUtility Log:@"countryHas0Prefix()"];
-    NSError* error = nil;
-    
-    NSRegularExpression *regexCountry = [NSRegularExpression regularExpressionWithPattern:REGEX_1_PREFIX_COUNTRIES
-                                                                               options:NSRegularExpressionCaseInsensitive
-                                                                                 error:&error];
-    
-    NSLocale* currentLocale = [NSLocale currentLocale];  // get the current locale.
-    NSString* countryCode = [currentLocale objectForKey:NSLocaleCountryCode];
-    NSRange range = [regexCountry rangeOfFirstMatchInString:countryCode options:0 range:NSMakeRange(0, [countryCode  length])];
-    if (range.location == NSNotFound) {
-        return YES;
-    }
-    else {
-        return FALSE;
-    }
-    
-}
 
 - (BOOL)talkatoneIsInstalled
 {
@@ -60,7 +40,7 @@
     
     //TODO: Internationalize...use Regex in resource files
     // Hack! Maybe works in Europe...
-    if ([self countryHas0Prefix] == YES) {
+    if ([CMIUtility countryHas0Prefix] == YES) {
         phoneNumber = [@"0" stringByAppendingString:phoneNumber];
     }
 
