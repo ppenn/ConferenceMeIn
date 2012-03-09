@@ -11,6 +11,9 @@
 #import "EKEventParser.h"
 #import "CMIUtility.h"
 
+#define REGEX_PHONE_NUMBER_LOOK_BEHIND @"(?<![\\d\\/])"
+#define REGEX_PHONE_NUMBER_LOOK_AHEAD @"(?!\\w)"
+
 #define REGEX_CODE_SPECIFIC @"(?<!moderator\\s|leader\\s)\\b(pin|participant|password|passcode|code)[\\s:\\#=s\\(\\)]{1,20}\\d{3,12}[\\s-]?\\d{1,12}+[\\s-]?\\d{0,12}"
 
 #define REGEX_CODE_GENERIC @"(?<![^\\d]\\d\\d\\d[^\\d])[\\d]{4,12}"
@@ -143,7 +146,7 @@
     NSError *error = NULL;
     NSString* phoneNumber = @"";
     
-    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", NSLocalizedString(@"RegexPhoneNumberLookBehind", nil), NSLocalizedString(@"RegexPhoneNumber", nil), NSLocalizedString(@"RegexPhoneNumberLookAhead", nil)];
+    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", REGEX_PHONE_NUMBER_LOOK_BEHIND, NSLocalizedString(@"RegexPhoneNumber", nil), REGEX_PHONE_NUMBER_LOOK_AHEAD];
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexPattern 
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
@@ -252,7 +255,7 @@
     [CMIUtility Log:@"tryToGetFirstPhone()"];
     
     NSError *error = NULL;
-    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", NSLocalizedString(@"RegexPhoneNumberLookBehind", nil), NSLocalizedString(@"RegexPhoneNumber", nil), NSLocalizedString(@"RegexPhoneNumberLookAhead", nil)];
+    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", REGEX_PHONE_NUMBER_LOOK_BEHIND, NSLocalizedString(@"RegexPhoneNumber", nil), REGEX_PHONE_NUMBER_LOOK_AHEAD];
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexPattern
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
@@ -267,7 +270,7 @@
     
     //This regex returns TOLL-FREE numbers...
     NSError *error = NULL;
-    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", NSLocalizedString(@"RegexTollFree", nil), NSLocalizedString(@"RegexPhoneNumberTollFree", nil), NSLocalizedString(@"RegexPhoneNumberLookAhead", nil)];
+    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", NSLocalizedString(@"RegexTollFree", nil), NSLocalizedString(@"RegexPhoneNumberTollFree", nil), REGEX_PHONE_NUMBER_LOOK_AHEAD];
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexPattern                                                                                                                   options:NSRegularExpressionCaseInsensitive                                                                                  error:&error];
     
     NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:eventText options:0 range:NSMakeRange(0, [eventText  length])];
@@ -283,7 +286,7 @@
     //This regex returns US and US TOLL-FREE numbers...
     NSError *error = NULL;
     
-    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", NSLocalizedString(@"RegexCountryTollFree", nil), NSLocalizedString(@"RegexPhoneNumberTollFree", nil), NSLocalizedString(@"RegexPhoneNumberLookAhead", nil)];
+    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", NSLocalizedString(@"RegexCountryTollFree", nil), NSLocalizedString(@"RegexPhoneNumberTollFree", nil), REGEX_PHONE_NUMBER_LOOK_AHEAD];
     NSRegularExpression *regexCountryTollFree = [NSRegularExpression regularExpressionWithPattern:regexPattern                                                                                                                   options:NSRegularExpressionCaseInsensitive                                                                                  error:&error];
         
     NSRange rangeOfPhoneNumber = [regexCountryTollFree rangeOfFirstMatchInString:eventText options:0 range:NSMakeRange(0, [eventText length])];

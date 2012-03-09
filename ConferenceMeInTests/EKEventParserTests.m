@@ -260,7 +260,7 @@
 {
     if ([CMIUtility countryHas0Prefix] == NO) return;
     
-    NSString* test = NSLocalizedString(@"RegexPhoneNumber", nil);
+//    NSString* test = NSLocalizedString(@"RegexPhoneNumber", nil);
     
     NSString* phoneText;
 
