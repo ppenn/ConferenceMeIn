@@ -11,7 +11,7 @@
 #import "EKEventParser.h"
 #import "CMIUtility.h"
 
-#define REGEX_CODE_SPECIFIC @"(\\bpin|participant|password|code)[\\s:\\)\\#]*\\d{3,12}[\\s-]?\\d{1,12}+[\\s-]?\\d{0,12}"
+#define REGEX_CODE_SPECIFIC @"(?<!moderator\\s|leader\\s)\\b(pin|participant|password|passcode|code)[\\s:\\#=s\\(\\)]{1,20}\\d{3,12}[\\s-]?\\d{1,12}+[\\s-]?\\d{0,12}"
 
 #define REGEX_CODE_GENERIC @"(?<![^\\d]\\d\\d\\d[^\\d])[\\d]{4,12}"
 #define REGEX_NEWLINE @"[\\r|\\n]"
@@ -19,15 +19,10 @@
 #define REGEX_SEPARATOR @"[^\\d]*"
 #define REGEX_CODE_IN_FORMATTED_NUMBER @"(?<=,,)\\d{4,12}"
 
-#define REGEX_PHONE_NUMBER_FIRST @"(?<![\\d\\/])[1]?([2-9]\\d{2}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{4})(?!\\w)"
-
-#define REGEX_PHONE_NUMBER_COUNTRY_TOLLFREE @"(u\\.s\\.|usa|united\\ss)[\\D]*[toll(\\-|\\s)?free\\D]*?(?=[18])"
-#define REGEX_PHONE_NUMBER_TOLLFREE @"toll(\\-|\\s)?free\\D*(?=[18])"
-
 #define REGEX_LEADER_SEPARATOR_START @"(?<=,,)\\d{4,12}[^\\d]+"
 #define REGEX_LEADER_CODE @"(?<=,,)\\d{4,12}[^\\d]+[\\d]{4,12}"
 
-#define MAX_NEWLINES 4
+#define MAX_NEWLINES 2
 
 @implementation EKEventParser
 
@@ -148,7 +143,8 @@
     NSError *error = NULL;
     NSString* phoneNumber = @"";
     
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:REGEX_PHONE_NUMBER_FIRST 
+    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", NSLocalizedString(@"RegexPhoneNumberLookBehind", nil), NSLocalizedString(@"RegexPhoneNumber", nil), NSLocalizedString(@"RegexPhoneNumberLookAhead", nil)];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexPattern 
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
     
@@ -178,7 +174,12 @@
     
     NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:eventText options:0 range:NSMakeRange(0, [eventText  length])];
     if (!NSEqualRanges(rangeOfFirstMatch, NSMakeRange(NSNotFound, 0))) {
-        code = [EKEventParser stripRegex:[eventText substringWithRange:rangeOfFirstMatch] regexToStrip:@"[^\\d]"];
+        if ([EKEventParser maxNewLinesExceeded:eventText range:rangeOfFirstMatch] == NO) {
+            code = [EKEventParser stripRegex:[eventText substringWithRange:rangeOfFirstMatch] regexToStrip:@"[^\\d]"];
+        }
+        else {
+            [CMIUtility Log:@"MaxNewLines exceeded"];
+        }
     }
         
     return code;
@@ -220,21 +221,30 @@
         }
     }
     
-    if (PIN != nil) {
-        // Maybe check to see how many linebreaks there were to reach here?
-        NSRegularExpression *regexNewline = [NSRegularExpression regularExpressionWithPattern:REGEX_NEWLINE                                                                                                 options:NSRegularExpressionCaseInsensitive                                                                                  error:&error];
-        
-        NSArray* possibleNewLines = [regexNewline matchesInString:eventText options:0 range:NSMakeRange(0, rangePIN.location)];
-        if (possibleNewLines != nil && possibleNewLines.count > MAX_NEWLINES) {
-            [CMIUtility Log:@"Maximum NewLines exceeded"];
-            PIN = nil;
-        }
+    if (PIN != nil &&
+        [EKEventParser maxNewLinesExceeded:eventText range:NSMakeRange(0, rangePIN.location)] == YES){            
+        [CMIUtility Log:@"Maximum NewLines exceeded"];
+        PIN = nil;
     }
 
     return PIN;
-    
 }
 
++ (BOOL)maxNewLinesExceeded:(NSString*)text range:(NSRange)range
+{
+    [CMIUtility Log:@"maxNewLinesExceeded()"];
+
+    NSError *error = NULL;
+    NSRegularExpression *regexNewline = [NSRegularExpression regularExpressionWithPattern:REGEX_NEWLINE                                                                                                 options:NSRegularExpressionCaseInsensitive                                                                                  error:&error];
+
+    NSArray* possibleNewLines = [regexNewline matchesInString:text options:0 range:NSMakeRange(range.location, range.length)];
+    if (possibleNewLines != nil && possibleNewLines.count > MAX_NEWLINES) {
+        return YES;
+    }
+    else {
+        return NO;
+    }
+}
 
 
 + (NSRange)tryToGetFirstPhone:(NSString*)eventText
@@ -242,8 +252,8 @@
     [CMIUtility Log:@"tryToGetFirstPhone()"];
     
     NSError *error = NULL;
-    
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:REGEX_PHONE_NUMBER_FIRST
+    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", NSLocalizedString(@"RegexPhoneNumberLookBehind", nil), NSLocalizedString(@"RegexPhoneNumber", nil), NSLocalizedString(@"RegexPhoneNumberLookAhead", nil)];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexPattern
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
     NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:eventText options:0 range:NSMakeRange(0, [eventText  length])];  
@@ -257,20 +267,14 @@
     
     //This regex returns TOLL-FREE numbers...
     NSError *error = NULL;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:REGEX_PHONE_NUMBER_TOLLFREE                                                                                                                   options:NSRegularExpressionCaseInsensitive                                                                                  error:&error];
+    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", NSLocalizedString(@"RegexTollFree", nil), NSLocalizedString(@"RegexPhoneNumberTollFree", nil), NSLocalizedString(@"RegexPhoneNumberLookAhead", nil)];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexPattern                                                                                                                   options:NSRegularExpressionCaseInsensitive                                                                                  error:&error];
     
     NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:eventText options:0 range:NSMakeRange(0, [eventText  length])];
-    
-    NSRange range;
-    range.location = NSNotFound;
-    if (rangeOfFirstMatch.location != NSNotFound) {
-        range.location = rangeOfFirstMatch.location + rangeOfFirstMatch.length;
-        range.length = eventText.length - range.location;
         
-    }
-    
-    return range;
+    return rangeOfFirstMatch;
 }
+
 
 + (NSRange)tryToGetCountryTollFreePhone:(NSString*)eventText
 {
@@ -278,38 +282,18 @@
     
     //This regex returns US and US TOLL-FREE numbers...
     NSError *error = NULL;
-    NSRegularExpression *regexUS = [NSRegularExpression regularExpressionWithPattern:REGEX_PHONE_NUMBER_COUNTRY_TOLLFREE                                                                                                                   options:NSRegularExpressionCaseInsensitive                                                                                  error:&error];
     
-    NSArray* possibleUSNumbers = [regexUS matchesInString:eventText options:0 range:NSMakeRange(0, [eventText length])];
-    
-    
-    NSTextCheckingResult* tollFreeNumber = nil;
-    // for each potential pin, check it's not part of a phone number. return the first.
-    for (NSTextCheckingResult* possibleUSNumber in possibleUSNumbers) 
-    {        
-        NSString* usSection = [eventText substringWithRange:possibleUSNumber.range];            
-        if ([usSection rangeOfString:@"free" options:NSCaseInsensitiveSearch].location != NSNotFound) {
-            tollFreeNumber = possibleUSNumber;
-        }
-    }
+    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", NSLocalizedString(@"RegexCountryTollFree", nil), NSLocalizedString(@"RegexPhoneNumberTollFree", nil), NSLocalizedString(@"RegexPhoneNumberLookAhead", nil)];
+    NSRegularExpression *regexCountryTollFree = [NSRegularExpression regularExpressionWithPattern:regexPattern                                                                                                                   options:NSRegularExpressionCaseInsensitive                                                                                  error:&error];
+        
+    NSRange rangeOfPhoneNumber = [regexCountryTollFree rangeOfFirstMatchInString:eventText options:0 range:NSMakeRange(0, [eventText length])];
 
-    NSRange range;
-    range.location = NSNotFound;
-    if (tollFreeNumber != nil) {
-        [CMIUtility Log:@"Toll-Free :)"];
-        range.location = tollFreeNumber.range.location + tollFreeNumber.range.length;
-        range.length = eventText.length - range.location;
-    }
-    else if (possibleUSNumbers.count > 0) {
-        [CMIUtility Log:@"Found country-specific #"];
-        NSTextCheckingResult* firstNumber = (NSTextCheckingResult*)[possibleUSNumbers objectAtIndex:0];
-        range.location = firstNumber.range.location + firstNumber.range.length;
-        range.length = eventText.length - range.location;        
-    }
     
-
-    return range;
+    
+    return rangeOfPhoneNumber;
 }
+
+
 
 + (NSRange)tryToGetPhone:(NSString*)eventText
 {
@@ -317,7 +301,7 @@
 
     NSRange range = [EKEventParser tryToGetCountryTollFreePhone:eventText];
     if (range.location != NSNotFound) {
-        [CMIUtility Log:@"matched CountryTollFree"];
+        [CMIUtility Log:@"matched Country Number"];
         return range;
     }
     else {
@@ -340,17 +324,6 @@
     
     return range;
     
-}
-
-+ (NSString*)stripLeadingZeroOrOne:(NSString*)phoneText
-{
-    //Remove leading 0 or 1...this should be safe to do, the regex should ensure we have a real phone # after it (i.e. 10 digits)
-    if ([phoneText characterAtIndex:0] == '1' ||
-        [phoneText characterAtIndex:0] == '0') {
-        phoneText = [phoneText substringFromIndex:1];
-    }
-    
-    return phoneText;
 }
 
 + (NSString*)parseEventText:(NSString*)eventText
@@ -380,6 +353,7 @@
     NSRange rangeOfFirstMatch = [EKEventParser tryToGetPhone:eventText];
     if (!NSEqualRanges(rangeOfFirstMatch, NSMakeRange(NSNotFound, 0))) {
         NSString* firstSubstring = [eventText substringWithRange:rangeOfFirstMatch];
+        [CMIUtility Log:firstSubstring];
         NSRange rangeOfSecondMatch = [EKEventParser tryToGetFirstPhone:firstSubstring];
         if (rangeOfSecondMatch.location != NSNotFound) {
             NSString *substringForSecondMatch = [EKEventParser stripRegex:[firstSubstring substringWithRange:rangeOfSecondMatch] regexToStrip:@"[^\\d]"];

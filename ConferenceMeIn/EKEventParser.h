@@ -22,7 +22,8 @@
 + (NSString*)getLeaderSeparatorFromNumber:(NSString*)phoneNumber;
 + (NSString*)getLeaderCodeFromNumber:(NSString*)phoneNumber;
 + (NSString*)parseIOSPhoneText:(NSString*)eventText;
-+ (NSString*)stripLeadingZeroOrOne:(NSString*)phoneText;
++ (BOOL)maxNewLinesExceeded:(NSString*)text range:(NSRange)range;
++ (NSString*)stripRegex:(NSString *)searchTerm regexToStrip:(NSString*)regexToStrip;
 
 + (CMIConferenceNumber*)eventTextToConferenceNumber:(NSString*)eventText;
 

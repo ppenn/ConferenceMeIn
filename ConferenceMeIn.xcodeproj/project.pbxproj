@@ -27,6 +27,9 @@
 		A81E2F9C14EAD07A0005B411 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A81E2F9914EAD07A0005B411 /* Icon.png */; };
 		A81E2F9D14EAD07A0005B411 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A81E2F9A14EAD07A0005B411 /* Icon@2x.png */; };
 		A81E2F9E14EAD07A0005B411 /* ITunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = A81E2F9B14EAD07A0005B411 /* ITunesArtwork.png */; };
+		A82018B815095FF300C5FC6F /* accuconference.txt in Resources */ = {isa = PBXBuildFile; fileRef = A82018B715095FF200C5FC6F /* accuconference.txt */; };
+		A82018B91509602200C5FC6F /* accuconference.txt in Resources */ = {isa = PBXBuildFile; fileRef = A82018B715095FF200C5FC6F /* accuconference.txt */; };
+		A82018BA1509602200C5FC6F /* livemeeting.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8F0178C14F58C3F0046E849 /* livemeeting.txt */; };
 		A82727D6150260CB005190EE /* CMIConferenceNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A82727D5150260CB005190EE /* CMIConferenceNumber.m */; };
 		A82727D7150260CB005190EE /* CMIConferenceNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A82727D5150260CB005190EE /* CMIConferenceNumber.m */; };
 		A82728061502FE42005190EE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728041502FE42005190EE /* AudioToolbox.framework */; };
@@ -162,6 +165,7 @@
 		A81E2F9A14EAD07A0005B411 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "ConferenceMeIn/images/Icon@2x.png"; sourceTree = "<group>"; };
 		A81E2F9B14EAD07A0005B411 /* ITunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ITunesArtwork.png; path = ConferenceMeIn/images/ITunesArtwork.png; sourceTree = "<group>"; };
 		A82018B61507E23500C5FC6F /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		A82018B715095FF200C5FC6F /* accuconference.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = accuconference.txt; path = test_invites/accuconference.txt; sourceTree = "<group>"; };
 		A82727D4150260CB005190EE /* CMIConferenceNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIConferenceNumber.h; sourceTree = "<group>"; };
 		A82727D5150260CB005190EE /* CMIConferenceNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIConferenceNumber.m; sourceTree = "<group>"; };
 		A82728041502FE42005190EE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -598,6 +602,7 @@
 		A8F0178B14F58C080046E849 /* test_invites */ = {
 			isa = PBXGroup;
 			children = (
+				A82018B715095FF200C5FC6F /* accuconference.txt */,
 				A8DF7CF01505D5E400C42A5D /* faux_fax.txt */,
 				A8081C5414FDC82800CEC9A6 /* lotuslive.txt */,
 				A8081C4F14FDA65500CEC9A6 /* webex.txt */,
@@ -712,6 +717,7 @@
 				A8CFD0E014EF360C00EA8616 /* IASKSpecifierValuesView.xib in Resources */,
 				A8F48F1E14F2F4F1004F9B2E /* CMIHelpIPhoneView.xib in Resources */,
 				A8F0178D14F58C3F0046E849 /* livemeeting.txt in Resources */,
+				A82018B815095FF300C5FC6F /* accuconference.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -719,6 +725,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A82018B91509602200C5FC6F /* accuconference.txt in Resources */,
+				A82018BA1509602200C5FC6F /* livemeeting.txt in Resources */,
 				A8E5253914CA0EC800797C16 /* InfoPlist.strings in Resources */,
 				A8E1D72B14D22AE400E5A877 /* gradientBackground.png in Resources */,
 				A8E1D74414D322CA00E5A877 /* phone.png in Resources */,
