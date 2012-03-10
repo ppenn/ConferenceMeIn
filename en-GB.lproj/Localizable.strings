@@ -14,7 +14,6 @@
 "RegexTollFree" = "toll\\D{0,2}free\\D*";
 "RegexPhoneNumberTollFree" = "0\\D{0,2}([8]\\d{2}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{4})";
 
-"TollFree" = "free";
 
 /* Main Window */
 

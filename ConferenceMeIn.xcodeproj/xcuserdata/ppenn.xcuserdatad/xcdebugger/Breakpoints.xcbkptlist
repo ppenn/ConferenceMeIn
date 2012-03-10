@@ -219,11 +219,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeIn/CMIUtility.m"
-         timestampString = "353018163.264116"
+         timestampString = "353032779.715366"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "224"
-         endingLineNumber = "224"
+         startingLineNumber = "244"
+         endingLineNumber = "244"
          landmarkName = "+createTestEvent:startDate:endDate:title:withConfNumber:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -371,12 +371,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeInTests/EKEventParserTests.m"
-         timestampString = "353018163.264116"
+         timestampString = "353032862.900184"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "267"
-         endingLineNumber = "267"
-         landmarkName = "-testUKPhoneNumbersShouldParse"
+         startingLineNumber = "123"
+         endingLineNumber = "123"
+         landmarkName = "-testInvitesShouldParse"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

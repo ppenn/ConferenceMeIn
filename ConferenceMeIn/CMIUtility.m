@@ -43,7 +43,27 @@
     else {
         return FALSE;
     }
+}
+
++ (NSString*) getRegionValue:(NSString*)key
+{
+#define DEFAULT_REGION_TABLE @"Region_GB"
     
+    NSString* regionValue = nil;
+    
+    NSLocale *locale = [NSLocale currentLocale];
+    NSString *countryCode = [locale objectForKey:NSLocaleCountryCode];
+    NSString *tableName = [NSString stringWithFormat:@"Region_%@", countryCode];
+    
+    regionValue = [[NSBundle mainBundle] localizedStringForKey:key value:nil table:tableName];    
+
+    // If value contains key, let's assume we didn't find it and use default table
+    if ([regionValue rangeOfString:@"Key"].location != NSNotFound) {
+        tableName = DEFAULT_REGION_TABLE;
+        regionValue = [[NSBundle mainBundle] localizedStringForKey:key value:nil table:tableName];    
+    }
+    
+    return regionValue;
 }
 
 + (void)Log:(NSString*)logMessage

@@ -27,7 +27,24 @@
 
 #define MAX_NEWLINES 2
 
+
+static NSString* regexPhoneNumberPattern = nil;
+static NSString* regexCountryTollFreePattern = nil;
+static NSString* regexTollFreePattern = nil;
+static NSString* regexPhoneNumberTollFreePattern = nil;
+
 @implementation EKEventParser
+
+//TODO: ugh, redo this.
++ (void)initializeStatics
+{
+    if (regexPhoneNumberPattern == nil) {
+        regexPhoneNumberPattern = [CMIUtility getRegionValue:@"RegexPhoneNumberKey"];
+        regexCountryTollFreePattern = [CMIUtility getRegionValue:@"RegexCountryTollFreeKey"];
+        regexTollFreePattern = [CMIUtility getRegionValue:@"RegexTollFreeKey"];
+        regexPhoneNumberTollFreePattern = [CMIUtility getRegionValue:@"RegexPhoneNumberTollFreeKey"];
+    }
+}
 
 + (NSString*)parseEvent:(EKEvent*)event
 {
@@ -143,6 +160,7 @@
 + (NSString*)parsePhoneNumber:(NSString*)eventText
 {
     [CMIUtility Log:@"parsePhoneNumber()"];
+    [EKEventParser initializeStatics];
     NSError *error = NULL;
     NSString* phoneNumber = @"";
     
@@ -253,6 +271,7 @@
 + (NSRange)tryToGetFirstPhone:(NSString*)eventText
 {
     [CMIUtility Log:@"tryToGetFirstPhone()"];
+    [EKEventParser initializeStatics];
     
     NSError *error = NULL;
     NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", REGEX_PHONE_NUMBER_LOOK_BEHIND, NSLocalizedString(@"RegexPhoneNumber", nil), REGEX_PHONE_NUMBER_LOOK_AHEAD];
@@ -267,10 +286,12 @@
 + (NSRange)tryToGetFirstTollFree:(NSString*)eventText
 {
     [CMIUtility Log:@"tryToGetFirstTollFree()"];
+    [EKEventParser initializeStatics];
     
     //This regex returns TOLL-FREE numbers...
     NSError *error = NULL;
-    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", NSLocalizedString(@"RegexTollFree", nil), NSLocalizedString(@"RegexPhoneNumberTollFree", nil), REGEX_PHONE_NUMBER_LOOK_AHEAD];
+//    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", NSLocalizedString(@"RegexTollFree", nil), NSLocalizedString(@"RegexPhoneNumberTollFree", nil), REGEX_PHONE_NUMBER_LOOK_AHEAD];
+    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", regexTollFreePattern, regexPhoneNumberTollFreePattern, REGEX_PHONE_NUMBER_LOOK_AHEAD];
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexPattern                                                                                                                   options:NSRegularExpressionCaseInsensitive                                                                                  error:&error];
     
     NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:eventText options:0 range:NSMakeRange(0, [eventText  length])];
@@ -282,6 +303,7 @@
 + (NSRange)tryToGetCountryTollFreePhone:(NSString*)eventText
 {
     [CMIUtility Log:@"tryToGetCountryTollFreePhone()"];
+    [EKEventParser initializeStatics];
     
     //This regex returns US and US TOLL-FREE numbers...
     NSError *error = NULL;
@@ -332,7 +354,7 @@
 + (NSString*)parseEventText:(NSString*)eventText
 {
     [CMIUtility Log:@"parseEventText()"];
-
+    
     NSString* conferenceNumber;
     
     CMIConferenceNumber* cmiConferenceNumber = [EKEventParser eventTextToConferenceNumber:eventText];
@@ -360,8 +382,6 @@
         NSRange rangeOfSecondMatch = [EKEventParser tryToGetFirstPhone:firstSubstring];
         if (rangeOfSecondMatch.location != NSNotFound) {
             NSString *substringForSecondMatch = [EKEventParser stripRegex:[firstSubstring substringWithRange:rangeOfSecondMatch] regexToStrip:@"[^\\d]"];
-            
-//            substringForSecondMatch = [EKEventParser stripLeadingZeroOrOne:substringForSecondMatch];
             
             cmiConferenceNumber.phoneNumber = [phoneNumber stringByAppendingString:substringForSecondMatch];
             

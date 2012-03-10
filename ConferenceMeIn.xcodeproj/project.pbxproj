@@ -36,6 +36,12 @@
 		A82728071502FE42005190EE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728051502FE42005190EE /* SystemConfiguration.framework */; };
 		A827280F1502FF08005190EE /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728081502FF08005190EE /* libGoogleAdMobAds.a */; };
 		A82728101502FF08005190EE /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728081502FF08005190EE /* libGoogleAdMobAds.a */; };
+		A8375CC8150ACB5100893AFB /* Region_US.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8375CC7150ACB5100893AFB /* Region_US.strings */; };
+		A8375CC9150ACB5100893AFB /* Region_US.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8375CC7150ACB5100893AFB /* Region_US.strings */; };
+		A8375CCB150ACB6F00893AFB /* Region_GB.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8375CCA150ACB6F00893AFB /* Region_GB.strings */; };
+		A8375CCC150ACB6F00893AFB /* Region_GB.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8375CCA150ACB6F00893AFB /* Region_GB.strings */; };
+		A8375CCE150ACF6700893AFB /* Region_AU.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8375CCD150ACF6700893AFB /* Region_AU.strings */; };
+		A8375CCF150ACF6700893AFB /* Region_AU.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8375CCD150ACF6700893AFB /* Region_AU.strings */; };
 		A856305514E87A53006B24F8 /* CMIUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A856305414E87A52006B24F8 /* CMIUserDefaults.m */; };
 		A856305614E87A53006B24F8 /* CMIUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A856305414E87A52006B24F8 /* CMIUserDefaults.m */; };
 		A85FF3B614CEF90100F2CD1C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A85FF3B514CEF90100F2CD1C /* Settings.bundle */; };
@@ -176,6 +182,9 @@
 		A827280C1502FF08005190EE /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADBannerViewDelegate.h; path = AdMob/GADBannerViewDelegate.h; sourceTree = "<group>"; };
 		A827280D1502FF08005190EE /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADInterstitialDelegate.h; path = AdMob/GADInterstitialDelegate.h; sourceTree = "<group>"; };
 		A827280E1502FF08005190EE /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADRequestError.h; path = AdMob/GADRequestError.h; sourceTree = "<group>"; };
+		A8375CC7150ACB5100893AFB /* Region_US.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Region_US.strings; sourceTree = "<group>"; };
+		A8375CCA150ACB6F00893AFB /* Region_GB.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Region_GB.strings; sourceTree = "<group>"; };
+		A8375CCD150ACF6700893AFB /* Region_AU.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Region_AU.strings; sourceTree = "<group>"; };
 		A856305314E87A52006B24F8 /* CMIUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIUserDefaults.h; sourceTree = "<group>"; };
 		A856305414E87A52006B24F8 /* CMIUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIUserDefaults.m; sourceTree = "<group>"; };
 		A85FF3B514CEF90100F2CD1C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -484,6 +493,9 @@
 			children = (
 				A8E1D72814D22AB700E5A877 /* Images */,
 				A8791464150A824200553EDD /* Localizable.strings */,
+				A8375CC7150ACB5100893AFB /* Region_US.strings */,
+				A8375CCA150ACB6F00893AFB /* Region_GB.strings */,
+				A8375CCD150ACF6700893AFB /* Region_AU.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -718,6 +730,9 @@
 				A8F0178D14F58C3F0046E849 /* livemeeting.txt in Resources */,
 				A82018B815095FF300C5FC6F /* accuconference.txt in Resources */,
 				A8791461150A824200553EDD /* Localizable.strings in Resources */,
+				A8375CC8150ACB5100893AFB /* Region_US.strings in Resources */,
+				A8375CCB150ACB6F00893AFB /* Region_GB.strings in Resources */,
+				A8375CCE150ACF6700893AFB /* Region_AU.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -752,6 +767,9 @@
 				A8081C5514FDC82800CEC9A6 /* lotuslive.txt in Resources */,
 				A8DF7CF11505D5E500C42A5D /* faux_fax.txt in Resources */,
 				A8791462150A824200553EDD /* Localizable.strings in Resources */,
+				A8375CC9150ACB5100893AFB /* Region_US.strings in Resources */,
+				A8375CCC150ACB6F00893AFB /* Region_GB.strings in Resources */,
+				A8375CCF150ACF6700893AFB /* Region_AU.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

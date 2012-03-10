@@ -1,0 +1,13 @@
+/* 
+  Region_GB.strings
+  ConferenceMeIn
+
+  Created by philip penn on 3/9/12.
+  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+*/
+
+"RegexPhoneNumberKey" = "0\\D{0,3}([2-9]\\d{2}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{4})";
+
+"RegexCountryTollFreeKey" = "(u\\.k\\.|uk|united\\sk)\\D*toll\\D*free\\D*";
+"RegexTollFreeKey" = "toll\\D{0,2}free\\D*";
+"RegexPhoneNumberTollFreeKey" = "0\\D{0,2}([8]\\d{2}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{4})";
