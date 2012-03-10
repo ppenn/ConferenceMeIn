@@ -3,7 +3,7 @@
 //  ConferenceMeIn
 //
 //  Created by philip penn on 1/26/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 Paleon Solutions. All rights reserved.
 //
 
 //  Logic unit tests contain unit test code that is designed to be linked into an independent test executable.

@@ -3,13 +3,13 @@
 //  ConferenceMeIn
 //
 //  Created by philip penn on 2/8/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 Paleon Solutions. All rights reserved.
 //
 
 #import "CMIUtility.h"
 
 //TOGGLE THIS BETWEEN 0 (release) and 1 (debug)
-#define CMI_DEBUG 1
+#define CMI_DEBUG 0
 
 #define REGEX_1_PREFIX_COUNTRIES @"[us|ca|au|ie|mx]"
 

@@ -193,8 +193,7 @@
 		A85FF3B514CEF90100F2CD1C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		A868D58914F853A300DEBC17 /* att_connect.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = att_connect.txt; path = test_invites/att_connect.txt; sourceTree = "<group>"; };
 		A86C356C14FC39250079BE4E /* verizon.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = verizon.txt; path = test_invites/verizon.txt; sourceTree = "<group>"; };
-		A8791463150A824200553EDD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		A8791465150A825E00553EDD /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		A8791463150A824200553EDD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		A8AEA2FB14E2380500E6ADC6 /* CMIHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIHelpViewController.h; sourceTree = "<group>"; };
 		A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIHelpViewController.m; sourceTree = "<group>"; };
 		A8B6321314E229430006E3A5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ConferenceMeIn/images/Default.png; sourceTree = "<group>"; };
@@ -255,7 +254,7 @@
 		A8E1D73B14D2718900E5A877 /* CMIEventSystemTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIEventSystemTests.h; sourceTree = "<group>"; };
 		A8E1D73C14D2718900E5A877 /* CMIEventSystemTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIEventSystemTests.m; sourceTree = "<group>"; };
 		A8E1D73E14D279E000E5A877 /* CMIMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIMasterViewController.h; sourceTree = "<group>"; };
-		A8E1D73F14D279E000E5A877 /* CMIMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIMasterViewController.m; sourceTree = "<group>"; };
+		A8E1D73F14D279E000E5A877 /* CMIMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CMIMasterViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		A8E1D74214D322CA00E5A877 /* phone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = phone.png; sourceTree = "<group>"; };
 		A8E5250614CA0EC800797C16 /* ConferenceMeIn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ConferenceMeIn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8E5250A14CA0EC800797C16 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -878,7 +877,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				A8791463150A824200553EDD /* en */,
-				A8791465150A825E00553EDD /* en-GB */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
