@@ -42,6 +42,8 @@
 		A8375CCC150ACB6F00893AFB /* Region_GB.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8375CCA150ACB6F00893AFB /* Region_GB.strings */; };
 		A8375CCE150ACF6700893AFB /* Region_AU.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8375CCD150ACF6700893AFB /* Region_AU.strings */; };
 		A8375CCF150ACF6700893AFB /* Region_AU.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8375CCD150ACF6700893AFB /* Region_AU.strings */; };
+		A8375CD1150ADCC300893AFB /* Region_CA.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8375CD0150ADCC300893AFB /* Region_CA.strings */; };
+		A8375CD2150ADCC300893AFB /* Region_CA.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8375CD0150ADCC300893AFB /* Region_CA.strings */; };
 		A856305514E87A53006B24F8 /* CMIUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A856305414E87A52006B24F8 /* CMIUserDefaults.m */; };
 		A856305614E87A53006B24F8 /* CMIUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A856305414E87A52006B24F8 /* CMIUserDefaults.m */; };
 		A85FF3B614CEF90100F2CD1C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A85FF3B514CEF90100F2CD1C /* Settings.bundle */; };
@@ -185,6 +187,7 @@
 		A8375CC7150ACB5100893AFB /* Region_US.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Region_US.strings; sourceTree = "<group>"; };
 		A8375CCA150ACB6F00893AFB /* Region_GB.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Region_GB.strings; sourceTree = "<group>"; };
 		A8375CCD150ACF6700893AFB /* Region_AU.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Region_AU.strings; sourceTree = "<group>"; };
+		A8375CD0150ADCC300893AFB /* Region_CA.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Region_CA.strings; sourceTree = "<group>"; };
 		A856305314E87A52006B24F8 /* CMIUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIUserDefaults.h; sourceTree = "<group>"; };
 		A856305414E87A52006B24F8 /* CMIUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIUserDefaults.m; sourceTree = "<group>"; };
 		A85FF3B514CEF90100F2CD1C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -496,6 +499,7 @@
 				A8375CC7150ACB5100893AFB /* Region_US.strings */,
 				A8375CCA150ACB6F00893AFB /* Region_GB.strings */,
 				A8375CCD150ACF6700893AFB /* Region_AU.strings */,
+				A8375CD0150ADCC300893AFB /* Region_CA.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -733,6 +737,7 @@
 				A8375CC8150ACB5100893AFB /* Region_US.strings in Resources */,
 				A8375CCB150ACB6F00893AFB /* Region_GB.strings in Resources */,
 				A8375CCE150ACF6700893AFB /* Region_AU.strings in Resources */,
+				A8375CD1150ADCC300893AFB /* Region_CA.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -770,6 +775,7 @@
 				A8375CC9150ACB5100893AFB /* Region_US.strings in Resources */,
 				A8375CCC150ACB6F00893AFB /* Region_GB.strings in Resources */,
 				A8375CCF150ACF6700893AFB /* Region_AU.strings in Resources */,
+				A8375CD2150ADCC300893AFB /* Region_CA.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -100,7 +100,7 @@
 
 - (void)testInvitesShouldParse
 {
-    if ([CMIUtility countryHas0Prefix] == YES) return;
+    if (![[CMIUtility getCountryName] isEqualToString:@"United States"]) return;
 
     NSString* fileContents;
     NSError* error;
@@ -176,7 +176,7 @@
 
 - (void)testPhoneNumbersShouldNotParse
 {
-    if ([CMIUtility countryHas0Prefix] == YES) return;
+    if (![[CMIUtility getCountryName] isEqualToString:@"United States"]) return;
 
     NSString* phoneText;
     
@@ -202,7 +202,7 @@
 
 - (void)testLeaderNumbersShouldParse
 {
-    if ([CMIUtility countryHas0Prefix] == YES) return;
+    if (![[CMIUtility getCountryName] isEqualToString:@"United States"]) return;
 
     NSString* phoneText;
     
@@ -256,9 +256,27 @@
                                     
 }
 
+- (void)testAustralianPhoneNumbersShouldParse
+{
+    if ([[CMIUtility getCountryName] isEqualToString:@"Australia"]) {
+        NSString* phoneText;
+
+        phoneText = [EKEventParser parseEventText:@"(04) 1234 5678 12345678"];
+        [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"(04) 1234 5678" expectedPhoneCode:@"12345678"];
+        
+        phoneText = [EKEventParser parseEventText:@"Dial-in\
+                     MeetingPlace Main Number 425-456-2500\
+                     Toll Free Number 1 800 129 278\
+                     Meeting ID: 2690\
+                     Password: 123456"];
+        [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"1 800 129 278" expectedPhoneCode:@"123456"];
+        
+    }
+}
+
 - (void)testUKPhoneNumbersShouldParse
 {
-    if ([CMIUtility countryHas0Prefix] == NO) return;
+    if ([[CMIUtility getCountryName] isEqualToString:@"United Kingdom"]) {
     
 //    NSString* test = NSLocalizedString(@"RegexPhoneNumber", nil);
     
@@ -273,12 +291,12 @@
                  Meeting ID: 2690\
                  Password: 123456"];
     [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"08882280484" expectedPhoneCode:@"123456"];
-
+    }
 }
 
 - (void)testPhoneNumbersShouldParse
 {
-    if ([CMIUtility countryHas0Prefix] == YES) return;
+    if (![[CMIUtility getCountryName] isEqualToString:@"United States"]) return;
 
     NSString* phoneText;
 

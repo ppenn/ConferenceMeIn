@@ -227,7 +227,9 @@ NSInteger _activeMenu = -1;
         
         if (_cmiEventCalendar.eventsList.count == 0 ||
             (_cmiEventCalendar.filterType != filterNone && _cmiEventCalendar.numConfEvents == 0)) {
-            return 1;
+            if (section == 0) {
+                return 1;
+            }
         }
         
         // Get number of events in a day
@@ -1034,14 +1036,16 @@ NSInteger _activeMenu = -1;
         
 }
 
-//TODO: MOVE this somewhere...parameterize
 - (BOOL) eventIsNow:(EKEvent*) event
 {
     [CMIUtility Log:@"eventIsNow()"];
     
+    if (_cmiEventCalendar.currentTimeframeStarts < 0)   return NO;
+    
     NSDate* now = [NSDate date];
+    NSInteger seconds = _cmiEventCalendar.currentTimeframeStarts * 60;
     // endDate is 1 day = 60*60*24 seconds = 86400 seconds from startDate
-    NSDate* trueStartDate = [NSDate dateWithTimeInterval:-(15*60) sinceDate:event.startDate];
+    NSDate* trueStartDate = [NSDate dateWithTimeInterval:-(seconds) sinceDate:event.startDate];
 
     return [CMIUtility date:now isBetweenDate:trueStartDate andDate:event.endDate];
     

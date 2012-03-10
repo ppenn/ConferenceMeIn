@@ -5,3 +5,11 @@
   Created by philip penn on 3/9/12.
   Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 */
+
+//tollfree 1 800 129 278
+//landline (04) 1234 5678
+
+"RegexPhoneNumberKey" = "(1\\D{0,1}8)?\\({0,1}((0|\\+61)(2|4|3|7|8)){0,1}\\){0,1}(\\ |-){0,1}[0-9]{2}(\\ |-){0,1}[0-9]{2}(\\ |-){0,1}[0-9]{1}(\\ |-){0,1}[0-9]{3}";
+"RegexCountryTollFreeKey" = "(australia)\\D*toll\\D*free\\D*";
+"RegexTollFreeKey" = "toll\\D{0,2}free\\D*";
+"RegexPhoneNumberTollFreeKey" = "(1\\D{0,2})?([8]\\d{2}[\\s(\\.]*-?[\\s)\\.]*\\d{3}[\\s\\.]*-?\\s*\\d{3})";

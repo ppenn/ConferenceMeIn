@@ -37,7 +37,7 @@
 "IntroMessage" = "Tap event to see  details and dial number\n\rDouble-tap to dial # directly\n\rTap & hold to see other actions";
 "HelpMessage" = "This application works with your iPhone calendar events, enabling you to quickly call a conference number without remembering the code.\n\rDouble-tap or tap-and-hold calendar event to dial conference number directly.\r\n\r\nSingle-tap calendar event to see event details and be prompted to dial conference number.\n\rUse Menu > Settings to set up your own conference number, which will be used in the location section of a new event if you add it from the + button.";
 "AddEventMessage" = "You have not entered your own conference number, which is included in this event. Would you like to set it up now?";
-"NoEventsMessage" = "<No calendar events to show for this day>";
+"NoEventsMessage" = "<No calendar events found for this view>";
 "WarnInvalidPhoneNumberTitle" = "Incomplete or Invalid Conference #";
 "WarnInvalidPhoneNumberQuestion" = "Would you like to set your conference #?";
 "EnterInSettingsTitle" = "Enter in Settings";

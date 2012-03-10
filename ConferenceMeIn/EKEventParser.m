@@ -164,7 +164,7 @@ static NSString* regexPhoneNumberTollFreePattern = nil;
     NSError *error = NULL;
     NSString* phoneNumber = @"";
     
-    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", REGEX_PHONE_NUMBER_LOOK_BEHIND, NSLocalizedString(@"RegexPhoneNumber", nil), REGEX_PHONE_NUMBER_LOOK_AHEAD];
+    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", REGEX_PHONE_NUMBER_LOOK_BEHIND, regexPhoneNumberPattern, REGEX_PHONE_NUMBER_LOOK_AHEAD];
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexPattern 
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
@@ -274,7 +274,9 @@ static NSString* regexPhoneNumberTollFreePattern = nil;
     [EKEventParser initializeStatics];
     
     NSError *error = NULL;
-    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", REGEX_PHONE_NUMBER_LOOK_BEHIND, NSLocalizedString(@"RegexPhoneNumber", nil), REGEX_PHONE_NUMBER_LOOK_AHEAD];
+    
+    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", REGEX_PHONE_NUMBER_LOOK_BEHIND, regexPhoneNumberPattern, REGEX_PHONE_NUMBER_LOOK_AHEAD];
+    
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexPattern
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
@@ -290,7 +292,6 @@ static NSString* regexPhoneNumberTollFreePattern = nil;
     
     //This regex returns TOLL-FREE numbers...
     NSError *error = NULL;
-//    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", NSLocalizedString(@"RegexTollFree", nil), NSLocalizedString(@"RegexPhoneNumberTollFree", nil), REGEX_PHONE_NUMBER_LOOK_AHEAD];
     NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", regexTollFreePattern, regexPhoneNumberTollFreePattern, REGEX_PHONE_NUMBER_LOOK_AHEAD];
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexPattern                                                                                                                   options:NSRegularExpressionCaseInsensitive                                                                                  error:&error];
     
@@ -308,7 +309,7 @@ static NSString* regexPhoneNumberTollFreePattern = nil;
     //This regex returns US and US TOLL-FREE numbers...
     NSError *error = NULL;
     
-    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", NSLocalizedString(@"RegexCountryTollFree", nil), NSLocalizedString(@"RegexPhoneNumberTollFree", nil), REGEX_PHONE_NUMBER_LOOK_AHEAD];
+    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", regexCountryTollFreePattern, regexPhoneNumberTollFreePattern, REGEX_PHONE_NUMBER_LOOK_AHEAD];
     NSRegularExpression *regexCountryTollFree = [NSRegularExpression regularExpressionWithPattern:regexPattern                                                                                                                   options:NSRegularExpressionCaseInsensitive                                                                                  error:&error];
         
     NSRange rangeOfPhoneNumber = [regexCountryTollFree rangeOfFirstMatchInString:eventText options:0 range:NSMakeRange(0, [eventText length])];

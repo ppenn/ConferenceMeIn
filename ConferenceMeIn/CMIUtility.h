@@ -35,5 +35,6 @@
 + (NSDate*) getMidnightDate:(NSDate*) date;
 + (NSDate*) dayToDate:(NSString*) day;
 + (NSString*) getRegionValue:(NSString*)key;
++ (NSString*)getCountryName;
 
 @end

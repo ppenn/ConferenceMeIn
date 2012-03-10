@@ -219,11 +219,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeIn/CMIUtility.m"
-         timestampString = "353032779.715366"
+         timestampString = "353045048.583528"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "244"
-         endingLineNumber = "244"
+         startingLineNumber = "247"
+         endingLineNumber = "247"
          landmarkName = "+createTestEvent:startDate:endDate:title:withConfNumber:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -363,20 +363,6 @@
          startingLineNumber = "196"
          endingLineNumber = "196"
          landmarkName = "-applicationDidBecomeActive:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "ConferenceMeInTests/EKEventParserTests.m"
-         timestampString = "353032862.900184"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "123"
-         endingLineNumber = "123"
-         landmarkName = "-testInvitesShouldParse"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
