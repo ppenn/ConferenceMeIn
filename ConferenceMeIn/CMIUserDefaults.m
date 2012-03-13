@@ -134,6 +134,8 @@ NSString *kShowCompletedEvents = @"showCompletedEventsKey";
 - (void)initializeDefaults
 {
     [CMIUtility Log:@"initializeDefaults()"];
+    BOOL canCall = [[UIApplication sharedApplication]
+                    canOpenURL:[NSURL URLWithString:@"tel:1234567"]];    
     
     NSString *pathStr = [[NSBundle mainBundle] bundlePath];
     NSString *settingsBundlePath = [pathStr stringByAppendingPathComponent:@"Settings.bundle"];
@@ -189,16 +191,18 @@ NSString *kShowCompletedEvents = @"showCompletedEventsKey";
     [[NSUserDefaults standardUserDefaults] setObject:leaderSeparatorDefault forKey:kMyConfLeaderSeparatorKey];
     [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:kMyConfConfNumberKey];
     
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-		[[NSUserDefaults standardUserDefaults] setInteger:[callProviderTypeDefault intValue] forKey:kCallProviderTypeKey];
-    }
-    else {
-        [[NSUserDefaults standardUserDefaults] setInteger:googleTalkatone forKey:kCallProviderTypeKey];            
-    }
     [[NSUserDefaults standardUserDefaults] setInteger:[calendarTimeframeDefault intValue]  forKey:kCalendarTimeframeTypeKey];
     [[NSUserDefaults standardUserDefaults] setInteger:[currentTimeframeStartsDefault intValue] forKey:kCurrentTimeframeStartsKey];
     [[NSUserDefaults standardUserDefaults] setInteger:[calendarTypeDefault intValue] forKey:kCalendarTypeKey];
     
+    if (canCall == NO)
+    {
+        [[NSUserDefaults standardUserDefaults] setInteger:googleTalkatone forKey:kCallProviderTypeKey];            
+    }
+    else { 
+        //iPhone
+		[[NSUserDefaults standardUserDefaults] setInteger:[callProviderTypeDefault intValue] forKey:kCallProviderTypeKey];
+    }
     
     [[NSUserDefaults standardUserDefaults] synchronize];
     
