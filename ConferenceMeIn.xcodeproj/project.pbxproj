@@ -44,9 +44,12 @@
 		A8375CCF150ACF6700893AFB /* Region_AU.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8375CCD150ACF6700893AFB /* Region_AU.strings */; };
 		A8375CD1150ADCC300893AFB /* Region_CA.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8375CD0150ADCC300893AFB /* Region_CA.strings */; };
 		A8375CD2150ADCC300893AFB /* Region_CA.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8375CD0150ADCC300893AFB /* Region_CA.strings */; };
+		A84E29F3150EF46900C0C032 /* microsoft.txt in Resources */ = {isa = PBXBuildFile; fileRef = A84E29F2150EF46900C0C032 /* microsoft.txt */; };
 		A856305514E87A53006B24F8 /* CMIUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A856305414E87A52006B24F8 /* CMIUserDefaults.m */; };
 		A856305614E87A53006B24F8 /* CMIUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = A856305414E87A52006B24F8 /* CMIUserDefaults.m */; };
 		A85FF3B614CEF90100F2CD1C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A85FF3B514CEF90100F2CD1C /* Settings.bundle */; };
+		A867B192150D6DF50074AB61 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = A867B191150D6DF50074AB61 /* Icon-72.png */; };
+		A867B193150D6DF50074AB61 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = A867B191150D6DF50074AB61 /* Icon-72.png */; };
 		A868D58A14F853A300DEBC17 /* att_connect.txt in Resources */ = {isa = PBXBuildFile; fileRef = A868D58914F853A300DEBC17 /* att_connect.txt */; };
 		A86C356D14FC39250079BE4E /* verizon.txt in Resources */ = {isa = PBXBuildFile; fileRef = A86C356C14FC39250079BE4E /* verizon.txt */; };
 		A8791461150A824200553EDD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8791464150A824200553EDD /* Localizable.strings */; };
@@ -82,7 +85,6 @@
 		A8CFD0E014EF360C00EA8616 /* IASKSpecifierValuesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8CFD0B714EF360C00EA8616 /* IASKSpecifierValuesView.xib */; };
 		A8CFD0E114EF360C00EA8616 /* IASKSpecifierValuesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8CFD0B714EF360C00EA8616 /* IASKSpecifierValuesView.xib */; };
 		A8CFD0E314EF403A00EA8616 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8CFD0E214EF403A00EA8616 /* MessageUI.framework */; };
-		A8CFD0E514EF404500EA8616 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8CFD0E414EF404500EA8616 /* MessageUI.framework */; };
 		A8CFD0E614EF404500EA8616 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8CFD0E414EF404500EA8616 /* MessageUI.framework */; };
 		A8CFD0E914EFE5C200EA8616 /* CMIMyConferenceNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0E814EFE5C200EA8616 /* CMIMyConferenceNumber.m */; };
 		A8CFD0EA14EFE5C200EA8616 /* CMIMyConferenceNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A8CFD0E814EFE5C200EA8616 /* CMIMyConferenceNumber.m */; };
@@ -115,7 +117,6 @@
 		A8E5251514CA0EC800797C16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8E5251314CA0EC800797C16 /* InfoPlist.strings */; };
 		A8E5251714CA0EC800797C16 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E5251614CA0EC800797C16 /* main.m */; };
 		A8E5251B14CA0EC800797C16 /* ConferenceMeInAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8E5251A14CA0EC800797C16 /* ConferenceMeInAppDelegate.m */; };
-		A8E5252F14CA0EC800797C16 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8E5252E14CA0EC800797C16 /* SenTestingKit.framework */; };
 		A8E5253014CA0EC800797C16 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8E5250A14CA0EC800797C16 /* UIKit.framework */; };
 		A8E5253114CA0EC800797C16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8E5250C14CA0EC800797C16 /* Foundation.framework */; };
 		A8E5253914CA0EC800797C16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8E5253714CA0EC800797C16 /* InfoPlist.strings */; };
@@ -141,6 +142,7 @@
 		A8F6211C14E368E900B735AC /* CMIUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6211B14E368E800B735AC /* CMIUtility.m */; };
 		A8F6212314E56A2C00B735AC /* CMIDay.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6212214E56A2C00B735AC /* CMIDay.m */; };
 		A8F6212414E56A2C00B735AC /* CMIDay.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F6212214E56A2C00B735AC /* CMIDay.m */; };
+		A8FD84F5150F084E00682125 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8FD84F4150F084E00682125 /* SenTestingKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -188,9 +190,11 @@
 		A8375CCA150ACB6F00893AFB /* Region_GB.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Region_GB.strings; sourceTree = "<group>"; };
 		A8375CCD150ACF6700893AFB /* Region_AU.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Region_AU.strings; sourceTree = "<group>"; };
 		A8375CD0150ADCC300893AFB /* Region_CA.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Region_CA.strings; sourceTree = "<group>"; };
+		A84E29F2150EF46900C0C032 /* microsoft.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = microsoft.txt; path = test_invites/microsoft.txt; sourceTree = "<group>"; };
 		A856305314E87A52006B24F8 /* CMIUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIUserDefaults.h; sourceTree = "<group>"; };
 		A856305414E87A52006B24F8 /* CMIUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIUserDefaults.m; sourceTree = "<group>"; };
 		A85FF3B514CEF90100F2CD1C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		A867B191150D6DF50074AB61 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "ConferenceMeIn/images/Icon-72.png"; sourceTree = "<group>"; };
 		A868D58914F853A300DEBC17 /* att_connect.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = att_connect.txt; path = test_invites/att_connect.txt; sourceTree = "<group>"; };
 		A86C356C14FC39250079BE4E /* verizon.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = verizon.txt; path = test_invites/verizon.txt; sourceTree = "<group>"; };
 		A8791463150A824200553EDD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -267,7 +271,6 @@
 		A8E5251914CA0EC800797C16 /* ConferenceMeInAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConferenceMeInAppDelegate.h; sourceTree = "<group>"; };
 		A8E5251A14CA0EC800797C16 /* ConferenceMeInAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConferenceMeInAppDelegate.m; sourceTree = "<group>"; };
 		A8E5252D14CA0EC800797C16 /* ConferenceMeInTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ConferenceMeInTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A8E5252E14CA0EC800797C16 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		A8E5253614CA0EC800797C16 /* ConferenceMeInTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ConferenceMeInTests-Info.plist"; sourceTree = "<group>"; };
 		A8E5253814CA0EC800797C16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A8E5253A14CA0EC800797C16 /* ConferenceMeInTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConferenceMeInTests.h; sourceTree = "<group>"; };
@@ -295,6 +298,7 @@
 		A8F6211B14E368E800B735AC /* CMIUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIUtility.m; sourceTree = "<group>"; };
 		A8F6212114E56A2B00B735AC /* CMIDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIDay.h; sourceTree = "<group>"; };
 		A8F6212214E56A2C00B735AC /* CMIDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIDay.m; sourceTree = "<group>"; };
+		A8FD84F4150F084E00682125 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -312,7 +316,6 @@
 				A8E5250B14CA0EC800797C16 /* UIKit.framework in Frameworks */,
 				A8E5250D14CA0EC800797C16 /* Foundation.framework in Frameworks */,
 				A8E5250F14CA0EC800797C16 /* CoreGraphics.framework in Frameworks */,
-				A8CFD0E514EF404500EA8616 /* MessageUI.framework in Frameworks */,
 				A827280F1502FF08005190EE /* libGoogleAdMobAds.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,11 +327,11 @@
 				A8DF7CF215068BA100C42A5D /* CoreGraphics.framework in Frameworks */,
 				A8DF7CED15058C2D00C42A5D /* AudioToolbox.framework in Frameworks */,
 				A8DF7CEE15058C2D00C42A5D /* SystemConfiguration.framework in Frameworks */,
-				A8E5252F14CA0EC800797C16 /* SenTestingKit.framework in Frameworks */,
 				A8081CB11501350600CEC9A6 /* AddressBook.framework in Frameworks */,
 				A8081CB21501350600CEC9A6 /* AddressBookUI.framework in Frameworks */,
 				A8E1D72514D20B8C00E5A877 /* EventKit.framework in Frameworks */,
 				A8E1D72614D20B8C00E5A877 /* EventKitUI.framework in Frameworks */,
+				A8FD84F5150F084E00682125 /* SenTestingKit.framework in Frameworks */,
 				A8E5253014CA0EC800797C16 /* UIKit.framework in Frameworks */,
 				A8E5253114CA0EC800797C16 /* Foundation.framework in Frameworks */,
 				A8CFD0E614EF404500EA8616 /* MessageUI.framework in Frameworks */,
@@ -506,6 +509,7 @@
 		A8E1D72814D22AB700E5A877 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A867B191150D6DF50074AB61 /* Icon-72.png */,
 				A81E2F9914EAD07A0005B411 /* Icon.png */,
 				A81E2F9A14EAD07A0005B411 /* Icon@2x.png */,
 				A81E2F9B14EAD07A0005B411 /* ITunesArtwork.png */,
@@ -547,6 +551,7 @@
 		A8E5250914CA0EC800797C16 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A8FD84F4150F084E00682125 /* SenTestingKit.framework */,
 				A82728041502FE42005190EE /* AudioToolbox.framework */,
 				A82728051502FE42005190EE /* SystemConfiguration.framework */,
 				A8081CA515003C2C00CEC9A6 /* AddressBook.framework */,
@@ -558,7 +563,6 @@
 				A8E5250A14CA0EC800797C16 /* UIKit.framework */,
 				A8E5250C14CA0EC800797C16 /* Foundation.framework */,
 				A8E5250E14CA0EC800797C16 /* CoreGraphics.framework */,
-				A8E5252E14CA0EC800797C16 /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -617,6 +621,7 @@
 		A8F0178B14F58C080046E849 /* test_invites */ = {
 			isa = PBXGroup;
 			children = (
+				A84E29F2150EF46900C0C032 /* microsoft.txt */,
 				A82018B715095FF200C5FC6F /* accuconference.txt */,
 				A8DF7CF01505D5E400C42A5D /* faux_fax.txt */,
 				A8081C5414FDC82800CEC9A6 /* lotuslive.txt */,
@@ -683,7 +688,7 @@
 		A8E524FD14CA0EC700797C16 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = A8E5250014CA0EC700797C16 /* Build configuration list for PBXProject "ConferenceMeIn" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -737,6 +742,7 @@
 				A8375CCB150ACB6F00893AFB /* Region_GB.strings in Resources */,
 				A8375CCE150ACF6700893AFB /* Region_AU.strings in Resources */,
 				A8375CD1150ADCC300893AFB /* Region_CA.strings in Resources */,
+				A867B192150D6DF50074AB61 /* Icon-72.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -775,6 +781,8 @@
 				A8375CCC150ACB6F00893AFB /* Region_GB.strings in Resources */,
 				A8375CCF150ACF6700893AFB /* Region_AU.strings in Resources */,
 				A8375CD2150ADCC300893AFB /* Region_CA.strings in Resources */,
+				A867B193150D6DF50074AB61 /* Icon-72.png in Resources */,
+				A84E29F3150EF46900C0C032 /* microsoft.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -906,7 +914,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: philip penn (SPPMQBL3XX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: philip penn (E96L5HBKN6)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -915,6 +923,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "31A22078-B245-418D-A534-CBD235CEFFC1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -923,6 +932,8 @@
 		A85FF3AE14CCD61F00F2CD1C /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: philip penn (E96L5HBKN6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: philip penn (E96L5HBKN6)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
@@ -941,13 +952,13 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ConferenceMeIn.app/ConferenceMeIn";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeInTests/ConferenceMeInTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
@@ -958,6 +969,67 @@
 			};
 			name = AdHoc;
 		};
+		A87CD073150C2C26008A79B5 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Paleon Solutions Inc.";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Distribution;
+		};
+		A87CD074150C2C26008A79B5 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: philip penn (E96L5HBKN6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: philip penn (E96L5HBKN6)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
+				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Distribution;
+		};
+		A87CD075150C2C26008A79B5 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ConferenceMeIn.app/ConferenceMeIn";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
+				INFOPLIST_FILE = "ConferenceMeInTests/ConferenceMeInTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Distribution;
+		};
 		A8E5253D14CA0EC800797C16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -965,7 +1037,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: philip penn (SPPMQBL3XX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: philip penn (E96L5HBKN6)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -990,7 +1062,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: philip penn (SPPMQBL3XX)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Paleon Solutions Inc.";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1007,6 +1079,8 @@
 		A8E5254014CA0EC800797C16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: philip penn (E96L5HBKN6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: philip penn (E96L5HBKN6)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
@@ -1023,7 +1097,8 @@
 		A8E5254114CA0EC800797C16 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: philip penn (SPPMQBL3XX)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: philip penn (E96L5HBKN6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: philip penn (E96L5HBKN6)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
@@ -1042,13 +1117,13 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ConferenceMeIn.app/ConferenceMeIn";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeInTests/ConferenceMeInTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
@@ -1064,13 +1139,13 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ConferenceMeIn.app/ConferenceMeIn";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeInTests/ConferenceMeInTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
@@ -1089,6 +1164,7 @@
 			buildConfigurations = (
 				A8E5253D14CA0EC800797C16 /* Debug */,
 				A8E5253E14CA0EC800797C16 /* Release */,
+				A87CD073150C2C26008A79B5 /* Distribution */,
 				A85FF3AD14CCD61F00F2CD1C /* AdHoc */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1099,6 +1175,7 @@
 			buildConfigurations = (
 				A8E5254014CA0EC800797C16 /* Debug */,
 				A8E5254114CA0EC800797C16 /* Release */,
+				A87CD074150C2C26008A79B5 /* Distribution */,
 				A85FF3AE14CCD61F00F2CD1C /* AdHoc */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1109,6 +1186,7 @@
 			buildConfigurations = (
 				A8E5254314CA0EC800797C16 /* Debug */,
 				A8E5254414CA0EC800797C16 /* Release */,
+				A87CD075150C2C26008A79B5 /* Distribution */,
 				A85FF3AF14CCD61F00F2CD1C /* AdHoc */,
 			);
 			defaultConfigurationIsVisible = 0;

@@ -20,7 +20,7 @@
 
 - (void)testMaxLines
 {
-    NSString* badgers = @"participant\n\n\n\nbadgers1234";
+    NSString* badgers = @"participant\n\n\n\n\nbadgers1234";
     
     BOOL shouldExceedMaxLines = [EKEventParser maxNewLinesExceeded:badgers range:NSMakeRange(0, [badgers length])];
     STAssertTrue(shouldExceedMaxLines == YES, @"should exceed");
@@ -138,7 +138,7 @@
     [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"18776693239" expectedPhoneCode:@"929759712"];
 
     fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/verizon.txt" encoding:stringEncoding error:nil];   
-    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"15174662084" expectedPhoneCode:@"8711113"];
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8666924538" expectedPhoneCode:@"8711113"];
     
     
     fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/livemeeting.txt" encoding:stringEncoding error:nil];   
@@ -171,6 +171,8 @@
     fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/gotomeeting_2_code_first.txt" encoding:stringEncoding error:nil];   
     [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"18663422541" expectedPhoneCode:@"4155367256"];
 
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/microsoft.txt" encoding:stringEncoding error:nil];   
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"18883203585" expectedPhoneCode:@"35734328"];
     
 }
 

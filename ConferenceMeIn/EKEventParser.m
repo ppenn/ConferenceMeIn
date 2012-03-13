@@ -14,7 +14,7 @@
 #define REGEX_PHONE_NUMBER_LOOK_BEHIND @"(?<![\\d\\/])"
 #define REGEX_PHONE_NUMBER_LOOK_AHEAD @"(?!\\w)"
 
-#define REGEX_CODE_SPECIFIC @"(?<!moderator\\s|leader\\s)\\b(pin|participant|password|passcode|code)[\\s:\\#=s\\(\\)]{1,20}\\d{3,12}[\\s-]?\\d{1,12}+[\\s-]?\\d{0,12}"
+#define REGEX_CODE_SPECIFIC @"(?<!moderator\\s|leader\\s)\\b(pin|participant|password|passcode|conference\\sid|code)[\\s:\\#=s\\(\\)]{1,20}\\d{3,12}[\\s-]?\\d{1,12}+[\\s-]?\\d{0,12}"
 
 #define REGEX_CODE_GENERIC @"(?<![^\\d]\\d\\d\\d[^\\d])[\\d]{4,12}"
 #define REGEX_NEWLINE @"[\\r|\\n]"
@@ -25,7 +25,7 @@
 #define REGEX_LEADER_SEPARATOR_START @"(?<=,,)\\d{4,12}[^\\d]+"
 #define REGEX_LEADER_CODE @"(?<=,,)\\d{4,12}[^\\d]+[\\d]{4,12}"
 
-#define MAX_NEWLINES 2
+#define MAX_NEWLINES 4
 
 
 static NSString* regexPhoneNumberPattern = nil;
@@ -221,21 +221,8 @@ static NSString* regexPhoneNumberTollFreePattern = nil;
     // for each potential pin, check it's not part of a phone number. return the first.
     for (NSTextCheckingResult* possiblePIN in possiblePINs) 
     {
-        
         NSString* pinNumber = [eventText substringWithRange:possiblePIN.range];            
-        NSRange substringToCheck;
-        if (((NSInteger)(possiblePIN.range.location) - 8) >= 0) {
-            substringToCheck.location = possiblePIN.range.location - 8;
-            substringToCheck.length = eventText.length - substringToCheck.location;
-        
-            NSString* secondPhoneNumber = [EKEventParser parsePhoneNumber:[eventText substringWithRange:substringToCheck]];
-            if ([secondPhoneNumber rangeOfString:pinNumber].location == NSNotFound) {
-                PIN = pinNumber;
-                rangePIN = possiblePIN.range;
-                break;
-            }
-        }
-        else {
+        if ([EKEventParser textContainsPhoneNumber:pinNumber] == NO) {
             PIN = pinNumber;
             rangePIN = possiblePIN.range;
             break;
@@ -319,33 +306,68 @@ static NSString* regexPhoneNumberTollFreePattern = nil;
     return rangeOfPhoneNumber;
 }
 
++(BOOL) textContainsPhoneNumber:(NSString*)eventText
+{
+    [CMIUtility Log:@"textContainsPhoneNumber()"];
 
+    NSRange range = [EKEventParser tryToGetFirstPhone:eventText];
+    
+    if (range.location == NSNotFound) {
+        return NO;
+    }
+    else {
+        return YES;
+    }
+}
+
++ (NSRange)tryToGetFirstTollFreeImplicit:(NSString*)eventText
+{
+    [CMIUtility Log:@"tryToGetFirstTollFreeImplicit()"];
+    [EKEventParser initializeStatics];
+    
+    //This regex returns TOLL-FREE numbers...
+    NSError *error = NULL;
+    NSString* regexPattern = [@"" stringByAppendingFormat:@"%@%@%@", REGEX_PHONE_NUMBER_LOOK_BEHIND,regexPhoneNumberTollFreePattern, REGEX_PHONE_NUMBER_LOOK_AHEAD];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexPattern                                                                                                                   options:NSRegularExpressionCaseInsensitive                                                                                  error:&error];
+    
+    NSRange rangeOfFirstMatch = [regex rangeOfFirstMatchInString:eventText options:0 range:NSMakeRange(0, [eventText  length])];
+    
+    return rangeOfFirstMatch;
+
+    
+}
 
 + (NSRange)tryToGetPhone:(NSString*)eventText
 {
     [CMIUtility Log:@"tryToGetPhone()"];
 
-    NSRange range = [EKEventParser tryToGetCountryTollFreePhone:eventText];
+    NSRange range;
+    if ([EKEventParser textContainsPhoneNumber:eventText] == NO){
+        [CMIUtility Log:@"matched no phone #"];
+        range.location = NSNotFound;
+        return range;    
+    }
+    
+    range = [EKEventParser tryToGetCountryTollFreePhone:eventText];
     if (range.location != NSNotFound) {
-        [CMIUtility Log:@"matched Country Number"];
+        [CMIUtility Log:@"matched Country TollFree"];
         return range;
     }
-    else {
-        // Try to Get the first Toll-Free number
-        range = [EKEventParser tryToGetFirstTollFree:eventText];
+    // Try to Get the first Toll-Free number
+    range = [EKEventParser tryToGetFirstTollFree:eventText];
+    if (range.location != NSNotFound) {
+        [CMIUtility Log:@"matched TollFree"];
+        return range;
     }
-    // If that didn't work then just try the whole thing
-    if (range.location == NSNotFound) {
-        range = [EKEventParser tryToGetFirstPhone:eventText];
-        if (range.location != NSNotFound) {
-            [CMIUtility Log:@"matched FirstPhoneNumber"];                    
-        }
-        else {
-            [CMIUtility Log:@"no match"];                                
-        }
+    range = [EKEventParser tryToGetFirstTollFreeImplicit:eventText];
+    if (range.location != NSNotFound) {
+        [CMIUtility Log:@"matched TollFree Implicit"];
+        return range;
     }
-    else {
-        [CMIUtility Log:@"matched FirstTollFree"];        
+    
+    range = [EKEventParser tryToGetFirstPhone:eventText];
+    if (range.location != NSNotFound) {
+        [CMIUtility Log:@"matched First Phone#"];
     }
     
     return range;
@@ -377,7 +399,7 @@ static NSString* regexPhoneNumberTollFreePattern = nil;
     
     // 2-phase pass, first of all find 
     NSRange rangeOfFirstMatch = [EKEventParser tryToGetPhone:eventText];
-    if (!NSEqualRanges(rangeOfFirstMatch, NSMakeRange(NSNotFound, 0))) {
+    if (rangeOfFirstMatch.location != NSNotFound) {
         NSString* firstSubstring = [eventText substringWithRange:rangeOfFirstMatch];
         [CMIUtility Log:firstSubstring];
         NSRange rangeOfSecondMatch = [EKEventParser tryToGetFirstPhone:firstSubstring];

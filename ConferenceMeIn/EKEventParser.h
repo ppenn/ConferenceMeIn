@@ -24,6 +24,8 @@
 + (NSString*)parseIOSPhoneText:(NSString*)eventText;
 + (BOOL)maxNewLinesExceeded:(NSString*)text range:(NSRange)range;
 + (NSString*)stripRegex:(NSString *)searchTerm regexToStrip:(NSString*)regexToStrip;
++ (BOOL) textContainsPhoneNumber:(NSString*)eventText;
++ (NSRange)tryToGetFirstTollFreeImplicit:(NSString*)eventText;
 
 + (CMIConferenceNumber*)eventTextToConferenceNumber:(NSString*)eventText;
 
