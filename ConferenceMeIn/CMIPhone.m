@@ -31,7 +31,7 @@
 
     if ([self talkatoneIsInstalled] == NO) {
         // open an alert with just an OK button
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Call Provider" message:@"Google Talkatone is not installed on device"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Invalid Call Provider" message:@"Talkatone is not installed on device"
                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];	
         

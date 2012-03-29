@@ -932,8 +932,8 @@
 		A85FF3AE14CCD61F00F2CD1C /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: philip penn (E96L5HBKN6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: philip penn (E96L5HBKN6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Adam Tonkin (46BVYY34TP)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Adam Tonkin (46BVYY34TP)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
@@ -943,6 +943,8 @@
 					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = AdHoc;
@@ -993,8 +995,8 @@
 		A87CD074150C2C26008A79B5 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: philip penn (E96L5HBKN6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: philip penn (E96L5HBKN6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Adam Tonkin (46BVYY34TP)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Adam Tonkin (46BVYY34TP)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
@@ -1004,6 +1006,8 @@
 					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Distribution;
@@ -1079,8 +1083,8 @@
 		A8E5254014CA0EC800797C16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: philip penn (E96L5HBKN6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: philip penn (E96L5HBKN6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Adam Tonkin (46BVYY34TP)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Adam Tonkin (46BVYY34TP)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
@@ -1090,6 +1094,8 @@
 					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1097,8 +1103,8 @@
 		A8E5254114CA0EC800797C16 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: philip penn (E96L5HBKN6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: philip penn (E96L5HBKN6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Adam Tonkin (46BVYY34TP)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Adam Tonkin (46BVYY34TP)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ConferenceMeIn/ConferenceMeIn-Prefix.pch";
 				INFOPLIST_FILE = "ConferenceMeIn/ConferenceMeIn-Info.plist";
@@ -1108,6 +1114,8 @@
 					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

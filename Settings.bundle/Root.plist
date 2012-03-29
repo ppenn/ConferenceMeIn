@@ -46,14 +46,14 @@
 				<string>Week Ahead</string>
 				<string>Today</string>
 				<string>Today &amp; Tomorrow</string>
-				<string>Debug (since 2/1/2012)</string> 
+<!--				<string>Debug (since 2/1/2012)</string>  -->
 			</array>
 			<key>Values</key>
 			<array>
 				<integer>0</integer>
 				<integer>1</integer>
 				<integer>2</integer>
-				<integer>3</integer> 
+<!--				<integer>3</integer>  -->
 			</array>
 		</dict>
 		<dict>
@@ -110,7 +110,7 @@
 			<key>Titles</key>
 			<array>
 				<string>Phone</string>
-				<string>Google Talkatone</string>
+				<string>Talkatone</string>
 			</array>
 			<key>Values</key>
 			<array>

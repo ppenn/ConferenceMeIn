@@ -1089,7 +1089,13 @@ NSInteger _activeMenu = -1;
         
         label = (UILabel *)[cell viewWithTag:EVENT_ORGANIZER_TAG];
         label.text = ([[cmiEvent ekEvent] organizer] != nil) ? [[[cmiEvent ekEvent] organizer] name] : NSLocalizedString(@"NoOrganizerLabel", nil);
-        
+//        if ([[cmiEvent ekEvent] organizer] != nil){
+//            [CMIUtility Log:@"Organizer/Attendees"];
+//            [CMIUtility Log:[[[cmiEvent ekEvent] organizer] name]];   
+//            for (EKParticipant* participant in [cmiEvent ekEvent].attendees) {
+//                [CMIUtility Log:participant.name];
+//            }
+//        }
 
         label = (UILabel *)[cell viewWithTag:START_TIME_TAG];
         label.text = eventStartDateStr;
