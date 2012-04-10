@@ -1,0 +1,74 @@
+When changing the time of the series to  1-3 beginning on 4/2, it deleted week of 3/27, stand by for meeting update for week of 3/27
+ 
+ 
+2012 Schedule
+ 
+ 
+Provide visibility into the schedule for each release
+Provide coordination across all release team members
+Discuss and address issues specific to the release
+Detailed Agenda	Please plan to attend the release sessions you are involved in.
+ 
+Discussion for the release will occurr during these time frames:
+ 
+Release 4                      1pm - 2pm  MDMS Go-Live
+Release 4.5                   2pm - 3pm  Portal Gas Pump
+Release 5                      3pm - 4pm  Billing from AMI data
+Rlease 5.5                     4pm - 5pm  Remote Connect/Disconnect
+ 
+Review the four week look ahead of the specific release plan task by task.
+Review the Fisbone of the specific release
+Review Key milestones of the release
+Discuss any issues specific to the release
+Discuss coordination and interdependencies between the groups involved
+ 
+ 
+Teleconference Information
+ 
+Call in # 877.873.8017
+Access # 7557171
+Host 6723
+ 
+ 
+ 
+ 
+-+-----+-----+-----+-----+-----+-----+-----+-----+-
+ 
+ 
+Zylstra, Kim has invited you to attend an online meeting using Microsoft® Office Communications Server.
+Join the meeting
+ 
+Make sure the Office Live Meeting client is installed before the meeting:
+I am connecting from inside the Corporation network
+I am connecting from outside the Corporation network
+AUDIO INFORMATION
+To join a meeting from your phone, dial in using the following information:
+ 
+        Conference ID:  22912
+        Passcode:       Passcode is not required.
+        Note: If you have an account on this corporate network, use your PIN to join. Have you set your PIN?
+TROUBLESHOOTING
+Unable to join the meeting?  Start Office Live Meeting and join the meeting with the following information:
+        Meeting ID:     e8d3ca8717174297bcffdef1d9efe0b5
+        Entry Code:     8993
+        Location:       meet:sip:zylstra@nvenergy.com;gruu;opaque=app:conf:focus:id:e8d3ca8717174297bcffdef1d9efe0b5%3Fconf-key=8993
+ 
+If you still cannot enter the meeting, contact support:
+Inside the Corporation network
+Outside the Corporation network
+NOTICE
+Office Live Meeting can be used to record meetings. By participating in this meeting, you agree that your communications may be monitored or recorded at any time during the meeting.
+ 
+ 
+ 
+
+
+*****************************************************************************
+NOTICE:   The information contained in this electronic transmission is 
+intended only for the use of the individual or entity named above.  ANY 
+DISTRIBUTION OR COPYING OF THIS MESSAGE IS PROHIBITED, except by the intended 
+recipient(s). Attempts to intercept this message are in violation of 18 
+U.S.C. 2511(1) of the Electronic Communications Privacy Act, which subjects 
+the interceptor to fines, imprisonment and/or civil damages. If you are not 
+the intended recipient(s), please delete it and notify me.  
+*****************************************************************************

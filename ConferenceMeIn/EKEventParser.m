@@ -14,7 +14,7 @@
 #define REGEX_PHONE_NUMBER_LOOK_BEHIND @"(?<![\\d\\/])"
 #define REGEX_PHONE_NUMBER_LOOK_AHEAD @"(?!\\w)"
 
-#define REGEX_CODE_SPECIFIC @"(?<!moderator\\s|leader\\s)\\b(pin|participant|password|passcode|conference\\sid|code)[\\s:\\#=s\\(\\)]{1,20}\\d{3,12}[\\s-]?\\d{1,12}+[\\s-]?\\d{0,12}"
+#define REGEX_CODE_SPECIFIC @"(?<!moderator\\s|leader\\s)\\b(pin|participant|password|passcode|code|access\\s\\#)[\\s:\\#=s\\(\\)]{1,20}\\d{3,12}[\\s-]?\\d{1,12}+[\\s-]?\\d{0,12}"
 
 #define REGEX_CODE_GENERIC @"(?<![^\\d]\\d\\d\\d[^\\d])[\\d]{4,12}"
 #define REGEX_NEWLINE @"[\\r|\\n]"

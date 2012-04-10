@@ -53,9 +53,6 @@
     
     NSLocale *locale = [NSLocale currentLocale];
     NSString *countryCode = [locale objectForKey:NSLocaleCountryCode];
-    if ([countryCode isEqualToString:@"CA"]) {
-        countryCode = @"US";
-    }
     NSString *tableName = [NSString stringWithFormat:@"Region_%@", countryCode];
     
     regionValue = [[NSBundle mainBundle] localizedStringForKey:key value:nil table:tableName];    

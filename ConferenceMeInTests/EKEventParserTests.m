@@ -121,10 +121,19 @@
         NSLog(@"%@", [error localizedDescription]);
     }
     [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"18888582144" expectedPhoneCode:@"4259370"];
+    
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/sts.txt" encoding:stringEncoding error:nil];   
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"1.800.977.8002" expectedPhoneCode:@"878663"];
 
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/faye.txt" encoding:stringEncoding error:nil];   
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8778738017" expectedPhoneCode:@"7557171"];
+
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/priscilla.txt" encoding:stringEncoding error:nil];   
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"8778109415" expectedPhoneCode:@"3452946"];
+    
     fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/faux_fax.txt" encoding:stringEncoding error:nil];   
     [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"3037796161" expectedPhoneCode:nil];
-    
+
     fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/lotuslive.txt" encoding:stringEncoding error:nil];   
     [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"18773660711" expectedPhoneCode:@"54466542"];
 
@@ -256,6 +265,40 @@
     STAssertTrue([leaderSeparator isEqualToString:@"#,*"], @"Leader Separator should be =");
     STAssertNil(leaderCode, @"Leader Code should be nil");
                                     
+}
+
+- (void)testIndianPhoneNumbersShouldParse
+{
+    if ([[CMIUtility getCountryName] isEqualToString:@"India"]) {
+        NSString* phoneText;
+        
+        phoneText = [EKEventParser parseEventText:@"1 800 102 3025 12345678"];
+        [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"1 800 102 3025" expectedPhoneCode:@"12345678"];
+
+        phoneText = [EKEventParser parseEventText:@"000 800 650 1700 12345678"];
+        [self testPhoneNumberCodeShouldParse:phoneText expectedPhoneNumber:@"000 800 650 1700" expectedPhoneCode:@"12345678"];
+        
+        NSString* fileContents;
+        NSError* error;
+        
+        NSStringEncoding stringEncoding;
+#if TARGET_IPHONE_SIMULATOR
+        // Simulator specific code
+        stringEncoding = NSASCIIStringEncoding;
+#else // TARGET_IPHONE_SIMULATOR
+        // Device specific code
+        stringEncoding = NSUTF8StringEncoding;
+#endif // TARGET_IPHONE_SIMULATOR    
+        
+        //NB: encoding seems to work differently depending on device vs simulator
+        //NSUTF8StringEncoding
+        fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/att_connect.txt" encoding:stringEncoding error:&error];   
+        if (!fileContents) {
+            NSLog(@"%@", [error localizedDescription]);
+        }
+        [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"18888582144" expectedPhoneCode:@"4259370"];
+
+    }
 }
 
 - (void)testAustralianPhoneNumbersShouldParse

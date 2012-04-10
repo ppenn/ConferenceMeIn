@@ -1,0 +1,42 @@
+Meeting Goals
+Define the scope of changes in RNI v3.1 to develop implementation and test strategy
+
+Detailed Agenda
+
+
+RNI v3.1 Release Notes Review 
+Action Items and Next Steps 
+
+
+Teleconference Information
+
+Call in # 877.810.9415
+Access Code 3452946
+
+
+
+
+
+-+-----+-----+-----+-----+-----+-----+-----+-----+-
+
+
+Zylstra, Kim has invited you to attend an online meeting using Microsoft® Office Communications Server.
+Join the meeting
+
+Make sure the Office Live Meeting client is installed before the meeting:
+
+I am connecting from inside the Corporation network
+I am connecting from outside the Corporation network 
+AUDIO INFORMATION 
+To join a meeting from your phone, dial in using the following information:
+
+       Conference ID:  112355
+       Passcode:       Passcode is not required.
+       Note: If you have an account on this corporate network, use your PIN to join. Have you set your PIN?
+TROUBLESHOOTING 
+Unable to join the meeting?  Start Office Live Meeting and join the meeting with the following information:
+       Meeting ID:     877396a1d2c2409dbd59a54103c23faa
+       Entry Code:     6468
+       Location:       meet:sip:Zylstra@nvenergy.com;gruu;opaque=app:conf:focus:id:877396a1d2c2409dbd59a54103c23faa%3Fconf-key=6468
+
+If you still cannot enter the meeting, contact support:
