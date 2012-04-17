@@ -49,7 +49,7 @@
 "SavingContactMessage" = "Saving Contact...";
 "PaleonSupportEmail" = "support@paleonsolutions.com";
 "PaleonSupportSubject" = "Conference Me In error";
-"PaleonSupportIntro" = "Please describe error here...";
+"PaleonSupportIntro" = "Please describe error here...\n\rExpected Phone#:\n\rExpected Code:\n\r";
 
 /* EventViewController Window */
 "ConferenceNumberDetails" = "Conference # Details";
