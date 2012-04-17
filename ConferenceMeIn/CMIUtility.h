@@ -36,5 +36,6 @@
 + (NSDate*) dayToDate:(NSString*) day;
 + (NSString*) getRegionValue:(NSString*)key;
 + (NSString*)getCountryName;
++ (NSString*) escapeString:(NSString*)actionString;
 
 @end

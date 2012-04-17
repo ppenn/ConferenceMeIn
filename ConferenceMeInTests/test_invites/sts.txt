@@ -1,1 +1,63 @@
-/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/
+Welcome to RegExr 0.3b, an intuitive tool for learning, writing, and testing Regular Expressions. Key features incluTeam, - I sent out a meeting request but it did not seem to work…
+
+So, Just to confirm that we have Our Inventors Meeting Next Wednesday April 11th at 2:30PM to… 5PM
+
+ 
+
+Mike / Steve and Myself will be sending out some documentation prior to this meeting..
+
+ 
+
+Meeting Location:
+
+119 Hosmer Street
+
+Acton, MA 01720
+
+ 
+
+Google Map Link:
+
+http://g.co/maps/f73em
+
+ 
+
+For Remote Team Members (Out of State)
+
+ 
+
+Call in Information:
+
+   Conference Name: STS - April 11th at 2:30PM est
+
+   Toll Free Dial-In Number
+
+       1.800.977.8002
+
+   Direct Dial Dial-In Number
+
+       1.404.920.6650
+
+   Number of Lines: 10
+
+   Date/Time:
+
+      4/11/2012 2:30:00 PM Eastern Time Zone
+
+      4/11/2012 1:30:00 PM Central Time Zone
+
+      4/11/2012 12:30:00 PM Mountain Time Zone
+
+      4/11/2012 11:30:00 AM Pacific Time Zone
+
+   Moderator Code(s):
+
+      23744267# (STS - April 11th at 2:30PM est - Moderator)
+
+ 
+
+   Participant Code(s):
+
+      878663# (STS - April 11th at 2:30PM est - Participant)
+
+ 

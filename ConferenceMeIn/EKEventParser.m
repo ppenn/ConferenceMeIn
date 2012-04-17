@@ -27,7 +27,6 @@
 
 #define MAX_NEWLINES 4
 
-
 static NSString* regexPhoneNumberPattern = nil;
 static NSString* regexCountryTollFreePattern = nil;
 static NSString* regexTollFreePattern = nil;

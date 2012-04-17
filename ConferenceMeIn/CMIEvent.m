@@ -18,6 +18,7 @@
 @synthesize conferenceNumber = _conferenceNumber;
 @synthesize callProvider = _callProvider;
 @synthesize cmiConferenceNumber = _cmiConferenceNumber;
+@synthesize eventContent = _eventContent;
 
 + (NSMutableArray*)createCMIEvents:(NSArray*)events
 {
@@ -65,6 +66,28 @@
         return false;
 }
 
+- (NSString*) eventContent
+{
+    [CMIUtility Log:@"eventContent()"];
+    
+    NSString* eventContent = @"";
+    
+    
+    if (_ekEvent.title != nil && [_ekEvent.title length] > 0) {
+        eventContent = [eventContent stringByAppendingString:_ekEvent.title];
+    }
+    
+    if ( _ekEvent.location != nil && [_ekEvent.location length] > 0) {
+        eventContent = [[eventContent stringByAppendingString:EVENT_CONTENT_SEPARATOR] stringByAppendingString:_ekEvent.location];
+    }
+    
+    if ( _ekEvent.hasNotes == YES && [_ekEvent.notes length] > 0 ) {
+        eventContent = [[eventContent stringByAppendingString:EVENT_CONTENT_SEPARATOR] stringByAppendingString:_ekEvent.notes];
+    }
+    
+    return eventContent;
+}
+
 - (void) parseEvent
 {
     [CMIUtility Log:@"parseEvent()"];
@@ -72,22 +95,16 @@
 
     NSString* eventContent = @"";
     
-//    if ([_ekEvent.title isEqualToString:@"testtitle2"]) {
-//        int stophere = 0;
-//    }
     
     if (_ekEvent.title != nil && [_ekEvent.title length] > 0) {
-//        _cmiConferenceNumber = [EKEventParser eventTextToConferenceNumber:_ekEvent.title];
         eventContent = [eventContent stringByAppendingString:_ekEvent.title];
     }
 
     if ( _ekEvent.location != nil && [_ekEvent.location length] > 0) {
-//        _cmiConferenceNumber = [EKEventParser eventTextToConferenceNumber:_ekEvent.location];
         eventContent = [[eventContent stringByAppendingString:EVENT_CONTENT_SEPARATOR] stringByAppendingString:_ekEvent.location];
     }
 
     if ( _ekEvent.hasNotes == YES && [_ekEvent.notes length] > 0 ) {
-//        _cmiConferenceNumber = [EKEventParser eventTextToConferenceNumber:_ekEvent.notes];
         eventContent = [[eventContent stringByAppendingString:EVENT_CONTENT_SEPARATOR] stringByAppendingString:_ekEvent.notes];
     }
     

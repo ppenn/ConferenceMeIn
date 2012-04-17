@@ -219,11 +219,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeIn/CMIUtility.m"
-         timestampString = "355723908.151987"
+         timestampString = "356393610.537001"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "244"
-         endingLineNumber = "244"
+         startingLineNumber = "270"
+         endingLineNumber = "270"
          landmarkName = "+createTestEvent:startDate:endDate:title:withConfNumber:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -382,11 +382,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "ConferenceMeIn/EKEventParser.m"
-         timestampString = "355723744.776963"
+         timestampString = "356384669.261676"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "42"
-         endingLineNumber = "42"
+         startingLineNumber = "41"
+         endingLineNumber = "41"
          landmarkName = "+initializeStatics"
          landmarkType = "5">
       </FileBreakpoint>
@@ -395,12 +395,38 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "ConferenceMeIn/CMIUtility.m"
-         timestampString = "355724294.957777"
+         timestampString = "356393610.537001"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "55"
-         endingLineNumber = "55"
+         startingLineNumber = "81"
+         endingLineNumber = "81"
          landmarkName = "+getRegionValue:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "ConferenceMeIn/CMIMasterViewController.m"
+         timestampString = "356387949.266373"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1181"
+         endingLineNumber = "1181"
+         landmarkName = "-emailLowLevel:subject:body:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "ConferenceMeIn/CMIMasterViewController.m"
+         timestampString = "356390954.451605"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1183"
+         endingLineNumber = "1183"
+         landmarkName = "-emailLowLevel:subject:body:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

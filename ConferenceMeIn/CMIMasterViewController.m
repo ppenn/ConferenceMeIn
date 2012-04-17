@@ -676,7 +676,8 @@ NSInteger _activeMenu = -1;
 
     UIActionSheet* actionSheet;
 
-    actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"ContextMenuButtonTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"CallMyConfNumTitle",@""), NSLocalizedString(@"EmailMyConfNumTitle",@""), NSLocalizedString(@"AddToContactTitle", @""), NSLocalizedString(@"CopyButtonTitle",@""),nil];
+    actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"ContextMenuButtonTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"CallMyConfNumTitle",@""), NSLocalizedString(@"EmailMyConfNumTitle",@""), NSLocalizedString(@"AddToContactTitle", @""), NSLocalizedString(@"CopyButtonTitle",@""),NSLocalizedString(@"ReportErrorButtonTitle", @""), nil];
+    actionSheet.destructiveButtonIndex = 4;
     actionSheet.tag = ACTIONSHEET_CONTEXT_MENU_CONF;
 
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
@@ -1089,13 +1090,6 @@ NSInteger _activeMenu = -1;
         
         label = (UILabel *)[cell viewWithTag:EVENT_ORGANIZER_TAG];
         label.text = ([[cmiEvent ekEvent] organizer] != nil) ? [[[cmiEvent ekEvent] organizer] name] : NSLocalizedString(@"NoOrganizerLabel", nil);
-//        if ([[cmiEvent ekEvent] organizer] != nil){
-//            [CMIUtility Log:@"Organizer/Attendees"];
-//            [CMIUtility Log:[[[cmiEvent ekEvent] organizer] name]];   
-//            for (EKParticipant* participant in [cmiEvent ekEvent].attendees) {
-//                [CMIUtility Log:participant.name];
-//            }
-//        }
 
         label = (UILabel *)[cell viewWithTag:START_TIME_TAG];
         label.text = eventStartDateStr;
@@ -1182,17 +1176,25 @@ NSInteger _activeMenu = -1;
     [_cmiPhone dialConferenceNumber:_cmiMyConferenceNumber];
 }
 
+-(void) emailLowLevel:(NSString*)destination subject:(NSString*)subject  body:(NSString*)body
+{
+    [CMIUtility Log:@"emailLowLevel()"];
+    NSString* escapedBody = [CMIUtility escapeString: body];
+    NSString* mailTo = [NSString stringWithFormat:@"%@%@%@%@%@%@", @"mailto:", destination, @"?subject=", [subject stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"&body=",escapedBody];
+ 
+    NSURL* mailURL = [NSURL URLWithString:mailTo];
+    [[UIApplication sharedApplication] openURL: mailURL];
+    
+}
+
 -(void) email:(NSString*)formattedConferenceNumber
 {
     [CMIUtility Log:@"email()"];
 
-    NSString* escapedConferenceNumberFormatted =
-    [formattedConferenceNumber stringByAddingPercentEscapesUsingEncoding:
-     NSASCIIStringEncoding];    
-    NSString* mailTo = [[[@"mailto:?subject=" stringByAppendingString:NSLocalizedString(@"EmailSubject", nil)]  stringByAppendingString:@"&body="] stringByAppendingString:escapedConferenceNumberFormatted];
-    NSURL* mailURL = [NSURL URLWithString:mailTo];
-    [[UIApplication sharedApplication] openURL: mailURL];
-    
+//    NSString* escapedConferenceNumberFormatted =
+//    [formattedConferenceNumber stringByAddingPercentEscapesUsingEncoding:
+//     NSASCIIStringEncoding];    
+    [self emailLowLevel:@"" subject:NSLocalizedString(@"EmailSubject", nil) body:formattedConferenceNumber];    
 }
 -(void) emailMyConferenceDetails 
 {
@@ -1372,6 +1374,11 @@ NSInteger _activeMenu = -1;
             [CMIUtility Log:@"Copy"];
             [self copyToClipboard];
 //            [actionSheet dismissWithClickedButtonIndex:-1 animated:YES];
+            break;
+        case contextMenuActionError:
+            [CMIUtility Log:@"EmailError"];
+            [self emailLowLevel:NSLocalizedString(@"PaleonSupportEmail", nil) subject:NSLocalizedString(@"PaleonSupportSubject", nil) body:
+             [[NSLocalizedString(@"PaleonSupportIntro", nil) stringByAppendingString: @"\\n"] stringByAppendingString: _selectedCMIEvent.eventContent]];
             break;
         default:
             [CMIUtility Log:@"Cancel"];

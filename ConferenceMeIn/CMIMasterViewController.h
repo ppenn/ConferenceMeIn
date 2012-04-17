@@ -45,6 +45,7 @@ typedef enum contextMenuActionButtons
     contextMenuActionEmail,
     contextMenuActionAddToContacts,
     contextMenuActionCopy,
+    contextMenuActionError,
     contextMenuActionCancel
 }contextMenuActionButtons;
 

@@ -44,8 +44,12 @@
 "EmailSubject" = "Conference%20Call%20Details";
 "ContextMenuButtonTitle" = "Conference Number";
 "CopyButtonTitle" = "Copy";
+"ReportErrorButtonTitle" = "Report Error";
 "LoadingEventsMessage" = "Loading Events...";
 "SavingContactMessage" = "Saving Contact...";
+"PaleonSupportEmail" = "support@paleonsolutions.com";
+"PaleonSupportSubject" = "Conference Me In error";
+"PaleonSupportIntro" = "Please describe error here...";
 
 /* EventViewController Window */
 "ConferenceNumberDetails" = "Conference # Details";

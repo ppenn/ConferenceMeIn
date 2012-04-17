@@ -24,7 +24,7 @@
 @property (readonly, nonatomic) bool hasConferenceNumber;
 @property callProviders callProvider;
 @property (readonly, nonatomic,strong) CMIConferenceNumber* cmiConferenceNumber;
-
+@property (readonly, nonatomic,strong) NSString* eventContent;
 
 
 @end
