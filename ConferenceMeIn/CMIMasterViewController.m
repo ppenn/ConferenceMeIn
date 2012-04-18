@@ -25,6 +25,7 @@
 #define ACTIONSHEET_SET_CONF_NUM 1
 #define ACTIONSHEET_CONTEXT_MENU 2
 #define ACTIONSHEET_CONTEXT_MENU_CONF 3
+#define ACTIONSHEET_CONTEXT_MENU_CONF_LIMITED 4
 
 
 #define ADMOB_PUBLISHER_ID @"a14f53ae2321351"
@@ -684,6 +685,20 @@ NSInteger _activeMenu = -1;
     [actionSheet showFromToolbar:self.navigationController.toolbar];	// show from our table 
     
 }
+-(void)createContextMenuLimited:(CMIEvent*)cmiEvent
+{
+    [CMIUtility Log:@"createContextMenuLimited()"];
+    
+    UIActionSheet* actionSheet;
+    
+    actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"ContextMenuButtonTitle", @"")                                                             delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:NSLocalizedString(@"ReportErrorButtonTitle", @"") otherButtonTitles: nil];
+    actionSheet.tag = ACTIONSHEET_CONTEXT_MENU_CONF_LIMITED;
+    
+    actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+    [actionSheet showFromToolbar:self.navigationController.toolbar];	// show from our table 
+    
+}
+
 
 -(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
 {
@@ -709,7 +724,8 @@ NSInteger _activeMenu = -1;
                     [self createContextMenu:cmiEvent];           
                 }
                 else {
-                    [self showEventNatively:indexPath.section row:indexPath.row];
+                    [self createContextMenuLimited:cmiEvent];           
+//                    [self showEventNatively:indexPath.section row:indexPath.row];
                 }
             }
         }
@@ -1180,7 +1196,7 @@ NSInteger _activeMenu = -1;
 {
     [CMIUtility Log:@"emailLowLevel()"];
     NSString* escapedBody = [CMIUtility escapeString: body];
-    NSString* mailTo = [NSString stringWithFormat:@"%@%@%@%@%@%@", @"mailto:", destination, @"?subject=", [subject stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],@"&body=",escapedBody];
+    NSString* mailTo = [NSString stringWithFormat:@"%@%@%@%@%@%@", @"mailto:", destination, @"?subject=",subject, @"&body=", escapedBody];
  
     NSURL* mailURL = [NSURL URLWithString:mailTo];
     [[UIApplication sharedApplication] openURL: mailURL];
@@ -1251,6 +1267,9 @@ NSInteger _activeMenu = -1;
                 }
                 else if (_activeMenu == ACTIONSHEET_CONTEXT_MENU_CONF) {
                     [self handleContextMenu:_actionSheetContextChoice];                    
+                }
+                else if (_activeMenu == ACTIONSHEET_CONTEXT_MENU_CONF_LIMITED) {
+                    [self handleContextMenuLimited:_actionSheetContextChoice];                    
                 }
             }
             
@@ -1386,6 +1405,26 @@ NSInteger _activeMenu = -1;
     }
 }
 
+- (void)handleContextMenuLimited:(NSInteger)buttonIndex
+{
+    [CMIUtility Log:@"handleContextMenuLimited()"];
+    
+    _activeMenu = ACTIONSHEET_CONTEXT_MENU_CONF_LIMITED;
+    _actionSheetContextChoice = buttonIndex;
+    
+    switch (buttonIndex) {
+        case contextMenuLimitedActionError:
+            [CMIUtility Log:@"EmailError"];
+            [self emailLowLevel:NSLocalizedString(@"PaleonSupportEmail", nil) subject:NSLocalizedString(@"PaleonSupportSubject", nil) body:
+             [[NSLocalizedString(@"PaleonSupportIntro", nil) stringByAppendingString: @"\\n"] stringByAppendingString: _selectedCMIEvent.eventContent]];
+            break;
+        default:
+            [CMIUtility Log:@"Cancel"];
+            break;
+    }
+}
+
+
 #pragma mark -
 #pragma mark - UIActionSheetDelegate
     
@@ -1404,6 +1443,9 @@ NSInteger _activeMenu = -1;
                 break;
             case ACTIONSHEET_CONTEXT_MENU_CONF:
                 [self handleContextMenu:buttonIndex];
+                break;
+            case ACTIONSHEET_CONTEXT_MENU_CONF_LIMITED:
+                [self handleContextMenuLimited:buttonIndex];
                 break;
             default:
                 break;

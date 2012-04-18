@@ -49,6 +49,13 @@ typedef enum contextMenuActionButtons
     contextMenuActionCancel
 }contextMenuActionButtons;
 
+typedef enum contextMenuLimitedActionButtons
+{
+    contextMenuLimitedActionError = 0,
+    contextMenuLimitedActionCancel
+}contextMenuLimitedActionButtons;
+
+
 typedef enum enterConfNumberActionButtons
 {
     enterConfNumberEnterSettings = 0,
@@ -93,6 +100,7 @@ typedef enum enterConfNumberActionButtons
 - (void)dismissMegaAnnoyingPopup;
 - (void)handleMainActionSheetClick:(NSInteger)buttonIndex;
 - (void)handleContextMenu:(NSInteger)buttonIndex;
+- (void)handleContextMenuLimited:(NSInteger)buttonIndex;
 - (void)loadAdMobBanner:(NSTimer *)aTimer;
 - (void) scrollToNow;
 - (void)refreshTimerFired:(NSTimer *)aTimer;

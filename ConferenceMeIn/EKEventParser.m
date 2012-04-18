@@ -221,9 +221,11 @@ static NSString* regexPhoneNumberTollFreePattern = nil;
     for (NSTextCheckingResult* possiblePIN in possiblePINs) 
     {
         NSString* pinNumber = [eventText substringWithRange:possiblePIN.range];            
+        PIN = pinNumber;
+        rangePIN = possiblePIN.range;
+        // Going to keep looking until I have one that doesn't look like a phone number...
+        // I'll take the last one if they all look like phone numbers (potentially valid. may want to rm this)
         if ([EKEventParser textContainsPhoneNumber:pinNumber] == NO) {
-            PIN = pinNumber;
-            rangePIN = possiblePIN.range;
             break;
         }
     }
