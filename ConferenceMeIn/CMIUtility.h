@@ -38,4 +38,6 @@
 + (NSString*)getCountryName;
 + (NSString*) escapeString:(NSString*)actionString;
 
++ (BOOL)checkIsDeviceVersionHigherThanRequiredVersion:(NSString *)requiredVersion;
+
 @end

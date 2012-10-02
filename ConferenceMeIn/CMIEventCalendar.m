@@ -49,6 +49,21 @@ NSMutableArray* _currentDaysArray;
     {
         // your code here
         _eventStore = [[EKEventStore alloc] init];
+        
+        if([CMIUtility checkIsDeviceVersionHigherThanRequiredVersion:@"6.0"]) {
+            [_eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+                
+                if (granted){
+                    //---- codes here when user allow your app to access theirs' calendar.
+                    [CMIUtility Log:@"granted"];
+                }else
+                {
+                    //----- codes here when user NOT allow your app to access the calendar.
+                    // maybe throw exception?
+                    [CMIUtility Log:@"not granted"];
+                }
+            }];
+        }
         // Get the default calendar from store.
         _defaultCalendar = [_eventStore defaultCalendarForNewEvents];
         _calendarType = allCalendars;
@@ -67,6 +82,11 @@ NSMutableArray* _currentDaysArray;
     
     return self;    
 }
+//**********************************************************************************
+
+//   Below is a block for checking is current ios version higher than required version.
+
+//**********************************************************************************
 
 - (void)setFilterType:(eventFilterTypes)filterType
 {

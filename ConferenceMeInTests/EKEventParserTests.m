@@ -122,6 +122,9 @@
     }
     [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"18888582144" expectedPhoneCode:@"4259370"];
 
+    fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/fc.txt" encoding:stringEncoding error:nil];   
+    [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"1(877)603-8688" expectedPhoneCode:@"6445656"];
+
     fileContents = [NSString stringWithContentsOfFile:@"/Users/ppenn/dev/xcode/ConferenceMeIn/ConferenceMeInTests/test_invites/josh_notebook.txt" encoding:stringEncoding error:nil];   
     [self testPhoneNumberCodeShouldParse:fileContents expectedPhoneNumber:@"866-505-0028" expectedPhoneCode:@"6507622984"];
 

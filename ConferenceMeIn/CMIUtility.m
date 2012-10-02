@@ -25,6 +25,19 @@
     return country;
 }
 
++ (BOOL)checkIsDeviceVersionHigherThanRequiredVersion:(NSString *)requiredVersion
+{
+    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    
+    if ([currSysVer compare:requiredVersion options:NSNumericSearch] != NSOrderedAscending)
+    {
+        return YES;
+    }
+    
+    return NO;
+}
+
+
 + (NSString*) escapeString:(NSString*)actionString 
 {
     NSMutableString *escaped = [[NSMutableString alloc] initWithString:[actionString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];   

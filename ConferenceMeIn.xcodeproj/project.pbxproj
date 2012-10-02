@@ -31,6 +31,8 @@
 		A82018B815095FF300C5FC6F /* accuconference.txt in Resources */ = {isa = PBXBuildFile; fileRef = A82018B715095FF200C5FC6F /* accuconference.txt */; };
 		A82018B91509602200C5FC6F /* accuconference.txt in Resources */ = {isa = PBXBuildFile; fileRef = A82018B715095FF200C5FC6F /* accuconference.txt */; };
 		A82018BA1509602200C5FC6F /* livemeeting.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8F0178C14F58C3F0046E849 /* livemeeting.txt */; };
+		A825916E161A8FFF00E7998D /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A825916D161A8FFF00E7998D /* AdSupport.framework */; };
+		A8259170161A973400E7998D /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A825916D161A8FFF00E7998D /* AdSupport.framework */; };
 		A82727D6150260CB005190EE /* CMIConferenceNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A82727D5150260CB005190EE /* CMIConferenceNumber.m */; };
 		A82727D7150260CB005190EE /* CMIConferenceNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = A82727D5150260CB005190EE /* CMIConferenceNumber.m */; };
 		A82728061502FE42005190EE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728041502FE42005190EE /* AudioToolbox.framework */; };
@@ -56,6 +58,7 @@
 		A86C356D14FC39250079BE4E /* verizon.txt in Resources */ = {isa = PBXBuildFile; fileRef = A86C356C14FC39250079BE4E /* verizon.txt */; };
 		A8791461150A824200553EDD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8791464150A824200553EDD /* Localizable.strings */; };
 		A8791462150A824200553EDD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8791464150A824200553EDD /* Localizable.strings */; };
+		A88A7C02161A62290048ABD8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A88A7C01161A62290048ABD8 /* Default-568h@2x.png */; };
 		A8AEA2FD14E2380500E6ADC6 /* CMIHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */; };
 		A8AEA2FE14E2380500E6ADC6 /* CMIHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */; };
 		A8B6321414E229440006E3A5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A8B6321314E229430006E3A5 /* Default.png */; };
@@ -94,6 +97,8 @@
 		A8DD4AE9153E75B900085D3A /* Region_BR.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8DD4AE7153E75B900085D3A /* Region_BR.strings */; };
 		A8DD4AEB153E773300085D3A /* Region_MX.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8DD4AEA153E773300085D3A /* Region_MX.strings */; };
 		A8DD4AEC153E773300085D3A /* Region_MX.strings in Resources */ = {isa = PBXBuildFile; fileRef = A8DD4AEA153E773300085D3A /* Region_MX.strings */; };
+		A8DD4AEE1541C28200085D3A /* fc.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8DD4AED1541C28200085D3A /* fc.txt */; };
+		A8DD4AEF1541C28200085D3A /* fc.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8DD4AED1541C28200085D3A /* fc.txt */; };
 		A8DF7CED15058C2D00C42A5D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728041502FE42005190EE /* AudioToolbox.framework */; };
 		A8DF7CEE15058C2D00C42A5D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A82728051502FE42005190EE /* SystemConfiguration.framework */; };
 		A8DF7CF11505D5E500C42A5D /* faux_fax.txt in Resources */ = {isa = PBXBuildFile; fileRef = A8DF7CF01505D5E400C42A5D /* faux_fax.txt */; };
@@ -194,6 +199,7 @@
 		A81E2F9A14EAD07A0005B411 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "ConferenceMeIn/images/Icon@2x.png"; sourceTree = "<group>"; };
 		A81E2F9B14EAD07A0005B411 /* ITunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ITunesArtwork.png; path = ConferenceMeIn/images/ITunesArtwork.png; sourceTree = "<group>"; };
 		A82018B715095FF200C5FC6F /* accuconference.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = accuconference.txt; path = test_invites/accuconference.txt; sourceTree = "<group>"; };
+		A825916D161A8FFF00E7998D /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		A82727D4150260CB005190EE /* CMIConferenceNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIConferenceNumber.h; sourceTree = "<group>"; };
 		A82727D5150260CB005190EE /* CMIConferenceNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIConferenceNumber.m; sourceTree = "<group>"; };
 		A82728041502FE42005190EE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -218,6 +224,7 @@
 		A868D58914F853A300DEBC17 /* att_connect.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = att_connect.txt; path = test_invites/att_connect.txt; sourceTree = "<group>"; };
 		A86C356C14FC39250079BE4E /* verizon.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = verizon.txt; path = test_invites/verizon.txt; sourceTree = "<group>"; };
 		A8791463150A824200553EDD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
+		A88A7C01161A62290048ABD8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		A8AEA2FB14E2380500E6ADC6 /* CMIHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMIHelpViewController.h; sourceTree = "<group>"; };
 		A8AEA2FC14E2380500E6ADC6 /* CMIHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIHelpViewController.m; sourceTree = "<group>"; };
 		A8B6321314E229430006E3A5 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ConferenceMeIn/images/Default.png; sourceTree = "<group>"; };
@@ -263,6 +270,7 @@
 		A8CFD0E814EFE5C200EA8616 /* CMIMyConferenceNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMIMyConferenceNumber.m; sourceTree = "<group>"; };
 		A8DD4AE7153E75B900085D3A /* Region_BR.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Region_BR.strings; sourceTree = "<group>"; };
 		A8DD4AEA153E773300085D3A /* Region_MX.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Region_MX.strings; sourceTree = "<group>"; };
+		A8DD4AED1541C28200085D3A /* fc.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = fc.txt; path = test_invites/fc.txt; sourceTree = "<group>"; };
 		A8DF7CF01505D5E400C42A5D /* faux_fax.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = faux_fax.txt; path = test_invites/faux_fax.txt; sourceTree = "<group>"; };
 		A8E1D70314D08F2800E5A877 /* EKEventParserTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKEventParserTests.h; sourceTree = "<group>"; };
 		A8E1D70414D08F2800E5A877 /* EKEventParserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKEventParserTests.m; sourceTree = "<group>"; };
@@ -335,6 +343,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A825916E161A8FFF00E7998D /* AdSupport.framework in Frameworks */,
 				A82728061502FE42005190EE /* AudioToolbox.framework in Frameworks */,
 				A82728071502FE42005190EE /* SystemConfiguration.framework in Frameworks */,
 				A8081CA715003C2D00CEC9A6 /* AddressBook.framework in Frameworks */,
@@ -353,6 +362,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8259170161A973400E7998D /* AdSupport.framework in Frameworks */,
 				A8DF7CF215068BA100C42A5D /* CoreGraphics.framework in Frameworks */,
 				A8DF7CED15058C2D00C42A5D /* AudioToolbox.framework in Frameworks */,
 				A8DF7CEE15058C2D00C42A5D /* SystemConfiguration.framework in Frameworks */,
@@ -565,6 +575,8 @@
 		A8E524FB14CA0EC700797C16 = {
 			isa = PBXGroup;
 			children = (
+				A825916D161A8FFF00E7998D /* AdSupport.framework */,
+				A88A7C01161A62290048ABD8 /* Default-568h@2x.png */,
 				A8CFD08F14EF360C00EA8616 /* InAppSettingsKit */,
 				A8E1D72714D22A9400E5A877 /* Resources */,
 				A8E5251014CA0EC800797C16 /* ConferenceMeIn */,
@@ -657,6 +669,7 @@
 		A8F0178B14F58C080046E849 /* test_invites */ = {
 			isa = PBXGroup;
 			children = (
+				A8DD4AED1541C28200085D3A /* fc.txt */,
 				A853CC13153E2925008DF28C /* josh_notebook.txt */,
 				A8EDADBF15339E76001A3C58 /* sts.txt */,
 				A8EDADBC15338B10001A3C58 /* faye.txt */,
@@ -790,6 +803,8 @@
 				A867B192150D6DF50074AB61 /* Icon-72.png in Resources */,
 				A8DD4AE8153E75B900085D3A /* Region_BR.strings in Resources */,
 				A8DD4AEB153E773300085D3A /* Region_MX.strings in Resources */,
+				A8DD4AEE1541C28200085D3A /* fc.txt in Resources */,
+				A88A7C02161A62290048ABD8 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -841,6 +856,7 @@
 				A853CC14153E2925008DF28C /* josh_notebook.txt in Resources */,
 				A8DD4AE9153E75B900085D3A /* Region_BR.strings in Resources */,
 				A8DD4AEC153E773300085D3A /* Region_MX.strings in Resources */,
+				A8DD4AEF1541C28200085D3A /* fc.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1063,6 +1079,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1B575652-7BAB-4250-BC57-AE381A551556";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "1B575652-7BAB-4250-BC57-AE381A551556";
@@ -1153,6 +1170,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
 				);
+				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1173,6 +1191,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/ConferenceMeIn/AdMob\"",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

@@ -7,6 +7,7 @@
 //
 
 #import "CMIEventTests.h"
+#import "CMIUtility.h"
 
 @implementation CMIEventTests
 
@@ -32,7 +33,20 @@ NSArray* _calendarEvents;
     // Set-up code here.
     _eventStore = [[EKEventStore alloc] init];
 //    [CMIEventSystem createTestEvents:_eventStore];
-
+    if([CMIUtility checkIsDeviceVersionHigherThanRequiredVersion:@"6.0"]) {
+        [_eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+            
+            if (granted){
+                //---- codes here when user allow your app to access theirs' calendar.
+                [CMIUtility Log:@"granted"];
+            }else
+            {
+                //----- codes here when user NOT allow your app to access the calendar.
+                // maybe throw exception?
+                [CMIUtility Log:@"not granted"];
+            }
+        }];
+    }
     
 #if TARGET_IPHONE_SIMULATOR
     // Simulator specific code
