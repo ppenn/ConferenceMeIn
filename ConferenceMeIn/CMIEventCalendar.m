@@ -27,6 +27,7 @@
 @synthesize cmiFilteredDaysDictionary = _cmiFilteredDaysDictionary;
 @synthesize lastRefreshTime = _lastRefreshTime;
 @synthesize showCompletedEvents = _showCompletedEvents;
+@synthesize accessGranted = _accessGranted;
 
 NSDate* _eventsStartDate = nil;
 NSDate* _eventsEndDate = nil;
@@ -52,20 +53,28 @@ NSMutableArray* _currentDaysArray;
         
         if([CMIUtility checkIsDeviceVersionHigherThanRequiredVersion:@"6.0"]) {
             [_eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+
+                _accessGranted = granted;
                 
                 if (granted){
                     //---- codes here when user allow your app to access theirs' calendar.
-                    [CMIUtility Log:@"granted"];
+                    [CMIUtility Log:@"calendar access granted"];
+                    // Get the default calendar from store.
+                    _defaultCalendar = [_eventStore defaultCalendarForNewEvents];
+                    
                 }else
                 {
                     //----- codes here when user NOT allow your app to access the calendar.
                     // maybe throw exception?
-                    [CMIUtility Log:@"not granted"];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [CMIUtility Log:@"calendar access not granted"];
+
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Calendar Access" message:NSLocalizedString(@"EnableCalendarAccess", @"")                                                           delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                                    [alert show];	
+                    });
                 }
             }];
         }
-        // Get the default calendar from store.
-        _defaultCalendar = [_eventStore defaultCalendarForNewEvents];
         _calendarType = allCalendars;
         _calendarTimeframeType = weekAhead;
         _currentTimeframeStarts = 0;

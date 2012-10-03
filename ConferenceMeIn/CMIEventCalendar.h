@@ -55,6 +55,7 @@ typedef enum eventFilterTypes
 @property (readonly, nonatomic) NSInteger numDays;
 @property (strong, nonatomic) NSDate* lastRefreshTime;
 @property BOOL showCompletedEvents;
+@property BOOL accessGranted;
 
 - (id) init;
 - (void) createCMIEvents;
