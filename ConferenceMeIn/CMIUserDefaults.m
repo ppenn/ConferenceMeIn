@@ -64,7 +64,7 @@ NSString *kShowCompletedEvents = @"showCompletedEventsKey";
 
 - (BOOL)defaultsAreDifferent
 {
-    [CMIUtility Log:@"defaultsHaveChanged()"];
+    [CMIUtility Log:@"defaultsAreDifferent()"];
 
     if(![[NSUserDefaults standardUserDefaults] objectForKey:kFirstRun]) return true;
 

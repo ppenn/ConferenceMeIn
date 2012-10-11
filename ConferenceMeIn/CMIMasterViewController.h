@@ -104,5 +104,6 @@ typedef enum enterConfNumberActionButtons
 - (void)loadAdMobBanner:(NSTimer *)aTimer;
 - (void) scrollToNow;
 - (void)refreshTimerFired:(NSTimer *)aTimer;
+- (void)checkCalendarPermission;
 
 @end

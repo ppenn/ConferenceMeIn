@@ -58,6 +58,7 @@ typedef enum eventFilterTypes
 @property BOOL accessGranted;
 
 - (id) init;
+- (void) finishInit;
 - (void) createCMIEvents;
 - (void) createCMIDays;
 - (void) createCMIDayEvents;

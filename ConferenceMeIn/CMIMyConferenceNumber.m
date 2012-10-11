@@ -85,7 +85,7 @@
 
 - (id) initWithUserDefaults:(CMIUserDefaults*)cmiUserDefaults
 {
-    [CMIUtility Log:@"initWithUserDefaults()"];
+    [CMIUtility Log:@"CMIMyConferenceNumber::initWithUserDefaults()"];
 
     self = [super init];
     

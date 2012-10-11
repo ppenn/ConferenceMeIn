@@ -23,6 +23,7 @@
 
 CMIMasterViewController* _cmiMasterViewController;
 
+
 - (void)defaultsChangedTimerFired:(NSTimer *)aTimer
 {
     @try {
@@ -101,6 +102,7 @@ CMIMasterViewController* _cmiMasterViewController;
         // listen for changes to our preferences when the Settings app does so,
         // when we are resumed from the backround, this will give us a chance to update our UI
         //
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(defaultsChanged:)
                                                      name:NSUserDefaultsDidChangeNotification
@@ -190,11 +192,11 @@ CMIMasterViewController* _cmiMasterViewController;
      */
     @try {
         [CMIUtility Log:@"applicationDidBecomeActive()"];
-        
-//        NSDate* testTomorrow = [CMIUtility dayToDate:@"20120317"];
 
         if (_cmiMasterViewController != nil && _cmiMasterViewController.admobIsLoaded == YES)
         {
+            [_cmiMasterViewController checkCalendarPermission];
+            
             // What if MVC is not visible?
             if ([CMIUtility isSameDay:[NSDate date] atDate2:_cmiMasterViewController.cmiEventCalendar.lastRefreshTime] == YES) {
 
@@ -217,6 +219,7 @@ CMIMasterViewController* _cmiMasterViewController;
             }
             
         }
+        
     }
     @catch (NSException *exception) {
         [CMIUtility LogError:exception.reason];

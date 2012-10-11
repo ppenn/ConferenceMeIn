@@ -37,6 +37,7 @@ NSInteger _tappedSection = 0;
 NSTimer* _tapTimer;
 CMIUserDefaults* _cmiUserDefaults;
 NSTimer* _refreshTimer;
+NSTimer* _accessDeniedTimer;
 callProviders _callProvider;
 NSIndexPath* _indexPath;
 
@@ -60,6 +61,20 @@ NSInteger _activeMenu = -1;
 @synthesize eventStoreChangeTimerWillFire = _eventStoreChangeTimerWillFire;
 @synthesize admobIsLoaded = _admobIsLoaded;
 @synthesize wakeUpAction = _wakeUpAction;
+
+- (void)accessDenedTimerFired:(NSTimer *)aTimer
+{
+    @try {
+        [CMIUtility Log:@"accessDenedTimerFired()"];
+        
+        [self checkCalendarPermission];
+        
+    }
+    @catch (NSException * e) {
+        [CMIUtility LogError:e.reason];
+    }
+}
+
 
 - (void)loadAdMobBanner:(NSTimer *)aTimer
 {
@@ -273,6 +288,13 @@ NSInteger _activeMenu = -1;
             UIFont* font = [UIFont systemFontOfSize:15.0];
             cell.textLabel.font = font;		
             cell.userInteractionEnabled = NO;
+            
+            if (_cmiEventCalendar.accessGranted == NO) {
+                cell.textLabel.backgroundColor = [UIColor redColor];
+                cell.textLabel.text = NSLocalizedString(@"EnableCalendarAccessShort", @"");
+                [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(accessDeniedTimerFired:) userInfo:nil repeats:NO];
+            }
+            
             return cell;            
         }
         
@@ -736,6 +758,70 @@ NSInteger _activeMenu = -1;
 
 }
 
+- (void)finishInitializingCMIEventCalendarUI {
+    @try {
+        [CMIUtility Log:@"finishInitializingCMIEventCalendarUI()"];
+        
+        if (_cmiEventCalendar.accessGranted == YES) {
+            [CMIUtility Log:@"Calendar Access Granted"];
+            // NB: you cannot read app settings before instantiating the calendar
+            [self readAppSettings];
+            _cmiUserDefaults.defaultsDidChange = NO;
+            
+            // This will only do anything if we are in the Simulator
+            [CMIUtility createTestEvents:_cmiEventCalendar.eventStore];
+            
+            [CMIUtility Log:@"adding observer"];
+            _eventStoreChangeTimerWillFire = NO;
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
+                                                         name:EKEventStoreChangedNotification object:_cmiEventCalendar.eventStore];
+            [CMIUtility Log:@"about to initializeUI"];
+            
+        }
+        else {
+            [CMIUtility Log:@"Calendar Access Denied"];
+            // UI initialization should trigger an accessDenied timer to show to user 
+        }
+        [self initializeUI];
+    }
+    @catch (NSException *e) {
+        [CMIUtility LogError:e.reason];
+    }
+}
+
+// This method initializes the CMIEventCalendarUI
+- (void)startInitializeCMIEventCalendarUI{
+    @try {
+        [CMIUtility Log:@"startInitializeCMIEventCalendarUI()"];
+        if (_cmiEventCalendar == nil) {
+            _cmiEventCalendar = [[CMIEventCalendar alloc] init];
+            // may take a while to finish
+            // iOS6 check
+            if([CMIUtility checkIsDeviceVersionHigherThanRequiredVersion:@"6.0"]) {
+                [_cmiEventCalendar.eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
+                    _cmiEventCalendar.accessGranted = granted;
+                    if (granted){
+                        //---- codes here when user allow your app to access theirs' calendar.
+                        [CMIUtility Log:@"calendar access granted"];
+                        [self finishInitializingCMIEventCalendarUI];
+                    }
+                }];
+            }
+            else {
+                [CMIUtility Log:@"iOS5 -- no calendar access check required"];
+                _cmiEventCalendar.accessGranted = YES;
+                [self finishInitializingCMIEventCalendarUI];
+            }
+            
+        }
+        
+    }
+    @catch (NSException *e) {
+        [CMIUtility LogError:e.reason];
+    }
+    
+}
+
 #pragma mark -
 #pragma mark View life-cycle
 
@@ -745,7 +831,7 @@ NSInteger _activeMenu = -1;
 
     @try {
         [CMIUtility Log:@"viewDidLoad()"];
-        //TODO: remove this var
+        //TODO: move some of this to the finishInitializeCMI...
         _admobIsLoaded = NO;
         bannerView_ = nil;
         _wakeUpAction = masterViewWakeUpReload;
@@ -754,27 +840,13 @@ NSInteger _activeMenu = -1;
         
         _cmiMyConferenceNumber = [[CMIMyConferenceNumber alloc] initWithUserDefaults:_cmiUserDefaults];
         _cmiPhone = [[CMIPhone alloc] initWithCallProvider:_cmiUserDefaults.callProviderType];
-        
         self.title = NSLocalizedString(@"MainWindowTitle", nil);
         [self createMenuButton];
         
         self.tableView.rowHeight = ROW_HEIGHT;
         _phoneImage = [UIImage imageNamed:@"phone.png"];
 
-        _cmiEventCalendar = [[CMIEventCalendar alloc] init];
-        // NB: you cannot read app settings before instantiating the calendar
-        [self readAppSettings];
-        _cmiUserDefaults.defaultsDidChange = NO;
-
-        // This will only do anything if we are in the Simulator
-        [CMIUtility createTestEvents:_cmiEventCalendar.eventStore];
-        
-        _eventStoreChangeTimerWillFire = NO;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
-                                                     name:EKEventStoreChangedNotification object:_cmiEventCalendar.eventStore];
-
-        [self initializeUI];
-                        
+        [self startInitializeCMIEventCalendarUI];
     }
     @catch (NSException *e) {
         [CMIUtility LogError:e.reason];
@@ -819,6 +891,21 @@ NSInteger _activeMenu = -1;
     }
 }
 
+- (void)checkCalendarPermission
+{
+    @try {
+        [CMIUtility Log:@"checkCalendarPermission()"];
+    
+        if (_cmiEventCalendar == nil || _cmiEventCalendar.accessGranted == NO) {
+                // This may have to be timered if the return doesn't work
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Calendar Access" message:NSLocalizedString(@"EnableCalendarAccess", @"")                                                           delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                [alert show];
+        }
+    }
+    @catch (NSException *e) {
+        [CMIUtility LogError:e.reason];
+    }
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -826,7 +913,7 @@ NSInteger _activeMenu = -1;
     
     @try {
         [CMIUtility Log:@"viewDidAppear()"];
-
+        
         if (_wakeUpAction == masterViewWakeUpReload ||
             (_reloadDefaultsOnAppear == YES && [_cmiUserDefaults defaultsAreDifferent] == YES)) {
             _reloadDefaultsOnAppear = NO;

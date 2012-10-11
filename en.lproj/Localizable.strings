@@ -50,7 +50,8 @@
 "PaleonSupportEmail" = "support@paleonsolutions.com";
 "PaleonSupportSubject" = "Conference Me In error";
 "PaleonSupportIntro" = "Describe error here or just send...\n\rExpected Phone#:\n\rExpected Code:\n\r";
-"EnableCalendarAccess" = "Go to Settings > Privacy > Calendars\n\rSelect Conf Me In and set On";
+"EnableCalendarAccess" = "This application needs Calendar access\n\rGo to Settings > Privacy > Calendars\n\rSelect Conf Me In and set On";
+"EnableCalendarAccessShort" = "Go to Settings > Privacy > Calendars";
 "EnableContactAccess" = "Go to Settings > Privacy > Contacts\n\rSelect Conf Me In and set On";
 
 /* EventViewController Window */

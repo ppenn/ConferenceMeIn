@@ -43,53 +43,38 @@ NSMutableArray* _currentDaysArray;
 - (id) init
 {
     self = [super init];
-
-    [CMIUtility Log:@"CMICalendar::init()"];
-
+    
+    [CMIUtility Log:@"CMIEventCalendar::init()"];
+    
     if (self != nil)
     {
         // your code here
         _eventStore = [[EKEventStore alloc] init];
-        
-        if([CMIUtility checkIsDeviceVersionHigherThanRequiredVersion:@"6.0"]) {
-            [_eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-
-                _accessGranted = granted;
-                
-                if (granted){
-                    //---- codes here when user allow your app to access theirs' calendar.
-                    [CMIUtility Log:@"calendar access granted"];
-                    // Get the default calendar from store.
-                    _defaultCalendar = [_eventStore defaultCalendarForNewEvents];
-                    
-                }else
-                {
-                    //----- codes here when user NOT allow your app to access the calendar.
-                    // maybe throw exception?
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [CMIUtility Log:@"calendar access not granted"];
-
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Calendar Access" message:NSLocalizedString(@"EnableCalendarAccess", @"")                                                           delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                                    [alert show];	
-                    });
-                }
-            }];
-        }
-        _calendarType = allCalendars;
-        _calendarTimeframeType = weekAhead;
-        _currentTimeframeStarts = 0;
-        _showCompletedEvents = NO;
-        
-        _cmiDaysDictionary = [[NSMutableDictionary alloc] init]; 
-        _cmiDaysArray = [[NSMutableArray alloc] init];
-        _cmiFilteredDaysDictionary = [[NSMutableDictionary alloc] init]; 
-        _cmiFilteredDaysArray = [[NSMutableArray alloc] init];
-        _eventsList = [[NSMutableArray alloc] init];
-        
-        self.filterType = filterNone;
     }
+
+    return self;
+}
+
+// NB this assumes that init() has been called
+- (void) finishInit
+{
+    [CMIUtility Log:@"CMIEventCalendar::finishInit()"];
+
+    // Get the default calendar from store.
+    _defaultCalendar = [_eventStore defaultCalendarForNewEvents];
+    _calendarType = allCalendars;
+    _calendarTimeframeType = weekAhead;
+    _currentTimeframeStarts = 0;
+    _showCompletedEvents = NO;
     
-    return self;    
+    _cmiDaysDictionary = [[NSMutableDictionary alloc] init]; 
+    _cmiDaysArray = [[NSMutableArray alloc] init];
+    _cmiFilteredDaysDictionary = [[NSMutableDictionary alloc] init]; 
+    _cmiFilteredDaysArray = [[NSMutableArray alloc] init];
+    _eventsList = [[NSMutableArray alloc] init];
+    
+    self.filterType = filterNone;
+    
 }
 //**********************************************************************************
 
