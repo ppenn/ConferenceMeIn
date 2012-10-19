@@ -50,6 +50,19 @@ NSMutableArray* _currentDaysArray;
     {
         // your code here
         _eventStore = [[EKEventStore alloc] init];
+
+        _calendarType = allCalendars;
+        _calendarTimeframeType = weekAhead;
+        _currentTimeframeStarts = 0;
+        _showCompletedEvents = NO;
+        
+        _cmiDaysDictionary = [[NSMutableDictionary alloc] init];
+        _cmiDaysArray = [[NSMutableArray alloc] init];
+        _cmiFilteredDaysDictionary = [[NSMutableDictionary alloc] init];
+        _cmiFilteredDaysArray = [[NSMutableArray alloc] init];
+        _eventsList = [[NSMutableArray alloc] init];
+        
+        self.filterType = filterNone;
     }
 
     return self;
@@ -62,18 +75,6 @@ NSMutableArray* _currentDaysArray;
 
     // Get the default calendar from store.
     _defaultCalendar = [_eventStore defaultCalendarForNewEvents];
-    _calendarType = allCalendars;
-    _calendarTimeframeType = weekAhead;
-    _currentTimeframeStarts = 0;
-    _showCompletedEvents = NO;
-    
-    _cmiDaysDictionary = [[NSMutableDictionary alloc] init]; 
-    _cmiDaysArray = [[NSMutableArray alloc] init];
-    _cmiFilteredDaysDictionary = [[NSMutableDictionary alloc] init]; 
-    _cmiFilteredDaysArray = [[NSMutableArray alloc] init];
-    _eventsList = [[NSMutableArray alloc] init];
-    
-    self.filterType = filterNone;
     
 }
 //**********************************************************************************

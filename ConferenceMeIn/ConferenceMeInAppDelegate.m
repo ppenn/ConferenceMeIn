@@ -100,7 +100,7 @@ CMIMasterViewController* _cmiMasterViewController;
         _defaultsChangedTimerWillFire = NO;
 
         // listen for changes to our preferences when the Settings app does so,
-        // when we are resumed from the backround, this will give us a chance to update our UI
+        // when we are resumed from the background, this will give us a chance to update our UI
         //
 
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -114,6 +114,7 @@ CMIMasterViewController* _cmiMasterViewController;
         self.window.rootViewController = self.navigationController;
         [self.window makeKeyAndVisible];
                 
+        [CMIUtility Log:@"Exiting didFinishLaunchingWithOptions()"];
         return YES;
     }
     @catch (NSException * e) {
@@ -193,10 +194,10 @@ CMIMasterViewController* _cmiMasterViewController;
     @try {
         [CMIUtility Log:@"applicationDidBecomeActive()"];
 
-        if (_cmiMasterViewController != nil && _cmiMasterViewController.admobIsLoaded == YES)
+        if (_cmiMasterViewController == nil)    return;
+        
+        if (_cmiMasterViewController.admobIsLoaded == YES && _cmiMasterViewController.accessWasDenied == NO)
         {
-            [_cmiMasterViewController checkCalendarPermission];
-            
             // What if MVC is not visible?
             if ([CMIUtility isSameDay:[NSDate date] atDate2:_cmiMasterViewController.cmiEventCalendar.lastRefreshTime] == YES) {
 
@@ -218,6 +219,13 @@ CMIMasterViewController* _cmiMasterViewController;
                 }
             }
             
+        }
+        else if (_cmiMasterViewController.accessWasDenied == YES){
+            if ([_cmiMasterViewController checkCalendarPermission] == NO){
+                [_cmiMasterViewController reloadTable];
+                return;
+            }
+
         }
         
     }

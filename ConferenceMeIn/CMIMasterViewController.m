@@ -44,6 +44,7 @@ NSIndexPath* _indexPath;
 NSInteger _actionSheetChoice = -1;
 NSInteger _actionSheetContextChoice = -1;
 NSInteger _activeMenu = -1;
+//BOOL _accessWasDenied = NO;
 
 @implementation CMIMasterViewController
 
@@ -61,11 +62,12 @@ NSInteger _activeMenu = -1;
 @synthesize eventStoreChangeTimerWillFire = _eventStoreChangeTimerWillFire;
 @synthesize admobIsLoaded = _admobIsLoaded;
 @synthesize wakeUpAction = _wakeUpAction;
+@synthesize accessWasDenied = _accessWasDenied;
 
-- (void)accessDenedTimerFired:(NSTimer *)aTimer
+- (void)accessDeniedTimerFired
 {
     @try {
-        [CMIUtility Log:@"accessDenedTimerFired()"];
+        [CMIUtility Log:@"accessDeinedTimerFired()"];
         
         [self checkCalendarPermission];
         
@@ -87,9 +89,7 @@ NSInteger _activeMenu = -1;
         // Initiate a generic request to load it with an ad.
         // NB This changes defaults so we have to momentarily unhook eventlistener on delegate
         
-//        [((ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate]) removeDefaultsEventListener];
-        [bannerView_ loadRequest:[GADRequest request]];    
-//        [((ConferenceMeInAppDelegate *)[[UIApplication sharedApplication] delegate]) addDefaultsEventListener];
+        [bannerView_ loadRequest:[GADRequest request]];
         
     }
     @catch (NSException *exception) {
@@ -215,7 +215,8 @@ NSInteger _activeMenu = -1;
     //	Push detailViewController onto the navigation controller stack
     //	If the underlying event gets deleted, detailViewController will remove itself from
     //	the stack and clear its event property.
-    [self setToolbarHidden:YES];
+   
+     [self setToolbarHidden:YES];
 
 //    _detailViewController.delegate = _detailViewController;
     _detailViewController.allowsEditing = YES;
@@ -226,9 +227,10 @@ NSInteger _activeMenu = -1;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
     @try {
         [CMIUtility Log:@"numberOfSectionsInTableView()"];
+                
         // Number of days in calendar
         NSInteger numSections = _cmiEventCalendar.numDays;
-
+        
         return numSections;
     }
     @catch (NSException * e) {
@@ -240,8 +242,8 @@ NSInteger _activeMenu = -1;
 
     @try {
         [CMIUtility Log:@"numberOfRowsInSection()"];
-        
-        if (_cmiEventCalendar.eventsList.count == 0 ||
+                
+        if (_accessWasDenied == YES || _cmiEventCalendar.eventsList.count == 0 ||
             (_cmiEventCalendar.filterType != filterNone && _cmiEventCalendar.numConfEvents == 0)) {
             if (section == 0) {
                 return 1;
@@ -281,6 +283,17 @@ NSInteger _activeMenu = -1;
 
         UITableViewCell* cell;
         
+        if (_accessWasDenied == YES) {
+            cell = [[UITableViewCell alloc] init];
+            cell.textLabel.backgroundColor = [UIColor redColor];
+            cell.textLabel.text = NSLocalizedString(@"EnableCalendarAccessShort", @"");
+            cell.textLabel.textColor = [UIColor redColor];
+            UIFont* font = [UIFont systemFontOfSize:15.0];
+            cell.textLabel.font = font;
+            cell.userInteractionEnabled = NO;
+
+            return cell;
+        }
         if (_cmiEventCalendar.eventsList.count == 0 ||
             (_cmiEventCalendar.filterType != filterNone && _cmiEventCalendar.numConfEvents == 0)) {
             cell = [[UITableViewCell alloc] init];
@@ -288,12 +301,6 @@ NSInteger _activeMenu = -1;
             UIFont* font = [UIFont systemFontOfSize:15.0];
             cell.textLabel.font = font;		
             cell.userInteractionEnabled = NO;
-            
-            if (_cmiEventCalendar.accessGranted == NO) {
-                cell.textLabel.backgroundColor = [UIColor redColor];
-                cell.textLabel.text = NSLocalizedString(@"EnableCalendarAccessShort", @"");
-                [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(accessDeniedTimerFired:) userInfo:nil repeats:NO];
-            }
             
             return cell;            
         }
@@ -408,7 +415,6 @@ NSInteger _activeMenu = -1;
     _cmiEventCalendar.currentTimeframeStarts = _cmiUserDefaults.currentTimeframeStarts;
     _cmiEventCalendar.calendarTimeframeType = _cmiUserDefaults.calendarTimeframeType;
     _highlightCurrentEvents = _cmiUserDefaults.highlightCurrentEvents;
-//    _cmiMyConferenceNumber.cmiUserDefaults = _cmiUserDefaults;
     // Is this a memory leak or does ARC take care of it?
     _cmiMyConferenceNumber = [[CMIMyConferenceNumber alloc] initWithUserDefaults:_cmiUserDefaults];
     _cmiPhone = [[CMIPhone alloc] initWithCallProvider:_cmiUserDefaults.callProviderType];
@@ -439,10 +445,12 @@ NSInteger _activeMenu = -1;
 
 -(void)invokeMegaAnnoyingPopup:(NSString*)message
 {
+    [CMIUtility Log:@"invokeMegaAnnoyingPopup()"];
+
     self.megaAlert = [[UIAlertView alloc] initWithTitle:message
                                                  message:nil delegate:self cancelButtonTitle:nil
                                        otherButtonTitles: nil];
-        
+    
     [self.megaAlert show];
 
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc]
@@ -462,6 +470,8 @@ NSInteger _activeMenu = -1;
 
 -(void)dismissMegaAnnoyingPopup
 {
+    [CMIUtility Log:@"dismissMegaAnnoyingPopup()"];
+    
     if (self.megaAlert != nil) {
         [self.megaAlert dismissWithClickedButtonIndex:0 animated:YES];
         self.megaAlert = nil;
@@ -470,6 +480,10 @@ NSInteger _activeMenu = -1;
 - (void) reloadTableScrollToNow
 {
     [CMIUtility Log:@"reloadTableScrollToNow()"];
+    
+    if (_cmiEventCalendar.accessGranted == NO) {
+        return;
+    }
     
     [self readAppSettings];    
     [self reloadTable];
@@ -650,6 +664,34 @@ NSInteger _activeMenu = -1;
     }
 
 }
+- (void)createNavigationButtons {
+    [CMIUtility Log:@"createNavigationButtons()"];
+    
+    //	Create an Add button
+    UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:
+                                      UIBarButtonSystemItemAdd target:self action:@selector(addEvent:)];
+    self.navigationItem.rightBarButtonItem = addButtonItem;
+    
+    
+    NSArray *segmentedItems = [NSArray arrayWithObjects:NSLocalizedString(@"SegmentAllEventsButton", nil), NSLocalizedString(@"SegmentConfCallEventsButton", nil), nil];
+    UISegmentedControl *ctrl = [[UISegmentedControl alloc] initWithItems:segmentedItems];
+    ctrl.segmentedControlStyle = UISegmentedControlStyleBar;
+    ctrl.selectedSegmentIndex = _cmiEventCalendar.filterType;
+    
+    [ctrl addTarget:self
+          action:@selector(eventFilterChanged:)
+          forControlEvents:UIControlEventValueChanged];
+    
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:ctrl];
+    CGFloat margin = 10.0;
+    CGFloat width = self.navigationController.toolbar.frame.size.width - margin;
+    CGFloat height = self.navigationController.toolbar.frame.size.height - margin;
+    ctrl.frame = CGRectMake(margin, margin, width, height);
+    ctrl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    NSArray *theToolbarItems = [NSArray arrayWithObjects:item, nil];
+    [self setToolbarItems:theToolbarItems animated:YES];
+}
 
 - (void)initializeUI
 {
@@ -660,7 +702,8 @@ NSInteger _activeMenu = -1;
     self.view.autoresizesSubviews = true;
     self.tableView.autoresizesSubviews = true;
     
-    //	Create an Add button 
+    //	Create an Add button
+    /*
     UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:
                                       UIBarButtonSystemItemAdd target:self action:@selector(addEvent:)];
     self.navigationItem.rightBarButtonItem = addButtonItem;
@@ -673,7 +716,7 @@ NSInteger _activeMenu = -1;
     
     [ctrl addTarget:self
              action:@selector(eventFilterChanged:)
-   forControlEvents:UIControlEventValueChanged];
+            forControlEvents:UIControlEventValueChanged];
     
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:ctrl];
     CGFloat margin = 10.0;
@@ -683,8 +726,9 @@ NSInteger _activeMenu = -1;
     ctrl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     NSArray *theToolbarItems = [NSArray arrayWithObjects:item, nil];
-    [self setToolbarItems:theToolbarItems];
+    [self setToolbarItems:theToolbarItems animated:YES];
 
+     */
     UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc] 
                                           initWithTarget:self action:@selector(handleLongPress:)];
     lpgr.minimumPressDuration = INTERVAL_LONG_PRESS; 
@@ -762,27 +806,23 @@ NSInteger _activeMenu = -1;
     @try {
         [CMIUtility Log:@"finishInitializingCMIEventCalendarUI()"];
         
-        if (_cmiEventCalendar.accessGranted == YES) {
-            [CMIUtility Log:@"Calendar Access Granted"];
             // NB: you cannot read app settings before instantiating the calendar
             [self readAppSettings];
             _cmiUserDefaults.defaultsDidChange = NO;
             
-            // This will only do anything if we are in the Simulator
-            [CMIUtility createTestEvents:_cmiEventCalendar.eventStore];
-            
-            [CMIUtility Log:@"adding observer"];
-            _eventStoreChangeTimerWillFire = NO;
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
-                                                         name:EKEventStoreChangedNotification object:_cmiEventCalendar.eventStore];
-            [CMIUtility Log:@"about to initializeUI"];
-            
-        }
-        else {
-            [CMIUtility Log:@"Calendar Access Denied"];
-            // UI initialization should trigger an accessDenied timer to show to user 
-        }
-        [self initializeUI];
+//            if (_cmiEventCalendar.accessGranted == YES) {
+                // This will only do anything if we are in the Simulator
+                [CMIUtility createTestEvents:_cmiEventCalendar.eventStore];
+                
+                [CMIUtility Log:@"adding observer"];
+                _eventStoreChangeTimerWillFire = NO;
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeChanged:)
+                                                             name:EKEventStoreChangedNotification object:_cmiEventCalendar.eventStore];
+//            }
+//        else {
+//            [CMIUtility Log:@"Calendar Access Denied"];
+//            // UI initialization should trigger an accessDenied timer to show to user 
+//        }
     }
     @catch (NSException *e) {
         [CMIUtility LogError:e.reason];
@@ -793,6 +833,10 @@ NSInteger _activeMenu = -1;
 - (void)startInitializeCMIEventCalendarUI{
     @try {
         [CMIUtility Log:@"startInitializeCMIEventCalendarUI()"];
+
+        [CMIUtility Log:@"about to initializeUI"]; // this is going to cause the 
+        [self initializeUI];
+        
         if (_cmiEventCalendar == nil) {
             _cmiEventCalendar = [[CMIEventCalendar alloc] init];
             // may take a while to finish
@@ -804,6 +848,12 @@ NSInteger _activeMenu = -1;
                         //---- codes here when user allow your app to access theirs' calendar.
                         [CMIUtility Log:@"calendar access granted"];
                         [self finishInitializingCMIEventCalendarUI];
+                    }
+                    else {
+                        [CMIUtility Log:@"calendar access denied"];
+                        [self finishInitializingCMIEventCalendarUI];
+                        _accessWasDenied = YES;
+                        
                     }
                 }];
             }
@@ -831,7 +881,7 @@ NSInteger _activeMenu = -1;
 
     @try {
         [CMIUtility Log:@"viewDidLoad()"];
-        //TODO: move some of this to the finishInitializeCMI...
+        
         _admobIsLoaded = NO;
         bannerView_ = nil;
         _wakeUpAction = masterViewWakeUpReload;
@@ -841,7 +891,9 @@ NSInteger _activeMenu = -1;
         _cmiMyConferenceNumber = [[CMIMyConferenceNumber alloc] initWithUserDefaults:_cmiUserDefaults];
         _cmiPhone = [[CMIPhone alloc] initWithCallProvider:_cmiUserDefaults.callProviderType];
         self.title = NSLocalizedString(@"MainWindowTitle", nil);
+
         [self createMenuButton];
+        [self createNavigationButtons];
         
         self.tableView.rowHeight = ROW_HEIGHT;
         _phoneImage = [UIImage imageNamed:@"phone.png"];
@@ -891,16 +943,18 @@ NSInteger _activeMenu = -1;
     }
 }
 
-- (void)checkCalendarPermission
+- (BOOL)checkCalendarPermission
 {
     @try {
         [CMIUtility Log:@"checkCalendarPermission()"];
     
-        if (_cmiEventCalendar == nil || _cmiEventCalendar.accessGranted == NO) {
+        if (_cmiEventCalendar == nil || _accessWasDenied == YES) {
                 // This may have to be timered if the return doesn't work
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Calendar Access" message:NSLocalizedString(@"EnableCalendarAccess", @"")                                                           delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
                 [alert show];
         }
+        
+        return _cmiEventCalendar.accessGranted;
     }
     @catch (NSException *e) {
         [CMIUtility LogError:e.reason];
@@ -918,10 +972,11 @@ NSInteger _activeMenu = -1;
             (_reloadDefaultsOnAppear == YES && [_cmiUserDefaults defaultsAreDifferent] == YES)) {
             _reloadDefaultsOnAppear = NO;
             _cmiUserDefaults.defaultsDidChange = NO;
-            
-            [self invokeMegaAnnoyingPopup:NSLocalizedString(@"LoadingEventsMessage", nil)];    
-            _refreshTimer = [NSTimer scheduledTimerWithTimeInterval:INTERVAL_REFRESH_TABLE target:self selector:@selector(refreshTimerFired:) userInfo:nil repeats:NO];
-            
+
+            if (_cmiEventCalendar.accessGranted == YES){
+                [self invokeMegaAnnoyingPopup:NSLocalizedString(@"LoadingEventsMessage", nil)];
+                _refreshTimer = [NSTimer scheduledTimerWithTimeInterval:INTERVAL_REFRESH_TABLE target:self selector:@selector(refreshTimerFired:) userInfo:nil repeats:NO];
+            }
         }
         else {
             if (_indexPath != nil) {
@@ -934,10 +989,16 @@ NSInteger _activeMenu = -1;
             if (self.navigationController.toolbarHidden == NO) {
                 [self scrollToNow];
             }
-        }    
+        }
+        //TODO i think this has to happen immediately
         [self setToolbarHidden:NO];
         _wakeUpAction = masterViewWakeUpDoNothing;
         [self loadAdMobBanner:nil];
+        
+//        if (_accessWasDenied == YES){
+//            _refreshTimer = [NSTimer scheduledTimerWithTimeInterval:INTERVAL_REFRESH_TABLE target:self selector:@selector(refreshTimerFired:) userInfo:nil repeats:NO];
+//            
+//        }
     }
     @catch (NSException *e) {
         [CMIUtility LogError:e.reason];

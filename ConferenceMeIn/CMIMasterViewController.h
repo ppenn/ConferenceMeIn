@@ -83,6 +83,7 @@ typedef enum enterConfNumberActionButtons
 @property (atomic) BOOL eventStoreChangeTimerWillFire;
 @property BOOL admobIsLoaded;
 @property masterViewWakeUpActions wakeUpAction;
+@property BOOL accessWasDenied;
 
 - (void)setToolbarHidden:(BOOL)hide;
 - (void) storeChanged:(NSNotification *) notification;
@@ -102,8 +103,8 @@ typedef enum enterConfNumberActionButtons
 - (void)handleContextMenu:(NSInteger)buttonIndex;
 - (void)handleContextMenuLimited:(NSInteger)buttonIndex;
 - (void)loadAdMobBanner:(NSTimer *)aTimer;
-- (void) scrollToNow;
+- (void)scrollToNow;
 - (void)refreshTimerFired:(NSTimer *)aTimer;
-- (void)checkCalendarPermission;
+- (BOOL)checkCalendarPermission;
 
 @end

@@ -205,11 +205,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "ConferenceMeIn/CMIEventCalendar.m"
-         timestampString = "371623540.283953"
+         timestampString = "372122275.473413"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "197"
-         endingLineNumber = "197"
+         startingLineNumber = "198"
+         endingLineNumber = "198"
          landmarkName = "-assignCMIEventsToCMIDays"
          landmarkType = "5">
       </FileBreakpoint>
@@ -367,11 +367,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "ConferenceMeIn/CMIMasterViewController.m"
-         timestampString = "371624718.977169"
+         timestampString = "372362748.658838"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1285"
-         endingLineNumber = "1285"
+         startingLineNumber = "1346"
+         endingLineNumber = "1346"
          landmarkName = "-emailLowLevel:subject:body:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -419,11 +419,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "ConferenceMeIn/ConferenceMeInAppDelegate.m"
-         timestampString = "371624097.890386"
+         timestampString = "372363462.223299"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "196"
-         endingLineNumber = "196"
+         startingLineNumber = "198"
+         endingLineNumber = "198"
          landmarkName = "-applicationDidBecomeActive:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -432,25 +432,90 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "ConferenceMeIn/CMIMasterViewController.m"
-         timestampString = "371624718.977169"
+         timestampString = "372312039.643824"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "849"
-         endingLineNumber = "849"
+         startingLineNumber = "901"
+         endingLineNumber = "901"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "ConferenceMeIn/CMIMasterViewController.m"
-         timestampString = "371624853.721682"
+         timestampString = "372312039.643824"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "232"
-         endingLineNumber = "232"
+         startingLineNumber = "826"
+         endingLineNumber = "826"
+         landmarkName = "-finishInitializingCMIEventCalendarUI"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "ConferenceMeIn/CMIEventCalendar.m"
+         timestampString = "372136331.301429"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "106"
+         endingLineNumber = "106"
+         landmarkName = "-getDayEventIndexForDate:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "ConferenceMeIn/CMIMasterViewController.m"
+         timestampString = "372312039.643824"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "989"
+         endingLineNumber = "989"
+         landmarkName = "-viewDidAppear:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "ConferenceMeIn/CMIMasterViewController.m"
+         timestampString = "372311672.027962"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "233"
+         endingLineNumber = "233"
          landmarkName = "-numberOfSectionsInTableView:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "ConferenceMeIn/CMIMasterViewController.m"
+         timestampString = "372311672.027962"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "246"
+         endingLineNumber = "246"
+         landmarkName = "-tableView:numberOfRowsInSection:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "ConferenceMeIn/ConferenceMeInAppDelegate.m"
+         timestampString = "372364213.500833"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "223"
+         endingLineNumber = "223"
+         landmarkName = "-applicationDidBecomeActive:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
